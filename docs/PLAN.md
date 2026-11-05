@@ -26,7 +26,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §4, DESIGN §6
 - [x] **0.3 Colour tokens.** Build `AppColors` as a `ThemeExtension` with every token in DESIGN §3.1–3.2 for light and dark, plus `CategoryColors` (DESIGN §3.3) and the chart palette (DESIGN §3.4). Add a `context.colors` extension. Test that every token has a light and a dark value.
   Refs: DESIGN §3, §11
-- [ ] **0.4 Type, spacing and theme.** Bundle Poppins 400–800 as assets. Build `AppTypography` (DESIGN §4, tabular figures), `AppSpacing`, `AppRadius`, `AppShadows`, and `buildLightTheme()` / `buildDarkTheme()`. Add a theme-mode provider (default System). Widget-test a sample screen in both themes.
+- [x] **0.4 Type, spacing and theme.** Bundle Poppins 400–800 as assets. Build `AppTypography` (DESIGN §4, tabular figures), `AppSpacing`, `AppRadius`, `AppShadows`, and `buildLightTheme()` / `buildDarkTheme()`. Add a theme-mode provider (default System). Widget-test a sample screen in both themes.
   Refs: DESIGN §4, §5, §11
 - [ ] **0.5 Localisation and money.** Set up `flutter gen-l10n` with an English ARB file. Build `MoneyFormatter` in `core/money` (pure Dart) and an `AmountText` widget that shows cents smaller for large amounts. Unit-test zero, negative (U+2212), large values and currency-symbol switching.
   Refs: PRD §6.1, DESIGN §4
