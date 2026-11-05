@@ -6,7 +6,7 @@ Offline-first personal budgeting app in Flutter (iOS and Android, plus a web bui
 - `docs/PRD.md`: requirements, screen IDs (S01–S44), acceptance criteria, data model, derived values, design tokens. **The source of truth for behaviour.**
 - `docs/PLAN.md`: the task list. Work through it in order.
 - `docs/DESIGN.md`: design tokens, component specs, layout patterns, dark mode and the Flutter theme mapping.
-- `docs/design/`: exported screens, light and dark, named after the canvas files (e.g. `Dashboard.png`, `DashboardDark.png`). **The source of truth for layout.** If the PRD and a screen disagree, follow the screen and tell me.
+- `docs/design/`: exported screens, light and dark, named after the canvas files (e.g. `Dashboard.png`, `Dashboard · Dark.png`). **The source of truth for layout.** If the PRD and a screen disagree, follow the screen and tell me.
 
 Before building a screen, read its section in the PRD and look at both its light and dark designs.
 

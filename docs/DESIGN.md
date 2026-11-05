@@ -4,7 +4,7 @@ The single reference for how ctrlSpend looks. Values come from the "CtrlSpend UI
 
 - Behaviour and copy: `docs/PRD.md`
 - Code conventions: `CLAUDE.md`
-- Screen exports: `docs/design/<File>.png` and `<File>Dark.png`
+- Screen exports: `docs/design/<File>.png` and `<File> · Dark.png`
 
 ---
 

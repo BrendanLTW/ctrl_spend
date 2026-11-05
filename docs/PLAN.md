@@ -12,7 +12,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 ## Before you start (you, not Claude Code)
 
 - [ ] Create the GitHub repo `ctrl_spend` and add `CLAUDE.md`, `.claude/commands/`, `docs/PRD.md`, `docs/DESIGN.md` and this file.
-- [ ] Export every canvas artboard to `docs/design/` as PNG, named after its file (`Dashboard.png`, `DashboardDark.png`, …).
+- [ ] Export every canvas artboard to `docs/design/` as PNG, named after its file (`Dashboard.png`, `Dashboard · Dark.png`, …).
 - [ ] Add the name step (`OnbName` + `OnbNameDark`) to the canvas and export it.
 - [ ] Update the canvas: Add income shows Salary and Gifts; onboarding steps read "of 5"; the brand board's splash footer reads "by BrendanLTW".
 
@@ -20,7 +20,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 0 — Foundation
 
-- [ ] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios, web). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
+- [x] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios; web skipped by decision, 2026-11-05). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
   Refs: CLAUDE.md Stack
 - [ ] **0.2 Folder structure and routing.** Create the `core/` and `features/` folders from `CLAUDE.md`. Set up go_router with a `StatefulShellRoute` for Home, Activity, Budgets and Insights (placeholder screens), plus routes for Add transaction, Settings and Onboarding. Add an onboarding redirect driven by a placeholder provider.
   Refs: PRD §4, DESIGN §6
@@ -30,7 +30,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: DESIGN §4, §5, §11
 - [ ] **0.5 Localisation and money.** Set up `flutter gen-l10n` with an English ARB file. Build `MoneyFormatter` in `core/money` (pure Dart) and an `AmountText` widget that shows cents smaller for large amounts. Unit-test zero, negative (U+2212), large values and currency-symbol switching.
   Refs: PRD §6.1, DESIGN §4
-- [ ] **0.6 App shell.** Build `AppShell`: the floating pill bottom bar (four tabs, active tab expands with label) and the separate round add button, with labels and the shadows from DESIGN §5. Widget tests in both themes; compare with `Dashboard.png` and `DashboardDark.png`.
+- [ ] **0.6 App shell.** Build `AppShell`: the floating pill bottom bar (four tabs, active tab expands with label) and the separate round add button, with labels and the shadows from DESIGN §5. Widget tests in both themes; compare with `Dashboard.png` and `Dashboard · Dark.png`.
   Refs: PRD §4, DESIGN §6, §7
 - [ ] **0.7 Money keypad.** Put keypad input logic in a pure function (cents fill, `00`, backspace, 9-digit cap) with unit tests. Build `MoneyKeypad` in both sizes (full screen and sheet) and `AmountDisplay` with its screen-reader label.
   Refs: PRD §6.1, DESIGN §7

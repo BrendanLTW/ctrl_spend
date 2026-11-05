@@ -1,4 +1,4 @@
-package com.example.ctrl_spend
+package com.brendanltw.ctrlspend
 
 import io.flutter.embedding.android.FlutterActivity
 
