@@ -50,7 +50,7 @@ final class AppThemeModeProvider
   }
 }
 
-String _$appThemeModeHash() => r'8dd08eee66702d97f1f1eb36e44dba02e3631f7b';
+String _$appThemeModeHash() => r'8eb62941a6f4ce6731d18ba8823ca74434b44afc';
 
 /// The Theme preference: Light, Dark or System.
 // shortcut: in-memory, resets on restart; back it with the stored setting
