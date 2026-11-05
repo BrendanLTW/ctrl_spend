@@ -36,7 +36,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §6.1, DESIGN §7
 - [x] **0.8 CI.** GitHub Actions on every push: set up Flutter, `pub get`, codegen, `flutter analyze`, `flutter test`. Add the status badge to `README.md`.
   Refs: PRD §10
-- [ ] **0.9 Spike (no production code).** Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
+- [x] **0.9 Spike (no production code).** Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
   Refs: PRD §12
 
 ## Phase 1 — Data
