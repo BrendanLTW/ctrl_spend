@@ -20,7 +20,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 0 — Foundation
 
-- [x] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios; web skipped by decision, 2026-11-05). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
+- [x] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
   Refs: CLAUDE.md Stack
 - [ ] **0.2 Folder structure and routing.** Create the `core/` and `features/` folders from `CLAUDE.md`. Set up go_router with a `StatefulShellRoute` for Home, Activity, Budgets and Insights (placeholder screens), plus routes for Add transaction, Settings and Onboarding. Add an onboarding redirect driven by a placeholder provider.
   Refs: PRD §4, DESIGN §6
@@ -36,7 +36,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §6.1, DESIGN §7
 - [ ] **0.8 CI.** GitHub Actions on every push: set up Flutter, `pub get`, codegen, `flutter analyze`, `flutter test`. Add the status badge to `README.md`.
   Refs: PRD §10
-- [ ] **0.9 Spikes (no production code).** (a) Run Drift in the web build with a throwaway table. (b) Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
+- [ ] **0.9 Spike (no production code).** Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
   Refs: PRD §12
 
 ## Phase 1 — Data
@@ -128,9 +128,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §10
 - [ ] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
   Refs: PRD §10
-- [ ] **4.5 Web demo.** Web build with notifications hidden; seeded demo data; deploy to GitHub Pages from Actions.
-  Refs: PRD §10
-- [ ] **4.6 README and release.** README with demo link, screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
+- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
   Refs: PRD §2
 
 ## Phase 5 — v1.1 (start only after v1.0 is released)
@@ -149,7 +147,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S29–S31, FR-17
 - [ ] **5.7 App lock settings.** Add flutter_secure_storage and local_auth. S37 with PIN setup and change (stored hashed in secure storage), Face ID, Lock after and Hide amounts in app switcher.
   Refs: S37, PRD §5.8, FR-18
-- [ ] **5.8 Lock screen.** S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled. Hidden on web.
+- [ ] **5.8 Lock screen.** S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled.
   Refs: S38, FR-18
 - [ ] **5.9 v1.1 release.** Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`.
   Refs: PRD §11

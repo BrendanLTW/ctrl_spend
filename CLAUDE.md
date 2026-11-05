@@ -1,6 +1,6 @@
 # ctrlSpend (`ctrl_spend`)
 
-Offline-first personal budgeting app in Flutter (iOS and Android, plus a web build for the demo). Portfolio project: code quality, architecture, tests and design fidelity matter more than feature count.
+Offline-first personal budgeting app in Flutter (iOS and Android). Portfolio project: code quality, architecture, tests and design fidelity matter more than feature count.
 
 ## Read first
 - `docs/PRD.md`: requirements, screen IDs (S01–S44), acceptance criteria, data model, derived values, design tokens. **The source of truth for behaviour.**
@@ -99,7 +99,7 @@ Rules:
 - Analyze: `flutter analyze`
 - Test: `flutter test`
 - Integration: `flutter test integration_test`
-- Run: `flutter run` · Web demo: `flutter run -d chrome`
+- Run: `flutter run`
 
 ## Testing
 - Unit tests for every repository, every derived value and `periodFor`. `periodFor` needs exhaustive cases: start days 1, 15, 28 and `last`, February in leap and non-leap years, and 30- and 31-day months.
