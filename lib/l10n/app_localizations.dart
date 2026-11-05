@@ -141,6 +141,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Finish onboarding'**
   String get finishOnboarding;
+
+  /// No description provided for @keypadBackspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Backspace'**
+  String get keypadBackspace;
+
+  /// No description provided for @keypadDoubleZero.
+  ///
+  /// In en, this message translates to:
+  /// **'Double zero'**
+  String get keypadDoubleZero;
 }
 
 class _AppLocalizationsDelegate

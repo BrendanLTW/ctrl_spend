@@ -23,6 +23,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.disabled,
     required this.chipText,
     required this.navSelected,
+    required this.keySoftPressed,
   });
 
   static const light = AppColors(
@@ -45,6 +46,7 @@ class AppColors extends ThemeExtension<AppColors> {
     disabled: Color(0xFF98A2B3),
     chipText: Color(0xFF344054),
     navSelected: Color(0xFFEEF1F6),
+    keySoftPressed: Color(0xFFEAECF0),
   );
 
   static const dark = AppColors(
@@ -67,6 +69,7 @@ class AppColors extends ThemeExtension<AppColors> {
     disabled: Color(0xFF5B6B86),
     chipText: Color(0xFFD0D5DD),
     navSelected: Color(0xFF2A3444),
+    keySoftPressed: Color(0xFF344054),
   );
 
   /// Screen background.
@@ -126,6 +129,9 @@ class AppColors extends ThemeExtension<AppColors> {
   /// Active tab pill in the bottom bar.
   final Color navSelected;
 
+  /// Pressed keypad key inside sheets (DESIGN §7 pressed states).
+  final Color keySoftPressed;
+
   /// Every token by name, so tests can check both palettes cover them all.
   @visibleForTesting
   Map<String, Color> get tokens => {
@@ -148,6 +154,7 @@ class AppColors extends ThemeExtension<AppColors> {
     'disabled': disabled,
     'chipText': chipText,
     'navSelected': navSelected,
+    'keySoftPressed': keySoftPressed,
   };
 
   @override
@@ -171,6 +178,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? disabled,
     Color? chipText,
     Color? navSelected,
+    Color? keySoftPressed,
   }) {
     return AppColors(
       ground: ground ?? this.ground,
@@ -192,6 +200,7 @@ class AppColors extends ThemeExtension<AppColors> {
       disabled: disabled ?? this.disabled,
       chipText: chipText ?? this.chipText,
       navSelected: navSelected ?? this.navSelected,
+      keySoftPressed: keySoftPressed ?? this.keySoftPressed,
     );
   }
 
@@ -218,6 +227,7 @@ class AppColors extends ThemeExtension<AppColors> {
       disabled: Color.lerp(disabled, other.disabled, t)!,
       chipText: Color.lerp(chipText, other.chipText, t)!,
       navSelected: Color.lerp(navSelected, other.navSelected, t)!,
+      keySoftPressed: Color.lerp(keySoftPressed, other.keySoftPressed, t)!,
     );
   }
 }

@@ -32,7 +32,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §6.1, DESIGN §4
 - [x] **0.6 App shell.** Build `AppShell`: the floating pill bottom bar (four tabs, active tab expands with label) and the separate round add button, with labels and the shadows from DESIGN §5. Widget tests in both themes; compare with `Dashboard.png` and `Dashboard · Dark.png`.
   Refs: PRD §4, DESIGN §6, §7
-- [ ] **0.7 Money keypad.** Put keypad input logic in a pure function (cents fill, `00`, backspace, 9-digit cap) with unit tests. Build `MoneyKeypad` in both sizes (full screen and sheet) and `AmountDisplay` with its screen-reader label.
+- [x] **0.7 Money keypad.** Put keypad input logic in a pure function (cents fill, `00`, backspace, 9-digit cap) with unit tests. Build `MoneyKeypad` in both sizes (full screen and sheet) and `AmountDisplay` with its screen-reader label.
   Refs: PRD §6.1, DESIGN §7
 - [ ] **0.8 CI.** GitHub Actions on every push: set up Flutter, `pub get`, codegen, `flutter analyze`, `flutter test`. Add the status badge to `README.md`.
   Refs: PRD §10

@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppColors', () {
-    test('light and dark define all 19 tokens', () {
-      expect(AppColors.light.tokens, hasLength(19));
+    test('light and dark define all 20 tokens', () {
+      expect(AppColors.light.tokens, hasLength(20));
       expect(AppColors.dark.tokens.keys, AppColors.light.tokens.keys);
     });
 

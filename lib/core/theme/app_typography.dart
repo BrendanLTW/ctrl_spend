@@ -20,6 +20,16 @@ class AppTypography {
     height: 1.1,
     fontFeatures: _tabular,
   );
+
+  /// Amount display inside sheets (Budgets edit).
+  TextStyle get displaySm => const TextStyle(
+    fontFamily: _family,
+    fontSize: 40,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -1,
+    height: 1.1,
+    fontFeatures: _tabular,
+  );
   TextStyle get amount => const TextStyle(
     fontFamily: _family,
     fontSize: 32,
@@ -101,6 +111,24 @@ class AppTypography {
     fontSize: 14,
     fontWeight: FontWeight.w600,
     height: 1.3,
+    fontFeatures: _tabular,
+  );
+
+  /// Money keypad key, full screen.
+  TextStyle get keypadKey => const TextStyle(
+    fontFamily: _family,
+    fontSize: 22,
+    fontWeight: FontWeight.w600,
+    height: 1,
+    fontFeatures: _tabular,
+  );
+
+  /// Money keypad key, in sheets.
+  TextStyle get keypadKeySm => const TextStyle(
+    fontFamily: _family,
+    fontSize: 21,
+    fontWeight: FontWeight.w600,
+    height: 1,
     fontFeatures: _tabular,
   );
   TextStyle get statValue => const TextStyle(

@@ -7,5 +7,7 @@
   "addTransaction": "Add transaction",
   "close": "Close",
   "settings": "Settings",
-  "finishOnboarding": "Finish onboarding"
+  "finishOnboarding": "Finish onboarding",
+  "keypadBackspace": "Backspace",
+  "keypadDoubleZero": "Double zero"
 }

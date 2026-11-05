@@ -28,7 +28,7 @@ void main() {
 
       final span = tester.widget<Text>(find.byType(Text)).textSpan! as TextSpan;
       expect(span.toPlainText(), 'RM 1,240.00');
-      final cents = span.children!.single as TextSpan;
+      final cents = span.children!.last as TextSpan;
       expect(cents.text, '.00');
       expect(cents.style!.fontSize, 18);
       expect(cents.style!.color, colors.muted);
@@ -55,6 +55,30 @@ void main() {
 
     final span = tester.widget<Text>(find.byType(Text)).textSpan! as TextSpan;
     expect(span.toPlainText(), '${MoneyFormatter.minus}${r'$'} 12.50');
-    expect((span.children!.single as TextSpan).style!.fontSize, 10);
+    expect((span.children!.last as TextSpan).style!.fontSize, 10);
+  });
+
+  testWidgets('symbolStyle styles the sign and symbol only', (tester) async {
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: buildLightTheme(),
+        home: const AmountText(
+          -200000,
+          currency: Currency.myr,
+          style: TextStyle(fontSize: 56),
+          symbolStyle: TextStyle(fontSize: 25),
+        ),
+      ),
+    );
+
+    final span = tester.widget<Text>(find.byType(Text)).textSpan! as TextSpan;
+    final parts = span.children!.cast<TextSpan>();
+    expect(parts.map((p) => p.text), [
+      '${MoneyFormatter.minus}RM ',
+      '2,000',
+      '.00',
+    ]);
+    expect(parts.first.style!.fontSize, 25);
+    expect(parts[1].style, isNull);
   });
 }

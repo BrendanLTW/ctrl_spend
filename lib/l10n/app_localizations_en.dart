@@ -32,4 +32,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get finishOnboarding => 'Finish onboarding';
+
+  @override
+  String get keypadBackspace => 'Backspace';
+
+  @override
+  String get keypadDoubleZero => 'Double zero';
 }

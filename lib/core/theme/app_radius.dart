@@ -6,6 +6,9 @@ abstract final class AppRadius {
   /// Icon tiles, keypad keys in sheets.
   static const double r16 = 16;
 
+  /// Full-screen keypad keys, segmented segments, day selector.
+  static const double r18 = 18;
+
   /// Fields, toast, category tile buttons, empty-state icon.
   static const double r20 = 20;
 
