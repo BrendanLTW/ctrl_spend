@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
@@ -6,7 +7,6 @@ import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controlle
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -42,7 +42,14 @@ GoRouter appRouter(Ref ref) {
     },
     routes: [
       StatefulShellRoute.indexedStack(
-        builder: (context, state, shell) => _TempShell(shell: shell),
+        builder: (context, state, shell) => AppShell(
+          currentIndex: shell.currentIndex,
+          // Tapping the active tab pops it back to its root.
+          onTabSelected: (i) =>
+              shell.goBranch(i, initialLocation: i == shell.currentIndex),
+          onAdd: () => context.push(Routes.add),
+          child: shell,
+        ),
         branches: [
           _branch(Routes.home, const DashboardScreen()),
           _branch(Routes.activity, const ActivityScreen()),
@@ -71,46 +78,3 @@ GoRouter appRouter(Ref ref) {
 StatefulShellBranch _branch(String path, Widget screen) => StatefulShellBranch(
   routes: [GoRoute(path: path, builder: (context, state) => screen)],
 );
-
-// shortcut: stand-in bottom bar; task 0.6 replaces it with AppShell.
-class _TempShell extends StatelessWidget {
-  const new({required this.shell});
-
-  final StatefulNavigationShell shell;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return Scaffold(
-      body: shell,
-      floatingActionButton: FloatingActionButton(
-        tooltip: l10n.addTransaction,
-        onPressed: () => context.push(Routes.add),
-        child: const Icon(Icons.add),
-      ),
-      bottomNavigationBar: NavigationBar(
-        selectedIndex: shell.currentIndex,
-        onDestinationSelected: (i) =>
-            shell.goBranch(i, initialLocation: i == shell.currentIndex),
-        destinations: [
-          NavigationDestination(
-            icon: const Icon(Icons.home_outlined),
-            label: l10n.tabHome,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.list),
-            label: l10n.tabActivity,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.pie_chart_outline),
-            label: l10n.tabBudgets,
-          ),
-          NavigationDestination(
-            icon: const Icon(Icons.bar_chart),
-            label: l10n.tabInsights,
-          ),
-        ],
-      ),
-    );
-  }
-}

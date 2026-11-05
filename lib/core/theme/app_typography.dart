@@ -94,6 +94,15 @@ class AppTypography {
     height: 1.3,
     fontFeatures: _tabular,
   );
+
+  /// Active bottom-bar tab label.
+  TextStyle get navLabel => const TextStyle(
+    fontFamily: _family,
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    height: 1.3,
+    fontFeatures: _tabular,
+  );
   TextStyle get statValue => const TextStyle(
     fontFamily: _family,
     fontSize: 21,
