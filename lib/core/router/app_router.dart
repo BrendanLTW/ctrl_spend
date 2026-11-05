@@ -6,6 +6,7 @@ import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controlle
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
+import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -71,8 +72,7 @@ StatefulShellBranch _branch(String path, Widget screen) => StatefulShellBranch(
   routes: [GoRoute(path: path, builder: (context, state) => screen)],
 );
 
-// shortcut: stand-in bottom bar with hard-coded labels; task 0.6 replaces it
-// with AppShell and 0.5 moves the strings to ARB.
+// shortcut: stand-in bottom bar; task 0.6 replaces it with AppShell.
 class _TempShell extends StatelessWidget {
   const new({required this.shell});
 
@@ -80,10 +80,11 @@ class _TempShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return Scaffold(
       body: shell,
       floatingActionButton: FloatingActionButton(
-        tooltip: 'Add transaction',
+        tooltip: l10n.addTransaction,
         onPressed: () => context.push(Routes.add),
         child: const Icon(Icons.add),
       ),
@@ -91,14 +92,23 @@ class _TempShell extends StatelessWidget {
         selectedIndex: shell.currentIndex,
         onDestinationSelected: (i) =>
             shell.goBranch(i, initialLocation: i == shell.currentIndex),
-        destinations: const [
-          NavigationDestination(icon: Icon(Icons.home_outlined), label: 'Home'),
-          NavigationDestination(icon: Icon(Icons.list), label: 'Activity'),
+        destinations: [
           NavigationDestination(
-            icon: Icon(Icons.pie_chart_outline),
-            label: 'Budgets',
+            icon: const Icon(Icons.home_outlined),
+            label: l10n.tabHome,
           ),
-          NavigationDestination(icon: Icon(Icons.bar_chart), label: 'Insights'),
+          NavigationDestination(
+            icon: const Icon(Icons.list),
+            label: l10n.tabActivity,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.pie_chart_outline),
+            label: l10n.tabBudgets,
+          ),
+          NavigationDestination(
+            icon: const Icon(Icons.bar_chart),
+            label: l10n.tabInsights,
+          ),
         ],
       ),
     );

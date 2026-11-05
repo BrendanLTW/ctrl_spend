@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controller.dart';
+import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,7 @@ class OnboardingScreen extends ConsumerWidget {
         child: FilledButton(
           onPressed: () =>
               ref.read(onboardingCompleteProvider.notifier).complete(),
-          child: const Text('Finish onboarding'),
+          child: Text(context.l10n.finishOnboarding),
         ),
       ),
     );

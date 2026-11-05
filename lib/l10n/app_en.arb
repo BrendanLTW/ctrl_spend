@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "tabHome": "Home",
+  "tabActivity": "Activity",
+  "tabBudgets": "Budgets",
+  "tabInsights": "Insights",
+  "addTransaction": "Add transaction",
+  "close": "Close",
+  "settings": "Settings",
+  "finishOnboarding": "Finish onboarding"
+}
