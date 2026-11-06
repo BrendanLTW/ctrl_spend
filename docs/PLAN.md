@@ -64,7 +64,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: DESIGN §7, §11
 - [x] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
   Refs: DESIGN §7, §11
-- [ ] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
+- [x] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
   Refs: S01–S03, PRD §5.1, FR-01
 - [ ] **2.4 Name and month setup.** S03a Your name (validation, 30-character limit) and S04 Set up your month (currency row showing RM, month-start segments, live period preview). "Other" opens S32 (task 2.13).
   Refs: S03a, S04, PRD §5.1, FR-01, FR-07

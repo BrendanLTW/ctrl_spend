@@ -8,21 +8,20 @@ part of 'onboarding_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// Whether the user has finished onboarding.
-// shortcut: in-memory placeholder, resets on restart; replace with the stored
-// setting when the settings repository lands.
+/// Whether the user has finished onboarding (stored setting). Null until
+/// the settings have loaded; the splash screen waits for it.
 
-@ProviderFor(OnboardingComplete)
+@ProviderFor(onboardingComplete)
 final onboardingCompleteProvider = OnboardingCompleteProvider._();
 
-/// Whether the user has finished onboarding.
-// shortcut: in-memory placeholder, resets on restart; replace with the stored
-// setting when the settings repository lands.
+/// Whether the user has finished onboarding (stored setting). Null until
+/// the settings have loaded; the splash screen waits for it.
+
 final class OnboardingCompleteProvider
-    extends $NotifierProvider<OnboardingComplete, bool> {
-  /// Whether the user has finished onboarding.
-  // shortcut: in-memory placeholder, resets on restart; replace with the stored
-  // setting when the settings repository lands.
+    extends $FunctionalProvider<bool?, bool?, bool?>
+    with $Provider<bool?> {
+  /// Whether the user has finished onboarding (stored setting). Null until
+  /// the settings have loaded; the splash screen waits for it.
   OnboardingCompleteProvider._()
     : super(
         from: null,
@@ -39,38 +38,22 @@ final class OnboardingCompleteProvider
 
   @$internal
   @override
-  OnboardingComplete create() => OnboardingComplete();
+  $ProviderElement<bool?> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool? create(Ref ref) {
+    return onboardingComplete(ref);
+  }
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(bool value) {
+  Override overrideWithValue(bool? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<bool>(value),
+      providerOverride: $SyncValueProvider<bool?>(value),
     );
   }
 }
 
 String _$onboardingCompleteHash() =>
-    r'6aaebda68b991dcbe725c23c95397f90cfc15fd3';
-
-/// Whether the user has finished onboarding.
-// shortcut: in-memory placeholder, resets on restart; replace with the stored
-// setting when the settings repository lands.
-
-abstract class _$OnboardingComplete extends $Notifier<bool> {
-  bool build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<bool, bool>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<bool, bool>,
-              bool,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
-}
+    r'8c2e1ac5a0cebd8e7236fac7f8c046ee9bef9644';

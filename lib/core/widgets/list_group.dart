@@ -34,6 +34,7 @@ class ListGroup extends StatelessWidget {
 class ListGroupRow extends StatelessWidget {
   const new({
     required this.title,
+    this.subtitle,
     this.leading,
     this.value,
     this.onTap,
@@ -41,6 +42,9 @@ class ListGroupRow extends StatelessWidget {
   });
 
   final String title;
+
+  /// A muted second line, e.g. S03's step descriptions.
+  final String? subtitle;
   final Widget? leading;
   final String? value;
   final VoidCallback? onTap;
@@ -51,7 +55,7 @@ class ListGroupRow extends StatelessWidget {
     final text = context.text;
     return Semantics(
       button: onTap != null,
-      label: [title, ?value].join(', '),
+      label: [title, ?subtitle, ?value].join(', '),
       excludeSemantics: true,
       child: InkWell(
         onTap: onTap,
@@ -68,9 +72,22 @@ class ListGroupRow extends StatelessWidget {
                   const SizedBox(width: 16),
                 ],
                 Expanded(
-                  child: Text(
-                    title,
-                    style: text.rowTitle.copyWith(color: colors.ink),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        title,
+                        style: text.rowTitle.copyWith(color: colors.ink),
+                      ),
+                      if (subtitle case final subtitle?) ...[
+                        const SizedBox(height: 2),
+                        Text(
+                          subtitle,
+                          style: text.body.copyWith(color: colors.muted),
+                        ),
+                      ],
+                    ],
                   ),
                 ),
                 if (value case final value?)

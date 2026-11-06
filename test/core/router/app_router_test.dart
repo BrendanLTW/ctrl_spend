@@ -1,7 +1,9 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controller.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
+import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
@@ -17,17 +19,15 @@ void main() {
     container = ProviderContainer(
       overrides: [
         preferencesRepositoryProvider.overrideWithValue(
-          FakePreferencesRepository(),
+          FakePreferencesRepository(Preferences(onboardingComplete: onboarded)),
         ),
       ],
     );
     addTearDown(container.dispose);
-    if (onboarded) {
-      container.read(onboardingCompleteProvider.notifier).complete();
-    }
     await tester.pumpWidget(
       UncontrolledProviderScope(container: container, child: const MainApp()),
     );
+    // Past the splash screen.
     await tester.pumpAndSettle();
   }
 
@@ -38,20 +38,35 @@ void main() {
       find.byWidgetPredicate((w) => w is AppShellTab && w.label == label);
 
   group('onboarding redirect', () {
-    testWidgets('sends a new user to onboarding', (tester) async {
+    testWidgets('sends a new user to Welcome', (tester) async {
       await pumpApp(tester, onboarded: false);
 
-      expect(find.text('Finish onboarding'), findsOneWidget);
+      expect(find.byType(WelcomeScreen), findsOneWidget);
       expect(find.byType(AppShell), findsNothing);
     });
 
-    testWidgets('finishing onboarding lands on Home', (tester) async {
+    testWidgets('a new user cannot open the app tabs directly', (tester) async {
       await pumpApp(tester, onboarded: false);
+
+      container.read(appRouterProvider).go(Routes.budgets);
+      await tester.pumpAndSettle();
+
+      expect(find.byType(WelcomeScreen), findsOneWidget);
+    });
+
+    testWidgets('finishing onboarding saves it and lands on Home', (
+      tester,
+    ) async {
+      await pumpApp(tester, onboarded: false);
+      container.read(appRouterProvider).go(Routes.onboardingSetup);
+      await tester.pumpAndSettle();
 
       await tester.tap(find.text('Finish onboarding'));
       await tester.pumpAndSettle();
 
       expect(title('Home'), findsOneWidget);
+      final prefs = await container.read(preferencesRepositoryProvider).read();
+      expect(prefs.onboardingComplete, isTrue);
     });
 
     testWidgets('an onboarded user cannot go back to onboarding', (
@@ -59,11 +74,11 @@ void main() {
     ) async {
       await pumpApp(tester);
 
-      container.read(appRouterProvider).go(Routes.onboarding);
+      container.read(appRouterProvider).go(Routes.onboardingHow);
       await tester.pumpAndSettle();
 
       expect(title('Home'), findsOneWidget);
-      expect(find.text('Finish onboarding'), findsNothing);
+      expect(find.byType(HowItWorksScreen), findsNothing);
     });
   });
 

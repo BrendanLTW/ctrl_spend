@@ -23,5 +23,49 @@
         "type": "int"
       }
     }
-  }
+  },
+  "back": "Back",
+  "skip": "Skip",
+  "continueAction": "Continue",
+  "appName": "ctrlSpend",
+  "splashTagline": "Know what's left to spend.",
+  "splashBy": "by",
+  "welcomeTitle": "Know what's left to spend, every day.",
+  "welcomeBody": "Set one monthly budget, log what you spend, and ctrlSpend keeps count.",
+  "getStarted": "Get started",
+  "skipTheTour": "Skip the tour",
+  "welcomePreviewLabel": "Dashboard preview: {amount} left to spend",
+  "@welcomePreviewLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leftToSpend": "Left to spend",
+  "spent": "spent",
+  "categoryPercent": "{category} · {percent}%",
+  "@categoryPercent": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryFood": "Food",
+  "howTitle": "How it works",
+  "howSubtitle": "Three steps, then you're in control.",
+  "howBasics": "The basics",
+  "howBudgetTitle": "Set one monthly budget",
+  "howBudgetBody": "Pick what you want to spend. Home shows what's left.",
+  "howLogTitle": "Log spending in seconds",
+  "howLogBody": "Tap +, type the amount, pick a category. Done.",
+  "howSeeTitle": "See where it goes",
+  "howSeeBody": "Spot the categories that eat your budget.",
+  "howPrivacy": "Your privacy",
+  "howPrivacyTitle": "Stays on this phone",
+  "howPrivacyBody": "No account, no bank login. Export a CSV whenever you like."
 }

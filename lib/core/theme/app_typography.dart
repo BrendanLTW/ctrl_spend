@@ -138,6 +138,26 @@ class AppTypography {
     height: 1.3,
     fontFeatures: _tabular,
   );
+
+  /// The Welcome headline (S02).
+  TextStyle get welcomeTitle => const TextStyle(
+    fontFamily: _family,
+    fontSize: 34,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -1,
+    height: 1.15,
+    fontFeatures: _tabular,
+  );
+
+  /// The splash wordmark: "ctrl" at this weight, "Spend" at w500 (DESIGN §2).
+  TextStyle get wordmark => const TextStyle(
+    fontFamily: _family,
+    fontSize: 40,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -1.2,
+    height: 1.1,
+  );
+
   TextStyle get amountRow => const TextStyle(
     fontFamily: _family,
     fontSize: 16,
