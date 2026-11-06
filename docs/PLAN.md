@@ -55,7 +55,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §8
 - [x] **1.7 Budget calculations.** Pure domain functions with tests: spent and income for a period, left to spend, the shared threshold function (neutral, warning, negative, no budget), category used %, allocated and flexible, and validation that category limits don't exceed the monthly budget.
   Refs: PRD §6.3, §8 Derived values
-- [ ] **1.8 Insight calculations.** Pure domain functions with tests: category shares for a period, daily totals and daily pace, under/over pace per day, monthly totals, averages and under-budget counts over full periods only, and past-period summaries with per-category results.
+- [x] **1.8 Insight calculations.** Pure domain functions with tests: category shares for a period, daily totals and daily pace, under/over pace per day, monthly totals, averages and under-budget counts over full periods only, and past-period summaries with per-category results.
   Refs: PRD §5.7, §5.10, §8
 
 ## Phase 2 — Core (P0)
