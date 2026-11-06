@@ -43,7 +43,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 - [x] **1.1 Periods.** Implement `periodFor(date, startDay)` in `core/period` (start day 1–28 or `last`) and an injectable `Clock` provider. Exhaustive unit tests: start days 1, 15, 28 and `last`; February in leap and non-leap years; 30- and 31-day months; dates on the boundary.
   Refs: PRD §6.2, CLAUDE.md Testing
-- [ ] **1.2 Database schema v1.** Drift database in `core/db` with Category, Transaction, Notification and a key-value Preferences table (schemaVersion 1). Provide it through Riverpod; use an in-memory database in tests. No Bill or Goal tables.
+- [x] **1.2 Database schema v1.** Drift database in `core/db` with Category, Transaction, Notification and a key-value Preferences table (schemaVersion 1). Provide it through Riverpod; use an in-memory database in tests. No Bill or Goal tables.
   Refs: PRD §8
 - [ ] **1.3 Domain entities.** freezed entities for Category, Transaction, Notification and Preferences, enums for type, icon key and colour key, and mappers to and from Drift rows.
   Refs: PRD §8, DESIGN §3.3, §8
