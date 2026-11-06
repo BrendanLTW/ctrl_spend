@@ -1,18 +1,15 @@
-/// The day a budget period starts each month (PRD §6.2).
-sealed class MonthStartDay {
-  const new();
-}
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-/// A fixed day, 1–28, so every month has it.
-final class DayOfMonth extends MonthStartDay {
-  const new(this.day) : assert(day >= 1 && day <= 28, 'day 1–28');
+part 'period.freezed.dart';
 
-  final int day;
-}
-
-/// The last day of each month: 31 Jan, 28 or 29 Feb, 31 Mar…
-final class LastDayOfMonth extends MonthStartDay {
-  const new();
+/// The day a budget period starts each month (PRD §6.2): a fixed day 1–28,
+/// so every month has it, or the last day of each month (31 Jan, 28 or
+/// 29 Feb, 31 Mar…).
+@freezed
+sealed class MonthStartDay with _$MonthStartDay {
+  @Assert('day >= 1 && day <= 28', 'day 1–28')
+  const factory day(int day) = DayOfMonth;
+  const factory last() = LastDayOfMonth;
 }
 
 /// A budget period: `start` to `end`, both inclusive, as local dates at

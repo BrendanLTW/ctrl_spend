@@ -45,7 +45,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §6.2, CLAUDE.md Testing
 - [x] **1.2 Database schema v1.** Drift database in `core/db` with Category, Transaction, Notification and a key-value Preferences table (schemaVersion 1). Provide it through Riverpod; use an in-memory database in tests. No Bill or Goal tables.
   Refs: PRD §8
-- [ ] **1.3 Domain entities.** freezed entities for Category, Transaction, Notification and Preferences, enums for type, icon key and colour key, and mappers to and from Drift rows.
+- [x] **1.3 Domain entities.** freezed entities for Category, Transaction, Notification and Preferences, enums for type, icon key and colour key, and mappers to and from Drift rows.
   Refs: PRD §8, DESIGN §3.3, §8
 - [ ] **1.4 Category repository.** Interface and Drift implementation: watch by type, add, update, archive, restore, delete. Seed the 8 default categories on first launch. Enforce unique names per type and delete-only-if-unused (otherwise archive). Unit tests.
   Refs: PRD §5.9, §8

@@ -1,17 +1,5 @@
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
-
-/// Colour keys a category can use (DESIGN §3.3). Users pick from the first
-/// seven; [neutral] is for built-in categories such as Gifts.
-enum CategoryColorKey {
-  orange,
-  blue,
-  pink,
-  yellow,
-  purple,
-  green,
-  red,
-  neutral,
-}
 
 typedef CategoryTileColors = ({Color tile, Color icon});
 
