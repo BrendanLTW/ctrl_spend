@@ -124,3 +124,6 @@ A task is done only when:
 - If the PRD, the designs and this file conflict, stop and ask rather than guess.
 - Schema changes bump Drift's `schemaVersion` and add a migration step plus a migration test.
 - If a package API is uncertain, check its pub.dev docs rather than guessing.
+
+## Git commits
+Never add "Co-Authored-By", "Claude-Session", or "Generated with Claude Code" lines to commit messages or PR descriptions.
