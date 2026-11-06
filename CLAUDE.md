@@ -1,12 +1,12 @@
 # ctrlSpend (`ctrl_spend`)
 
-Offline-first personal budgeting app in Flutter (iOS and Android, plus a web build for the demo). Portfolio project: code quality, architecture, tests and design fidelity matter more than feature count.
+Offline-first personal budgeting app in Flutter (iOS and Android). Portfolio project: code quality, architecture, tests and design fidelity matter more than feature count.
 
 ## Read first
 - `docs/PRD.md`: requirements, screen IDs (S01–S44), acceptance criteria, data model, derived values, design tokens. **The source of truth for behaviour.**
 - `docs/PLAN.md`: the task list. Work through it in order.
 - `docs/DESIGN.md`: design tokens, component specs, layout patterns, dark mode and the Flutter theme mapping.
-- `docs/design/`: exported screens, light and dark, named after the canvas files (e.g. `Dashboard.png`, `DashboardDark.png`). **The source of truth for layout.** If the PRD and a screen disagree, follow the screen and tell me.
+- `docs/design/`: exported screens, light and dark, named after the canvas files (e.g. `Dashboard.png`, `Dashboard · Dark.png`). **The source of truth for layout.** If the PRD and a screen disagree, follow the screen and tell me.
 
 Before building a screen, read its section in the PRD and look at both its light and dark designs.
 
@@ -99,7 +99,7 @@ Rules:
 - Analyze: `flutter analyze`
 - Test: `flutter test`
 - Integration: `flutter test integration_test`
-- Run: `flutter run` · Web demo: `flutter run -d chrome`
+- Run: `flutter run`
 
 ## Testing
 - Unit tests for every repository, every derived value and `periodFor`. `periodFor` needs exhaustive cases: start days 1, 15, 28 and `last`, February in leap and non-leap years, and 30- and 31-day months.
@@ -124,3 +124,6 @@ A task is done only when:
 - If the PRD, the designs and this file conflict, stop and ask rather than guess.
 - Schema changes bump Drift's `schemaVersion` and add a migration step plus a migration test.
 - If a package API is uncertain, check its pub.dev docs rather than guessing.
+
+## Git commits
+Never add "Co-Authored-By", "Claude-Session", or "Generated with Claude Code" lines to commit messages or PR descriptions.

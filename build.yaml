@@ -1,0 +1,7 @@
+targets:
+  $default:
+    builders:
+      drift_dev:
+        options:
+          # ISO-8601 text keeps UTC and milliseconds (PRD §8 occurredAt).
+          store_date_time_values_as_text: true

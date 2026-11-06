@@ -41,7 +41,7 @@ ctrlSpend answers one question first: **how much is left to spend this period?**
 - Feature-first Flutter architecture with enforced layer boundaries.
 - Unit, widget and end-to-end tests; CI on every push.
 - Light and dark themes built from one token set.
-- A live demo, an APK, and a README explaining key decisions.
+- An APK and a README explaining key decisions.
 
 ### Non-goals (v1)
 - Bank linking, accounts, cloud sync or multi-device use.
@@ -456,7 +456,7 @@ Primary button, pill button, text link, destructive button; segmented control (W
 | Correctness | Money as integer minor units; dates stored in UTC, shown in local time |
 | Privacy | No accounts, analytics, ads or network calls; data leaves only through export |
 | Security | PIN in secure storage; optional biometric unlock; app-switcher snapshot hidden on request |
-| Platforms | iOS and Android; a web build for the demo with notifications, biometrics and app lock hidden |
+| Platforms | iOS and Android |
 | Quality | `flutter analyze` clean; unit tests for derived values and `periodFor`; widget tests per screen in both themes; one end-to-end test (onboarding → add expense → dashboard → delete → undo); CI on every push |
 | Design fidelity | Each screen is compared with its light and dark design before its task is done |
 
@@ -472,7 +472,7 @@ The design now covers far more than the original six-week scope. Suggested phase
 | 1 Data | Drift schema, `periodFor`, repositories, derived values | Unit tests pass |
 | 2 Core | Onboarding, dashboard (4 hero states), add/edit, activity, budgets, categories, transaction detail and delete | **All P0 done** |
 | 3 Complete | Search and filters, insights (3 views), settings screens, notifications, past periods, CSV export and import | **All P1 done** |
-| 4 Ship | Accessibility and fidelity pass, end-to-end test, demo, APK, README | **v1.0 released** with all P0 + P1 |
+| 4 Ship | Accessibility and fidelity pass, end-to-end test, APK, README | **v1.0 released** with all P0 + P1 |
 | 5 Update | Recurring bills, savings goals, app lock; schema migration adding the Bill, Goal and GoalContribution tables | P2 tests pass; migration test from v1.0 data; **v1.1 released** |
 
 ---
@@ -484,7 +484,6 @@ The design now covers far more than the original six-week scope. Suggested phase
 | Scope has roughly tripled since the first plan | P2 moved to v1.1, so v1.0 ships with P0 + P1 only |
 | Payday periods with "last day of month" | Exhaustive tests for `periodFor` across month lengths and leap years |
 | Local notification scheduling differs by platform | Spike on both platforms in Phase 0 |
-| App lock and secure storage on web | Hide lock features on web |
 | Category limits exceeding the monthly budget | Validate in the domain layer; show remaining allocation in S06 and S17 |
 
 ### Open questions

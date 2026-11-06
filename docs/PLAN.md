@@ -12,7 +12,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 ## Before you start (you, not Claude Code)
 
 - [ ] Create the GitHub repo `ctrl_spend` and add `CLAUDE.md`, `.claude/commands/`, `docs/PRD.md`, `docs/DESIGN.md` and this file.
-- [ ] Export every canvas artboard to `docs/design/` as PNG, named after its file (`Dashboard.png`, `DashboardDark.png`, …).
+- [ ] Export every canvas artboard to `docs/design/` as PNG, named after its file (`Dashboard.png`, `Dashboard · Dark.png`, …).
 - [ ] Add the name step (`OnbName` + `OnbNameDark`) to the canvas and export it.
 - [ ] Update the canvas: Add income shows Salary and Gifts; onboarding steps read "of 5"; the brand board's splash footer reads "by BrendanLTW".
 
@@ -20,38 +20,38 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 0 — Foundation
 
-- [ ] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios, web). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
+- [x] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
   Refs: CLAUDE.md Stack
-- [ ] **0.2 Folder structure and routing.** Create the `core/` and `features/` folders from `CLAUDE.md`. Set up go_router with a `StatefulShellRoute` for Home, Activity, Budgets and Insights (placeholder screens), plus routes for Add transaction, Settings and Onboarding. Add an onboarding redirect driven by a placeholder provider.
+- [x] **0.2 Folder structure and routing.** Create the `core/` and `features/` folders from `CLAUDE.md`. Set up go_router with a `StatefulShellRoute` for Home, Activity, Budgets and Insights (placeholder screens), plus routes for Add transaction, Settings and Onboarding. Add an onboarding redirect driven by a placeholder provider.
   Refs: PRD §4, DESIGN §6
-- [ ] **0.3 Colour tokens.** Build `AppColors` as a `ThemeExtension` with every token in DESIGN §3.1–3.2 for light and dark, plus `CategoryColors` (DESIGN §3.3) and the chart palette (DESIGN §3.4). Add a `context.colors` extension. Test that every token has a light and a dark value.
+- [x] **0.3 Colour tokens.** Build `AppColors` as a `ThemeExtension` with every token in DESIGN §3.1–3.2 for light and dark, plus `CategoryColors` (DESIGN §3.3) and the chart palette (DESIGN §3.4). Add a `context.colors` extension. Test that every token has a light and a dark value.
   Refs: DESIGN §3, §11
-- [ ] **0.4 Type, spacing and theme.** Bundle Poppins 400–800 as assets. Build `AppTypography` (DESIGN §4, tabular figures), `AppSpacing`, `AppRadius`, `AppShadows`, and `buildLightTheme()` / `buildDarkTheme()`. Add a theme-mode provider (default System). Widget-test a sample screen in both themes.
+- [x] **0.4 Type, spacing and theme.** Bundle Poppins 400–800 as assets. Build `AppTypography` (DESIGN §4, tabular figures), `AppSpacing`, `AppRadius`, `AppShadows`, and `buildLightTheme()` / `buildDarkTheme()`. Add a theme-mode provider (default System). Widget-test a sample screen in both themes.
   Refs: DESIGN §4, §5, §11
-- [ ] **0.5 Localisation and money.** Set up `flutter gen-l10n` with an English ARB file. Build `MoneyFormatter` in `core/money` (pure Dart) and an `AmountText` widget that shows cents smaller for large amounts. Unit-test zero, negative (U+2212), large values and currency-symbol switching.
+- [x] **0.5 Localisation and money.** Set up `flutter gen-l10n` with an English ARB file. Build `MoneyFormatter` in `core/money` (pure Dart) and an `AmountText` widget that shows cents smaller for large amounts. Unit-test zero, negative (U+2212), large values and currency-symbol switching.
   Refs: PRD §6.1, DESIGN §4
-- [ ] **0.6 App shell.** Build `AppShell`: the floating pill bottom bar (four tabs, active tab expands with label) and the separate round add button, with labels and the shadows from DESIGN §5. Widget tests in both themes; compare with `Dashboard.png` and `DashboardDark.png`.
+- [x] **0.6 App shell.** Build `AppShell`: the floating pill bottom bar (four tabs, active tab expands with label) and the separate round add button, with labels and the shadows from DESIGN §5. Widget tests in both themes; compare with `Dashboard.png` and `Dashboard · Dark.png`.
   Refs: PRD §4, DESIGN §6, §7
-- [ ] **0.7 Money keypad.** Put keypad input logic in a pure function (cents fill, `00`, backspace, 9-digit cap) with unit tests. Build `MoneyKeypad` in both sizes (full screen and sheet) and `AmountDisplay` with its screen-reader label.
+- [x] **0.7 Money keypad.** Put keypad input logic in a pure function (cents fill, `00`, backspace, 9-digit cap) with unit tests. Build `MoneyKeypad` in both sizes (full screen and sheet) and `AmountDisplay` with its screen-reader label.
   Refs: PRD §6.1, DESIGN §7
-- [ ] **0.8 CI.** GitHub Actions on every push: set up Flutter, `pub get`, codegen, `flutter analyze`, `flutter test`. Add the status badge to `README.md`.
+- [x] **0.8 CI.** GitHub Actions on every push: set up Flutter, `pub get`, codegen, `flutter analyze`, `flutter test`. Add the status badge to `README.md`.
   Refs: PRD §10
-- [ ] **0.9 Spikes (no production code).** (a) Run Drift in the web build with a throwaway table. (b) Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
+- [x] **0.9 Spike (no production code).** Schedule a local notification on Android and iOS with flutter_local_notifications, including the permission prompt. Record findings and any setup steps in `docs/spikes.md`.
   Refs: PRD §12
 
 ## Phase 1 — Data
 
-- [ ] **1.1 Periods.** Implement `periodFor(date, startDay)` in `core/period` (start day 1–28 or `last`) and an injectable `Clock` provider. Exhaustive unit tests: start days 1, 15, 28 and `last`; February in leap and non-leap years; 30- and 31-day months; dates on the boundary.
+- [x] **1.1 Periods.** Implement `periodFor(date, startDay)` in `core/period` (start day 1–28 or `last`) and an injectable `Clock` provider. Exhaustive unit tests: start days 1, 15, 28 and `last`; February in leap and non-leap years; 30- and 31-day months; dates on the boundary.
   Refs: PRD §6.2, CLAUDE.md Testing
-- [ ] **1.2 Database schema v1.** Drift database in `core/db` with Category, Transaction, Notification and a key-value Preferences table (schemaVersion 1). Provide it through Riverpod; use an in-memory database in tests. No Bill or Goal tables.
+- [x] **1.2 Database schema v1.** Drift database in `core/db` with Category, Transaction, Notification and a key-value Preferences table (schemaVersion 1). Provide it through Riverpod; use an in-memory database in tests. No Bill or Goal tables.
   Refs: PRD §8
-- [ ] **1.3 Domain entities.** freezed entities for Category, Transaction, Notification and Preferences, enums for type, icon key and colour key, and mappers to and from Drift rows.
+- [x] **1.3 Domain entities.** freezed entities for Category, Transaction, Notification and Preferences, enums for type, icon key and colour key, and mappers to and from Drift rows.
   Refs: PRD §8, DESIGN §3.3, §8
-- [ ] **1.4 Category repository.** Interface and Drift implementation: watch by type, add, update, archive, restore, delete. Seed the 8 default categories on first launch. Enforce unique names per type and delete-only-if-unused (otherwise archive). Unit tests.
+- [x] **1.4 Category repository.** Interface and Drift implementation: watch by type, add, update, archive, restore, delete. Seed the 8 default categories on first launch. Enforce unique names per type and delete-only-if-unused (otherwise archive). Unit tests.
   Refs: PRD §5.9, §8
-- [ ] **1.5 Transaction repository.** Watch by period; filter by type, category and search text (case-insensitive over title, note and category name); add, update, delete and exact restore for undo. Unit tests.
+- [x] **1.5 Transaction repository.** Watch by period; filter by type, category and search text (case-insensitive over title, note and category name); add, update, delete and exact restore for undo. Unit tests.
   Refs: PRD §5.3, §5.5
-- [ ] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
+- [x] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
   Refs: PRD §8
 - [ ] **1.7 Budget calculations.** Pure domain functions with tests: spent and income for a period, left to spend, the shared threshold function (neutral, warning, negative, no budget), category used %, allocated and flexible, and validation that category limits don't exceed the monthly budget.
   Refs: PRD §6.3, §8 Derived values
@@ -128,9 +128,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §10
 - [ ] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
   Refs: PRD §10
-- [ ] **4.5 Web demo.** Web build with notifications hidden; seeded demo data; deploy to GitHub Pages from Actions.
-  Refs: PRD §10
-- [ ] **4.6 README and release.** README with demo link, screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
+- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
   Refs: PRD §2
 
 ## Phase 5 — v1.1 (start only after v1.0 is released)
@@ -149,7 +147,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S29–S31, FR-17
 - [ ] **5.7 App lock settings.** Add flutter_secure_storage and local_auth. S37 with PIN setup and change (stored hashed in secure storage), Face ID, Lock after and Hide amounts in app switcher.
   Refs: S37, PRD §5.8, FR-18
-- [ ] **5.8 Lock screen.** S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled. Hidden on web.
+- [ ] **5.8 Lock screen.** S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled.
   Refs: S38, FR-18
 - [ ] **5.9 v1.1 release.** Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`.
   Refs: PRD §11
