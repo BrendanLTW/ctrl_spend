@@ -7,20 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   late AppDatabase db;
 
-  setUp(() async {
-    db = AppDatabase(NativeDatabase.memory());
-    await db
-        .into(db.categories)
-        .insert(
-          CategoriesCompanion.insert(
-            name: 'Food',
-            type: 'expense',
-            iconKey: 'food',
-            colorKey: 'orange',
-            sortOrder: 0,
-          ),
-        );
-  });
+  // Category 1 is the seeded Food.
+  setUp(() => db = AppDatabase(NativeDatabase.memory()));
   tearDown(() => db.close());
 
   Future<Transaction> roundTrip(Transaction transaction) async {

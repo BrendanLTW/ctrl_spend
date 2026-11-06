@@ -22,29 +22,29 @@ void main() {
   }
 
   test('an expense category with a limit survives a round trip', () async {
-    const food = Category(
-      id: 1,
-      name: 'Food',
+    const lunch = Category(
+      id: 50,
+      name: 'Lunch',
       type: TransactionType.expense,
       iconKey: CategoryIconKey.food,
       colorKey: CategoryColorKey.orange,
       sortOrder: 0,
       limitMinor: 40000,
     );
-    expect(await roundTrip(food), food);
+    expect(await roundTrip(lunch), lunch);
   });
 
   test('an archived income category without a limit survives', () async {
-    const gifts = Category(
-      id: 2,
-      name: 'Gifts',
+    const bonus = Category(
+      id: 51,
+      name: 'Bonus',
       type: TransactionType.income,
       iconKey: CategoryIconKey.gift,
       colorKey: CategoryColorKey.neutral,
       sortOrder: 1,
       archived: true,
     );
-    expect(await roundTrip(gifts), gifts);
+    expect(await roundTrip(bonus), bonus);
   });
 
   test('every icon and colour key survives', () async {

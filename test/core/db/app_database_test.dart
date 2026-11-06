@@ -9,17 +9,18 @@ void main() {
   setUp(() => db = AppDatabase(NativeDatabase.memory()));
   tearDown(() => db.close());
 
-  Future<int> addCategory({String name = 'Food', String type = 'expense'}) => db
-      .into(db.categories)
-      .insert(
-        CategoriesCompanion.insert(
-          name: name,
-          type: type,
-          iconKey: 'food',
-          colorKey: 'orange',
-          sortOrder: 0,
-        ),
-      );
+  Future<int> addCategory({String name = 'Coffee', String type = 'expense'}) =>
+      db
+          .into(db.categories)
+          .insert(
+            CategoriesCompanion.insert(
+              name: name,
+              type: type,
+              iconKey: 'food',
+              colorKey: 'orange',
+              sortOrder: 0,
+            ),
+          );
 
   Future<int> addTransaction(
     int categoryId, {
@@ -60,13 +61,19 @@ void main() {
   group('categories', () {
     test('a name is unique per type, ignoring case', () async {
       await addCategory();
-      expect(() => addCategory(name: 'food'), throwsA(isA<SqliteException>()));
+      expect(
+        () => addCategory(name: 'coffee'),
+        throwsA(isA<SqliteException>()),
+      );
     });
 
     test('the same name may exist as expense and income', () async {
+      // Gifts is seeded as income.
       await addCategory(name: 'Gifts');
-      await addCategory(name: 'Gifts', type: 'income');
-      expect(await db.select(db.categories).get(), hasLength(2));
+      final gifts = await (db.select(
+        db.categories,
+      )..where((c) => c.name.equals('Gifts'))).get();
+      expect(gifts.map((c) => c.type), unorderedEquals(['expense', 'income']));
     });
 
     test('type must be expense or income', () async {
@@ -77,8 +84,10 @@ void main() {
     });
 
     test('a category is not archived by default', () async {
-      await addCategory();
-      final row = await db.select(db.categories).getSingle();
+      final id = await addCategory();
+      final row = await (db.select(
+        db.categories,
+      )..where((c) => c.id.equals(id))).getSingle();
       expect(row.archived, isFalse);
     });
   });
