@@ -4,6 +4,8 @@ import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controller.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
@@ -28,8 +30,10 @@ abstract final class Routes {
   /// S02 Welcome; the other steps sit under it.
   static const onboarding = '/onboarding';
   static const onboardingHow = '/onboarding/how';
+  static const onboardingName = '/onboarding/name';
+  static const onboardingMonth = '/onboarding/month';
 
-  // shortcut: one placeholder route for S03a–S08 until task 2.4.
+  // shortcut: one placeholder route for S05–S08 until tasks 2.5–2.6.
   static const onboardingSetup = '/onboarding/setup';
 }
 
@@ -91,6 +95,14 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: 'how',
             builder: (context, state) => const HowItWorksScreen(),
+          ),
+          GoRoute(
+            path: 'name',
+            builder: (context, state) => const NameScreen(),
+          ),
+          GoRoute(
+            path: 'month',
+            builder: (context, state) => const MonthSetupScreen(),
           ),
           GoRoute(
             path: 'setup',

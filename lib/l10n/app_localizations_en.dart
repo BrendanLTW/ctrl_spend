@@ -140,4 +140,80 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get howPrivacyBody =>
       'No account, no bank login. Export a CSV whenever you like.';
+
+  @override
+  String get nameTitle => 'What should we call you?';
+
+  @override
+  String get nameSubtitle =>
+      'It\'s how ctrlSpend says hi. Your name stays on this phone.';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get monthTitle => 'Set up your month';
+
+  @override
+  String get monthSubtitle =>
+      'Line your budget period up with payday, so each month starts fresh when the money comes in.';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get monthStartsOn => 'Month starts on';
+
+  @override
+  String get startDay1st => '1st';
+
+  @override
+  String get startDay15th => '15th';
+
+  @override
+  String get startDay25th => '25th';
+
+  @override
+  String get startDayOther => 'Other';
+
+  @override
+  String get currentPeriod => 'Current period';
+
+  @override
+  String periodDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Last day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String periodWithDaysLeft(String range, String daysLeft) {
+    return '$range · $daysLeft';
+  }
+
+  @override
+  String get currencyMyr => 'Malaysian Ringgit';
+
+  @override
+  String get currencySgd => 'Singapore Dollar';
+
+  @override
+  String get currencyUsd => 'US Dollar';
+
+  @override
+  String get currencyAud => 'Australian Dollar';
+
+  @override
+  String get currencyBnd => 'Brunei Dollar';
+
+  @override
+  String get currencyEur => 'Euro';
+
+  @override
+  String get currencyIdr => 'Indonesian Rupiah';
 }

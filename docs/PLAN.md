@@ -66,7 +66,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: DESIGN §7, §11
 - [x] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
   Refs: S01–S03, PRD §5.1, FR-01
-- [ ] **2.4 Name and month setup.** S03a Your name (validation, 30-character limit) and S04 Set up your month (currency row showing RM, month-start segments, live period preview). "Other" opens S32 (task 2.13).
+- [x] **2.4 Name and month setup.** S03a Your name (validation, 30-character limit) and S04 Set up your month (currency row showing RM, month-start segments, live period preview). "Other" opens S32 (task 2.13).
   Refs: S03a, S04, PRD §5.1, FR-01, FR-07
 - [ ] **2.5 Budget and category limits.** S05 Set your monthly budget (keypad, Skip leaves no budget) and S06 Split by category (allocated summary, add limit per category, can't exceed the budget).
   Refs: S05, S06, PRD §5.1, FR-01, FR-05

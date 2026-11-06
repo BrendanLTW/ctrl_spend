@@ -339,6 +339,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No account, no bank login. Export a CSV whenever you like.'**
   String get howPrivacyBody;
+
+  /// No description provided for @nameTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'What should we call you?'**
+  String get nameTitle;
+
+  /// No description provided for @nameSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'It\'s how ctrlSpend says hi. Your name stays on this phone.'**
+  String get nameSubtitle;
+
+  /// No description provided for @firstName.
+  ///
+  /// In en, this message translates to:
+  /// **'First name'**
+  String get firstName;
+
+  /// No description provided for @monthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set up your month'**
+  String get monthTitle;
+
+  /// No description provided for @monthSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Line your budget period up with payday, so each month starts fresh when the money comes in.'**
+  String get monthSubtitle;
+
+  /// No description provided for @currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get currency;
+
+  /// No description provided for @monthStartsOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Month starts on'**
+  String get monthStartsOn;
+
+  /// No description provided for @startDay1st.
+  ///
+  /// In en, this message translates to:
+  /// **'1st'**
+  String get startDay1st;
+
+  /// No description provided for @startDay15th.
+  ///
+  /// In en, this message translates to:
+  /// **'15th'**
+  String get startDay15th;
+
+  /// No description provided for @startDay25th.
+  ///
+  /// In en, this message translates to:
+  /// **'25th'**
+  String get startDay25th;
+
+  /// No description provided for @startDayOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get startDayOther;
+
+  /// No description provided for @currentPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Current period'**
+  String get currentPeriod;
+
+  /// No description provided for @periodDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Last day} =1{1 day left} other{{count} days left}}'**
+  String periodDaysLeft(int count);
+
+  /// No description provided for @periodWithDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{range} · {daysLeft}'**
+  String periodWithDaysLeft(String range, String daysLeft);
+
+  /// No description provided for @currencyMyr.
+  ///
+  /// In en, this message translates to:
+  /// **'Malaysian Ringgit'**
+  String get currencyMyr;
+
+  /// No description provided for @currencySgd.
+  ///
+  /// In en, this message translates to:
+  /// **'Singapore Dollar'**
+  String get currencySgd;
+
+  /// No description provided for @currencyUsd.
+  ///
+  /// In en, this message translates to:
+  /// **'US Dollar'**
+  String get currencyUsd;
+
+  /// No description provided for @currencyAud.
+  ///
+  /// In en, this message translates to:
+  /// **'Australian Dollar'**
+  String get currencyAud;
+
+  /// No description provided for @currencyBnd.
+  ///
+  /// In en, this message translates to:
+  /// **'Brunei Dollar'**
+  String get currencyBnd;
+
+  /// No description provided for @currencyEur.
+  ///
+  /// In en, this message translates to:
+  /// **'Euro'**
+  String get currencyEur;
+
+  /// No description provided for @currencyIdr.
+  ///
+  /// In en, this message translates to:
+  /// **'Indonesian Rupiah'**
+  String get currencyIdr;
 }
 
 class _AppLocalizationsDelegate

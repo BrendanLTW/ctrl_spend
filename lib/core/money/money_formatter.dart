@@ -15,6 +15,12 @@ enum Currency {
 
   final String code;
   final String symbol;
+
+  /// The currency for a stored ISO code, or MYR if it's unknown.
+  static Currency fromCode(String code) => Currency.values.firstWhere(
+    (c) => c.code == code,
+    orElse: () => Currency.myr,
+  );
 }
 
 enum MoneySign {

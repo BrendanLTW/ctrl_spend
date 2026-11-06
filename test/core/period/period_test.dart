@@ -171,4 +171,23 @@ void main() {
       expect(p.contains(DateTime(2026, 11, 15)), isFalse);
     });
   });
+
+  group('daysLeft', () {
+    final p = (start: d(2026, 10, 15), end: d(2026, 11, 14));
+
+    test('does not count today', () {
+      expect(daysLeft(p, DateTime(2026, 11, 4, 9)), 10);
+      expect(daysLeft(p, d(2026, 10, 15)), 30);
+    });
+
+    test('is 0 on the last day and 1 the day before', () {
+      expect(daysLeft(p, DateTime(2026, 11, 14, 23, 59)), 0);
+      expect(daysLeft(p, d(2026, 11, 13)), 1);
+    });
+
+    test('crosses a year end', () {
+      final dec = periodFor(d(2026, 12, 20), const DayOfMonth(15));
+      expect(daysLeft(dec, d(2026, 12, 31)), 14);
+    });
+  });
 }

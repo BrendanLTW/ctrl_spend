@@ -4,7 +4,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/brand_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -221,7 +221,7 @@ void main() {
       await pumpApp(tester, FakePreferencesRepository());
       await tester.tap(find.text('Skip the tour'));
       await tester.pumpAndSettle();
-      expect(find.byType(OnboardingScreen), findsOneWidget);
+      expect(find.byType(NameScreen), findsOneWidget);
       expect(find.byType(HowItWorksScreen), findsNothing);
     });
 
@@ -232,7 +232,7 @@ void main() {
         await toHowItWorks(tester);
         await tester.tap(find.text(action));
         await tester.pumpAndSettle();
-        expect(find.byType(OnboardingScreen), findsOneWidget, reason: action);
+        expect(find.byType(NameScreen), findsOneWidget, reason: action);
       }
     });
 
@@ -240,7 +240,7 @@ void main() {
       await toHowItWorks(tester);
       await tester.tap(find.text('Continue'));
       await tester.pumpAndSettle();
-      await tester.tap(find.byType(BackButton));
+      await tester.tap(find.byTooltip('Back'));
       await tester.pumpAndSettle();
       expect(find.byType(HowItWorksScreen), findsOneWidget);
     });

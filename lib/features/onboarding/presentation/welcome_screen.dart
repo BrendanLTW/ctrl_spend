@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   TextLink(
                     label: l10n.skipTheTour,
-                    onPressed: () => context.push(Routes.onboardingSetup),
+                    onPressed: () => context.push(Routes.onboardingName),
                   ),
                 ],
               ),

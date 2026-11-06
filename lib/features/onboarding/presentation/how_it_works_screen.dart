@@ -1,10 +1,9 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
+import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,7 @@ class HowItWorksScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    void next() => context.push(Routes.onboardingSetup);
+    void next() => context.push(Routes.onboardingName);
     return OnboardingScaffold(
       title: l10n.howTitle,
       subtitle: l10n.howSubtitle,
@@ -28,7 +27,7 @@ class HowItWorksScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          _SectionLabel(l10n.howBasics),
+          SectionLabel(l10n.howBasics),
           ListGroup(
             children: [
               ListGroupRow(
@@ -58,7 +57,7 @@ class HowItWorksScreen extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.sectionTop),
-          _SectionLabel(l10n.howPrivacy),
+          SectionLabel(l10n.howPrivacy),
           ListGroup(
             children: [
               ListGroupRow(
@@ -75,27 +74,4 @@ class HowItWorksScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class _SectionLabel extends StatelessWidget {
-  const new(this.label);
-
-  final String label;
-
-  @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.fromLTRB(
-      AppSpacing.textX - AppSpacing.screenX,
-      0,
-      0,
-      12,
-    ),
-    child: Semantics(
-      header: true,
-      child: Text(
-        label.toUpperCase(),
-        style: context.text.label.copyWith(color: context.colors.muted),
-      ),
-    ),
-  );
 }

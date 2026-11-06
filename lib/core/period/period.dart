@@ -58,3 +58,15 @@ DateTime _localDay(DateTime date) {
   final local = date.toLocal();
   return DateTime(local.year, local.month, local.day);
 }
+
+/// Whole days after [today] until [period] ends, not counting today:
+/// 4 Nov in 15 Oct – 14 Nov is 10, the last day is 0. Uses [today]'s
+/// local calendar day.
+int daysLeft(Period period, DateTime today) {
+  final day = _localDay(today);
+  return DateTime.utc(
+    period.end.year,
+    period.end.month,
+    period.end.day,
+  ).difference(DateTime.utc(day.year, day.month, day.day)).inDays;
+}

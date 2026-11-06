@@ -67,5 +67,43 @@
   "howSeeBody": "Spot the categories that eat your budget.",
   "howPrivacy": "Your privacy",
   "howPrivacyTitle": "Stays on this phone",
-  "howPrivacyBody": "No account, no bank login. Export a CSV whenever you like."
+  "howPrivacyBody": "No account, no bank login. Export a CSV whenever you like.",
+  "nameTitle": "What should we call you?",
+  "nameSubtitle": "It's how ctrlSpend says hi. Your name stays on this phone.",
+  "firstName": "First name",
+  "monthTitle": "Set up your month",
+  "monthSubtitle": "Line your budget period up with payday, so each month starts fresh when the money comes in.",
+  "currency": "Currency",
+  "monthStartsOn": "Month starts on",
+  "startDay1st": "1st",
+  "startDay15th": "15th",
+  "startDay25th": "25th",
+  "startDayOther": "Other",
+  "currentPeriod": "Current period",
+  "periodDaysLeft": "{count, plural, =0{Last day} =1{1 day left} other{{count} days left}}",
+  "@periodDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodWithDaysLeft": "{range} · {daysLeft}",
+  "@periodWithDaysLeft": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "daysLeft": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyMyr": "Malaysian Ringgit",
+  "currencySgd": "Singapore Dollar",
+  "currencyUsd": "US Dollar",
+  "currencyAud": "Australian Dollar",
+  "currencyBnd": "Brunei Dollar",
+  "currencyEur": "Euro",
+  "currencyIdr": "Indonesian Rupiah"
 }
