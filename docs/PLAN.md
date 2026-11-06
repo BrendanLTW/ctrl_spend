@@ -49,7 +49,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §8, DESIGN §3.3, §8
 - [x] **1.4 Category repository.** Interface and Drift implementation: watch by type, add, update, archive, restore, delete. Seed the 8 default categories on first launch. Enforce unique names per type and delete-only-if-unused (otherwise archive). Unit tests.
   Refs: PRD §5.9, §8
-- [ ] **1.5 Transaction repository.** Watch by period; filter by type, category and search text (case-insensitive over title, note and category name); add, update, delete and exact restore for undo. Unit tests.
+- [x] **1.5 Transaction repository.** Watch by period; filter by type, category and search text (case-insensitive over title, note and category name); add, update, delete and exact restore for undo. Unit tests.
   Refs: PRD §5.3, §5.5
 - [ ] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
   Refs: PRD §8
