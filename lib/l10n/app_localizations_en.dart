@@ -38,4 +38,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get keypadDoubleZero => 'Double zero';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get previousMonth => 'Previous month';
+
+  @override
+  String get nextMonth => 'Next month';
+
+  @override
+  String stepIndicator(int current, int total) {
+    return 'Step $current of $total';
+  }
 }

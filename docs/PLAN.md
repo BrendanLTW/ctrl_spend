@@ -62,7 +62,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 - [x] **2.1 Shared widgets, part 1.** `CategoryTile`, `TransactionRow`, `ListGroup` / `ListGroupRow` / `KeyValueRow`, `AppProgressBar` (with label), `StatCard`. Widget tests in both themes.
   Refs: DESIGN §7, §11
-- [ ] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
+- [x] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
   Refs: DESIGN §7, §11
 - [ ] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
   Refs: S01–S03, PRD §5.1, FR-01

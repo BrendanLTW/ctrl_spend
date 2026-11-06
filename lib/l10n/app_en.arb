@@ -9,5 +9,19 @@
   "settings": "Settings",
   "finishOnboarding": "Finish onboarding",
   "keypadBackspace": "Backspace",
-  "keypadDoubleZero": "Double zero"
+  "keypadDoubleZero": "Double zero",
+  "cancel": "Cancel",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
+  "stepIndicator": "Step {current} of {total}",
+  "@stepIndicator": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -153,6 +153,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Double zero'**
   String get keypadDoubleZero;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @previousMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get previousMonth;
+
+  /// No description provided for @nextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get nextMonth;
+
+  /// No description provided for @stepIndicator.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {current} of {total}'**
+  String stepIndicator(int current, int total);
 }
 
 class _AppLocalizationsDelegate
