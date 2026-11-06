@@ -49,4 +49,20 @@ void main() {
       Currency.idr: 'Rp 1,240.50',
     });
   });
+
+  test('formatCompact leaves out .00 only', () {
+    const formatter = MoneyFormatter(Currency.myr);
+    expect(formatter.formatCompact(90000), 'RM 900');
+    expect(formatter.formatCompact(1250), 'RM 12.50');
+    expect(formatter.formatCompact(0), 'RM 0');
+    expect(
+      formatter.formatCompact(1820, sign: MoneySign.expense),
+      '${MoneyFormatter.minus}RM 18.20',
+    );
+  });
+
+  test('Currency.fromCode finds a code, or falls back to MYR', () {
+    expect(Currency.fromCode('SGD'), Currency.sgd);
+    expect(Currency.fromCode('XYZ'), Currency.myr);
+  });
 }

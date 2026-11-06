@@ -216,4 +216,84 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get currencyIdr => 'Indonesian Rupiah';
+
+  @override
+  String get budgetTitle => 'Set your monthly budget';
+
+  @override
+  String get budgetSubtitle =>
+      'How much do you want to spend each month? You can change this any time in Budgets.';
+
+  @override
+  String get monthlyBudget => 'Monthly budget';
+
+  @override
+  String get perMonth => 'per month';
+
+  @override
+  String budgetPerMonthLabel(String amount) {
+    return 'Budget $amount per month';
+  }
+
+  @override
+  String budgetBelowLimits(String amount) {
+    return 'Your category limits add up to $amount. Set at least that.';
+  }
+
+  @override
+  String get splitTitle => 'Split by category';
+
+  @override
+  String get splitSubtitle =>
+      'Optional. Give limits to the categories you tend to overspend on.';
+
+  @override
+  String get allocated => 'Allocated';
+
+  @override
+  String allocatedOf(String allocated, String budget) {
+    return '$allocated of $budget';
+  }
+
+  @override
+  String flexibleRemainder(String amount) {
+    return '$amount stays flexible for everything else.';
+  }
+
+  @override
+  String allocatedLabel(int percent) {
+    return '$percent% of monthly budget allocated';
+  }
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get addLimit => 'Add limit';
+
+  @override
+  String categoryLimitLabel(String category, String amount) {
+    return '$category, limit $amount';
+  }
+
+  @override
+  String categoryNoLimitLabel(String category) {
+    return '$category, add limit';
+  }
+
+  @override
+  String categoryBudget(String category) {
+    return '$category budget';
+  }
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String leftToAllocate(String amount) {
+    return '$amount left to allocate';
+  }
 }

@@ -49,7 +49,7 @@ class MonthSetupScreen extends ConsumerWidget {
       title: l10n.monthTitle,
       subtitle: l10n.monthSubtitle,
       primaryLabel: l10n.continueAction,
-      onPrimary: () => context.push(Routes.onboardingSetup),
+      onPrimary: () => context.push(Routes.onboardingBudget),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [

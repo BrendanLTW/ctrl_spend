@@ -6,9 +6,10 @@ import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
+import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_preferences_repository.dart';
 
 /// 4 Nov 2026, the designs' "today".
@@ -33,6 +35,7 @@ Future<void> pumpAt(
   container = ProviderContainer(
     overrides: [
       preferencesRepositoryProvider.overrideWithValue(prefs),
+      categoryRepositoryProvider.overrideWithValue(FakeCategoryRepository()),
       clockProvider.overrideWithValue(() => today),
     ],
   );
@@ -179,7 +182,7 @@ void main() {
       await pumpAt(tester, Routes.onboardingMonth);
       await tester.tap(find.text('Continue'));
       await tester.pumpAndSettle();
-      expect(find.byType(OnboardingScreen), findsOneWidget);
+      expect(find.byType(BudgetScreen), findsOneWidget);
     });
   });
 

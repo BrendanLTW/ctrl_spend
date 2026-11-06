@@ -182,6 +182,30 @@ void main() {
       );
     });
 
+    testWidgets('the footer stays pinned above the button', (tester) async {
+      await pumpScreen(
+        tester,
+        themes.first.theme,
+        OnboardingScaffold(
+          title: 'Set your monthly budget',
+          primaryLabel: 'Continue',
+          onPrimary: () {},
+          // Taller than the screen, so the content has to scroll.
+          body: const SizedBox(height: 2000),
+          footer: const SizedBox(key: Key('keypad'), height: 100),
+        ),
+      );
+      final footer = tester.getRect(find.byKey(const Key('keypad')));
+      final button = tester.getRect(find.byType(PrimaryButton));
+      expect(footer.bottom, button.top - 16);
+      expect(
+        footer.top,
+        lessThan(
+          tester.view.physicalSize.height / tester.view.devicePixelRatio,
+        ),
+      );
+    });
+
     testWidgets('back pops the route', (tester) async {
       await tester.pumpWidget(
         MaterialApp(

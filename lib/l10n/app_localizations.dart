@@ -465,6 +465,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Indonesian Rupiah'**
   String get currencyIdr;
+
+  /// No description provided for @budgetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your monthly budget'**
+  String get budgetTitle;
+
+  /// No description provided for @budgetSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How much do you want to spend each month? You can change this any time in Budgets.'**
+  String get budgetSubtitle;
+
+  /// No description provided for @monthlyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly budget'**
+  String get monthlyBudget;
+
+  /// No description provided for @perMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'per month'**
+  String get perMonth;
+
+  /// No description provided for @budgetPerMonthLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget {amount} per month'**
+  String budgetPerMonthLabel(String amount);
+
+  /// No description provided for @budgetBelowLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'Your category limits add up to {amount}. Set at least that.'**
+  String budgetBelowLimits(String amount);
+
+  /// No description provided for @splitTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Split by category'**
+  String get splitTitle;
+
+  /// No description provided for @splitSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional. Give limits to the categories you tend to overspend on.'**
+  String get splitSubtitle;
+
+  /// No description provided for @allocated.
+  ///
+  /// In en, this message translates to:
+  /// **'Allocated'**
+  String get allocated;
+
+  /// No description provided for @allocatedOf.
+  ///
+  /// In en, this message translates to:
+  /// **'{allocated} of {budget}'**
+  String allocatedOf(String allocated, String budget);
+
+  /// No description provided for @flexibleRemainder.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} stays flexible for everything else.'**
+  String flexibleRemainder(String amount);
+
+  /// No description provided for @allocatedLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of monthly budget allocated'**
+  String allocatedLabel(int percent);
+
+  /// No description provided for @categories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get categories;
+
+  /// No description provided for @addLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Add limit'**
+  String get addLimit;
+
+  /// No description provided for @categoryLimitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{category}, limit {amount}'**
+  String categoryLimitLabel(String category, String amount);
+
+  /// No description provided for @categoryNoLimitLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{category}, add limit'**
+  String categoryNoLimitLabel(String category);
+
+  /// No description provided for @categoryBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} budget'**
+  String categoryBudget(String category);
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get remove;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @leftToAllocate.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left to allocate'**
+  String leftToAllocate(String amount);
 }
 
 class _AppLocalizationsDelegate

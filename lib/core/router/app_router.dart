@@ -3,6 +3,8 @@ import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/category_limits_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
@@ -32,8 +34,10 @@ abstract final class Routes {
   static const onboardingHow = '/onboarding/how';
   static const onboardingName = '/onboarding/name';
   static const onboardingMonth = '/onboarding/month';
+  static const onboardingBudget = '/onboarding/budget';
+  static const onboardingCategories = '/onboarding/categories';
 
-  // shortcut: one placeholder route for S05–S08 until tasks 2.5–2.6.
+  // shortcut: one placeholder route for S07–S08 until task 2.6.
   static const onboardingSetup = '/onboarding/setup';
 }
 
@@ -103,6 +107,14 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: 'month',
             builder: (context, state) => const MonthSetupScreen(),
+          ),
+          GoRoute(
+            path: 'budget',
+            builder: (context, state) => const BudgetScreen(),
+          ),
+          GoRoute(
+            path: 'categories',
+            builder: (context, state) => const CategoryLimitsScreen(),
           ),
           GoRoute(
             path: 'setup',

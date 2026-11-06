@@ -22,6 +22,7 @@ class OnboardingScaffold extends StatelessWidget {
     this.onSkip,
     this.secondaryLabel,
     this.onSecondary,
+    this.footer,
     super.key,
   }) : assert(
          (secondaryLabel == null) == (onSecondary == null),
@@ -42,6 +43,10 @@ class OnboardingScaffold extends StatelessWidget {
   final VoidCallback? onSkip;
   final String? secondaryLabel;
   final VoidCallback? onSecondary;
+
+  /// Pinned above the primary button, outside the scrolling content, so
+  /// it always stays on screen (S05's keypad).
+  final Widget? footer;
 
   @override
   Widget build(BuildContext context) {
@@ -138,6 +143,10 @@ class OnboardingScaffold extends StatelessWidget {
               ),
               child: Column(
                 children: [
+                  if (footer case final footer?) ...[
+                    footer,
+                    const SizedBox(height: 16),
+                  ],
                   PrimaryButton(label: primaryLabel, onPressed: onPrimary),
                   if ((secondaryLabel, onSecondary) case (
                     final label?,

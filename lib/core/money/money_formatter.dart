@@ -51,6 +51,12 @@ class MoneyFormatter {
     return '$head$cents';
   }
 
+  /// Leaves out ".00": "RM 900" but "RM 12.50" (summary figures, chips).
+  String formatCompact(int minor, {MoneySign sign = MoneySign.auto}) {
+    final (:head, :cents) = split(minor, sign: sign);
+    return minor % 100 == 0 ? head : '$head$cents';
+  }
+
   /// The amount without its cents, and the cents with their point, so large
   /// amounts can show the cents smaller.
   ({String head, String cents}) split(

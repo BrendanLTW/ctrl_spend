@@ -105,5 +105,94 @@
   "currencyAud": "Australian Dollar",
   "currencyBnd": "Brunei Dollar",
   "currencyEur": "Euro",
-  "currencyIdr": "Indonesian Rupiah"
+  "currencyIdr": "Indonesian Rupiah",
+  "budgetTitle": "Set your monthly budget",
+  "budgetSubtitle": "How much do you want to spend each month? You can change this any time in Budgets.",
+  "monthlyBudget": "Monthly budget",
+  "perMonth": "per month",
+  "budgetPerMonthLabel": "Budget {amount} per month",
+  "@budgetPerMonthLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetBelowLimits": "Your category limits add up to {amount}. Set at least that.",
+  "@budgetBelowLimits": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "splitTitle": "Split by category",
+  "splitSubtitle": "Optional. Give limits to the categories you tend to overspend on.",
+  "allocated": "Allocated",
+  "allocatedOf": "{allocated} of {budget}",
+  "@allocatedOf": {
+    "placeholders": {
+      "allocated": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "flexibleRemainder": "{amount} stays flexible for everything else.",
+  "@flexibleRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "allocatedLabel": "{percent}% of monthly budget allocated",
+  "@allocatedLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "categories": "Categories",
+  "addLimit": "Add limit",
+  "categoryLimitLabel": "{category}, limit {amount}",
+  "@categoryLimitLabel": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryNoLimitLabel": "{category}, add limit",
+  "@categoryNoLimitLabel": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryBudget": "{category} budget",
+  "@categoryBudget": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Remove",
+  "save": "Save",
+  "leftToAllocate": "{amount} left to allocate",
+  "@leftToAllocate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }

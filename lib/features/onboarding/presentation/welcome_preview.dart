@@ -41,20 +41,29 @@ class WelcomePreview extends StatelessWidget {
         ),
         child: Column(
           children: [
+            // Chips shrink rather than overflow on narrow phones.
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                _Chip(
-                  icon: CategoryIconKey.food,
-                  color: CategoryColorKey.orange,
-                  label: l10n.categoryPercent(l10n.categoryFood, _foodPercent),
+                Flexible(
+                  child: _Chip(
+                    icon: CategoryIconKey.food,
+                    color: CategoryColorKey.orange,
+                    label: l10n.categoryPercent(
+                      l10n.categoryFood,
+                      _foodPercent,
+                    ),
+                  ),
                 ),
-                const Spacer(),
-                _Chip(
-                  icon: CategoryIconKey.car,
-                  color: CategoryColorKey.blue,
-                  label: formatter.format(
-                    _sampleExpenseMinor,
-                    sign: MoneySign.expense,
+                const SizedBox(width: 8),
+                Flexible(
+                  child: _Chip(
+                    icon: CategoryIconKey.car,
+                    color: CategoryColorKey.blue,
+                    label: formatter.format(
+                      _sampleExpenseMinor,
+                      sign: MoneySign.expense,
+                    ),
                   ),
                 ),
               ],
@@ -147,9 +156,13 @@ class _Chip extends StatelessWidget {
             child: Icon(categoryIcon(icon), size: 16, color: tile.icon),
           ),
           const SizedBox(width: 10),
-          Text(
-            label,
-            style: context.text.rowTitleSm.copyWith(color: colors.ink),
+          Flexible(
+            child: Text(
+              label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: context.text.rowTitleSm.copyWith(color: colors.ink),
+            ),
           ),
         ],
       ),
