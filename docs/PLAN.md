@@ -60,7 +60,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 2 — Core (P0)
 
-- [ ] **2.1 Shared widgets, part 1.** `CategoryTile`, `TransactionRow`, `ListGroup` / `ListGroupRow` / `KeyValueRow`, `AppProgressBar` (with label), `StatCard`. Widget tests in both themes.
+- [x] **2.1 Shared widgets, part 1.** `CategoryTile`, `TransactionRow`, `ListGroup` / `ListGroupRow` / `KeyValueRow`, `AppProgressBar` (with label), `StatCard`. Widget tests in both themes.
   Refs: DESIGN §7, §11
 - [ ] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
   Refs: DESIGN §7, §11
