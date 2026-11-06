@@ -4,11 +4,15 @@ import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
+import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/fake_preferences_repository.dart';
 
 class _Sample extends StatelessWidget {
   const new();
@@ -80,30 +84,45 @@ void main() {
     });
   }
 
-  test('theme mode defaults to system and can be changed', () {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    expect(container.read(appThemeModeProvider), ThemeMode.system);
+  group('theme mode', () {
+    late FakePreferencesRepository prefs;
+    late ProviderContainer container;
 
-    container.read(appThemeModeProvider.notifier).mode = ThemeMode.dark;
-    expect(container.read(appThemeModeProvider), ThemeMode.dark);
-  });
+    setUp(() {
+      prefs = FakePreferencesRepository();
+      container = ProviderContainer(
+        overrides: [preferencesRepositoryProvider.overrideWithValue(prefs)],
+      );
+      addTearDown(container.dispose);
+    });
 
-  testWidgets('app follows the theme mode preference', (tester) async {
-    final container = ProviderContainer();
-    addTearDown(container.dispose);
-    await tester.pumpWidget(
-      UncontrolledProviderScope(container: container, child: const MainApp()),
-    );
-    Brightness brightness() =>
-        Theme.of(tester.element(find.byType(Scaffold).first)).brightness;
+    test('is system until the settings load, then follows them', () async {
+      final sub = container.listen(appThemeModeProvider, (_, _) {});
+      addTearDown(sub.close);
+      expect(sub.read(), ThemeMode.system);
 
-    container.read(appThemeModeProvider.notifier).mode = ThemeMode.dark;
-    await tester.pumpAndSettle();
-    expect(brightness(), Brightness.dark);
+      await prefs.update((p) => p.copyWith(theme: AppTheme.dark));
+      await pumpEventQueue();
+      expect(sub.read(), ThemeMode.dark);
+      await prefs.update((p) => p.copyWith(theme: AppTheme.light));
+      await pumpEventQueue();
+      expect(sub.read(), ThemeMode.light);
+    });
 
-    container.read(appThemeModeProvider.notifier).mode = ThemeMode.light;
-    await tester.pumpAndSettle();
-    expect(brightness(), Brightness.light);
+    testWidgets('the app follows the stored setting', (tester) async {
+      await tester.pumpWidget(
+        UncontrolledProviderScope(container: container, child: const MainApp()),
+      );
+      Brightness brightness() =>
+          Theme.of(tester.element(find.byType(Scaffold).first)).brightness;
+
+      await prefs.update((p) => p.copyWith(theme: AppTheme.dark));
+      await tester.pumpAndSettle();
+      expect(brightness(), Brightness.dark);
+
+      await prefs.update((p) => p.copyWith(theme: AppTheme.light));
+      await tester.pumpAndSettle();
+      expect(brightness(), Brightness.light);
+    });
   });
 }

@@ -51,7 +51,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §5.9, §8
 - [x] **1.5 Transaction repository.** Watch by period; filter by type, category and search text (case-insensitive over title, note and category name); add, update, delete and exact restore for undo. Unit tests.
   Refs: PRD §5.3, §5.5
-- [ ] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
+- [x] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
   Refs: PRD §8
 - [ ] **1.7 Budget calculations.** Pure domain functions with tests: spent and income for a period, left to spend, the shared threshold function (neutral, warning, negative, no budget), category used %, allocated and flexible, and validation that category limits don't exceed the monthly budget.
   Refs: PRD §6.3, §8 Derived values

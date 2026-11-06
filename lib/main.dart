@@ -4,6 +4,8 @@ import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.dart';
+import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -27,6 +29,9 @@ void main() {
         ),
         transactionRepositoryProvider.overrideWith(
           (ref) => DriftTransactionRepository(ref.watch(appDatabaseProvider)),
+        ),
+        preferencesRepositoryProvider.overrideWith(
+          (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),
         ),
       ],
       child: const MainApp(),

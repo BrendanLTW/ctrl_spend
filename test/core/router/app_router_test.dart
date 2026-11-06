@@ -2,16 +2,25 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controller.dart';
+import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_preferences_repository.dart';
+
 void main() {
   late ProviderContainer container;
 
   Future<void> pumpApp(WidgetTester tester, {bool onboarded = true}) async {
-    container = ProviderContainer();
+    container = ProviderContainer(
+      overrides: [
+        preferencesRepositoryProvider.overrideWithValue(
+          FakePreferencesRepository(),
+        ),
+      ],
+    );
     addTearDown(container.dispose);
     if (onboarded) {
       container.read(onboardingCompleteProvider.notifier).complete();

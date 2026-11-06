@@ -8,21 +8,20 @@ part of 'theme_mode_controller.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// The Theme preference: Light, Dark or System.
-// shortcut: in-memory, resets on restart; back it with the stored setting
-// when the settings repository lands.
+/// The stored Theme setting (S33) as a [ThemeMode]. System until the
+/// settings have loaded. Change it with `PreferencesRepository.update`.
 
-@ProviderFor(AppThemeMode)
+@ProviderFor(appThemeMode)
 final appThemeModeProvider = AppThemeModeProvider._();
 
-/// The Theme preference: Light, Dark or System.
-// shortcut: in-memory, resets on restart; back it with the stored setting
-// when the settings repository lands.
+/// The stored Theme setting (S33) as a [ThemeMode]. System until the
+/// settings have loaded. Change it with `PreferencesRepository.update`.
+
 final class AppThemeModeProvider
-    extends $NotifierProvider<AppThemeMode, ThemeMode> {
-  /// The Theme preference: Light, Dark or System.
-  // shortcut: in-memory, resets on restart; back it with the stored setting
-  // when the settings repository lands.
+    extends $FunctionalProvider<ThemeMode, ThemeMode, ThemeMode>
+    with $Provider<ThemeMode> {
+  /// The stored Theme setting (S33) as a [ThemeMode]. System until the
+  /// settings have loaded. Change it with `PreferencesRepository.update`.
   AppThemeModeProvider._()
     : super(
         from: null,
@@ -39,7 +38,13 @@ final class AppThemeModeProvider
 
   @$internal
   @override
-  AppThemeMode create() => AppThemeMode();
+  $ProviderElement<ThemeMode> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  ThemeMode create(Ref ref) {
+    return appThemeMode(ref);
+  }
 
   /// {@macro riverpod.override_with_value}
   Override overrideWithValue(ThemeMode value) {
@@ -50,26 +55,4 @@ final class AppThemeModeProvider
   }
 }
 
-String _$appThemeModeHash() => r'8eb62941a6f4ce6731d18ba8823ca74434b44afc';
-
-/// The Theme preference: Light, Dark or System.
-// shortcut: in-memory, resets on restart; back it with the stored setting
-// when the settings repository lands.
-
-abstract class _$AppThemeMode extends $Notifier<ThemeMode> {
-  ThemeMode build();
-  @$mustCallSuper
-  @override
-  WhenComplete runBuild() {
-    final ref = this.ref as $Ref<ThemeMode, ThemeMode>;
-    final element =
-        ref.element
-            as $ClassProviderElement<
-              AnyNotifier<ThemeMode, ThemeMode>,
-              ThemeMode,
-              Object?,
-              Object?
-            >;
-    return element.handleCreate(ref, build);
-  }
-}
+String _$appThemeModeHash() => r'bf21ffd396967cefd28397edc1602ab352ff2cee';
