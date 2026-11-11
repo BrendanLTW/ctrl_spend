@@ -214,6 +214,9 @@ void main() {
       await tester.tap(find.text('Add your first expense'));
       await tester.pumpAndSettle();
       expect(find.byType(AddTransactionScreen), findsOneWidget);
+      // New entries open the keypad first; Done closes it.
+      await tester.tap(find.text('Done'));
+      await tester.pumpAndSettle();
       await tester.tap(find.byTooltip('Close'));
       await tester.pumpAndSettle();
       expect(find.byType(DashboardScreen), findsOneWidget);

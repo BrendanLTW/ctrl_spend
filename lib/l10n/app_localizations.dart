@@ -861,6 +861,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add what you spend and your budget updates as you go.'**
   String get noTransactionsBody;
+
+  /// No description provided for @newExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'New expense'**
+  String get newExpense;
+
+  /// No description provided for @newIncome.
+  ///
+  /// In en, this message translates to:
+  /// **'New income'**
+  String get newIncome;
+
+  /// No description provided for @editTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit transaction'**
+  String get editTransaction;
+
+  /// No description provided for @delete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get delete;
+
+  /// No description provided for @expenseLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get expenseLabel;
+
+  /// No description provided for @totalAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Total amount'**
+  String get totalAmount;
+
+  /// No description provided for @totalAmountLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Total amount {amount}'**
+  String totalAmountLabel(String amount);
+
+  /// No description provided for @selectCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Select category'**
+  String get selectCategory;
+
+  /// No description provided for @more.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get more;
+
+  /// No description provided for @addNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note…'**
+  String get addNote;
+
+  /// No description provided for @categorySheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categorySheetTitle;
+
+  /// No description provided for @dateSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateSheetTitle;
+
+  /// No description provided for @amountSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get amountSheetTitle;
+
+  /// No description provided for @done.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get done;
+
+  /// No description provided for @setDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {date}'**
+  String setDate(String date);
+
+  /// No description provided for @dateToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Today, {date}'**
+  String dateToday(String date);
+
+  /// No description provided for @dateYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday, {date}'**
+  String dateYesterday(String date);
+
+  /// No description provided for @deleteTransactionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete this transaction?'**
+  String get deleteTransactionTitle;
+
+  /// No description provided for @deleteExpenseBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} ({amount}) will be removed and {amount} goes back to your {category} budget.'**
+  String deleteExpenseBody(String title, String amount, String category);
+
+  /// No description provided for @deleteIncomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{title} ({amount}) will be removed.'**
+  String deleteIncomeBody(String title, String amount);
 }
 
 class _AppLocalizationsDelegate

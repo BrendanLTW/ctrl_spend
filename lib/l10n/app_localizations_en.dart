@@ -468,4 +468,76 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get noTransactionsBody =>
       'Add what you spend and your budget updates as you go.';
+
+  @override
+  String get newExpense => 'New expense';
+
+  @override
+  String get newIncome => 'New income';
+
+  @override
+  String get editTransaction => 'Edit transaction';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get expenseLabel => 'Expense';
+
+  @override
+  String get totalAmount => 'Total amount';
+
+  @override
+  String totalAmountLabel(String amount) {
+    return 'Total amount $amount';
+  }
+
+  @override
+  String get selectCategory => 'Select category';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get addNote => 'Add a note…';
+
+  @override
+  String get categorySheetTitle => 'Category';
+
+  @override
+  String get dateSheetTitle => 'Date';
+
+  @override
+  String get amountSheetTitle => 'Amount';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String setDate(String date) {
+    return 'Set $date';
+  }
+
+  @override
+  String dateToday(String date) {
+    return 'Today, $date';
+  }
+
+  @override
+  String dateYesterday(String date) {
+    return 'Yesterday, $date';
+  }
+
+  @override
+  String get deleteTransactionTitle => 'Delete this transaction?';
+
+  @override
+  String deleteExpenseBody(String title, String amount, String category) {
+    return '$title ($amount) will be removed and $amount goes back to your $category budget.';
+  }
+
+  @override
+  String deleteIncomeBody(String title, String amount) {
+    return '$title ($amount) will be removed.';
+  }
 }

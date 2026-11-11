@@ -12,6 +12,10 @@ class FakeTransactionRepository implements TransactionRepository {
   final _changes = StreamController<void>.broadcast();
   var _nextId = 1;
 
+  /// Everything stored, newest first. Synchronous, so a test can check it
+  /// without pumping for a stream's first value.
+  List<Transaction> get all => _matching();
+
   List<Transaction> _matching({
     Period? period,
     TransactionType? type,

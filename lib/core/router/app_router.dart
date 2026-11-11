@@ -14,6 +14,7 @@ import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dar
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
+import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -26,7 +27,12 @@ abstract final class Routes {
   static const activity = '/activity';
   static const budgets = '/budgets';
   static const insights = '/insights';
+
+  /// S12; add `?type=income` for New income.
   static const add = '/add';
+
+  /// S13 Edit transaction.
+  static String editTransaction(int id) => '/transactions/$id/edit';
   static const settings = '/settings';
   static const splash = '/splash';
 
@@ -82,7 +88,17 @@ GoRouter appRouter(Ref ref) {
       ),
       GoRoute(
         path: Routes.add,
-        builder: (context, state) => const AddTransactionScreen(),
+        builder: (context, state) => AddTransactionScreen(
+          initialType: state.uri.queryParameters['type'] == 'income'
+              ? TransactionType.income
+              : TransactionType.expense,
+        ),
+      ),
+      GoRoute(
+        path: '/transactions/:id/edit',
+        builder: (context, state) => AddTransactionScreen(
+          transactionId: int.tryParse(state.pathParameters['id'] ?? ''),
+        ),
       ),
       GoRoute(
         path: Routes.settings,

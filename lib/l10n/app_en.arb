@@ -326,5 +326,76 @@
     }
   },
   "noTransactionsTitle": "No transactions yet",
-  "noTransactionsBody": "Add what you spend and your budget updates as you go."
+  "noTransactionsBody": "Add what you spend and your budget updates as you go.",
+  "newExpense": "New expense",
+  "newIncome": "New income",
+  "editTransaction": "Edit transaction",
+  "delete": "Delete",
+  "expenseLabel": "Expense",
+  "totalAmount": "Total amount",
+  "totalAmountLabel": "Total amount {amount}",
+  "@totalAmountLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "selectCategory": "Select category",
+  "more": "More",
+  "addNote": "Add a note…",
+  "categorySheetTitle": "Category",
+  "dateSheetTitle": "Date",
+  "amountSheetTitle": "Amount",
+  "done": "Done",
+  "setDate": "Set {date}",
+  "@setDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateToday": "Today, {date}",
+  "@dateToday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateYesterday": "Yesterday, {date}",
+  "@dateYesterday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTransactionTitle": "Delete this transaction?",
+  "deleteExpenseBody": "{title} ({amount}) will be removed and {amount} goes back to your {category} budget.",
+  "@deleteExpenseBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteIncomeBody": "{title} ({amount}) will be removed.",
+  "@deleteIncomeBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  }
 }

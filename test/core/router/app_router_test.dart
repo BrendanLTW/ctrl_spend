@@ -108,9 +108,12 @@ void main() {
 
     await tester.tap(find.byTooltip('Add transaction'));
     await tester.pumpAndSettle();
-    expect(title('Add transaction'), findsOneWidget);
+    expect(title('New expense'), findsOneWidget);
     expect(find.byType(AppShell), findsNothing);
 
+    // New entries open the keypad first; Done closes it.
+    await tester.tap(find.text('Done'));
+    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Close'));
     await tester.pumpAndSettle();
     expect(title('Budgets'), findsOneWidget);

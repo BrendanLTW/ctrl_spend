@@ -38,6 +38,7 @@ class ListGroupRow extends StatelessWidget {
     this.leading,
     this.value,
     this.onTap,
+    this.selected = false,
     super.key,
   });
 
@@ -49,12 +50,16 @@ class ListGroupRow extends StatelessWidget {
   final String? value;
   final VoidCallback? onTap;
 
+  /// Shows a check instead of the chevron, for single-choice lists.
+  final bool selected;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
     return Semantics(
       button: onTap != null,
+      selected: selected,
       label: [title, ?subtitle, ?value].join(', '),
       excludeSemantics: true,
       child: InkWell(
@@ -98,11 +103,13 @@ class ListGroupRow extends StatelessWidget {
                       style: text.rowTitleSm.copyWith(color: colors.muted),
                     ),
                   ),
-                if (onTap != null)
+                if (selected || onTap != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
                     child: Icon(
-                      Icons.chevron_right_rounded,
+                      selected
+                          ? Icons.check_rounded
+                          : Icons.chevron_right_rounded,
                       size: 20,
                       color: colors.ink,
                     ),
