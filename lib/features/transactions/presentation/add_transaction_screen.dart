@@ -4,7 +4,6 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -15,6 +14,7 @@ import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart'
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/presentation/category_choice.dart';
+import 'package:ctrl_spend/features/transactions/presentation/delete_transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/transaction_amount_card.dart';
 import 'package:ctrl_spend/l10n/date_labels.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -140,21 +140,14 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
   Future<void> _delete(Category? category, Currency currency) async {
     final editing = _editing;
     if (editing == null) return;
-    final l10n = context.l10n;
-    final amount = MoneyFormatter(currency).format(editing.amountMinor);
-    final confirmed = await showAppDialog(
+    final deleted = await confirmAndDeleteTransaction(
       context,
-      icon: Icons.delete_outline_rounded,
-      title: l10n.deleteTransactionTitle,
-      body: editing.type == TransactionType.expense && category != null
-          ? l10n.deleteExpenseBody(editing.title, amount, category.name)
-          : l10n.deleteIncomeBody(editing.title, amount),
-      confirmLabel: l10n.delete,
-      destructive: true,
+      ref,
+      transaction: editing,
+      category: category,
+      currency: currency,
     );
-    if (!confirmed) return;
-    await ref.read(transactionRepositoryProvider).delete(editing.id);
-    if (mounted) context.pop();
+    if (deleted && mounted) context.pop();
   }
 
   @override

@@ -540,4 +540,58 @@ class AppLocalizationsEn extends AppLocalizations {
   String deleteIncomeBody(String title, String amount) {
     return '$title ($amount) will be removed.';
   }
+
+  @override
+  String get transactionTitle => 'Transaction';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get categoryRowLabel => 'Category';
+
+  @override
+  String get dateRowLabelTitle => 'Date';
+
+  @override
+  String get noteRowLabel => 'Note';
+
+  @override
+  String get budgetImpact => 'Budget impact';
+
+  @override
+  String get editAction => 'Edit';
+
+  @override
+  String get deleteTransaction => 'Delete transaction';
+
+  @override
+  String amountLeft(String amount) {
+    return '$amount left';
+  }
+
+  @override
+  String overBy(String amount) {
+    return 'Over by $amount';
+  }
+
+  @override
+  String spentOfThisPeriod(String spent, String limit) {
+    return '$spent of $limit this period';
+  }
+
+  @override
+  String spentOfInPeriod(String spent, String limit, String period) {
+    return '$spent of $limit in $period';
+  }
+
+  @override
+  String dateAndTime(String date, String time) {
+    return '$date · $time';
+  }
+
+  @override
+  String percentOfSpent(int percent, String name) {
+    return '$percent% of $name spent';
+  }
 }

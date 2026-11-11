@@ -78,7 +78,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S10, PRD §5.2, FR-02
 - [x] **2.9 Add and edit transaction.** S12 and S13: Expense/Income toggle swapping category sets, keypad amount, category row with More, date row opening the S43 date picker, note, Save disabled for amount 0 or no category, edit mode prefilled with Delete.
   Refs: S12, S13, S43, PRD §5.3, FR-03
-- [ ] **2.10 Transaction detail and delete.** S41 with details and budget impact; S42 confirmation dialog; deleting returns to the previous screen.
+- [x] **2.10 Transaction detail and delete.** S41 with details and budget impact; S42 confirmation dialog; deleting returns to the previous screen.
   Refs: S41, S42, PRD §5.13, FR-03
 - [ ] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
   Refs: S16, PRD §5.5, FR-04

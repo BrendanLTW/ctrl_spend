@@ -112,8 +112,7 @@ class DashboardScreen extends ConsumerWidget {
               currency: currency,
               today: today,
               onViewAll: () => context.go(Routes.activity),
-              // shortcut: opens transaction detail (S41) in task 2.10.
-              onOpen: (_) {},
+              onOpen: (t) => context.push(Routes.transaction(t.id)),
               onAddFirst: () => context.push(Routes.add),
             ),
           ],

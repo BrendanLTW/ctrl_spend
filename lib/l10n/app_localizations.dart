@@ -981,6 +981,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{title} ({amount}) will be removed.'**
   String deleteIncomeBody(String title, String amount);
+
+  /// No description provided for @transactionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction'**
+  String get transactionTitle;
+
+  /// No description provided for @details.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get details;
+
+  /// No description provided for @categoryRowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryRowLabel;
+
+  /// No description provided for @dateRowLabelTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dateRowLabelTitle;
+
+  /// No description provided for @noteRowLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get noteRowLabel;
+
+  /// No description provided for @budgetImpact.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget impact'**
+  String get budgetImpact;
+
+  /// No description provided for @editAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get editAction;
+
+  /// No description provided for @deleteTransaction.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete transaction'**
+  String get deleteTransaction;
+
+  /// No description provided for @amountLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} left'**
+  String amountLeft(String amount);
+
+  /// No description provided for @overBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Over by {amount}'**
+  String overBy(String amount);
+
+  /// No description provided for @spentOfThisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {limit} this period'**
+  String spentOfThisPeriod(String spent, String limit);
+
+  /// No description provided for @spentOfInPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {limit} in {period}'**
+  String spentOfInPeriod(String spent, String limit, String period);
+
+  /// No description provided for @dateAndTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{date} · {time}'**
+  String dateAndTime(String date, String time);
+
+  /// No description provided for @percentOfSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of {name} spent'**
+  String percentOfSpent(int percent, String name);
 }
 
 class _AppLocalizationsDelegate

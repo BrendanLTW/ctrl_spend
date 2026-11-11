@@ -16,6 +16,7 @@ import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart'
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
+import 'package:ctrl_spend/features/transactions/presentation/transaction_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -30,6 +31,9 @@ abstract final class Routes {
 
   /// S12; add `?type=income` for New income.
   static const add = '/add';
+
+  /// S41 Transaction.
+  static String transaction(int id) => '/transactions/$id';
 
   /// S13 Edit transaction.
   static String editTransaction(int id) => '/transactions/$id/edit';
@@ -92,6 +96,12 @@ GoRouter appRouter(Ref ref) {
           initialType: state.uri.queryParameters['type'] == 'income'
               ? TransactionType.income
               : TransactionType.expense,
+        ),
+      ),
+      GoRoute(
+        path: '/transactions/:id',
+        builder: (context, state) => TransactionDetailScreen(
+          transactionId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
         ),
       ),
       GoRoute(

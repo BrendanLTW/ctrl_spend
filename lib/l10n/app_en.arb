@@ -397,5 +397,76 @@
         "type": "String"
       }
     }
+  },
+  "transactionTitle": "Transaction",
+  "details": "Details",
+  "categoryRowLabel": "Category",
+  "dateRowLabelTitle": "Date",
+  "noteRowLabel": "Note",
+  "budgetImpact": "Budget impact",
+  "editAction": "Edit",
+  "deleteTransaction": "Delete transaction",
+  "amountLeft": "{amount} left",
+  "@amountLeft": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "overBy": "Over by {amount}",
+  "@overBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfThisPeriod": "{spent} of {limit} this period",
+  "@spentOfThisPeriod": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfInPeriod": "{spent} of {limit} in {period}",
+  "@spentOfInPeriod": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "dateAndTime": "{date} · {time}",
+  "@dateAndTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "percentOfSpent": "{percent}% of {name} spent",
+  "@percentOfSpent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

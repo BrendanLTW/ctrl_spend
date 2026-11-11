@@ -27,7 +27,10 @@ enum CategoryTileSize {
   regular(48, AppRadius.r16, 22),
 
   /// 44 × 44, radius 15: Activity rows.
-  compact(44, 15, 21);
+  compact(44, 15, 21),
+
+  /// 28 × 28, radius 9: beside a value, as in S41's Category row.
+  small(28, 9, 15);
 
   new(this.extent, this.radius, this.iconSize);
 
