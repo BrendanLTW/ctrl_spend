@@ -86,7 +86,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S17, PRD §5.6, FR-05
 - [x] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
   Refs: S21, S32, PRD §5.8, FR-07
-- [ ] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
+- [x] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
   Refs: S22, S24, PRD §5.9, FR-06
 - [ ] **2.15 P0 review.** Walk through every acceptance criterion for FR-01 to FR-07 and every P0 screen against its light and dark design. List gaps, fix them, and confirm all P0 tests pass.
   Refs: PRD §7

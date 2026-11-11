@@ -105,10 +105,10 @@ void main() {
     testWidgets('only rows with a screen can be tapped', (tester) async {
       await pumpAt(tester, Routes.settings);
       expect(row(tester, 'Month starts on').onTap, isNotNull);
+      expect(row(tester, 'Categories').onTap, isNotNull);
       for (final title in [
         'Theme',
         'Currency',
-        'Categories',
         'Export to CSV',
         'Import from CSV',
       ]) {

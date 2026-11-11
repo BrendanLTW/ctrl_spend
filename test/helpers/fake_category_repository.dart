@@ -24,6 +24,10 @@ class FakeCategoryRepository implements CategoryRepository {
   }
 
   final _byId = <int, Category>{};
+
+  /// Whether a category has transactions; [remove] then archives it, as
+  /// the real repository does. Unset means none do.
+  bool Function(int id)? isUsed;
   final _changes = StreamController<void>.broadcast();
 
   Category byName(String name) =>
@@ -60,6 +64,12 @@ class FakeCategoryRepository implements CategoryRepository {
     required CategoryColorKey colorKey,
     int? limitMinor,
   }) async {
+    // The same rule as the real repository: unique per type, any case.
+    final taken = _byId.values.any(
+      (c) =>
+          c.type == type && c.name.toLowerCase() == name.trim().toLowerCase(),
+    );
+    if (taken) throw DuplicateCategoryNameException(name.trim());
     final id = _byId.keys.fold(0, (a, b) => a > b ? a : b) + 1;
     final category = Category(
       id: id,
@@ -89,6 +99,10 @@ class FakeCategoryRepository implements CategoryRepository {
 
   @override
   Future<CategoryRemoval> remove(int id) async {
+    if (isUsed?.call(id) ?? false) {
+      await archive(id);
+      return CategoryRemoval.archived;
+    }
     _byId.remove(id);
     _changes.add(null);
     return CategoryRemoval.deleted;

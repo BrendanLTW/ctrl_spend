@@ -107,11 +107,11 @@ class SettingsScreen extends ConsumerWidget {
           SectionLabel(l10n.manageSection),
           ListGroup(
             children: [
-              // shortcut: opens S22 Category manager in task 2.14.
               ListGroupRow(
                 leading: tile(Icons.grid_view_rounded, CategoryColorKey.pink),
                 title: l10n.categories,
                 value: '$categoryCount',
+                onTap: () => context.push(Routes.categories),
               ),
               // shortcut: Export and Import open S35/S36 in tasks 3.10–3.11.
               ListGroupRow(

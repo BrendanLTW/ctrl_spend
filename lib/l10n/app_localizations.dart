@@ -1221,6 +1221,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name}, {detail}'**
   String profileLabel(String name, String detail);
+
+  /// No description provided for @newCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'New category'**
+  String get newCategory;
+
+  /// No description provided for @categoryName.
+  ///
+  /// In en, this message translates to:
+  /// **'Category name'**
+  String get categoryName;
+
+  /// No description provided for @iconSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon'**
+  String get iconSection;
+
+  /// No description provided for @colourSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Colour'**
+  String get colourSection;
+
+  /// No description provided for @monthlyLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly limit'**
+  String get monthlyLimit;
+
+  /// No description provided for @optional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get optional;
+
+  /// No description provided for @createCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Create category'**
+  String get createCategory;
+
+  /// No description provided for @duplicateCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'{type, select, expense{You already have an expense category called {name}.} other{You already have an income category called {name}.}}'**
+  String duplicateCategory(String type, String name);
+
+  /// No description provided for @archivedSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get archivedSection;
+
+  /// No description provided for @restore.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore'**
+  String get restore;
+
+  /// No description provided for @categoriesNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories with transactions are archived instead of deleted, so your history stays intact.'**
+  String get categoriesNote;
+
+  /// No description provided for @categoryDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Category deleted'**
+  String get categoryDeleted;
+
+  /// No description provided for @categoryArchived.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} archived — it has transactions'**
+  String categoryArchived(String name);
+
+  /// No description provided for @colourName.
+  ///
+  /// In en, this message translates to:
+  /// **'{colour, select, orange{Orange} blue{Blue} pink{Pink} yellow{Yellow} purple{Purple} green{Green} red{Red} other{Grey}}'**
+  String colourName(String colour);
+
+  /// No description provided for @iconName.
+  ///
+  /// In en, this message translates to:
+  /// **'{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}'**
+  String iconName(String icon);
 }
 
 class _AppLocalizationsDelegate

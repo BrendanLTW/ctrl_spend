@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
+import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -42,6 +43,9 @@ abstract final class Routes {
 
   /// S32; under onboarding it's [onboardingMonthStart] (S04's Other).
   static const monthStart = '/settings/month-start';
+
+  /// S22 Category manager.
+  static const categories = '/settings/categories';
   static const splash = '/splash';
 
   /// S02 Welcome; the other steps sit under it.
@@ -118,6 +122,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.settings,
         builder: (context, state) => const SettingsScreen(),
+      ),
+      GoRoute(
+        path: Routes.categories,
+        builder: (context, state) => const CategoryManagerScreen(),
       ),
       GoRoute(
         path: Routes.monthStart,

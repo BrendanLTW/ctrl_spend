@@ -685,4 +685,87 @@ class AppLocalizationsEn extends AppLocalizations {
   String profileLabel(String name, String detail) {
     return '$name, $detail';
   }
+
+  @override
+  String get newCategory => 'New category';
+
+  @override
+  String get categoryName => 'Category name';
+
+  @override
+  String get iconSection => 'Icon';
+
+  @override
+  String get colourSection => 'Colour';
+
+  @override
+  String get monthlyLimit => 'Monthly limit';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get createCategory => 'Create category';
+
+  @override
+  String duplicateCategory(String type, String name) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'expense': 'You already have an expense category called $name.',
+      'other': 'You already have an income category called $name.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get archivedSection => 'Archived';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get categoriesNote =>
+      'Categories with transactions are archived instead of deleted, so your history stays intact.';
+
+  @override
+  String get categoryDeleted => 'Category deleted';
+
+  @override
+  String categoryArchived(String name) {
+    return '$name archived — it has transactions';
+  }
+
+  @override
+  String colourName(String colour) {
+    String _temp0 = intl.Intl.selectLogic(colour, {
+      'orange': 'Orange',
+      'blue': 'Blue',
+      'pink': 'Pink',
+      'yellow': 'Yellow',
+      'purple': 'Purple',
+      'green': 'Green',
+      'red': 'Red',
+      'other': 'Grey',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String iconName(String icon) {
+    String _temp0 = intl.Intl.selectLogic(icon, {
+      'food': 'Food',
+      'coffee': 'Coffee',
+      'car': 'Car',
+      'bag': 'Bag',
+      'bolt': 'Bolt',
+      'film': 'Film',
+      'heart': 'Heart',
+      'gift': 'Gift',
+      'book': 'Book',
+      'travel': 'Travel',
+      'home': 'Home',
+      'phone': 'Phone',
+      'other': 'Wallet',
+    });
+    return '$_temp0';
+  }
 }

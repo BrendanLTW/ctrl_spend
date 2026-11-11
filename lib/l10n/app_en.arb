@@ -560,5 +560,51 @@
         "type": "String"
       }
     }
+  },
+  "newCategory": "New category",
+  "categoryName": "Category name",
+  "iconSection": "Icon",
+  "colourSection": "Colour",
+  "monthlyLimit": "Monthly limit",
+  "optional": "Optional",
+  "createCategory": "Create category",
+  "duplicateCategory": "{type, select, expense{You already have an expense category called {name}.} other{You already have an income category called {name}.}}",
+  "@duplicateCategory": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "archivedSection": "Archived",
+  "restore": "Restore",
+  "categoriesNote": "Categories with transactions are archived instead of deleted, so your history stays intact.",
+  "categoryDeleted": "Category deleted",
+  "categoryArchived": "{name} archived — it has transactions",
+  "@categoryArchived": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "colourName": "{colour, select, orange{Orange} blue{Blue} pink{Pink} yellow{Yellow} purple{Purple} green{Green} red{Red} other{Grey}}",
+  "@colourName": {
+    "placeholders": {
+      "colour": {
+        "type": "String"
+      }
+    }
+  },
+  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}",
+  "@iconName": {
+    "placeholders": {
+      "icon": {
+        "type": "String"
+      }
+    }
   }
 }
