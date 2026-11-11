@@ -7,7 +7,6 @@
   "addTransaction": "Add transaction",
   "close": "Close",
   "settings": "Settings",
-  "finishOnboarding": "Finish onboarding",
   "keypadBackspace": "Backspace",
   "keypadDoubleZero": "Double zero",
   "cancel": "Cancel",
@@ -194,5 +193,71 @@
         "type": "String"
       }
     }
-  }
+  },
+  "remindersTitle": "Stay on track",
+  "remindersSubtitle": "A nudge at the end of the day helps you log spending before you forget it.",
+  "sampleNotification": "You have RM 72 left for Food this period. Log today's spending?",
+  "notificationNow": "now",
+  "notifyMeAbout": "Notify me about",
+  "dailyReminder": "Daily reminder",
+  "dailyReminderAt": "Every day at {time}",
+  "@dailyReminderAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetAlerts": "Budget alerts",
+  "budgetAlertsDetail": "When a budget reaches 80% and 100%",
+  "weeklySummary": "Weekly summary",
+  "weeklySummaryDetail": "Sunday evenings",
+  "turnOnNotifications": "Turn on notifications",
+  "notNow": "Not now",
+  "allSetTitle": "You're all set",
+  "allSetBody": "Add what you've spent since {date} to see what's really left this period.",
+  "@allSetBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "yourSetup": "Your setup",
+  "categoryLimits": "Category limits",
+  "limitsCount": "{limited} of {total}",
+  "@limitsCount": {
+    "placeholders": {
+      "limited": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "reminders": "Reminders",
+  "remindersDaily": "Daily, {time}",
+  "@remindersDaily": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remindersWeekly": "Weekly, Sunday",
+  "remindersAlertsOnly": "Budget alerts only",
+  "remindersOff": "Off",
+  "notSet": "Not set",
+  "lastDay": "Last day",
+  "ordinalDay": "{day, select, 1{1st} 2{2nd} 3{3rd} 21{21st} 22{22nd} 23{23rd} other{{day}th}}",
+  "@ordinalDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "addFirstExpense": "Add your first expense",
+  "goToDashboard": "Go to dashboard"
 }

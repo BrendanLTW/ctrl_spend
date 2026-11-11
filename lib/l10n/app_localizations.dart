@@ -136,12 +136,6 @@ abstract class AppLocalizations {
   /// **'Settings'**
   String get settings;
 
-  /// No description provided for @finishOnboarding.
-  ///
-  /// In en, this message translates to:
-  /// **'Finish onboarding'**
-  String get finishOnboarding;
-
   /// No description provided for @keypadBackspace.
   ///
   /// In en, this message translates to:
@@ -585,6 +579,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{amount} left to allocate'**
   String leftToAllocate(String amount);
+
+  /// No description provided for @remindersTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Stay on track'**
+  String get remindersTitle;
+
+  /// No description provided for @remindersSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'A nudge at the end of the day helps you log spending before you forget it.'**
+  String get remindersSubtitle;
+
+  /// No description provided for @sampleNotification.
+  ///
+  /// In en, this message translates to:
+  /// **'You have RM 72 left for Food this period. Log today\'s spending?'**
+  String get sampleNotification;
+
+  /// No description provided for @notificationNow.
+  ///
+  /// In en, this message translates to:
+  /// **'now'**
+  String get notificationNow;
+
+  /// No description provided for @notifyMeAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify me about'**
+  String get notifyMeAbout;
+
+  /// No description provided for @dailyReminder.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily reminder'**
+  String get dailyReminder;
+
+  /// No description provided for @dailyReminderAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day at {time}'**
+  String dailyReminderAt(String time);
+
+  /// No description provided for @budgetAlerts.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget alerts'**
+  String get budgetAlerts;
+
+  /// No description provided for @budgetAlertsDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'When a budget reaches 80% and 100%'**
+  String get budgetAlertsDetail;
+
+  /// No description provided for @weeklySummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly summary'**
+  String get weeklySummary;
+
+  /// No description provided for @weeklySummaryDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunday evenings'**
+  String get weeklySummaryDetail;
+
+  /// No description provided for @turnOnNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn on notifications'**
+  String get turnOnNotifications;
+
+  /// No description provided for @notNow.
+  ///
+  /// In en, this message translates to:
+  /// **'Not now'**
+  String get notNow;
+
+  /// No description provided for @allSetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re all set'**
+  String get allSetTitle;
+
+  /// No description provided for @allSetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what you\'ve spent since {date} to see what\'s really left this period.'**
+  String allSetBody(String date);
+
+  /// No description provided for @yourSetup.
+  ///
+  /// In en, this message translates to:
+  /// **'Your setup'**
+  String get yourSetup;
+
+  /// No description provided for @categoryLimits.
+  ///
+  /// In en, this message translates to:
+  /// **'Category limits'**
+  String get categoryLimits;
+
+  /// No description provided for @limitsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{limited} of {total}'**
+  String limitsCount(int limited, int total);
+
+  /// No description provided for @reminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get reminders;
+
+  /// No description provided for @remindersDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily, {time}'**
+  String remindersDaily(String time);
+
+  /// No description provided for @remindersWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly, Sunday'**
+  String get remindersWeekly;
+
+  /// No description provided for @remindersAlertsOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget alerts only'**
+  String get remindersAlertsOnly;
+
+  /// No description provided for @remindersOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get remindersOff;
+
+  /// No description provided for @notSet.
+  ///
+  /// In en, this message translates to:
+  /// **'Not set'**
+  String get notSet;
+
+  /// No description provided for @lastDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Last day'**
+  String get lastDay;
+
+  /// No description provided for @ordinalDay.
+  ///
+  /// In en, this message translates to:
+  /// **'{day, select, 1{1st} 2{2nd} 3{3rd} 21{21st} 22{22nd} 23{23rd} other{{day}th}}'**
+  String ordinalDay(String day);
+
+  /// No description provided for @addFirstExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first expense'**
+  String get addFirstExpense;
+
+  /// No description provided for @goToDashboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to dashboard'**
+  String get goToDashboard;
 }
 
 class _AppLocalizationsDelegate

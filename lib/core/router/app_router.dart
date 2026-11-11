@@ -3,13 +3,14 @@ import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/category_limits_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controller.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
@@ -36,9 +37,8 @@ abstract final class Routes {
   static const onboardingMonth = '/onboarding/month';
   static const onboardingBudget = '/onboarding/budget';
   static const onboardingCategories = '/onboarding/categories';
-
-  // shortcut: one placeholder route for S07–S08 until task 2.6.
-  static const onboardingSetup = '/onboarding/setup';
+  static const onboardingReminders = '/onboarding/reminders';
+  static const onboardingDone = '/onboarding/done';
 }
 
 @Riverpod(keepAlive: true)
@@ -117,8 +117,12 @@ GoRouter appRouter(Ref ref) {
             builder: (context, state) => const CategoryLimitsScreen(),
           ),
           GoRoute(
-            path: 'setup',
-            builder: (context, state) => const OnboardingScreen(),
+            path: 'reminders',
+            builder: (context, state) => const RemindersScreen(),
+          ),
+          GoRoute(
+            path: 'done',
+            builder: (context, state) => const AllSetScreen(),
           ),
         ],
       ),

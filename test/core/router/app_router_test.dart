@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
+import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/fake_category_repository.dart';
 import '../../helpers/fake_preferences_repository.dart';
 
 void main() {
@@ -21,6 +23,7 @@ void main() {
         preferencesRepositoryProvider.overrideWithValue(
           FakePreferencesRepository(Preferences(onboardingComplete: onboarded)),
         ),
+        categoryRepositoryProvider.overrideWithValue(FakeCategoryRepository()),
       ],
     );
     addTearDown(container.dispose);
@@ -58,10 +61,10 @@ void main() {
       tester,
     ) async {
       await pumpApp(tester, onboarded: false);
-      container.read(appRouterProvider).go(Routes.onboardingSetup);
+      container.read(appRouterProvider).go(Routes.onboardingDone);
       await tester.pumpAndSettle();
 
-      await tester.tap(find.text('Finish onboarding'));
+      await tester.tap(find.text('Go to dashboard'));
       await tester.pumpAndSettle();
 
       expect(title('Home'), findsOneWidget);

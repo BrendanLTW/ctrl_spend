@@ -8,7 +8,7 @@ import 'package:ctrl_spend/core/widgets/step_indicator.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/category_limits_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/onboarding_screen.dart';
+import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
@@ -115,7 +115,7 @@ void main() {
       await tester.tap(find.text('Skip'));
       await tester.pumpAndSettle();
       expect((await prefs.read()).monthlyBudgetMinor, isNull);
-      expect(find.byType(OnboardingScreen), findsOneWidget);
+      expect(find.byType(RemindersScreen), findsOneWidget);
       expect(find.byType(CategoryLimitsScreen), findsNothing);
     });
 
@@ -279,7 +279,7 @@ void main() {
         await pumpAt(tester, Routes.onboardingCategories);
         await tester.tap(find.text(action));
         await tester.pumpAndSettle();
-        expect(find.byType(OnboardingScreen), findsOneWidget);
+        expect(find.byType(RemindersScreen), findsOneWidget);
       });
     }
 

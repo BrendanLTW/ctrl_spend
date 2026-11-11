@@ -38,7 +38,7 @@ class _BudgetScreenState extends ConsumerState<BudgetScreen> {
     await ref
         .read(preferencesRepositoryProvider)
         .update((p) => p.copyWith(monthlyBudgetMinor: null));
-    if (mounted) await context.push(Routes.onboardingSetup);
+    if (mounted) await context.push(Routes.onboardingReminders);
   }
 
   @override

@@ -31,9 +31,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
-  String get finishOnboarding => 'Finish onboarding';
-
-  @override
   String get keypadBackspace => 'Backspace';
 
   @override
@@ -296,4 +293,109 @@ class AppLocalizationsEn extends AppLocalizations {
   String leftToAllocate(String amount) {
     return '$amount left to allocate';
   }
+
+  @override
+  String get remindersTitle => 'Stay on track';
+
+  @override
+  String get remindersSubtitle =>
+      'A nudge at the end of the day helps you log spending before you forget it.';
+
+  @override
+  String get sampleNotification =>
+      'You have RM 72 left for Food this period. Log today\'s spending?';
+
+  @override
+  String get notificationNow => 'now';
+
+  @override
+  String get notifyMeAbout => 'Notify me about';
+
+  @override
+  String get dailyReminder => 'Daily reminder';
+
+  @override
+  String dailyReminderAt(String time) {
+    return 'Every day at $time';
+  }
+
+  @override
+  String get budgetAlerts => 'Budget alerts';
+
+  @override
+  String get budgetAlertsDetail => 'When a budget reaches 80% and 100%';
+
+  @override
+  String get weeklySummary => 'Weekly summary';
+
+  @override
+  String get weeklySummaryDetail => 'Sunday evenings';
+
+  @override
+  String get turnOnNotifications => 'Turn on notifications';
+
+  @override
+  String get notNow => 'Not now';
+
+  @override
+  String get allSetTitle => 'You\'re all set';
+
+  @override
+  String allSetBody(String date) {
+    return 'Add what you\'ve spent since $date to see what\'s really left this period.';
+  }
+
+  @override
+  String get yourSetup => 'Your setup';
+
+  @override
+  String get categoryLimits => 'Category limits';
+
+  @override
+  String limitsCount(int limited, int total) {
+    return '$limited of $total';
+  }
+
+  @override
+  String get reminders => 'Reminders';
+
+  @override
+  String remindersDaily(String time) {
+    return 'Daily, $time';
+  }
+
+  @override
+  String get remindersWeekly => 'Weekly, Sunday';
+
+  @override
+  String get remindersAlertsOnly => 'Budget alerts only';
+
+  @override
+  String get remindersOff => 'Off';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get lastDay => 'Last day';
+
+  @override
+  String ordinalDay(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      '1': '1st',
+      '2': '2nd',
+      '3': '3rd',
+      '21': '21st',
+      '22': '22nd',
+      '23': '23rd',
+      'other': '${day}th',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get addFirstExpense => 'Add your first expense';
+
+  @override
+  String get goToDashboard => 'Go to dashboard';
 }

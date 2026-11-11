@@ -71,7 +71,7 @@ class CategoryLimitsScreen extends ConsumerWidget {
           .update(category.copyWith(limitMinor: limit));
     }
 
-    void next() => context.push(Routes.onboardingSetup);
+    void next() => context.push(Routes.onboardingReminders);
     return OnboardingScaffold(
       step: 4,
       title: l10n.splitTitle,

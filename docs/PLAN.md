@@ -70,7 +70,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S03a, S04, PRD §5.1, FR-01, FR-07
 - [x] **2.5 Budget and category limits.** S05 Set your monthly budget (keypad, Skip leaves no budget) and S06 Split by category (allocated summary, add limit per category, can't exceed the budget).
   Refs: S05, S06, PRD §5.1, FR-01, FR-05
-- [ ] **2.6 Reminders and finish.** S07 Stay on track (save toggle preferences only; the permission prompt comes in 3.8) and S08 You're all set (summary, Add your first expense, Go to dashboard). Back keeps values on every step.
+- [x] **2.6 Reminders and finish.** S07 Stay on track (save toggle preferences only; the permission prompt comes in 3.8) and S08 You're all set (summary, Add your first expense, Go to dashboard). Back keeps values on every step.
   Refs: S07, S08, PRD §5.1
 - [ ] **2.7 Dashboard.** S09 with header (period, greeting, bell, avatar → Settings), `BudgetHero` in all four states (S11), Spent and Income cards, and Recent activities with View all. Figures update live.
   Refs: S09, S11, PRD §5.2, FR-02
