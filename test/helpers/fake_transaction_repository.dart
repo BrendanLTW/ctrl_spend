@@ -5,12 +5,16 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 
 /// In-memory transactions for widget tests. Filters by period, type and
-/// category; search matches the title only. Drift's stream timers clash
-/// with the fake clock.
+/// category; search matches the title, note and (given [categoryName]) the
+/// category name, ignoring case, like the real repository. Drift's stream
+/// timers clash with the fake clock.
 class FakeTransactionRepository implements TransactionRepository {
   final _byId = <int, Transaction>{};
   final _changes = StreamController<void>.broadcast();
   var _nextId = 1;
+
+  /// Names categories for search; unset means only title and note match.
+  String? Function(int categoryId)? categoryName;
 
   /// Everything stored, newest first. Synchronous, so a test can check it
   /// without pumping for a stream's first value.
@@ -27,7 +31,15 @@ class FakeTransactionRepository implements TransactionRepository {
         .where((t) => period == null || period.contains(t.occurredAt))
         .where((t) => type == null || t.type == type)
         .where((t) => categoryId == null || t.categoryId == categoryId)
-        .where((t) => text.isEmpty || t.title.toLowerCase().contains(text))
+        .where(
+          (t) =>
+              text.isEmpty ||
+              [
+                t.title,
+                t.note ?? '',
+                categoryName?.call(t.categoryId) ?? '',
+              ].any((s) => s.toLowerCase().contains(text)),
+        )
         .toList()
       ..sort((a, b) {
         final byTime = b.occurredAt.compareTo(a.occurredAt);

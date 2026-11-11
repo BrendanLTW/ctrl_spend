@@ -768,4 +768,37 @@ class AppLocalizationsEn extends AppLocalizations {
     });
     return '$_temp0';
   }
+
+  @override
+  String get searchHint => 'Search notes and categories';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get allChip => 'All';
+
+  @override
+  String noResultsTitle(String query) {
+    return 'No results for “$query”';
+  }
+
+  @override
+  String noResultsInChip(String chip) {
+    return 'Nothing matches in $chip. Try another word, or search all transactions.';
+  }
+
+  @override
+  String get noResultsAll => 'Nothing matches. Try another word.';
+
+  @override
+  String get searchAll => 'Search all';
+
+  @override
+  String get nothingHereTitle => 'Nothing here yet';
+
+  @override
+  String nothingInChip(String chip) {
+    return 'No transactions in $chip so far.';
+  }
 }

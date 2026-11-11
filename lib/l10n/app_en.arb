@@ -606,5 +606,35 @@
         "type": "String"
       }
     }
+  },
+  "searchHint": "Search notes and categories",
+  "clearSearch": "Clear search",
+  "allChip": "All",
+  "noResultsTitle": "No results for “{query}”",
+  "@noResultsTitle": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "noResultsInChip": "Nothing matches in {chip}. Try another word, or search all transactions.",
+  "@noResultsInChip": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
+  },
+  "noResultsAll": "Nothing matches. Try another word.",
+  "searchAll": "Search all",
+  "nothingHereTitle": "Nothing here yet",
+  "nothingInChip": "No transactions in {chip} so far.",
+  "@nothingInChip": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
   }
 }

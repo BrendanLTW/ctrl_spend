@@ -93,7 +93,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 3 — Complete (P1)
 
-- [ ] **3.1 Search and filters.** Search field and chips (All, Expense, Income, categories) on S16, and the S39 No results state with Search all.
+- [x] **3.1 Search and filters.** Search field and chips (All, Expense, Income, categories) on S16, and the S39 No results state with Search all.
   Refs: S16, S39, PRD §5.5, FR-08
 - [ ] **3.2 Insights · Month.** S18 with the Week/Month/6 months control, period total, ranked spending categories with a screen-reader summary, and the S40 empty state.
   Refs: S18, S40, PRD §5.7, FR-09

@@ -1311,6 +1311,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}'**
   String iconName(String icon);
+
+  /// No description provided for @searchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Search notes and categories'**
+  String get searchHint;
+
+  /// No description provided for @clearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get clearSearch;
+
+  /// No description provided for @allChip.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get allChip;
+
+  /// No description provided for @noResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No results for “{query}”'**
+  String noResultsTitle(String query);
+
+  /// No description provided for @noResultsInChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches in {chip}. Try another word, or search all transactions.'**
+  String noResultsInChip(String chip);
+
+  /// No description provided for @noResultsAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing matches. Try another word.'**
+  String get noResultsAll;
+
+  /// No description provided for @searchAll.
+  ///
+  /// In en, this message translates to:
+  /// **'Search all'**
+  String get searchAll;
+
+  /// No description provided for @nothingHereTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing here yet'**
+  String get nothingHereTitle;
+
+  /// No description provided for @nothingInChip.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions in {chip} so far.'**
+  String nothingInChip(String chip);
 }
 
 class _AppLocalizationsDelegate

@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
+import 'package:ctrl_spend/core/widgets/filter_chips.dart';
 import 'package:ctrl_spend/core/widgets/swipe_to_delete.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
@@ -42,6 +43,7 @@ Future<void> pumpActivity(
   addTearDown(tester.view.reset);
   transactions = FakeTransactionRepository();
   categories = FakeCategoryRepository();
+  transactions.categoryName = (id) => categories.byId(id)?.name;
   await seed?.call();
   container = ProviderContainer(
     overrides: [
@@ -179,6 +181,138 @@ void main() {
       find.widgetWithText(TransactionRow, 'TNB electricity'),
     );
     expect(row.caption, 'Bills');
+  });
+
+  group('search and filters', () {
+    Future<void> search(WidgetTester tester, String text) async {
+      await tester.enterText(find.byType(TextField), text);
+      await tester.pumpAndSettle();
+    }
+
+    Future<void> chip(WidgetTester tester, String label) async {
+      final finder = find.descendant(
+        of: find.byType(
+          FilterChips<({TransactionType? type, int? categoryId})>,
+        ),
+        matching: find.text(label),
+      );
+      await tester.ensureVisible(finder);
+      await tester.tap(finder);
+      await tester.pumpAndSettle();
+    }
+
+    List<String> titles(WidgetTester tester) => [
+      for (final r in tester.widgetList<TransactionRow>(
+        find.byType(TransactionRow),
+      ))
+        r.title,
+    ];
+
+    testWidgets('the chips: All, the types, then categories', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      final row = tester
+          .widget<FilterChips<({TransactionType? type, int? categoryId})>>(
+            find.byType(
+              FilterChips<({TransactionType? type, int? categoryId})>,
+            ),
+          );
+      expect(
+        [for (final c in row.chips) c.label],
+        [
+          'All',
+          'Expense',
+          'Income',
+          'Food',
+          'Transport',
+          'Shopping',
+          'Bills',
+          'Fun',
+          'Health',
+          'Salary',
+          'Gifts',
+        ],
+      );
+    });
+
+    testWidgets('search matches title and category, ignoring case', (
+      tester,
+    ) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await search(tester, 'NASI');
+      expect(titles(tester), ['Nasi lemak']);
+      await search(tester, 'transp');
+      expect(titles(tester), ['Grab to KLCC']);
+      expect(find.text('${minus}RM 18.20'), findsNWidgets(2), reason: 'net');
+    });
+
+    testWidgets('type and category chips filter', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await chip(tester, 'Income');
+      expect(titles(tester), ['Salary']);
+      await chip(tester, 'Bills');
+      expect(titles(tester), ['TNB electricity']);
+      await chip(tester, 'All');
+      expect(titles(tester), hasLength(4));
+    });
+
+    testWidgets('search and a chip combine', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await chip(tester, 'Expense');
+      await search(tester, 'a');
+      expect(titles(tester), ['Nasi lemak', 'Grab to KLCC']);
+    });
+
+    testWidgets('no results in a chip offers Search all', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await chip(tester, 'Expense');
+      await search(tester, 'salary');
+      expect(find.text('No results for “salary”'), findsOneWidget);
+      expect(
+        find.text(
+          'Nothing matches in Expense. Try another word, or search all '
+          'transactions.',
+        ),
+        findsOneWidget,
+      );
+      await tester.tap(find.text('Search all'));
+      await tester.pumpAndSettle();
+      expect(titles(tester), ['Salary']);
+      expect(
+        tester.widget<TextField>(find.byType(TextField)).controller!.text,
+        'salary',
+        reason: 'the search text stays',
+      );
+    });
+
+    testWidgets('no results with All has no button', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await search(tester, 'netflix');
+      expect(find.text('No results for “netflix”'), findsOneWidget);
+      expect(find.text('Nothing matches. Try another word.'), findsOneWidget);
+      expect(find.text('Search all'), findsNothing);
+    });
+
+    testWidgets('an empty chip says nothing is there yet', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await chip(tester, 'Health');
+      expect(find.text('Nothing here yet'), findsOneWidget);
+      expect(find.text('No transactions in Health so far.'), findsOneWidget);
+    });
+
+    testWidgets('clearing the search brings everything back', (tester) async {
+      await pumpActivity(tester, seed: seedDesign);
+      await search(tester, 'nasi');
+      await tester.tap(find.byTooltip('Clear search'));
+      await tester.pumpAndSettle();
+      expect(titles(tester), hasLength(4));
+      expect(find.byTooltip('Clear search'), findsNothing);
+    });
+
+    testWidgets('no transactions at all ignores the filters', (tester) async {
+      await pumpActivity(tester);
+      await search(tester, 'x');
+      expect(find.text('No transactions yet'), findsOneWidget);
+    });
   });
 
   group('swipe to delete', () {

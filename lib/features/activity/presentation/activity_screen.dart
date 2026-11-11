@@ -7,6 +7,8 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
+import 'package:ctrl_spend/core/widgets/filter_chips.dart';
+import 'package:ctrl_spend/core/widgets/search_field.dart';
 import 'package:ctrl_spend/core/widgets/swipe_to_delete.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
 import 'package:ctrl_spend/features/activity/domain/day_groups.dart';
@@ -21,21 +23,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+/// The chip filter: All, a type, or a category.
+typedef _Filter = ({TransactionType? type, int? categoryId});
+
+const _Filter _all = (type: null, categoryId: null);
+
 /// S16 Activity: every transaction by day, newest first, with each day's
-/// net. Swipe a row left to delete it, with a 5-second Undo.
-// shortcut: search and filter chips (S16, S39) come in task 3.1.
-class ActivityScreen extends ConsumerWidget {
+/// net, narrowed by search and one chip. Swipe a row left to delete it,
+/// with a 5-second Undo. No matches shows S39.
+class ActivityScreen extends ConsumerStatefulWidget {
   const new({super.key});
 
-  Future<void> _delete(
-    BuildContext context,
-    WidgetRef ref,
-    Transaction transaction,
-  ) async {
+  @override
+  ConsumerState<ActivityScreen> createState() => _ActivityScreenState();
+}
+
+class _ActivityScreenState extends ConsumerState<ActivityScreen> {
+  final _search = TextEditingController();
+  _Filter _filter = _all;
+
+  @override
+  void dispose() {
+    _search.dispose();
+    super.dispose();
+  }
+
+  Future<void> _delete(Transaction transaction) async {
     final l10n = context.l10n;
     final repository = ref.read(transactionRepositoryProvider);
     final deleted = await repository.delete(transaction.id);
-    if (!context.mounted) return;
+    if (!mounted) return;
     showAppToast(
       context,
       message: l10n.transactionDeleted,
@@ -45,7 +62,7 @@ class ActivityScreen extends ConsumerWidget {
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
     final l10n = context.l10n;
@@ -54,7 +71,17 @@ class ActivityScreen extends ConsumerWidget {
     final currency = Currency.fromCode(
       ref.watch(preferencesProvider).value?.currencyCode ?? '',
     );
-    final transactions = ref.watch(transactionsProvider()).value;
+    final query = _search.text.trim();
+    final any = ref.watch(transactionsProvider()).value;
+    final transactions = ref
+        .watch(
+          transactionsProvider(
+            type: _filter.type,
+            categoryId: _filter.categoryId,
+            search: query.isEmpty ? null : query,
+          ),
+        )
+        .value;
     final categories = <int, Category>{
       for (final c
           in ref.watch(categoriesProvider()).value ?? const <Category>[])
@@ -85,7 +112,7 @@ class ActivityScreen extends ConsumerWidget {
               key: ValueKey(t.id),
               deleteLabel: l10n.delete,
               radius: 22,
-              onDelete: () => _delete(context, ref, t),
+              onDelete: () => _delete(t),
               child: TransactionRow(
                 compact: true,
                 tile: CategoryTile.forKey(
@@ -108,56 +135,127 @@ class ActivityScreen extends ConsumerWidget {
       }
     }
 
+    // Chips: All, the two types, then active categories, expense first.
+    final active =
+        [
+          for (final c in categories.values)
+            if (!c.archived) c,
+        ]..sort((a, b) {
+          if (a.type != b.type) {
+            return a.type == TransactionType.expense ? -1 : 1;
+          }
+          return a.sortOrder.compareTo(b.sortOrder);
+        });
+    final chips = <ChipOption<_Filter>>[
+      (value: _all, label: l10n.allChip),
+      (
+        value: (type: TransactionType.expense, categoryId: null),
+        label: l10n.expenseLabel,
+      ),
+      (
+        value: (type: TransactionType.income, categoryId: null),
+        label: l10n.incomeLabel,
+      ),
+      for (final c in active)
+        (value: (type: null, categoryId: c.id), label: c.name),
+    ];
+    final chipLabel = chips
+        .firstWhere((c) => c.value == _filter, orElse: () => chips.first)
+        .label;
+
+    Widget body;
+    if (any != null && any.isEmpty) {
+      body = SliverPadding(
+        padding: const EdgeInsets.all(AppSpacing.screenX),
+        sliver: SliverToBoxAdapter(
+          child: EmptyState(
+            icon: Icons.receipt_long_outlined,
+            title: l10n.noTransactionsTitle,
+            body: l10n.noTransactionsBody,
+            actionLabel: l10n.addFirstExpense,
+            onAction: () => context.push(Routes.add),
+          ),
+        ),
+      );
+    } else if (transactions != null && transactions.isEmpty) {
+      final filtered = _filter != _all;
+      body = SliverPadding(
+        padding: const EdgeInsets.only(top: 48),
+        sliver: SliverToBoxAdapter(
+          // S39 No results.
+          child: EmptyState(
+            card: false,
+            icon: Icons.search_off_rounded,
+            title: query.isEmpty
+                ? l10n.nothingHereTitle
+                : l10n.noResultsTitle(query),
+            body: query.isEmpty
+                ? l10n.nothingInChip(chipLabel)
+                : filtered
+                ? l10n.noResultsInChip(chipLabel)
+                : l10n.noResultsAll,
+            actionLabel: filtered ? l10n.searchAll : null,
+            // "Search all" drops the chip and keeps the search text.
+            onAction: filtered ? () => setState(() => _filter = _all) : null,
+          ),
+        ),
+      );
+    } else {
+      body = SliverPadding(
+        // Clear of the floating bottom bar.
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screenX,
+          0,
+          AppSpacing.screenX,
+          120,
+        ),
+        sliver: SliverList.builder(
+          itemCount: items.length,
+          itemBuilder: (context, i) => items[i](),
+        ),
+      );
+    }
+
     return Scaffold(
       backgroundColor: colors.ground,
       body: SafeArea(
         bottom: false,
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.textX,
                 16,
                 AppSpacing.textX,
-                8,
+                12,
               ),
-              sliver: SliverToBoxAdapter(
-                child: Semantics(
-                  header: true,
-                  child: Text(
-                    l10n.tabActivity,
-                    style: text.welcomeTitle.copyWith(color: colors.ink),
-                  ),
+              child: Semantics(
+                header: true,
+                child: Text(
+                  l10n.tabActivity,
+                  style: text.welcomeTitle.copyWith(color: colors.ink),
                 ),
               ),
             ),
-            if (transactions != null && transactions.isEmpty)
-              SliverPadding(
-                padding: const EdgeInsets.all(AppSpacing.screenX),
-                sliver: SliverToBoxAdapter(
-                  child: EmptyState(
-                    icon: Icons.receipt_long_outlined,
-                    title: l10n.noTransactionsTitle,
-                    body: l10n.noTransactionsBody,
-                    actionLabel: l10n.addFirstExpense,
-                    onAction: () => context.push(Routes.add),
-                  ),
-                ),
-              )
-            else
-              SliverPadding(
-                // Clear of the floating bottom bar.
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.screenX,
-                  0,
-                  AppSpacing.screenX,
-                  120,
-                ),
-                sliver: SliverList.builder(
-                  itemCount: items.length,
-                  itemBuilder: (context, i) => items[i](),
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenX,
               ),
+              child: SearchField(
+                controller: _search,
+                hint: l10n.searchHint,
+                onChanged: (_) => setState(() {}),
+              ),
+            ),
+            const SizedBox(height: 12),
+            FilterChips<_Filter>(
+              chips: chips,
+              selected: _filter,
+              onChanged: (filter) => setState(() => _filter = filter),
+            ),
+            const SizedBox(height: 4),
+            Expanded(child: CustomScrollView(slivers: [body])),
           ],
         ),
       ),

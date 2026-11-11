@@ -30,6 +30,8 @@ class FakeCategoryRepository implements CategoryRepository {
   bool Function(int id)? isUsed;
   final _changes = StreamController<void>.broadcast();
 
+  Category? byId(int id) => _byId[id];
+
   Category byName(String name) =>
       _byId.values.singleWhere((c) => c.name == name);
 
