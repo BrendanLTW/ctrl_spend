@@ -90,8 +90,7 @@ class MonthSetupScreen extends ConsumerWidget {
                 child: DaySelector(
                   label: l10n.startDayOther,
                   selected: selectedQuick == null,
-                  // shortcut: opens S32 Month start once task 2.13 builds it.
-                  onTap: () {},
+                  onTap: () => context.push(Routes.onboardingMonthStart),
                 ),
               ),
             ],

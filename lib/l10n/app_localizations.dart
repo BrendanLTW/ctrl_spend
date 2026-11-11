@@ -1137,6 +1137,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name}, {percent}%, {detail}'**
   String categoryBudgetLabel(String name, int percent, String detail);
+
+  /// No description provided for @dataStoredOnPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Data stored on this phone'**
+  String get dataStoredOnPhone;
+
+  /// No description provided for @preferencesSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get preferencesSection;
+
+  /// No description provided for @manageSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage'**
+  String get manageSection;
+
+  /// No description provided for @themeRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme'**
+  String get themeRow;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @themeSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'System'**
+  String get themeSystem;
+
+  /// No description provided for @exportCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Export to CSV'**
+  String get exportCsv;
+
+  /// No description provided for @importCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Import from CSV'**
+  String get importCsv;
+
+  /// No description provided for @nameSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your name'**
+  String get nameSheetTitle;
+
+  /// No description provided for @monthStartSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the day your budget resets. Most people choose payday.'**
+  String get monthStartSubtitle;
+
+  /// No description provided for @lastDayOfMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Last day of the month'**
+  String get lastDayOfMonth;
+
+  /// No description provided for @nextPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Next period'**
+  String get nextPeriod;
+
+  /// No description provided for @profileLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, {detail}'**
+  String profileLabel(String name, String detail);
 }
 
 class _AppLocalizationsDelegate

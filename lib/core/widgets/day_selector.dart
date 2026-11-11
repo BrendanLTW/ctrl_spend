@@ -12,6 +12,7 @@ class DaySelector extends StatelessWidget {
     required this.selected,
     required this.onTap,
     this.semanticLabel,
+    this.compact = false,
     super.key,
   });
 
@@ -21,6 +22,9 @@ class DaySelector extends StatelessWidget {
 
   /// Read instead of [label], e.g. "15th" for a grid's "15".
   final String? semanticLabel;
+
+  /// 44 high, radius 16: S32's day grid.
+  final bool compact;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +37,16 @@ class DaySelector extends StatelessWidget {
       excludeSemantics: true,
       child: Material(
         color: selected ? colors.ink : colors.surface,
-        borderRadius: BorderRadius.circular(AppRadius.r18),
+        borderRadius: BorderRadius.circular(
+          compact ? AppRadius.r16 : AppRadius.r18,
+        ),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onTap,
           highlightColor: selected ? colors.inkPressed : colors.raised,
           splashFactory: NoSplash.splashFactory,
           child: SizedBox(
-            height: 56,
+            height: compact ? 44 : 56,
             child: Center(
               child: Text(
                 label,

@@ -640,4 +640,49 @@ class AppLocalizationsEn extends AppLocalizations {
   String categoryBudgetLabel(String name, int percent, String detail) {
     return '$name, $percent%, $detail';
   }
+
+  @override
+  String get dataStoredOnPhone => 'Data stored on this phone';
+
+  @override
+  String get preferencesSection => 'Preferences';
+
+  @override
+  String get manageSection => 'Manage';
+
+  @override
+  String get themeRow => 'Theme';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get exportCsv => 'Export to CSV';
+
+  @override
+  String get importCsv => 'Import from CSV';
+
+  @override
+  String get nameSheetTitle => 'Your name';
+
+  @override
+  String get monthStartSubtitle =>
+      'Pick the day your budget resets. Most people choose payday.';
+
+  @override
+  String get lastDayOfMonth => 'Last day of the month';
+
+  @override
+  String get nextPeriod => 'Next period';
+
+  @override
+  String profileLabel(String name, String detail) {
+    return '$name, $detail';
+  }
 }

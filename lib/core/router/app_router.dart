@@ -13,6 +13,7 @@ import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controlle
 import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
+import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
@@ -38,6 +39,9 @@ abstract final class Routes {
   /// S13 Edit transaction.
   static String editTransaction(int id) => '/transactions/$id/edit';
   static const settings = '/settings';
+
+  /// S32; under onboarding it's [onboardingMonthStart] (S04's Other).
+  static const monthStart = '/settings/month-start';
   static const splash = '/splash';
 
   /// S02 Welcome; the other steps sit under it.
@@ -45,6 +49,7 @@ abstract final class Routes {
   static const onboardingHow = '/onboarding/how';
   static const onboardingName = '/onboarding/name';
   static const onboardingMonth = '/onboarding/month';
+  static const onboardingMonthStart = '/onboarding/month-start';
   static const onboardingBudget = '/onboarding/budget';
   static const onboardingCategories = '/onboarding/categories';
   static const onboardingReminders = '/onboarding/reminders';
@@ -115,6 +120,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
+        path: Routes.monthStart,
+        builder: (context, state) => const MonthStartScreen(),
+      ),
+      GoRoute(
         path: Routes.splash,
         builder: (context, state) => const SplashScreen(),
       ),
@@ -133,6 +142,10 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: 'month',
             builder: (context, state) => const MonthSetupScreen(),
+          ),
+          GoRoute(
+            path: 'month-start',
+            builder: (context, state) => const MonthStartScreen(),
           ),
           GoRoute(
             path: 'budget',

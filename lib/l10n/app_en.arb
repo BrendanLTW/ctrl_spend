@@ -536,5 +536,29 @@
         "type": "String"
       }
     }
+  },
+  "dataStoredOnPhone": "Data stored on this phone",
+  "preferencesSection": "Preferences",
+  "manageSection": "Manage",
+  "themeRow": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "exportCsv": "Export to CSV",
+  "importCsv": "Import from CSV",
+  "nameSheetTitle": "Your name",
+  "monthStartSubtitle": "Pick the day your budget resets. Most people choose payday.",
+  "lastDayOfMonth": "Last day of the month",
+  "nextPeriod": "Next period",
+  "profileLabel": "{name}, {detail}",
+  "@profileLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -134,7 +134,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(title('Settings'), findsOneWidget);
 
-    await tester.tap(find.byType(BackButton));
+    await tester.tap(find.byTooltip('Back'));
     await tester.pumpAndSettle();
     expect(home, findsOneWidget);
   });

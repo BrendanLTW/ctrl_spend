@@ -84,7 +84,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S16, PRD §5.5, FR-04
 - [x] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
   Refs: S17, PRD §5.6, FR-05
-- [ ] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
+- [x] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
   Refs: S21, S32, PRD §5.8, FR-07
 - [ ] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
   Refs: S22, S24, PRD §5.9, FR-06

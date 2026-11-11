@@ -308,7 +308,7 @@ void main() {
       await tester.tap(find.byTooltip('Settings'));
       await tester.pumpAndSettle();
       expect(find.byType(DashboardScreen), findsNothing);
-      await tester.tap(find.byType(BackButton));
+      await tester.tap(find.byTooltip('Back'));
       await tester.pumpAndSettle();
       expect(find.byType(DashboardScreen), findsOneWidget);
     });
