@@ -234,6 +234,31 @@ void main() {
     expect(find.text('Roti canai'), findsOneWidget);
   });
 
+  testWidgets('editing an amount updates Home straight away (FR-02)', (
+    tester,
+  ) async {
+    await pumpApp(tester, seed: () => add(76000, 'Rent', category: 'Bills'));
+    expect(find.text('RM 1,240.00', findRichText: true), findsOneWidget);
+    await openDetail(tester);
+    await tester.tap(find.text('Edit'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('760.00'));
+    await tester.pumpAndSettle();
+    // RM 760.00 → RM 76.00
+    await tester.tap(find.bySemanticsLabel('Backspace').last);
+    await tester.pump();
+    await tester.tap(find.text('Done'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Save'));
+    await tester.pump(const Duration(milliseconds: 100));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Back'));
+    await tester.pumpAndSettle();
+    expect(find.byType(DashboardScreen), findsOneWidget);
+    expect(find.text('RM 1,924.00', findRichText: true), findsOneWidget);
+    expect(find.text('RM 76', findRichText: true), findsOneWidget);
+  });
+
   group('delete', () {
     testWidgets('Cancel keeps it', (tester) async {
       await pumpApp(tester, seed: () => add(1250, 'Nasi lemak'));

@@ -88,7 +88,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S21, S32, PRD §5.8, FR-07
 - [x] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
   Refs: S22, S24, PRD §5.9, FR-06
-- [ ] **2.15 P0 review.** Walk through every acceptance criterion for FR-01 to FR-07 and every P0 screen against its light and dark design. List gaps, fix them, and confirm all P0 tests pass.
+- [x] **2.15 P0 review.** Walk through every acceptance criterion for FR-01 to FR-07 and every P0 screen against its light and dark design. List gaps, fix them, and confirm all P0 tests pass.
   Refs: PRD §7
 
 ## Phase 3 — Complete (P1)

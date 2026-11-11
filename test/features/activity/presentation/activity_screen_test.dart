@@ -165,6 +165,22 @@ void main() {
     expect(find.text('No transactions yet'), findsOneWidget);
   });
 
+  testWidgets('an archived category keeps its history here (FR-06)', (
+    tester,
+  ) async {
+    await pumpActivity(
+      tester,
+      seed: () async {
+        await seedDesign();
+        await categories.archive(categories.byName('Bills').id);
+      },
+    );
+    final row = tester.widget<TransactionRow>(
+      find.widgetWithText(TransactionRow, 'TNB electricity'),
+    );
+    expect(row.caption, 'Bills');
+  });
+
   group('swipe to delete', () {
     testWidgets('a short drag snaps back', (tester) async {
       await pumpActivity(tester, seed: seedDesign);
