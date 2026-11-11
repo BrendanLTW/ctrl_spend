@@ -1065,6 +1065,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{percent}% of {name} spent'**
   String percentOfSpent(int percent, String name);
+
+  /// No description provided for @transactionDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Transaction deleted'**
+  String get transactionDeleted;
+
+  /// No description provided for @undo.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
 }
 
 class _AppLocalizationsDelegate

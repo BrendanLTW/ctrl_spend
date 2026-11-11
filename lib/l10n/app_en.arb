@@ -468,5 +468,7 @@
         "type": "String"
       }
     }
-  }
+  },
+  "transactionDeleted": "Transaction deleted",
+  "undo": "Undo"
 }

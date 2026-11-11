@@ -80,7 +80,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S12, S13, S43, PRD §5.3, FR-03
 - [x] **2.10 Transaction detail and delete.** S41 with details and budget impact; S42 confirmation dialog; deleting returns to the previous screen.
   Refs: S41, S42, PRD §5.13, FR-03
-- [ ] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
+- [x] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
   Refs: S16, PRD §5.5, FR-04
 - [ ] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
   Refs: S17, PRD §5.6, FR-05

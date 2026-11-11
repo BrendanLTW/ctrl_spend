@@ -117,6 +117,11 @@ void hideAppToast() {
   _current = null;
   if (current == null) return;
   current.timer.cancel();
-  if (current.entry.mounted) current.entry.remove();
-  current.entry.dispose();
+  // If its overlay is already gone (the app was torn down), there's
+  // nothing to remove, and disposing would assert.
+  if (current.entry.mounted) {
+    current.entry
+      ..remove()
+      ..dispose();
+  }
 }

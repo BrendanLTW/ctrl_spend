@@ -30,3 +30,17 @@ extension DateRowLabels on AppLocalizations {
     };
   }
 }
+
+extension DayHeaderLabels on AppLocalizations {
+  /// Activity's day header (S16): "Today", "Yesterday, 3 Nov" or
+  /// "Sun, 1 Nov". Shown uppercase.
+  String dayHeaderLabel(DateTime day, DateTime today, String locale) {
+    final date = DateTime.utc(day.year, day.month, day.day);
+    final now = DateTime.utc(today.year, today.month, today.day);
+    return switch (now.difference(date).inDays) {
+      0 => this.today,
+      1 => dateYesterday(DateFormat('d MMM', locale).format(day)),
+      _ => DateFormat('EEE, d MMM', locale).format(day),
+    };
+  }
+}

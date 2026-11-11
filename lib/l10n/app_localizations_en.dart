@@ -594,4 +594,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String percentOfSpent(int percent, String name) {
     return '$percent% of $name spent';
   }
+
+  @override
+  String get transactionDeleted => 'Transaction deleted';
+
+  @override
+  String get undo => 'Undo';
 }

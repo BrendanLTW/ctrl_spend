@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
+import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
@@ -89,7 +90,10 @@ void main() {
   testWidgets('tabs switch between the four branches', (tester) async {
     await pumpApp(tester);
 
-    for (final label in ['Activity', 'Budgets', 'Insights']) {
+    await tester.tap(tab('Activity'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ActivityScreen), findsOneWidget);
+    for (final label in ['Budgets', 'Insights']) {
       await tester.tap(tab(label));
       await tester.pumpAndSettle();
       expect(title(label), findsOneWidget);
