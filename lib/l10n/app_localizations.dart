@@ -849,6 +849,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{percent}% of monthly budget spent'**
   String budgetSpentPercent(int percent);
+
+  /// No description provided for @noTransactionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions yet'**
+  String get noTransactionsTitle;
+
+  /// No description provided for @noTransactionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add what you spend and your budget updates as you go.'**
+  String get noTransactionsBody;
 }
 
 class _AppLocalizationsDelegate

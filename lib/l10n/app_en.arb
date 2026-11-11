@@ -324,5 +324,7 @@
         "type": "int"
       }
     }
-  }
+  },
+  "noTransactionsTitle": "No transactions yet",
+  "noTransactionsBody": "Add what you spend and your budget updates as you go."
 }

@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -11,7 +12,8 @@ import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// S09's Recent activities: a header with View all and the latest
-/// transactions, captioned "Today · Food" (income reads "Income").
+/// transactions, captioned "Today · Food" (income reads "Income"). With
+/// none at all it shows the S10 first-run empty state.
 class RecentActivities extends StatelessWidget {
   const new({
     required this.transactions,
@@ -20,6 +22,7 @@ class RecentActivities extends StatelessWidget {
     required this.today,
     required this.onViewAll,
     required this.onOpen,
+    required this.onAddFirst,
     super.key,
   });
 
@@ -32,6 +35,9 @@ class RecentActivities extends StatelessWidget {
   final DateTime today;
   final VoidCallback onViewAll;
   final ValueChanged<Transaction> onOpen;
+
+  /// The S10 empty state's action, shown when there are no transactions.
+  final VoidCallback onAddFirst;
 
   @override
   Widget build(BuildContext context) {
@@ -54,32 +60,44 @@ class RecentActivities extends StatelessWidget {
                 ),
               ),
             ),
-            TextButton(
-              onPressed: onViewAll,
-              style: TextButton.styleFrom(
-                minimumSize: const Size(44, 44),
-                foregroundColor: colors.ink,
-                overlayColor: colors.raised,
+            // Hidden on first run (S10); keeps the header's height.
+            if (transactions.isEmpty)
+              const SizedBox(height: 44)
+            else
+              TextButton(
+                onPressed: onViewAll,
+                style: TextButton.styleFrom(
+                  minimumSize: const Size(44, 44),
+                  foregroundColor: colors.ink,
+                  overlayColor: colors.raised,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      l10n.viewAll,
+                      style: text.rowTitle.copyWith(color: colors.ink),
+                    ),
+                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.chevron_right_rounded,
+                      size: 20,
+                      color: colors.ink,
+                    ),
+                  ],
+                ),
               ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    l10n.viewAll,
-                    style: text.rowTitle.copyWith(color: colors.ink),
-                  ),
-                  const SizedBox(width: 4),
-                  Icon(
-                    Icons.chevron_right_rounded,
-                    size: 20,
-                    color: colors.ink,
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
         const SizedBox(height: 8),
+        if (transactions.isEmpty)
+          EmptyState(
+            icon: Icons.receipt_long_outlined,
+            title: l10n.noTransactionsTitle,
+            body: l10n.noTransactionsBody,
+            actionLabel: l10n.addFirstExpense,
+            onAction: onAddFirst,
+          ),
         for (final t in transactions) ...[
           if (categories[t.categoryId] case final category?)
             TransactionRow(

@@ -106,7 +106,6 @@ class DashboardScreen extends ConsumerWidget {
               ],
             ),
             const SizedBox(height: 28),
-            // shortcut: no transactions shows the S10 empty state in task 2.8.
             RecentActivities(
               transactions: latest.take(recentCount).toList(),
               categories: categories,
@@ -115,6 +114,7 @@ class DashboardScreen extends ConsumerWidget {
               onViewAll: () => context.go(Routes.activity),
               // shortcut: opens transaction detail (S41) in task 2.10.
               onOpen: (_) {},
+              onAddFirst: () => context.push(Routes.add),
             ),
           ],
         ),

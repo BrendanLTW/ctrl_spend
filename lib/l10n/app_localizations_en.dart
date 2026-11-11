@@ -461,4 +461,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String budgetSpentPercent(int percent) {
     return '$percent% of monthly budget spent';
   }
+
+  @override
+  String get noTransactionsTitle => 'No transactions yet';
+
+  @override
+  String get noTransactionsBody =>
+      'Add what you spend and your budget updates as you go.';
 }

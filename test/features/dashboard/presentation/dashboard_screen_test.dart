@@ -4,10 +4,12 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
+import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -187,9 +189,89 @@ void main() {
     expect(find.text('Set a monthly budget'), findsOneWidget);
   });
 
+  group('S10 first run', () {
+    testWidgets('no transactions shows the empty state, no View all', (
+      tester,
+    ) async {
+      await pumpHome(tester);
+      expect(find.byType(EmptyState), findsOneWidget);
+      expect(find.text('No transactions yet'), findsOneWidget);
+      expect(
+        find.text('Add what you spend and your budget updates as you go.'),
+        findsOneWidget,
+      );
+      expect(find.text('View all'), findsNothing);
+      expect(find.byType(TransactionRow), findsNothing);
+      expect(find.text('RM 2,000.00', findRichText: true), findsOneWidget);
+      expect(find.text('RM 0', findRichText: true), findsNWidgets(2));
+    });
+
+    testWidgets('Add your first expense opens Add, and close returns', (
+      tester,
+    ) async {
+      await pumpHome(tester);
+      await tester.ensureVisible(find.text('Add your first expense'));
+      await tester.tap(find.text('Add your first expense'));
+      await tester.pumpAndSettle();
+      expect(find.byType(AddTransactionScreen), findsOneWidget);
+      await tester.tap(find.byTooltip('Close'));
+      await tester.pumpAndSettle();
+      expect(find.byType(DashboardScreen), findsOneWidget);
+    });
+
+    testWidgets('the first transaction replaces the empty state', (
+      tester,
+    ) async {
+      await pumpHome(tester);
+      await spend(1250, 'Nasi lemak');
+      await tester.pumpAndSettle();
+      expect(find.byType(EmptyState), findsNothing);
+      expect(find.text('Nasi lemak'), findsOneWidget);
+      expect(find.text('View all'), findsOneWidget);
+    });
+
+    testWidgets('an older period still counts, so no empty state', (
+      tester,
+    ) async {
+      await pumpHome(
+        tester,
+        seed: () => spend(5000, 'Old', at: DateTime(2026, 10, 10)),
+      );
+      expect(find.byType(EmptyState), findsNothing);
+      expect(find.text('RM 0', findRichText: true), findsNWidgets(2));
+    });
+
+    for (final (theme, colors) in [
+      (AppTheme.light, AppColors.light),
+      (AppTheme.dark, AppColors.dark),
+    ]) {
+      testWidgets('the empty card uses the theme in ${theme.name} mode', (
+        tester,
+      ) async {
+        await pumpHome(
+          tester,
+          prefs: Preferences(
+            monthlyBudgetMinor: 200000,
+            onboardingComplete: true,
+            theme: theme,
+          ),
+        );
+        final card = tester.widget<Container>(
+          find
+              .descendant(
+                of: find.byType(EmptyState),
+                matching: find.byType(Container),
+              )
+              .first,
+        );
+        expect((card.decoration! as BoxDecoration).color, colors.surface);
+      });
+    }
+  });
+
   group('navigation', () {
     testWidgets('View all opens Activity', (tester) async {
-      await pumpHome(tester);
+      await pumpHome(tester, seed: () => spend(1250, 'Nasi lemak'));
       await tester.tap(find.text('View all'));
       await tester.pumpAndSettle();
       expect(
