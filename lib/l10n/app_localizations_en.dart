@@ -600,4 +600,44 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get undo => 'Undo';
+
+  @override
+  String get byCategory => 'By category';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get leftWord => 'left';
+
+  @override
+  String get overWord => 'over';
+
+  @override
+  String spentOfBudget(String spent, String budget) {
+    return '$spent of $budget spent';
+  }
+
+  @override
+  String spentAndLeft(String spent, String left) {
+    return 'Spent $spent · Left $left';
+  }
+
+  @override
+  String spentAndOver(String spent, String over) {
+    return 'Spent $spent · Over by $over';
+  }
+
+  @override
+  String get addLimitSheetTitle => 'Add a limit';
+
+  @override
+  String budgetCardLabel(String amount, String state, String detail) {
+    return 'Monthly budget, $amount $state, $detail';
+  }
+
+  @override
+  String categoryBudgetLabel(String name, int percent, String detail) {
+    return '$name, $percent%, $detail';
+  }
 }

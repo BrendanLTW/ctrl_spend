@@ -1077,6 +1077,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Undo'**
   String get undo;
+
+  /// No description provided for @byCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'By category'**
+  String get byCategory;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @leftWord.
+  ///
+  /// In en, this message translates to:
+  /// **'left'**
+  String get leftWord;
+
+  /// No description provided for @overWord.
+  ///
+  /// In en, this message translates to:
+  /// **'over'**
+  String get overWord;
+
+  /// No description provided for @spentOfBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {budget} spent'**
+  String spentOfBudget(String spent, String budget);
+
+  /// No description provided for @spentAndLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent {spent} · Left {left}'**
+  String spentAndLeft(String spent, String left);
+
+  /// No description provided for @spentAndOver.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent {spent} · Over by {over}'**
+  String spentAndOver(String spent, String over);
+
+  /// No description provided for @addLimitSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a limit'**
+  String get addLimitSheetTitle;
+
+  /// No description provided for @budgetCardLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly budget, {amount} {state}, {detail}'**
+  String budgetCardLabel(String amount, String state, String detail);
+
+  /// No description provided for @categoryBudgetLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, {percent}%, {detail}'**
+  String categoryBudgetLabel(String name, int percent, String detail);
 }
 
 class _AppLocalizationsDelegate

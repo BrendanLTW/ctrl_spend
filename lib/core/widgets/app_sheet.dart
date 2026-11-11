@@ -15,6 +15,9 @@ Future<T?> showAppSheet<T>(
   Widget? trailing,
 }) => showModalBottomSheet<T>(
   context: context,
+  // Above the tab shell, so the floating bottom bar can't cover the
+  // sheet's lower half (keypad keys, Save).
+  useRootNavigator: true,
   isScrollControlled: true,
   useSafeArea: true,
   backgroundColor: context.colors.surface,

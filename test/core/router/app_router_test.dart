@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
+import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
@@ -93,7 +94,10 @@ void main() {
     await tester.tap(tab('Activity'));
     await tester.pumpAndSettle();
     expect(find.byType(ActivityScreen), findsOneWidget);
-    for (final label in ['Budgets', 'Insights']) {
+    await tester.tap(tab('Budgets'));
+    await tester.pumpAndSettle();
+    expect(find.byType(BudgetsScreen), findsOneWidget);
+    for (final label in ['Insights']) {
       await tester.tap(tab(label));
       await tester.pumpAndSettle();
       expect(title(label), findsOneWidget);
@@ -120,7 +124,7 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Close'));
     await tester.pumpAndSettle();
-    expect(title('Budgets'), findsOneWidget);
+    expect(find.byType(BudgetsScreen), findsOneWidget);
   });
 
   testWidgets('avatar opens Settings and back returns Home', (tester) async {

@@ -27,7 +27,9 @@ final class AmountRemoved extends AmountSheetResult {
 /// The keypad sheet for a per-month amount (S06, S17): [leading] tile and
 /// [title], the amount, the sheet keypad and Save. [removable] puts
 /// "Remove" in the header instead of ✕. With [maxMinor], amounts above it
-/// can't be saved and the room left is shown. Save needs more than 0.
+/// can't be saved and the room left is shown; with [minMinor], amounts
+/// below it can't be saved and [minMessage] says why. Save needs more
+/// than 0.
 Future<AmountSheetResult?> showAmountSheet(
   BuildContext context, {
   required String title,
@@ -36,6 +38,8 @@ Future<AmountSheetResult?> showAmountSheet(
   Widget? leading,
   bool removable = false,
   int? maxMinor,
+  int? minMinor,
+  String? minMessage,
 }) {
   final l10n = context.l10n;
   return showAppSheet<AmountSheetResult>(
@@ -63,6 +67,8 @@ Future<AmountSheetResult?> showAmountSheet(
       currency: currency,
       initialMinor: initialMinor,
       maxMinor: maxMinor,
+      minMinor: minMinor,
+      minMessage: minMessage,
     ),
   );
 }
@@ -72,11 +78,15 @@ class _AmountSheetBody extends StatefulWidget {
     required this.currency,
     required this.initialMinor,
     required this.maxMinor,
+    required this.minMinor,
+    required this.minMessage,
   });
 
   final Currency currency;
   final int initialMinor;
   final int? maxMinor;
+  final int? minMinor;
+  final String? minMessage;
 
   @override
   State<_AmountSheetBody> createState() => _AmountSheetBodyState();
@@ -93,6 +103,8 @@ class _AmountSheetBodyState extends State<_AmountSheetBody> {
     final formatter = MoneyFormatter(widget.currency);
     final max = widget.maxMinor;
     final over = max != null && _minor > max;
+    final min = widget.minMinor;
+    final under = min != null && _minor < min;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -123,6 +135,15 @@ class _AmountSheetBodyState extends State<_AmountSheetBody> {
                     fontWeight: FontWeight.w500,
                   ),
                 ),
+              if (under && widget.minMessage != null)
+                Text(
+                  widget.minMessage!,
+                  textAlign: TextAlign.center,
+                  style: text.caption.copyWith(
+                    color: colors.negative,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
             ],
           ),
         ),
@@ -135,7 +156,7 @@ class _AmountSheetBodyState extends State<_AmountSheetBody> {
         const SizedBox(height: 16),
         PrimaryButton(
           label: l10n.save,
-          onPressed: _minor > 0 && !over
+          onPressed: _minor > 0 && !over && !under
               ? () => Navigator.of(context).pop(AmountSaved(_minor))
               : null,
         ),

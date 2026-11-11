@@ -470,5 +470,71 @@
     }
   },
   "transactionDeleted": "Transaction deleted",
-  "undo": "Undo"
+  "undo": "Undo",
+  "byCategory": "By category",
+  "add": "Add",
+  "leftWord": "left",
+  "overWord": "over",
+  "spentOfBudget": "{spent} of {budget} spent",
+  "@spentOfBudget": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "spentAndLeft": "Spent {spent} · Left {left}",
+  "@spentAndLeft": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "spentAndOver": "Spent {spent} · Over by {over}",
+  "@spentAndOver": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "over": {
+        "type": "String"
+      }
+    }
+  },
+  "addLimitSheetTitle": "Add a limit",
+  "budgetCardLabel": "Monthly budget, {amount} {state}, {detail}",
+  "@budgetCardLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryBudgetLabel": "{name}, {percent}%, {detail}",
+  "@categoryBudgetLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  }
 }

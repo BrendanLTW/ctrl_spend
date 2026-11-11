@@ -82,7 +82,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S41, S42, PRD §5.13, FR-03
 - [x] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
   Refs: S16, PRD §5.5, FR-04
-- [ ] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
+- [x] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
   Refs: S17, PRD §5.6, FR-05
 - [ ] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
   Refs: S21, S32, PRD §5.8, FR-07
