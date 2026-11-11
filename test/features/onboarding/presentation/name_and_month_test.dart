@@ -6,19 +6,17 @@ import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_preferences_repository.dart';
+import '../../../helpers/fake_repositories.dart';
 
 /// 4 Nov 2026, the designs' "today".
 final today = DateTime(2026, 11, 4, 9);
@@ -34,8 +32,7 @@ Future<void> pumpAt(
   prefs = FakePreferencesRepository(initial);
   container = ProviderContainer(
     overrides: [
-      preferencesRepositoryProvider.overrideWithValue(prefs),
-      categoryRepositoryProvider.overrideWithValue(FakeCategoryRepository()),
+      ...fakeRepositories(preferences: prefs),
       clockProvider.overrideWithValue(() => today),
     ],
   );

@@ -5,12 +5,10 @@ import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/category_limits_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_preferences_repository.dart';
+import '../../../helpers/fake_repositories.dart';
 
 const String minus = MoneyFormatter.minus;
 
@@ -42,8 +41,7 @@ Future<void> pumpAt(
   }
   container = ProviderContainer(
     overrides: [
-      preferencesRepositoryProvider.overrideWithValue(prefs),
-      categoryRepositoryProvider.overrideWithValue(categories),
+      ...fakeRepositories(preferences: prefs, categories: categories),
     ],
   );
   addTearDown(container.dispose);

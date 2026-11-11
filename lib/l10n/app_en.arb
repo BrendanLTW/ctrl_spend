@@ -259,5 +259,70 @@
     }
   },
   "addFirstExpense": "Add your first expense",
-  "goToDashboard": "Go to dashboard"
+  "goToDashboard": "Go to dashboard",
+  "greeting": "Hi, {name}",
+  "@greeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingNoName": "Hi there",
+  "notifications": "Notifications",
+  "spentLabel": "Spent",
+  "incomeLabel": "Income",
+  "statLabel": "{label}, {amount}",
+  "@statLabel": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentActivities": "Recent activities",
+  "viewAll": "View all",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "dayAndDetail": "{day} · {detail}",
+  "@dayAndDetail": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "overBudgetBy": "Over budget by",
+  "spentThisPeriod": "Spent this period",
+  "amountSpent": "{amount} spent",
+  "@amountSpent": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ofAmount": "of {amount}",
+  "@ofAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "setMonthlyBudget": "Set a monthly budget",
+  "budgetSpentPercent": "{percent}% of monthly budget spent",
+  "@budgetSpentPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  }
 }

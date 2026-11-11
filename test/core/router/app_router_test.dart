@@ -1,7 +1,7 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -11,20 +11,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/fake_category_repository.dart';
 import '../../helpers/fake_preferences_repository.dart';
+import '../../helpers/fake_repositories.dart';
 
 void main() {
   late ProviderContainer container;
 
   Future<void> pumpApp(WidgetTester tester, {bool onboarded = true}) async {
     container = ProviderContainer(
-      overrides: [
-        preferencesRepositoryProvider.overrideWithValue(
-          FakePreferencesRepository(Preferences(onboardingComplete: onboarded)),
+      overrides: fakeRepositories(
+        preferences: FakePreferencesRepository(
+          Preferences(onboardingComplete: onboarded),
         ),
-        categoryRepositoryProvider.overrideWithValue(FakeCategoryRepository()),
-      ],
+      ),
     );
     addTearDown(container.dispose);
     await tester.pumpWidget(
@@ -36,6 +35,8 @@ void main() {
 
   Finder title(String text) =>
       find.descendant(of: find.byType(AppBar), matching: find.text(text));
+
+  final home = find.byType(DashboardScreen);
 
   Finder tab(String label) =>
       find.byWidgetPredicate((w) => w is AppShellTab && w.label == label);
@@ -67,7 +68,7 @@ void main() {
       await tester.tap(find.text('Go to dashboard'));
       await tester.pumpAndSettle();
 
-      expect(title('Home'), findsOneWidget);
+      expect(home, findsOneWidget);
       final prefs = await container.read(preferencesRepositoryProvider).read();
       expect(prefs.onboardingComplete, isTrue);
     });
@@ -80,7 +81,7 @@ void main() {
       container.read(appRouterProvider).go(Routes.onboardingHow);
       await tester.pumpAndSettle();
 
-      expect(title('Home'), findsOneWidget);
+      expect(home, findsOneWidget);
       expect(find.byType(HowItWorksScreen), findsNothing);
     });
   });
@@ -88,11 +89,14 @@ void main() {
   testWidgets('tabs switch between the four branches', (tester) async {
     await pumpApp(tester);
 
-    for (final label in ['Activity', 'Budgets', 'Insights', 'Home']) {
+    for (final label in ['Activity', 'Budgets', 'Insights']) {
       await tester.tap(tab(label));
       await tester.pumpAndSettle();
       expect(title(label), findsOneWidget);
     }
+    await tester.tap(tab('Home'));
+    await tester.pumpAndSettle();
+    expect(home, findsOneWidget);
   });
 
   testWidgets('add button opens Add transaction and close returns', (
@@ -121,6 +125,6 @@ void main() {
 
     await tester.tap(find.byType(BackButton));
     await tester.pumpAndSettle();
-    expect(title('Home'), findsOneWidget);
+    expect(home, findsOneWidget);
   });
 }

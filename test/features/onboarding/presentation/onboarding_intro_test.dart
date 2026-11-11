@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_preferences_repository.dart';
+import '../../../helpers/fake_repositories.dart';
 
 /// Settings that load only when [load] is called.
 class _SlowPreferences implements PreferencesRepository {
@@ -39,7 +40,7 @@ Future<void> pumpApp(
   bool settle = true,
 }) async {
   final container = ProviderContainer(
-    overrides: [preferencesRepositoryProvider.overrideWithValue(prefs)],
+    overrides: fakeRepositories(preferences: prefs),
   );
   addTearDown(container.dispose);
   await tester.pumpWidget(

@@ -67,3 +67,15 @@ abstract interface class TransactionRepository {
 @Riverpod(keepAlive: true)
 TransactionRepository transactionRepository(Ref ref) =>
     throw UnimplementedError('Override transactionRepositoryProvider');
+
+/// Transactions, live, with [TransactionRepository.watch]'s filters.
+@riverpod
+Stream<List<Transaction>> transactions(
+  Ref ref, {
+  Period? period,
+  TransactionType? type,
+  int? categoryId,
+  String? search,
+}) => ref
+    .watch(transactionRepositoryProvider)
+    .watch(period: period, type: type, categoryId: categoryId, search: search);

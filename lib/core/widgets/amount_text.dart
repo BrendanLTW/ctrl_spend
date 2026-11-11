@@ -12,6 +12,7 @@ class AmountText extends StatelessWidget {
     required this.style,
     this.centsStyle,
     this.symbolStyle,
+    this.centsColor,
     this.sign = MoneySign.auto,
     super.key,
   });
@@ -23,6 +24,9 @@ class AmountText extends StatelessWidget {
 
   /// Defaults to [style] at the hero's 18/32 size in `muted`.
   final TextStyle? centsStyle;
+
+  /// The default cents' colour instead of `muted`, e.g. amber on the hero.
+  final Color? centsColor;
 
   /// When set, the sign and currency symbol use this style instead of
   /// [style], e.g. the smaller "RM" on the amount display.
@@ -41,7 +45,7 @@ class AmountText extends StatelessWidget {
         centsStyle ??
         style.copyWith(
           fontSize: (style.fontSize ?? 14) * _centsScale,
-          color: context.colors.muted,
+          color: centsColor ?? context.colors.muted,
         );
     return Semantics(
       label: formatter.format(minor, sign: sign),

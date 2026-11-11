@@ -747,6 +747,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to dashboard'**
   String get goToDashboard;
+
+  /// No description provided for @greeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi, {name}'**
+  String greeting(String name);
+
+  /// No description provided for @greetingNoName.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi there'**
+  String get greetingNoName;
+
+  /// No description provided for @notifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notifications;
+
+  /// No description provided for @spentLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent'**
+  String get spentLabel;
+
+  /// No description provided for @incomeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Income'**
+  String get incomeLabel;
+
+  /// No description provided for @statLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}, {amount}'**
+  String statLabel(String label, String amount);
+
+  /// No description provided for @recentActivities.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent activities'**
+  String get recentActivities;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get viewAll;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @dayAndDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} · {detail}'**
+  String dayAndDetail(String day, String detail);
+
+  /// No description provided for @overBudgetBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Over budget by'**
+  String get overBudgetBy;
+
+  /// No description provided for @spentThisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent this period'**
+  String get spentThisPeriod;
+
+  /// No description provided for @amountSpent.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} spent'**
+  String amountSpent(String amount);
+
+  /// No description provided for @ofAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'of {amount}'**
+  String ofAmount(String amount);
+
+  /// No description provided for @setMonthlyBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set a monthly budget'**
+  String get setMonthlyBudget;
+
+  /// No description provided for @budgetSpentPercent.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% of monthly budget spent'**
+  String budgetSpentPercent(int percent);
 }
 
 class _AppLocalizationsDelegate

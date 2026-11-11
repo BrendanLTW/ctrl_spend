@@ -398,4 +398,67 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get goToDashboard => 'Go to dashboard';
+
+  @override
+  String greeting(String name) {
+    return 'Hi, $name';
+  }
+
+  @override
+  String get greetingNoName => 'Hi there';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get spentLabel => 'Spent';
+
+  @override
+  String get incomeLabel => 'Income';
+
+  @override
+  String statLabel(String label, String amount) {
+    return '$label, $amount';
+  }
+
+  @override
+  String get recentActivities => 'Recent activities';
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String dayAndDetail(String day, String detail) {
+    return '$day · $detail';
+  }
+
+  @override
+  String get overBudgetBy => 'Over budget by';
+
+  @override
+  String get spentThisPeriod => 'Spent this period';
+
+  @override
+  String amountSpent(String amount) {
+    return '$amount spent';
+  }
+
+  @override
+  String ofAmount(String amount) {
+    return 'of $amount';
+  }
+
+  @override
+  String get setMonthlyBudget => 'Set a monthly budget';
+
+  @override
+  String budgetSpentPercent(int percent) {
+    return '$percent% of monthly budget spent';
+  }
 }
