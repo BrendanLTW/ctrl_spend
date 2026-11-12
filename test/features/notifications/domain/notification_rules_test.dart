@@ -126,7 +126,7 @@ void main() {
       );
       final income = events([], [pay]).single as IncomeRecorded;
       expect(income.category, 'Salary');
-      expect(income.title, 'November pay');
+      expect(income.categoryId, salary);
       expect(income.amountMinor, 480000);
       // Already known: an edit, not a new one.
       expect(events([pay], []), isEmpty);

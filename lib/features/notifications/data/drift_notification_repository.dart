@@ -26,6 +26,7 @@ class DriftNotificationRepository implements NotificationRepository {
     required String title,
     required String body,
     required DateTime createdAt,
+    int? categoryId,
   }) => _db
       .into(_db.notifications)
       .insert(
@@ -34,6 +35,7 @@ class DriftNotificationRepository implements NotificationRepository {
           title: title,
           body: body,
           createdAt: createdAt.toUtc(),
+          categoryId: Value(categoryId),
         ),
       );
 

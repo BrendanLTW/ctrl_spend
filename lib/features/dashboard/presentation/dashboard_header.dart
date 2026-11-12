@@ -10,6 +10,7 @@ class DashboardHeader extends StatelessWidget {
     required this.name,
     required this.onBell,
     required this.onAvatar,
+    this.unreadCount = 0,
     super.key,
   });
 
@@ -17,6 +18,9 @@ class DashboardHeader extends StatelessWidget {
   final String periodLabel;
   final String name;
   final VoidCallback onBell;
+
+  /// Shows a red dot on the bell when above 0 (S09).
+  final int unreadCount;
   final VoidCallback onAvatar;
 
   @override
@@ -51,16 +55,39 @@ class DashboardHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 12),
-        // shortcut: no unread badge until the inbox (task 3.9).
-        IconButton(
-          onPressed: onBell,
-          tooltip: l10n.notifications,
-          style: IconButton.styleFrom(
-            fixedSize: const Size(48, 48),
-            backgroundColor: colors.raised,
-            foregroundColor: colors.ink,
+        Semantics(
+          container: true,
+          label: l10n.notificationsUnread(unreadCount),
+          button: true,
+          excludeSemantics: true,
+          child: Stack(
+            children: [
+              IconButton(
+                onPressed: onBell,
+                tooltip: l10n.notifications,
+                style: IconButton.styleFrom(
+                  fixedSize: const Size(48, 48),
+                  backgroundColor: colors.raised,
+                  foregroundColor: colors.ink,
+                ),
+                icon: const Icon(Icons.notifications_none_rounded, size: 22),
+              ),
+              if (unreadCount > 0)
+                Positioned(
+                  top: 12,
+                  right: 13,
+                  child: Container(
+                    width: 9,
+                    height: 9,
+                    decoration: BoxDecoration(
+                      color: colors.negative,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: colors.raised, width: 1.5),
+                    ),
+                  ),
+                ),
+            ],
           ),
-          icon: const Icon(Icons.notifications_none_rounded, size: 22),
         ),
         const SizedBox(width: 12),
         IconButton(

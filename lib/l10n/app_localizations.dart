@@ -1837,19 +1837,19 @@ abstract class AppLocalizations {
   /// No description provided for @notifyIncomeBody.
   ///
   /// In en, this message translates to:
-  /// **'{amount} · {title}'**
-  String notifyIncomeBody(String amount, String title);
+  /// **'{amount} recorded as Income.'**
+  String notifyIncomeBody(String amount);
 
   /// No description provided for @notifyDailyTitle.
   ///
   /// In en, this message translates to:
-  /// **'Log today\'s spending?'**
+  /// **'Daily reminder'**
   String get notifyDailyTitle;
 
   /// No description provided for @notifyDailyBody.
   ///
   /// In en, this message translates to:
-  /// **'Take a moment to add what you spent today.'**
+  /// **'Anything to log from today? It takes ten seconds.'**
   String get notifyDailyBody;
 
   /// No description provided for @notifyWeeklyTitle.
@@ -1897,14 +1897,86 @@ abstract class AppLocalizations {
   /// No description provided for @notifyPeriodBudgetBody.
   ///
   /// In en, this message translates to:
-  /// **'Your {budget} budget has reset.'**
-  String notifyPeriodBudgetBody(String budget);
+  /// **'{range}. Your {budget} budget has reset.'**
+  String notifyPeriodBudgetBody(String range, String budget);
 
   /// No description provided for @notifyPeriodBody.
   ///
   /// In en, this message translates to:
   /// **'Your new period runs {range}.'**
   String notifyPeriodBody(String range);
+
+  /// No description provided for @earlierSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Earlier'**
+  String get earlierSection;
+
+  /// No description provided for @unread.
+  ///
+  /// In en, this message translates to:
+  /// **'Unread'**
+  String get unread;
+
+  /// No description provided for @minutesAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}m'**
+  String minutesAgo(int count);
+
+  /// No description provided for @hoursAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count}h'**
+  String hoursAgo(int count);
+
+  /// No description provided for @notificationSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Notification settings'**
+  String get notificationSettings;
+
+  /// No description provided for @noNotificationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No notifications yet'**
+  String get noNotificationsTitle;
+
+  /// No description provided for @noNotificationsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We\'ll let you know when a budget gets close to its limit, and remind you to log your spending.'**
+  String get noNotificationsBody;
+
+  /// No description provided for @youllHearAbout.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll hear about'**
+  String get youllHearAbout;
+
+  /// No description provided for @at80And100.
+  ///
+  /// In en, this message translates to:
+  /// **'At 80% and 100%'**
+  String get at80And100;
+
+  /// No description provided for @onLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'On'**
+  String get onLabel;
+
+  /// No description provided for @offLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Off'**
+  String get offLabel;
+
+  /// No description provided for @notificationsUnread.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Notifications} =1{Notifications, 1 unread} other{Notifications, {count} unread}}'**
+  String notificationsUnread(int count);
 }
 
 class _AppLocalizationsDelegate

@@ -5,6 +5,7 @@ import 'package:ctrl_spend/features/categories/presentation/category_detail_scre
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/category_limits_screen.dart';
@@ -60,6 +61,9 @@ abstract final class Routes {
 
   /// S23 Category detail.
   static String category(int id) => '/settings/categories/$id';
+
+  /// S14 Notifications.
+  static const notifications = '/notifications';
 
   /// S25 Past periods.
   static const pastPeriods = '/periods';
@@ -163,6 +167,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => CategoryDetailScreen(
           categoryId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
         ),
+      ),
+      GoRoute(
+        path: Routes.notifications,
+        builder: (context, state) => const NotificationsScreen(),
       ),
       GoRoute(
         path: Routes.pastPeriods,

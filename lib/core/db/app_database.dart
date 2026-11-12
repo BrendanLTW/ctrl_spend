@@ -11,7 +11,7 @@ class AppDatabase extends _$AppDatabase {
   new(super.e);
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -31,6 +31,12 @@ class AppDatabase extends _$AppDatabase {
             ),
         ]),
       );
+    },
+    onUpgrade: (m, from, to) async {
+      // v2: notifications remember their category (S14 tiles).
+      if (from < 2) {
+        await m.addColumn(notifications, notifications.categoryId);
+      }
     },
     // SQLite ignores foreign keys unless asked, per connection.
     beforeOpen: (_) => customStatement('PRAGMA foreign_keys = ON'),

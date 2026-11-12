@@ -1060,19 +1060,16 @@
       }
     }
   },
-  "notifyIncomeBody": "{amount} · {title}",
+  "notifyIncomeBody": "{amount} recorded as Income.",
   "@notifyIncomeBody": {
     "placeholders": {
       "amount": {
         "type": "String"
-      },
-      "title": {
-        "type": "String"
       }
     }
   },
-  "notifyDailyTitle": "Log today's spending?",
-  "notifyDailyBody": "Take a moment to add what you spent today.",
+  "notifyDailyTitle": "Daily reminder",
+  "notifyDailyBody": "Anything to log from today? It takes ten seconds.",
   "notifyWeeklyTitle": "Your weekly summary",
   "notifyWeeklyLess": "You spent {spent} last week, {difference} less than the week before.",
   "@notifyWeeklyLess": {
@@ -1107,9 +1104,12 @@
   "notifyWeeklyReadyTitle": "Your weekly summary is ready",
   "notifyWeeklyReadyBody": "See how last week went.",
   "notifyPeriodTitle": "New period started",
-  "notifyPeriodBudgetBody": "Your {budget} budget has reset.",
+  "notifyPeriodBudgetBody": "{range}. Your {budget} budget has reset.",
   "@notifyPeriodBudgetBody": {
     "placeholders": {
+      "range": {
+        "type": "String"
+      },
       "budget": {
         "type": "String"
       }
@@ -1120,6 +1120,39 @@
     "placeholders": {
       "range": {
         "type": "String"
+      }
+    }
+  },
+  "earlierSection": "Earlier",
+  "unread": "Unread",
+  "minutesAgo": "{count}m",
+  "@minutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{count}h",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSettings": "Notification settings",
+  "noNotificationsTitle": "No notifications yet",
+  "noNotificationsBody": "We'll let you know when a budget gets close to its limit, and remind you to log your spending.",
+  "youllHearAbout": "You'll hear about",
+  "at80And100": "At 80% and 100%",
+  "onLabel": "On",
+  "offLabel": "Off",
+  "notificationsUnread": "{count, plural, =0{Notifications} =1{Notifications, 1 unread} other{Notifications, {count} unread}}",
+  "@notificationsUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
       }
     }
   }

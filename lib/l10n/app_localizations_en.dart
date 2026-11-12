@@ -1150,15 +1150,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String notifyIncomeBody(String amount, String title) {
-    return '$amount · $title';
+  String notifyIncomeBody(String amount) {
+    return '$amount recorded as Income.';
   }
 
   @override
-  String get notifyDailyTitle => 'Log today\'s spending?';
+  String get notifyDailyTitle => 'Daily reminder';
 
   @override
-  String get notifyDailyBody => 'Take a moment to add what you spent today.';
+  String get notifyDailyBody =>
+      'Anything to log from today? It takes ten seconds.';
 
   @override
   String get notifyWeeklyTitle => 'Your weekly summary';
@@ -1188,12 +1189,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get notifyPeriodTitle => 'New period started';
 
   @override
-  String notifyPeriodBudgetBody(String budget) {
-    return 'Your $budget budget has reset.';
+  String notifyPeriodBudgetBody(String range, String budget) {
+    return '$range. Your $budget budget has reset.';
   }
 
   @override
   String notifyPeriodBody(String range) {
     return 'Your new period runs $range.';
+  }
+
+  @override
+  String get earlierSection => 'Earlier';
+
+  @override
+  String get unread => 'Unread';
+
+  @override
+  String minutesAgo(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String hoursAgo(int count) {
+    return '${count}h';
+  }
+
+  @override
+  String get notificationSettings => 'Notification settings';
+
+  @override
+  String get noNotificationsTitle => 'No notifications yet';
+
+  @override
+  String get noNotificationsBody =>
+      'We\'ll let you know when a budget gets close to its limit, and remind you to log your spending.';
+
+  @override
+  String get youllHearAbout => 'You\'ll hear about';
+
+  @override
+  String get at80And100 => 'At 80% and 100%';
+
+  @override
+  String get onLabel => 'On';
+
+  @override
+  String get offLabel => 'Off';
+
+  @override
+  String notificationsUnread(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Notifications, $count unread',
+      one: 'Notifications, 1 unread',
+      zero: 'Notifications',
+    );
+    return '$_temp0';
   }
 }

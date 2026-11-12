@@ -31,6 +31,7 @@ class FakeNotificationRepository implements NotificationRepository {
     required String title,
     required String body,
     required DateTime createdAt,
+    int? categoryId,
   }) async {
     all.add(
       AppNotification(
@@ -39,6 +40,7 @@ class FakeNotificationRepository implements NotificationRepository {
         title: title,
         body: body,
         createdAt: createdAt,
+        categoryId: categoryId,
       ),
     );
     _changes.add(null);

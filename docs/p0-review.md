@@ -41,7 +41,7 @@ Each P0 screen was rendered with Poppins at 390 × 844 in both themes and compar
 | S06 Category limits | Yes | |
 | S07 Reminders | Yes | Permission prompt in 3.8 |
 | S08 All set | Yes | |
-| S09 Dashboard | Yes | Bell does nothing until the inbox (3.9) |
+| S09 Dashboard | Yes | |
 | S10 First run | Yes | Empty card sits slightly lower; page scrolls clear of the bar |
 | S11 Hero states | Yes | |
 | S12 / S13 Add, edit | Yes | Keypad in a sheet (no keypad on the canvas); dark amount card uses `surface` (canvas shows white) |

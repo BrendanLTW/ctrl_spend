@@ -154,6 +154,7 @@ class NotificationService {
           title: text.title,
           body: text.body,
           createdAt: event.at,
+          categoryId: event.categoryId,
         );
   }
 

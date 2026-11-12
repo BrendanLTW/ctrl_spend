@@ -14,6 +14,7 @@ abstract interface class NotificationRepository {
     required String title,
     required String body,
     required DateTime createdAt,
+    int? categoryId,
   });
 
   /// Marks every unread notification read at [at] (S14 on open).

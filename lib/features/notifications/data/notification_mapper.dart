@@ -10,6 +10,7 @@ extension NotificationRowMapper on NotificationRow {
     body: body,
     createdAt: createdAt,
     readAt: readAt,
+    categoryId: categoryId,
   );
 }
 
@@ -23,5 +24,6 @@ extension NotificationMapper on AppNotification {
     body: Value(body),
     createdAt: Value(createdAt.toUtc()),
     readAt: Value(readAt?.toUtc()),
+    categoryId: Value(categoryId),
   );
 }

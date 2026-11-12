@@ -1027,6 +1027,20 @@ class $NotificationsTable extends Notifications
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+    'category_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES categories (id) ON DELETE SET NULL',
+    ),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -1035,6 +1049,7 @@ class $NotificationsTable extends Notifications
     body,
     createdAt,
     readAt,
+    categoryId,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1089,6 +1104,12 @@ class $NotificationsTable extends Notifications
         readAt.isAcceptableOrUnknown(data['read_at']!, _readAtMeta),
       );
     }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    }
     return context;
   }
 
@@ -1122,6 +1143,10 @@ class $NotificationsTable extends Notifications
         DriftSqlType.dateTime,
         data['${effectivePrefix}read_at'],
       ),
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}category_id'],
+      ),
     );
   }
 
@@ -1138,6 +1163,10 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
   final String body;
   final DateTime createdAt;
   final DateTime? readAt;
+
+  /// The category a budget alert or income row is about, for its tile
+  /// (S14). Added in schema v2.
+  final int? categoryId;
   const NotificationRow({
     required this.id,
     required this.kind,
@@ -1145,6 +1174,7 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
     required this.body,
     required this.createdAt,
     this.readAt,
+    this.categoryId,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -1156,6 +1186,9 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
     map['created_at'] = Variable<DateTime>(createdAt);
     if (!nullToAbsent || readAt != null) {
       map['read_at'] = Variable<DateTime>(readAt);
+    }
+    if (!nullToAbsent || categoryId != null) {
+      map['category_id'] = Variable<int>(categoryId);
     }
     return map;
   }
@@ -1170,6 +1203,9 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
       readAt: readAt == null && nullToAbsent
           ? const Value.absent()
           : Value(readAt),
+      categoryId: categoryId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(categoryId),
     );
   }
 
@@ -1185,6 +1221,7 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
       body: serializer.fromJson<String>(json['body']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       readAt: serializer.fromJson<DateTime?>(json['readAt']),
+      categoryId: serializer.fromJson<int?>(json['categoryId']),
     );
   }
   @override
@@ -1197,6 +1234,7 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
       'body': serializer.toJson<String>(body),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'readAt': serializer.toJson<DateTime?>(readAt),
+      'categoryId': serializer.toJson<int?>(categoryId),
     };
   }
 
@@ -1207,6 +1245,7 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
     String? body,
     DateTime? createdAt,
     Value<DateTime?> readAt = const Value.absent(),
+    Value<int?> categoryId = const Value.absent(),
   }) => NotificationRow(
     id: id ?? this.id,
     kind: kind ?? this.kind,
@@ -1214,6 +1253,7 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
     body: body ?? this.body,
     createdAt: createdAt ?? this.createdAt,
     readAt: readAt.present ? readAt.value : this.readAt,
+    categoryId: categoryId.present ? categoryId.value : this.categoryId,
   );
   NotificationRow copyWithCompanion(NotificationsCompanion data) {
     return NotificationRow(
@@ -1223,6 +1263,9 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
       body: data.body.present ? data.body.value : this.body,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       readAt: data.readAt.present ? data.readAt.value : this.readAt,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
     );
   }
 
@@ -1234,13 +1277,15 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
           ..write('title: $title, ')
           ..write('body: $body, ')
           ..write('createdAt: $createdAt, ')
-          ..write('readAt: $readAt')
+          ..write('readAt: $readAt, ')
+          ..write('categoryId: $categoryId')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, kind, title, body, createdAt, readAt);
+  int get hashCode =>
+      Object.hash(id, kind, title, body, createdAt, readAt, categoryId);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -1250,7 +1295,8 @@ class NotificationRow extends DataClass implements Insertable<NotificationRow> {
           other.title == this.title &&
           other.body == this.body &&
           other.createdAt == this.createdAt &&
-          other.readAt == this.readAt);
+          other.readAt == this.readAt &&
+          other.categoryId == this.categoryId);
 }
 
 class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
@@ -1260,6 +1306,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
   final Value<String> body;
   final Value<DateTime> createdAt;
   final Value<DateTime?> readAt;
+  final Value<int?> categoryId;
   const NotificationsCompanion({
     this.id = const Value.absent(),
     this.kind = const Value.absent(),
@@ -1267,6 +1314,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
     this.body = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.readAt = const Value.absent(),
+    this.categoryId = const Value.absent(),
   });
   NotificationsCompanion.insert({
     this.id = const Value.absent(),
@@ -1275,6 +1323,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
     required String body,
     required DateTime createdAt,
     this.readAt = const Value.absent(),
+    this.categoryId = const Value.absent(),
   }) : kind = Value(kind),
        title = Value(title),
        body = Value(body),
@@ -1286,6 +1335,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
     Expression<String>? body,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? readAt,
+    Expression<int>? categoryId,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1294,6 +1344,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
       if (body != null) 'body': body,
       if (createdAt != null) 'created_at': createdAt,
       if (readAt != null) 'read_at': readAt,
+      if (categoryId != null) 'category_id': categoryId,
     });
   }
 
@@ -1304,6 +1355,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
     Value<String>? body,
     Value<DateTime>? createdAt,
     Value<DateTime?>? readAt,
+    Value<int?>? categoryId,
   }) {
     return NotificationsCompanion(
       id: id ?? this.id,
@@ -1312,6 +1364,7 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
       body: body ?? this.body,
       createdAt: createdAt ?? this.createdAt,
       readAt: readAt ?? this.readAt,
+      categoryId: categoryId ?? this.categoryId,
     );
   }
 
@@ -1336,6 +1389,9 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
     if (readAt.present) {
       map['read_at'] = Variable<DateTime>(readAt.value);
     }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
     return map;
   }
 
@@ -1347,7 +1403,8 @@ class NotificationsCompanion extends UpdateCompanion<NotificationRow> {
           ..write('title: $title, ')
           ..write('body: $body, ')
           ..write('createdAt: $createdAt, ')
-          ..write('readAt: $readAt')
+          ..write('readAt: $readAt, ')
+          ..write('categoryId: $categoryId')
           ..write(')'))
         .toString();
   }
@@ -1579,6 +1636,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     preferences,
   ];
   @override
+  StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'categories',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('notifications', kind: UpdateKind.update)],
+    ),
+  ]);
+  @override
   DriftDatabaseOptions get options =>
       const DriftDatabaseOptions(storeDateTimeAsText: true);
 }
@@ -1621,6 +1688,24 @@ final class $$CategoriesTableReferences
     ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_transactionsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<$NotificationsTable, List<NotificationRow>>
+  _notificationsRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
+    db.notifications,
+    aliasName: 'categories__id__notifications__category_id',
+  );
+
+  $$NotificationsTableProcessedTableManager get notificationsRefs {
+    final manager = $$NotificationsTableTableManager(
+      $_db,
+      $_db.notifications,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(_notificationsRefsTable($_db));
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -1692,6 +1777,31 @@ class $$CategoriesTableFilterComposer
           }) => $$TransactionsTableFilterComposer(
             $db: $db,
             $table: $db.transactions,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> notificationsRefs(
+    Expression<bool> Function($$NotificationsTableFilterComposer f) f,
+  ) {
+    final $$NotificationsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notifications,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotificationsTableFilterComposer(
+            $db: $db,
+            $table: $db.notifications,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -1811,6 +1921,31 @@ class $$CategoriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> notificationsRefs<T extends Object>(
+    Expression<T> Function($$NotificationsTableAnnotationComposer a) f,
+  ) {
+    final $$NotificationsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.notifications,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$NotificationsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.notifications,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$CategoriesTableTableManager
@@ -1826,7 +1961,10 @@ class $$CategoriesTableTableManager
           $$CategoriesTableUpdateCompanionBuilder,
           (CategoryRow, $$CategoriesTableReferences),
           CategoryRow,
-          PrefetchHooks Function({bool transactionsRefs})
+          PrefetchHooks Function({
+            bool transactionsRefs,
+            bool notificationsRefs,
+          })
         > {
   $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
     : super(
@@ -1887,37 +2025,61 @@ class $$CategoriesTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({transactionsRefs = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [if (transactionsRefs) db.transactions],
-              addJoins: null,
-              getPrefetchedDataCallback: (items) async {
-                return [
-                  if (transactionsRefs)
-                    await $_getPrefetchedDataByColumns<
-                      CategoryRow,
-                      $CategoriesTable,
-                      TransactionRow,
-                      $TransactionsTable
-                    >(
-                      currentTable: table,
-                      referencedTable: $$CategoriesTableReferences
-                          ._transactionsRefsTable(db),
-                      managerFromTypedResult: (p0) =>
-                          $$CategoriesTableReferences(
-                            db,
-                            table,
-                            p0,
-                          ).transactionsRefs,
-                      currentColumn: 'id',
-                      referencedColumn: 'category_id',
-                      typedResults: items,
-                    ),
-                ];
+          prefetchHooksCallback:
+              ({transactionsRefs = false, notificationsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (transactionsRefs) db.transactions,
+                    if (notificationsRefs) db.notifications,
+                  ],
+                  addJoins: null,
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (transactionsRefs)
+                        await $_getPrefetchedDataByColumns<
+                          CategoryRow,
+                          $CategoriesTable,
+                          TransactionRow,
+                          $TransactionsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._transactionsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).transactionsRefs,
+                          currentColumn: 'id',
+                          referencedColumn: 'category_id',
+                          typedResults: items,
+                        ),
+                      if (notificationsRefs)
+                        await $_getPrefetchedDataByColumns<
+                          CategoryRow,
+                          $CategoriesTable,
+                          NotificationRow,
+                          $NotificationsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._notificationsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).notificationsRefs,
+                          currentColumn: 'id',
+                          referencedColumn: 'category_id',
+                          typedResults: items,
+                        ),
+                    ];
+                  },
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -1934,7 +2096,7 @@ typedef $$CategoriesTableProcessedTableManager =
       $$CategoriesTableUpdateCompanionBuilder,
       (CategoryRow, $$CategoriesTableReferences),
       CategoryRow,
-      PrefetchHooks Function({bool transactionsRefs})
+      PrefetchHooks Function({bool transactionsRefs, bool notificationsRefs})
     >;
 typedef $$TransactionsTableCreateCompanionBuilder =
     TransactionsCompanion Function({
@@ -2295,6 +2457,7 @@ typedef $$NotificationsTableCreateCompanionBuilder =
       required String body,
       required DateTime createdAt,
       Value<DateTime?> readAt,
+      Value<int?> categoryId,
     });
 typedef $$NotificationsTableUpdateCompanionBuilder =
     NotificationsCompanion Function({
@@ -2304,7 +2467,35 @@ typedef $$NotificationsTableUpdateCompanionBuilder =
       Value<String> body,
       Value<DateTime> createdAt,
       Value<DateTime?> readAt,
+      Value<int?> categoryId,
     });
+
+final class $$NotificationsTableReferences
+    extends
+        BaseReferences<_$AppDatabase, $NotificationsTable, NotificationRow> {
+  $$NotificationsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $CategoriesTable _categoryIdTable(_$AppDatabase db) =>
+      db.categories.createAlias('notifications__category_id__categories__id');
+
+  $$CategoriesTableProcessedTableManager? get categoryId {
+    final $_column = $_itemColumn<int>('category_id');
+    if ($_column == null) return null;
+    final manager = $$CategoriesTableTableManager(
+      $_db,
+      $_db.categories,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
 
 class $$NotificationsTableFilterComposer
     extends Composer<_$AppDatabase, $NotificationsTable> {
@@ -2344,6 +2535,29 @@ class $$NotificationsTableFilterComposer
     column: $table.readAt,
     builder: (column) => ColumnFilters(column),
   );
+
+  $$CategoriesTableFilterComposer get categoryId {
+    final $$CategoriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableFilterComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationsTableOrderingComposer
@@ -2384,6 +2598,29 @@ class $$NotificationsTableOrderingComposer
     column: $table.readAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  $$CategoriesTableOrderingComposer get categoryId {
+    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationsTableAnnotationComposer
@@ -2412,6 +2649,29 @@ class $$NotificationsTableAnnotationComposer
 
   GeneratedColumn<DateTime> get readAt =>
       $composableBuilder(column: $table.readAt, builder: (column) => column);
+
+  $$CategoriesTableAnnotationComposer get categoryId {
+    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
 }
 
 class $$NotificationsTableTableManager
@@ -2425,12 +2685,9 @@ class $$NotificationsTableTableManager
           $$NotificationsTableAnnotationComposer,
           $$NotificationsTableCreateCompanionBuilder,
           $$NotificationsTableUpdateCompanionBuilder,
-          (
-            NotificationRow,
-            BaseReferences<_$AppDatabase, $NotificationsTable, NotificationRow>,
-          ),
+          (NotificationRow, $$NotificationsTableReferences),
           NotificationRow,
-          PrefetchHooks Function()
+          PrefetchHooks Function({bool categoryId})
         > {
   $$NotificationsTableTableManager(_$AppDatabase db, $NotificationsTable table)
     : super(
@@ -2451,6 +2708,7 @@ class $$NotificationsTableTableManager
                 Value<String> body = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime?> readAt = const Value.absent(),
+                Value<int?> categoryId = const Value.absent(),
               }) => NotificationsCompanion(
                 id: id,
                 kind: kind,
@@ -2458,6 +2716,7 @@ class $$NotificationsTableTableManager
                 body: body,
                 createdAt: createdAt,
                 readAt: readAt,
+                categoryId: categoryId,
               ),
           createCompanionCallback:
               ({
@@ -2467,6 +2726,7 @@ class $$NotificationsTableTableManager
                 required String body,
                 required DateTime createdAt,
                 Value<DateTime?> readAt = const Value.absent(),
+                Value<int?> categoryId = const Value.absent(),
               }) => NotificationsCompanion.insert(
                 id: id,
                 kind: kind,
@@ -2474,20 +2734,55 @@ class $$NotificationsTableTableManager
                 body: body,
                 createdAt: createdAt,
                 readAt: readAt,
+                categoryId: categoryId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable<$NotificationsTable, NotificationRow>(table),
-                  BaseReferences<
-                    _$AppDatabase,
-                    $NotificationsTable,
-                    NotificationRow
-                  >(db, table, e),
+                  $$NotificationsTableReferences(db, table, e),
                 ),
               )
               .toList(),
-          prefetchHooksCallback: null,
+          prefetchHooksCallback: ({categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (categoryId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.categoryId,
+                        referencedTable: $$NotificationsTableReferences
+                            ._categoryIdTable(db),
+                        referencedColumn: $$NotificationsTableReferences
+                            ._categoryIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
         ),
       );
 }
@@ -2502,12 +2797,9 @@ typedef $$NotificationsTableProcessedTableManager =
       $$NotificationsTableAnnotationComposer,
       $$NotificationsTableCreateCompanionBuilder,
       $$NotificationsTableUpdateCompanionBuilder,
-      (
-        NotificationRow,
-        BaseReferences<_$AppDatabase, $NotificationsTable, NotificationRow>,
-      ),
+      (NotificationRow, $$NotificationsTableReferences),
       NotificationRow,
-      PrefetchHooks Function()
+      PrefetchHooks Function({bool categoryId})
     >;
 typedef $$PreferencesTableCreateCompanionBuilder =
     PreferencesCompanion Function({

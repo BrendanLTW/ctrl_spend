@@ -109,7 +109,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S33, S34, PRD §5.8, FR-10
 - [x] **3.8 Local notifications.** A notification service using the spike findings: permission request from S07, daily reminder, budget alerts at 80% and 100%, weekly summary, new period started and income recorded. Each writes a Notification row. Tests with a fake scheduler and injected clock.
   Refs: S07, PRD §5.4, FR-12
-- [ ] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
+- [x] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
   Refs: S14, S15, PRD §5.4, FR-12
 - [ ] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
   Refs: S35, PRD §5.8, FR-14
@@ -133,7 +133,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 5 — v1.1 (start only after v1.0 is released)
 
-- [ ] **5.1 Schema v2.** Add Bill, Goal and GoalContribution tables (schemaVersion 2), the migration step and a migration test from v1.0 data.
+- [ ] **5.1 Schema v2.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data.
   Refs: PRD §8
 - [ ] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests.
   Refs: PRD §5.11, §8

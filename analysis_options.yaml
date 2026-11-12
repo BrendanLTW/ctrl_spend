@@ -8,6 +8,8 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - lib/l10n/app_localizations*.dart
+    # Written by `drift_dev schema generate` for migration tests.
+    - test/core/db/generated/**
 
 linter:
   rules:

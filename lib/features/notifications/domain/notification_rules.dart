@@ -17,6 +17,10 @@ sealed class NotificationEvent {
 
   final DateTime at;
 
+  /// The category it's about, for the inbox tile. Null for the monthly
+  /// budget and the scheduled kinds.
+  int? get categoryId => null;
+
   NotificationKind get kind;
 }
 
@@ -24,6 +28,7 @@ sealed class NotificationEvent {
 final class BudgetWarning extends NotificationEvent {
   const new({
     required this.category,
+    required this.categoryId,
     required this.percent,
     required this.leftMinor,
     required this.daysLeft,
@@ -31,6 +36,8 @@ final class BudgetWarning extends NotificationEvent {
   }) : super(at);
 
   final String? category;
+  @override
+  final int? categoryId;
   final int percent;
   final int leftMinor;
   final int daysLeft;
@@ -43,12 +50,15 @@ final class BudgetWarning extends NotificationEvent {
 final class OverBudget extends NotificationEvent {
   const new({
     required this.category,
+    required this.categoryId,
     required this.spentMinor,
     required this.limitMinor,
     required DateTime at,
   }) : super(at);
 
   final String? category;
+  @override
+  final int? categoryId;
   final int spentMinor;
   final int limitMinor;
 
@@ -59,13 +69,14 @@ final class OverBudget extends NotificationEvent {
 final class IncomeRecorded extends NotificationEvent {
   const new({
     required this.category,
-    required this.title,
+    required this.categoryId,
     required this.amountMinor,
     required DateTime at,
   }) : super(at);
 
   final String category;
-  final String title;
+  @override
+  final int categoryId;
   final int amountMinor;
 
   @override
@@ -125,19 +136,26 @@ List<NotificationEvent> transactionEvents({
   final days = daysLeft(period, now);
   final events = <NotificationEvent>[];
 
-  NotificationEvent? crossing(String? name, int was, int spent, int limit) {
+  NotificationEvent? crossing(
+    Category? category,
+    int was,
+    int spent,
+    int limit,
+  ) {
     final from = budgetStatus(spentMinor: was, limitMinor: limit);
     final to = budgetStatus(spentMinor: spent, limitMinor: limit);
     if (to == from) return null;
     return switch (to) {
       BudgetStatus.negative => OverBudget(
-        category: name,
+        category: category?.name,
+        categoryId: category?.id,
         spentMinor: spent,
         limitMinor: limit,
         at: now,
       ),
       BudgetStatus.warning when from != BudgetStatus.negative => BudgetWarning(
-        category: name,
+        category: category?.name,
+        categoryId: category?.id,
         percent: usedPercent(spentMinor: spent, limitMinor: limit)!,
         leftMinor: limit - spent,
         daysLeft: days,
@@ -163,7 +181,7 @@ List<NotificationEvent> transactionEvents({
       final limit = c.limitMinor;
       if (limit == null || c.type != TransactionType.expense) continue;
       final event = crossing(
-        c.name,
+        c,
         wasByCategory[c.id] ?? 0,
         byCategory[c.id] ?? 0,
         limit,
@@ -179,7 +197,7 @@ List<NotificationEvent> transactionEvents({
     events.add(
       IncomeRecorded(
         category: names[t.categoryId] ?? '',
-        title: t.title,
+        categoryId: t.categoryId,
         amountMinor: t.amountMinor,
         at: now,
       ),

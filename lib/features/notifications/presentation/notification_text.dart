@@ -41,7 +41,6 @@ NotificationText notificationText(
       title: l10n.notifyIncomeTitle(event.category),
       body: l10n.notifyIncomeBody(
         formatter.format(event.amountMinor, sign: MoneySign.income),
-        event.title,
       ),
     ),
     DailyReminder() => (
@@ -63,7 +62,10 @@ NotificationText notificationText(
       title: l10n.notifyPeriodTitle,
       body: budgetMinor == null
           ? l10n.notifyPeriodBody(formatPeriod(event.period, locale))
-          : l10n.notifyPeriodBudgetBody(money(budgetMinor)),
+          : l10n.notifyPeriodBudgetBody(
+              formatPeriod(event.period, locale),
+              money(budgetMinor),
+            ),
     ),
   };
 }

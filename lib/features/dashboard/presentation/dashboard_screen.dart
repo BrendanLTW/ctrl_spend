@@ -14,6 +14,7 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_header.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/recent_activities.dart';
+import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -47,6 +48,9 @@ class DashboardScreen extends ConsumerWidget {
     final totals = periodTotals(inPeriod, period);
     final locale = Localizations.localeOf(context).toLanguageTag();
 
+    final unread = (ref.watch(notificationsProvider).value ?? const [])
+        .where((n) => n.readAt == null)
+        .length;
     return Scaffold(
       backgroundColor: context.colors.ground,
       body: SafeArea(
@@ -67,8 +71,8 @@ class DashboardScreen extends ConsumerWidget {
               child: DashboardHeader(
                 periodLabel: formatPeriod(period, locale),
                 name: prefs.userName,
-                // shortcut: opens the inbox (S14) once task 3.9 builds it.
-                onBell: () {},
+                unreadCount: unread,
+                onBell: () => context.push(Routes.notifications),
                 onAvatar: () => context.push(Routes.settings),
               ),
             ),

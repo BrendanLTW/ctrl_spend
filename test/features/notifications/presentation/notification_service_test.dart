@@ -98,12 +98,12 @@ void main() {
       final daily = scheduler.pending[NotificationService.dailyId]!;
       expect(daily.kind, 'daily');
       expect(daily.minutes, 21 * 60);
-      expect(daily.title, "Log today's spending?");
+      expect(daily.title, 'Daily reminder');
       expect(scheduler.pending[NotificationService.weeklyId], isNull);
       final period = scheduler.pending[NotificationService.periodId]!;
       expect(period.at, DateTime(2026, 11, 15, 9));
       expect(period.title, 'New period started');
-      expect(period.body, 'Your RM 2,000 budget has reset.');
+      expect(period.body, '15 Nov – 14 Dec. Your RM 2,000 budget has reset.');
     });
 
     testWidgets('settings changes reschedule', (tester) async {
@@ -146,8 +146,11 @@ void main() {
       );
       final reminder = inbox.all.single;
       expect(reminder.kind, NotificationKind.dailyReminder);
-      expect(reminder.title, "Log today's spending?");
-      expect(reminder.body, 'Take a moment to add what you spent today.');
+      expect(reminder.title, 'Daily reminder');
+      expect(
+        reminder.body,
+        'Anything to log from today? It takes ten seconds.',
+      );
       expect(reminder.createdAt, DateTime(2026, 11, 3, 21));
       expect(reminder.readAt, isNull);
       expect((await prefs.read()).notificationsCheckedAt, now);
@@ -158,8 +161,11 @@ void main() {
       now = DateTime(2026, 11, 15, 22);
       tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
       await tester.pumpAndSettle();
-      expect(titles(), ['New period started', "Log today's spending?"]);
-      expect(inbox.all.first.body, 'Your RM 2,000 budget has reset.');
+      expect(titles(), ['New period started', 'Daily reminder']);
+      expect(
+        inbox.all.first.body,
+        '15 Nov – 14 Dec. Your RM 2,000 budget has reset.',
+      );
       // The next period's start is registered after the roll-over.
       expect(
         scheduler.pending[NotificationService.periodId]!.at,
@@ -221,7 +227,8 @@ void main() {
       await pumpApp(tester);
       await spend(tester, 480000, 'Salary', title: 'November pay');
       expect(titles(), ['Salary added']);
-      expect(inbox.all.single.body, '+RM 4,800.00 · November pay');
+      expect(inbox.all.single.body, '+RM 4,800.00 recorded as Income.');
+      expect(inbox.all.single.categoryId, categories.byName('Salary').id);
     });
   });
 
