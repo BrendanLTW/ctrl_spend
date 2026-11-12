@@ -23,6 +23,12 @@ class FakeTransactionRepository implements TransactionRepository {
   /// Makes the next [importAll] fail part-way, to prove nothing is kept.
   bool failImport = false;
 
+  /// Removes everything (Delete all data).
+  void clear() {
+    _byId.clear();
+    _changes.add(null);
+  }
+
   /// Everything stored, newest first. Synchronous, so a test can check it
   /// without pumping for a stream's first value.
   List<Transaction> get all => _matching();

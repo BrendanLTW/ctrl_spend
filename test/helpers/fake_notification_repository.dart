@@ -11,6 +11,12 @@ class FakeNotificationRepository implements NotificationRepository {
   List<AppNotification> get _sorted =>
       [...all]..sort((a, b) => b.createdAt.compareTo(a.createdAt));
 
+  /// Removes everything (Delete all data).
+  void clear() {
+    all.clear();
+    _changes.add(null);
+  }
+
   @override
   Stream<List<AppNotification>> watch() {
     StreamSubscription<void>? changes;

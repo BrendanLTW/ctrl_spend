@@ -1257,5 +1257,10 @@
   "columnDate": "Date",
   "columnType": "Type",
   "columnCategory": "Category",
-  "columnAmount": "Amount"
+  "columnAmount": "Amount",
+  "deleteAllData": "Delete all data",
+  "deleteAllDataTitle": "Delete all data?",
+  "deleteAllDataBody": "This erases every transaction, category, notification and setting on this phone. It can't be undone.",
+  "deleteEverything": "Delete everything",
+  "exportFirst": "Export first"
 }

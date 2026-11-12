@@ -14,6 +14,7 @@ import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -124,6 +125,20 @@ class SettingsScreen extends ConsumerWidget {
                 leading: tile(Icons.upload_rounded, CategoryColorKey.blue),
                 title: l10n.importCsv,
                 onTap: () => importCsv(context, ref),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.sectionTop),
+          ListGroup(
+            children: [
+              ListGroupRow(
+                leading: tile(
+                  Icons.delete_outline_rounded,
+                  CategoryColorKey.red,
+                ),
+                title: l10n.deleteAllData,
+                titleColor: colors.negative,
+                onTap: () => confirmAndDeleteAllData(context, ref),
               ),
             ],
           ),

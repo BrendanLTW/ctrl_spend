@@ -11,6 +11,17 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 /// clock.
 class FakeCategoryRepository implements CategoryRepository {
   new() {
+    _seed();
+  }
+
+  /// Back to the defaults only (Delete all data).
+  void reset() {
+    _byId.clear();
+    _seed();
+    _changes.add(null);
+  }
+
+  void _seed() {
     for (final (i, c) in defaultCategories.indexed) {
       _byId[i + 1] = Category(
         id: i + 1,

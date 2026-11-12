@@ -4,9 +4,11 @@ import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/data_transfer/data/drift_data_eraser.dart';
 import 'package:ctrl_spend/features/data_transfer/data/share_plus_file_sharer.dart';
 import 'package:ctrl_spend/features/data_transfer/data/system_csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/notifications/data/drift_notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/data/local_notification_scheduler.dart';
@@ -50,6 +52,9 @@ void main() {
         ),
         fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
         csvFilePickerProvider.overrideWith((ref) => SystemCsvFilePicker()),
+        dataEraserProvider.overrideWith(
+          (ref) => DriftDataEraser(ref.watch(appDatabaseProvider)),
+        ),
       ],
       child: const MainApp(),
     ),

@@ -38,6 +38,7 @@ class ListGroupRow extends StatelessWidget {
     this.leading,
     this.value,
     this.valueColor,
+    this.titleColor,
     this.trailing,
     this.onTap,
     this.selected = false,
@@ -54,6 +55,9 @@ class ListGroupRow extends StatelessWidget {
   /// Defaults to `muted`; a status colour for results like "Over by RM 10"
   /// (S25).
   final Color? valueColor;
+
+  /// Defaults to `ink`; `negative` for Delete all data (S21).
+  final Color? titleColor;
 
   /// A widget in the value's place, e.g. S23's icon tile. Not read out.
   final Widget? trailing;
@@ -92,7 +96,9 @@ class ListGroupRow extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: text.rowTitle.copyWith(color: colors.ink),
+                        style: text.rowTitle.copyWith(
+                          color: titleColor ?? colors.ink,
+                        ),
                       ),
                       if (subtitle case final subtitle?) ...[
                         const SizedBox(height: 2),

@@ -1384,4 +1384,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get columnAmount => 'Amount';
+
+  @override
+  String get deleteAllData => 'Delete all data';
+
+  @override
+  String get deleteAllDataTitle => 'Delete all data?';
+
+  @override
+  String get deleteAllDataBody =>
+      'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.';
+
+  @override
+  String get deleteEverything => 'Delete everything';
+
+  @override
+  String get exportFirst => 'Export first';
 }

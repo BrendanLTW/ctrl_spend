@@ -109,6 +109,20 @@ class NotificationService {
     }
   }();
 
+  /// After Delete all data: cancels what's scheduled with the phone and
+  /// forgets it, so finishing onboarding again schedules from scratch.
+  Future<void> reset() async {
+    _scheduled = null;
+    _caughtUpOnLaunch = false;
+    // Forget the old settings too: otherwise a transactions update that
+    // arrives before the reset settings would catch up as if onboarded.
+    _prefs = null;
+    final scheduler = _ref.read(notificationSchedulerProvider);
+    for (final id in const [dailyId, weeklyId, periodId]) {
+      await scheduler.cancel(id);
+    }
+  }
+
   void dispose() => _lifecycle.dispose();
 
   void _onPreferences(Preferences? prefs) {

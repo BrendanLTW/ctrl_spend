@@ -38,6 +38,7 @@ class AppDialog extends StatelessWidget {
     required this.body,
     required this.confirmLabel,
     this.destructive = false,
+    this.link,
     super.key,
   });
 
@@ -48,6 +49,10 @@ class AppDialog extends StatelessWidget {
 
   /// Red confirm button and icon, e.g. Delete.
   final bool destructive;
+
+  /// A text link above the buttons, e.g. "Export first" before Delete all
+  /// data.
+  final Widget? link;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +101,12 @@ class AppDialog extends StatelessWidget {
               textAlign: TextAlign.center,
               style: text.body.copyWith(color: colors.muted),
             ),
-            const SizedBox(height: 24),
+            if (link case final link?) ...[
+              const SizedBox(height: 8),
+              link,
+              const SizedBox(height: 8),
+            ] else
+              const SizedBox(height: 24),
             PillButton(
               label: confirmLabel,
               style: destructive

@@ -19,18 +19,7 @@ class AppDatabase extends _$AppDatabase {
     // the table is empty would bring back categories the user deleted.
     onCreate: (m) async {
       await m.createAll();
-      await batch(
-        (b) => b.insertAll(categories, [
-          for (final (i, c) in defaultCategories.indexed)
-            CategoriesCompanion.insert(
-              name: c.name,
-              type: c.type.name,
-              iconKey: c.icon.name,
-              colorKey: c.colour.name,
-              sortOrder: i,
-            ),
-        ]),
-      );
+      await seedDefaultCategories();
     },
     onUpgrade: (m, from, to) async {
       // v2: notifications remember their category (S14 tiles).
@@ -40,6 +29,23 @@ class AppDatabase extends _$AppDatabase {
     },
     // SQLite ignores foreign keys unless asked, per connection.
     beforeOpen: (_) => customStatement('PRAGMA foreign_keys = ON'),
+  );
+}
+
+extension DefaultCategorySeed on AppDatabase {
+  /// Adds the 8 default categories (PRD §8): on first launch, and again
+  /// after Delete all data.
+  Future<void> seedDefaultCategories() => batch(
+    (b) => b.insertAll(categories, [
+      for (final (i, c) in defaultCategories.indexed)
+        CategoriesCompanion.insert(
+          name: c.name,
+          type: c.type.name,
+          iconKey: c.icon.name,
+          colorKey: c.colour.name,
+          sortOrder: i,
+        ),
+    ]),
   );
 }
 

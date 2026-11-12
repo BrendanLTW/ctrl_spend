@@ -2169,6 +2169,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Amount'**
   String get columnAmount;
+
+  /// No description provided for @deleteAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all data'**
+  String get deleteAllData;
+
+  /// No description provided for @deleteAllDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete all data?'**
+  String get deleteAllDataTitle;
+
+  /// No description provided for @deleteAllDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.'**
+  String get deleteAllDataBody;
+
+  /// No description provided for @deleteEverything.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete everything'**
+  String get deleteEverything;
+
+  /// No description provided for @exportFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Export first'**
+  String get exportFirst;
 }
 
 class _AppLocalizationsDelegate

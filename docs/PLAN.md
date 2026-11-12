@@ -117,6 +117,8 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S36, PRD §5.8, FR-14
 - [x] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
   Refs: FR-11, DESIGN §9
+- [x] **3.13 Delete all data.** *(Added on request.)* A red S21 row and S42-style dialog with Export first; erase every table in one transaction, re-seed the default categories, cancel scheduled notifications and return to onboarding.
+  Refs: PRD §5.8 (addition)
 
 ## Phase 4 — Ship v1.0
 
