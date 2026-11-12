@@ -33,6 +33,24 @@ date,time,type,category,title,amount,note
 2026-10-10,18:00,expense,Shopping,"Shoes, black",99.00,
 ```
 
-## Import (task 3.11)
+## Import
 
-Import reads the same columns. Its validation rules (unknown categories, bad dates, empty amounts) and the all-or-nothing behaviour are defined in that task.
+Code: `lib/features/data_transfer/domain/csv_import.dart` and `TransactionRepository.importAll`.
+
+- **All or nothing.** Every row is checked first. If any row has a problem, nothing is imported and S36 lists each problem by row. Otherwise every row is saved in one database transaction.
+- **Row numbers** count the header as row 1, as a spreadsheet shows them.
+- **Columns** are found by their header names, in any order and any case. `date`, `type`, `category` and `amount` are required; a missing one is a single row 1 problem. `time`, `title` and `note` are optional.
+- **Blank lines** are skipped. A byte-order mark is ignored. A file that isn't UTF-8 text is one row 1 problem.
+- **Imports add** to what's there; there is no duplicate check.
+
+| Column | Accepted | Problem shown |
+|---|---|---|
+| `date` | `YYYY-MM-DD` or `DD/MM/YYYY`, only real dates | `"31/02/2026" isn't a real date`, `Date is empty` |
+| `time` | `HH:mm`, 24-hour. Empty means 12:00 | `"25:00" isn't a time` |
+| `type` | `expense` or `income`, any case | `"spend" isn't expense or income`, `Type is empty` |
+| `category` | Any name. Matched by name and type, ignoring case, archived categories included. A new name creates a category with the wallet icon and the neutral colour | `Category is empty` |
+| `title` | Any text. Empty means the category name | — |
+| `amount` | Above 0, at most two decimals, `,` allowed as a thousands separator (`1,234.50`) | `"abc" isn't an amount`, `Amount is empty` |
+| `note` | Any text. Empty means no note | — |
+
+**Download a sample CSV** on S36 shares `ctrlspend-sample.csv` with three example rows.

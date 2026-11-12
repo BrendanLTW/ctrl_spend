@@ -102,14 +102,14 @@ void main() {
       expect(find.text('Savings goals'), findsNothing);
     });
 
-    testWidgets('only rows with a screen can be tapped', (tester) async {
+    testWidgets('every row can be tapped', (tester) async {
       await pumpAt(tester, Routes.settings);
       expect(row(tester, 'Month starts on').onTap, isNotNull);
       expect(row(tester, 'Categories').onTap, isNotNull);
       expect(row(tester, 'Theme').onTap, isNotNull);
       expect(row(tester, 'Currency').onTap, isNotNull);
       expect(row(tester, 'Export to CSV').onTap, isNotNull);
-      expect(row(tester, 'Import from CSV').onTap, isNull);
+      expect(row(tester, 'Import from CSV').onTap, isNotNull);
     });
 
     testWidgets('the last day shows as "Last day"', (tester) async {

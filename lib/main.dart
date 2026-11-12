@@ -5,6 +5,8 @@ import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/data/share_plus_file_sharer.dart';
+import 'package:ctrl_spend/features/data_transfer/data/system_csv_file_picker.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/notifications/data/drift_notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/data/local_notification_scheduler.dart';
@@ -47,6 +49,7 @@ void main() {
           (ref) => LocalNotificationScheduler(),
         ),
         fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
+        csvFilePickerProvider.overrideWith((ref) => SystemCsvFilePicker()),
       ],
       child: const MainApp(),
     ),

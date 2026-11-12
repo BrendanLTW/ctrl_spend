@@ -13,6 +13,7 @@ import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -119,10 +120,10 @@ class SettingsScreen extends ConsumerWidget {
                 title: l10n.exportCsv,
                 onTap: () => context.push(Routes.export),
               ),
-              // shortcut: Import opens S36 in task 3.11.
               ListGroupRow(
                 leading: tile(Icons.upload_rounded, CategoryColorKey.blue),
                 title: l10n.importCsv,
+                onTap: () => importCsv(context, ref),
               ),
             ],
           ),

@@ -113,7 +113,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S14, S15, PRD §5.4, FR-12
 - [x] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
   Refs: S35, PRD §5.8, FR-14
-- [ ] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
+- [x] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
   Refs: S36, PRD §5.8, FR-14
 - [ ] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
   Refs: FR-11, DESIGN §9

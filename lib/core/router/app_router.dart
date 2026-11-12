@@ -4,7 +4,9 @@ import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/import_failed_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -59,6 +61,9 @@ abstract final class Routes {
 
   /// S35 Export data.
   static const export = '/settings/export';
+
+  /// S36 Import failed; pass the `ImportFailure` as `extra`.
+  static const importFailed = '/settings/import';
 
   /// S22 Category manager.
   static const categories = '/settings/categories';
@@ -157,6 +162,14 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.export,
         builder: (context, state) => const ExportScreen(),
+      ),
+      GoRoute(
+        path: Routes.importFailed,
+        builder: (context, state) => switch (state.extra) {
+          final ImportFailure failure => ImportFailedScreen(failure: failure),
+          // Only reachable with its problems; anything else goes back.
+          _ => const SettingsScreen(),
+        },
       ),
       GoRoute(
         path: Routes.theme,

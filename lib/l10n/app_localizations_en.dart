@@ -1295,4 +1295,93 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nothingToExport => 'No transactions to export';
+
+  @override
+  String get importTitle => 'Import data';
+
+  @override
+  String get importFailedTitle => 'We couldn\'t import that file';
+
+  @override
+  String importFailedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count rows have problems, so nothing was imported. Fix them and try again.',
+      one:
+          '1 row has a problem, so nothing was imported. Fix it and try again.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rowNumber(int row) {
+    return 'Row $row';
+  }
+
+  @override
+  String problemNotADate(String value) {
+    return '“$value” isn\'t a real date';
+  }
+
+  @override
+  String problemNotATime(String value) {
+    return '“$value” isn\'t a time';
+  }
+
+  @override
+  String problemNotAnAmount(String value) {
+    return '“$value” isn\'t an amount';
+  }
+
+  @override
+  String problemNotAType(String value) {
+    return '“$value” isn\'t expense or income';
+  }
+
+  @override
+  String problemEmpty(String column) {
+    return '$column is empty';
+  }
+
+  @override
+  String problemMissingColumns(String columns) {
+    return 'The first row must name the columns $columns';
+  }
+
+  @override
+  String get problemNotText => 'The file isn\'t readable text';
+
+  @override
+  String get chooseAnotherFile => 'Choose another file';
+
+  @override
+  String get downloadSampleCsv => 'Download a sample CSV';
+
+  @override
+  String importedTransactions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Imported $count transactions',
+      one: 'Imported 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importEmpty => 'That file has no transactions';
+
+  @override
+  String get columnDate => 'Date';
+
+  @override
+  String get columnType => 'Type';
+
+  @override
+  String get columnCategory => 'Category';
+
+  @override
+  String get columnAmount => 'Amount';
 }

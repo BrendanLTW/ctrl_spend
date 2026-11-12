@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
@@ -7,6 +8,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:flutter_riverpod/misc.dart';
 
 import 'fake_category_repository.dart';
+import 'fake_csv_file_picker.dart';
 import 'fake_file_sharer.dart';
 import 'fake_notification_repository.dart';
 import 'fake_notification_scheduler.dart';
@@ -22,6 +24,7 @@ List<Override> fakeRepositories({
   NotificationRepository? notifications,
   NotificationScheduler? scheduler,
   FileSharer? sharer,
+  CsvFilePicker? picker,
 }) => [
   preferencesRepositoryProvider.overrideWithValue(
     preferences ?? FakePreferencesRepository(),
@@ -39,4 +42,5 @@ List<Override> fakeRepositories({
     scheduler ?? FakeNotificationScheduler(),
   ),
   fileSharerProvider.overrideWithValue(sharer ?? FakeFileSharer()),
+  csvFilePickerProvider.overrideWithValue(picker ?? FakeCsvFilePicker()),
 ];

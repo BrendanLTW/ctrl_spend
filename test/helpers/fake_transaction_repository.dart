@@ -16,6 +16,13 @@ class FakeTransactionRepository implements TransactionRepository {
   /// Names categories for search; unset means only title and note match.
   String? Function(int categoryId)? categoryName;
 
+  /// Resolves [importAll]'s category names, e.g. with
+  /// `FakeCategoryRepository.idForImport`. Unset, importing throws.
+  Future<int> Function(String name, TransactionType type)? categoryForImport;
+
+  /// Makes the next [importAll] fail part-way, to prove nothing is kept.
+  bool failImport = false;
+
   /// Everything stored, newest first. Synchronous, so a test can check it
   /// without pumping for a stream's first value.
   List<Transaction> get all => _matching();
@@ -111,6 +118,29 @@ class FakeTransactionRepository implements TransactionRepository {
   @override
   Future<void> restore(Transaction transaction) async {
     _byId[transaction.id] = transaction;
+    _changes.add(null);
+  }
+
+  @override
+  Future<void> importAll(List<ImportedTransaction> rows) async {
+    final saved = <Transaction>[];
+    for (final row in rows) {
+      if (failImport) throw StateError('import failed');
+      saved.add(
+        Transaction(
+          id: _nextId++,
+          amountMinor: row.amountMinor,
+          type: row.type,
+          categoryId: await categoryForImport!(row.category, row.type),
+          occurredAt: row.occurredAt.toUtc(),
+          title: row.title,
+          note: row.note,
+        ),
+      );
+    }
+    for (final t in saved) {
+      _byId[t.id] = t;
+    }
     _changes.add(null);
   }
 }

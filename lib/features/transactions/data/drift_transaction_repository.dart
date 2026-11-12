@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/data/transaction_mapper.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -84,6 +85,60 @@ class DriftTransactionRepository implements TransactionRepository {
     );
     await _db.update(_db.transactions).replace(transaction.toCompanion());
   });
+
+  @override
+  Future<void> importAll(List<ImportedTransaction> rows) =>
+      _db.transaction(() async {
+        final c = _db.categories;
+        final ids = {
+          for (final row in await _db.select(c).get())
+            (row.type, row.name.toLowerCase()): row.id,
+        };
+        final nextOrder = <String, int>{};
+        Future<int> categoryFor(ImportedTransaction t) async {
+          final key = (t.type.name, t.category.toLowerCase());
+          if (ids[key] case final id?) return id;
+          final maxOrder = c.sortOrder.max();
+          final order =
+              nextOrder[t.type.name] ??
+              ((await (_db.selectOnly(c)
+                            ..addColumns([maxOrder])
+                            ..where(c.type.equals(t.type.name)))
+                          .map((r) => r.read(maxOrder))
+                          .getSingle() ??
+                      -1) +
+                  1);
+          nextOrder[t.type.name] = order + 1;
+          final id = await _db
+              .into(c)
+              .insert(
+                CategoriesCompanion.insert(
+                  name: t.category,
+                  type: t.type.name,
+                  iconKey: CategoryIconKey.wallet.name,
+                  colorKey: CategoryColorKey.neutral.name,
+                  sortOrder: order,
+                ),
+              );
+          return ids[key] = id;
+        }
+
+        for (final t in rows) {
+          _checkAmount(t.amountMinor);
+          await _db
+              .into(_db.transactions)
+              .insert(
+                TransactionsCompanion.insert(
+                  amountMinor: t.amountMinor,
+                  type: t.type.name,
+                  categoryId: await categoryFor(t),
+                  occurredAt: t.occurredAt.toUtc(),
+                  title: t.title,
+                  note: Value(t.note),
+                ),
+              );
+        }
+      });
 
   @override
   Future<Transaction> delete(int id) => _db.transaction(() async {

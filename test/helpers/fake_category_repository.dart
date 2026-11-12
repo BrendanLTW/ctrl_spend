@@ -35,6 +35,23 @@ class FakeCategoryRepository implements CategoryRepository {
   Category byName(String name) =>
       _byId.values.singleWhere((c) => c.name == name);
 
+  /// The category `importAll` would use: matched by name and type,
+  /// ignoring case, archived ones included, or created like the real one.
+  Future<int> idForImport(String name, TransactionType type) async {
+    for (final c in _byId.values) {
+      if (c.type == type && c.name.toLowerCase() == name.toLowerCase()) {
+        return c.id;
+      }
+    }
+    final created = await add(
+      name: name,
+      type: type,
+      iconKey: CategoryIconKey.wallet,
+      colorKey: CategoryColorKey.neutral,
+    );
+    return created.id;
+  }
+
   List<Category> _matching({TransactionType? type, bool? archived}) =>
       _byId.values
           .where((c) => type == null || c.type == type)

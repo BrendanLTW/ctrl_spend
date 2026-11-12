@@ -2055,6 +2055,120 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No transactions to export'**
   String get nothingToExport;
+
+  /// No description provided for @importTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Import data'**
+  String get importTitle;
+
+  /// No description provided for @importFailedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn\'t import that file'**
+  String get importFailedTitle;
+
+  /// No description provided for @importFailedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 row has a problem, so nothing was imported. Fix it and try again.} other{{count} rows have problems, so nothing was imported. Fix them and try again.}}'**
+  String importFailedBody(int count);
+
+  /// No description provided for @rowNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Row {row}'**
+  String rowNumber(int row);
+
+  /// No description provided for @problemNotADate.
+  ///
+  /// In en, this message translates to:
+  /// **'“{value}” isn\'t a real date'**
+  String problemNotADate(String value);
+
+  /// No description provided for @problemNotATime.
+  ///
+  /// In en, this message translates to:
+  /// **'“{value}” isn\'t a time'**
+  String problemNotATime(String value);
+
+  /// No description provided for @problemNotAnAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'“{value}” isn\'t an amount'**
+  String problemNotAnAmount(String value);
+
+  /// No description provided for @problemNotAType.
+  ///
+  /// In en, this message translates to:
+  /// **'“{value}” isn\'t expense or income'**
+  String problemNotAType(String value);
+
+  /// No description provided for @problemEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'{column} is empty'**
+  String problemEmpty(String column);
+
+  /// No description provided for @problemMissingColumns.
+  ///
+  /// In en, this message translates to:
+  /// **'The first row must name the columns {columns}'**
+  String problemMissingColumns(String columns);
+
+  /// No description provided for @problemNotText.
+  ///
+  /// In en, this message translates to:
+  /// **'The file isn\'t readable text'**
+  String get problemNotText;
+
+  /// No description provided for @chooseAnotherFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose another file'**
+  String get chooseAnotherFile;
+
+  /// No description provided for @downloadSampleCsv.
+  ///
+  /// In en, this message translates to:
+  /// **'Download a sample CSV'**
+  String get downloadSampleCsv;
+
+  /// No description provided for @importedTransactions.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Imported 1 transaction} other{Imported {count} transactions}}'**
+  String importedTransactions(int count);
+
+  /// No description provided for @importEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'That file has no transactions'**
+  String get importEmpty;
+
+  /// No description provided for @columnDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get columnDate;
+
+  /// No description provided for @columnType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get columnType;
+
+  /// No description provided for @columnCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get columnCategory;
+
+  /// No description provided for @columnAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get columnAmount;
 }
 
 class _AppLocalizationsDelegate

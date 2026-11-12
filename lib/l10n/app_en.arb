@@ -1175,5 +1175,87 @@
       }
     }
   },
-  "nothingToExport": "No transactions to export"
+  "nothingToExport": "No transactions to export",
+  "importTitle": "Import data",
+  "importFailedTitle": "We couldn't import that file",
+  "importFailedBody": "{count, plural, =1{1 row has a problem, so nothing was imported. Fix it and try again.} other{{count} rows have problems, so nothing was imported. Fix them and try again.}}",
+  "@importFailedBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rowNumber": "Row {row}",
+  "@rowNumber": {
+    "placeholders": {
+      "row": {
+        "type": "int"
+      }
+    }
+  },
+  "problemNotADate": "“{value}” isn't a real date",
+  "@problemNotADate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotATime": "“{value}” isn't a time",
+  "@problemNotATime": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotAnAmount": "“{value}” isn't an amount",
+  "@problemNotAnAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotAType": "“{value}” isn't expense or income",
+  "@problemNotAType": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemEmpty": "{column} is empty",
+  "@problemEmpty": {
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "problemMissingColumns": "The first row must name the columns {columns}",
+  "@problemMissingColumns": {
+    "placeholders": {
+      "columns": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotText": "The file isn't readable text",
+  "chooseAnotherFile": "Choose another file",
+  "downloadSampleCsv": "Download a sample CSV",
+  "importedTransactions": "{count, plural, =1{Imported 1 transaction} other{Imported {count} transactions}}",
+  "@importedTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importEmpty": "That file has no transactions",
+  "columnDate": "Date",
+  "columnType": "Type",
+  "columnCategory": "Category",
+  "columnAmount": "Amount"
 }
