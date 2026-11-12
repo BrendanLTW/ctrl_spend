@@ -1365,6 +1365,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No transactions in {chip} so far.'**
   String nothingInChip(String chip);
+
+  /// No description provided for @insightsWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get insightsWeek;
+
+  /// No description provided for @insightsMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get insightsMonth;
+
+  /// No description provided for @insightsSixMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'6 months'**
+  String get insightsSixMonths;
+
+  /// No description provided for @spentInPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Spent {period}'**
+  String spentInPeriod(String period);
+
+  /// No description provided for @spendingCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending categories'**
+  String get spendingCategories;
+
+  /// No description provided for @spendingSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Spending by category: {shares}'**
+  String spendingSummary(String shares);
+
+  /// No description provided for @categoryShare.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} {percent}%, {amount}'**
+  String categoryShare(String category, int percent, String amount);
+
+  /// No description provided for @insightsEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Not enough data yet'**
+  String get insightsEmptyTitle;
+
+  /// No description provided for @insightsEmptyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Charts appear once you\'ve logged a few days of spending.'**
+  String get insightsEmptyBody;
+
+  /// No description provided for @addAnExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Add an expense'**
+  String get addAnExpense;
 }
 
 class _AppLocalizationsDelegate

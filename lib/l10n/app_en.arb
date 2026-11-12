@@ -636,5 +636,42 @@
         "type": "String"
       }
     }
-  }
+  },
+  "insightsWeek": "Week",
+  "insightsMonth": "Month",
+  "insightsSixMonths": "6 months",
+  "spentInPeriod": "Spent {period}",
+  "@spentInPeriod": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "spendingCategories": "Spending categories",
+  "spendingSummary": "Spending by category: {shares}",
+  "@spendingSummary": {
+    "placeholders": {
+      "shares": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryShare": "{category} {percent}%, {amount}",
+  "@categoryShare": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "insightsEmptyTitle": "Not enough data yet",
+  "insightsEmptyBody": "Charts appear once you've logged a few days of spending.",
+  "addAnExpense": "Add an expense"
 }

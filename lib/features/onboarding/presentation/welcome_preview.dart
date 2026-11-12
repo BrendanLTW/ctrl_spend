@@ -9,6 +9,7 @@ import 'package:ctrl_spend/core/theme/chart_palette.dart';
 import 'package:ctrl_spend/core/widgets/amount_text.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/donut_painter.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,15 @@ class WelcomePreview extends StatelessWidget {
   static const _budgetMinor = 200000;
   static const _sampleExpenseMinor = 1820;
   static const _foodPercent = 82;
+
+  /// Sample category arcs; an illustration, not a chart.
+  static const List<(Color, double)> _segments = [
+    (ChartPalette.orange, 0.36),
+    (ChartPalette.pink, 0.20),
+    (ChartPalette.blue, 0.17),
+    (ChartPalette.yellow, 0.12),
+    (ChartPalette.purple, 0.08),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +81,12 @@ class WelcomePreview extends StatelessWidget {
             SizedBox(
               height: 200,
               child: CustomPaint(
-                painter: _DonutPainter(),
+                painter: const DonutPainter(
+                  segments: _segments,
+                  stroke: 16,
+                  gap: 0.55,
+                  startAngle: -math.pi / 2.6,
+                ),
                 child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -168,42 +183,4 @@ class _Chip extends StatelessWidget {
       ),
     );
   }
-}
-
-/// Sample category arcs; an illustration, not a chart (S02).
-class _DonutPainter extends CustomPainter {
-  static const List<(Color, double)> _segments = [
-    (ChartPalette.orange, 0.36),
-    (ChartPalette.pink, 0.20),
-    (ChartPalette.blue, 0.17),
-    (ChartPalette.yellow, 0.12),
-    (ChartPalette.purple, 0.08),
-  ];
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    const stroke = 16.0;
-    // Room between arcs, beyond what the round caps take up (DESIGN S02).
-    const gap = 0.55;
-    final radius = math.min(size.width, size.height) / 2 - stroke;
-    final rect = Rect.fromCircle(
-      center: size.center(Offset.zero),
-      radius: radius,
-    );
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = stroke
-      ..strokeCap = StrokeCap.round;
-    final total = _segments.fold<double>(0, (sum, s) => sum + s.$2);
-    final available = 2 * math.pi - gap * _segments.length;
-    var start = -math.pi / 2.6;
-    for (final (color, share) in _segments) {
-      final sweep = share / total * available;
-      canvas.drawArc(rect, start, sweep, false, paint..color = color);
-      start += sweep + gap;
-    }
-  }
-
-  @override
-  bool shouldRepaint(_DonutPainter oldDelegate) => false;
 }

@@ -38,18 +38,6 @@ final List<CategoryColorKey> pickerColours = [
     if (key != CategoryColorKey.neutral) key,
 ];
 
-/// The bright swatch for a colour key, as on the design's dots.
-Color swatchColour(CategoryColorKey key) => switch (key) {
-  CategoryColorKey.orange => ChartPalette.orange,
-  CategoryColorKey.blue => ChartPalette.blue,
-  CategoryColorKey.pink => ChartPalette.pink,
-  CategoryColorKey.yellow => ChartPalette.yellow,
-  CategoryColorKey.purple => ChartPalette.purple,
-  CategoryColorKey.green => ChartPalette.green,
-  CategoryColorKey.red => ChartPalette.red,
-  CategoryColorKey.neutral => ChartPalette.under,
-};
-
 class _AddCategoryBody extends ConsumerStatefulWidget {
   const new();
 
@@ -354,7 +342,7 @@ class _Swatches extends StatelessWidget {
                 ),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: swatchColour(colour),
+                    color: ChartPalette.of(colour),
                     shape: BoxShape.circle,
                   ),
                 ),

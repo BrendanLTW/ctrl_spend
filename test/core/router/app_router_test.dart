@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -97,11 +98,9 @@ void main() {
     await tester.tap(tab('Budgets'));
     await tester.pumpAndSettle();
     expect(find.byType(BudgetsScreen), findsOneWidget);
-    for (final label in ['Insights']) {
-      await tester.tap(tab(label));
-      await tester.pumpAndSettle();
-      expect(title(label), findsOneWidget);
-    }
+    await tester.tap(tab('Insights'));
+    await tester.pumpAndSettle();
+    expect(find.byType(InsightsScreen), findsOneWidget);
     await tester.tap(tab('Home'));
     await tester.pumpAndSettle();
     expect(home, findsOneWidget);

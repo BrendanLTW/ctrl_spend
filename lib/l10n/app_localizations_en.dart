@@ -801,4 +801,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String nothingInChip(String chip) {
     return 'No transactions in $chip so far.';
   }
+
+  @override
+  String get insightsWeek => 'Week';
+
+  @override
+  String get insightsMonth => 'Month';
+
+  @override
+  String get insightsSixMonths => '6 months';
+
+  @override
+  String spentInPeriod(String period) {
+    return 'Spent $period';
+  }
+
+  @override
+  String get spendingCategories => 'Spending categories';
+
+  @override
+  String spendingSummary(String shares) {
+    return 'Spending by category: $shares';
+  }
+
+  @override
+  String categoryShare(String category, int percent, String amount) {
+    return '$category $percent%, $amount';
+  }
+
+  @override
+  String get insightsEmptyTitle => 'Not enough data yet';
+
+  @override
+  String get insightsEmptyBody =>
+      'Charts appear once you\'ve logged a few days of spending.';
+
+  @override
+  String get addAnExpense => 'Add an expense';
 }
