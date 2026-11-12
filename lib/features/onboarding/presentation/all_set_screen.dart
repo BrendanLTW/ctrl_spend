@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
@@ -86,8 +87,8 @@ class AllSetScreen extends ConsumerWidget {
                             color: tick.tile,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
-                            Icons.check_rounded,
+                          child: AppIconView(
+                            AppIcon.check,
                             size: 44,
                             color: tick.icon,
                           ),

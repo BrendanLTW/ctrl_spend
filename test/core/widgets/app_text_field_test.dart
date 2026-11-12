@@ -1,7 +1,9 @@
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/find_app_icon.dart';
 import '../../helpers/themed.dart';
 
 void main() {
@@ -17,7 +19,7 @@ void main() {
         AppTextField(
           controller: controller,
           hint: 'First name',
-          icon: Icons.person_outline_rounded,
+          icon: AppIcon.user,
         ),
       );
       final decoration = tester
@@ -30,7 +32,7 @@ void main() {
         BorderRadius.circular(20),
       );
       expect(
-        tester.widget<Icon>(find.byIcon(Icons.person_outline_rounded)).color,
+        tester.widget<AppIconView>(findAppIcon(AppIcon.user)).color,
         t.colors.muted,
       );
       expect(

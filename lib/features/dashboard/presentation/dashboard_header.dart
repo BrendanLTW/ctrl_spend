@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -70,7 +71,7 @@ class DashboardHeader extends StatelessWidget {
                   backgroundColor: colors.raised,
                   foregroundColor: colors.ink,
                 ),
-                icon: const Icon(Icons.notifications_none_rounded, size: 22),
+                icon: const AppIconView(AppIcon.bell, size: 22),
               ),
               if (unreadCount > 0)
                 Positioned(
@@ -99,7 +100,7 @@ class DashboardHeader extends StatelessWidget {
             foregroundColor: colors.onInk,
           ),
           icon: trimmed.isEmpty
-              ? const Icon(Icons.person_outline_rounded, size: 22)
+              ? const AppIconView(AppIcon.user, size: 22)
               : Text(
                   trimmed.characters.first.toUpperCase(),
                   style: text.header.copyWith(color: colors.onInk),

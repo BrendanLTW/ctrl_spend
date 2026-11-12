@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -91,7 +92,7 @@ class AppSheet extends StatelessWidget {
                       tooltip: context.l10n.close,
                       iconSize: 24,
                       color: colors.ink,
-                      icon: const Icon(Icons.close_rounded),
+                      icon: const AppIconView(AppIcon.close),
                     ),
               ],
             ),

@@ -29,6 +29,8 @@ void main() {
   LicenseRegistry.addLicense(() async* {
     final ofl = await rootBundle.loadString('assets/fonts/OFL.txt');
     yield LicenseEntryWithLineBreaks(['Poppins'], ofl);
+    final isc = await rootBundle.loadString('assets/icons/LICENSE');
+    yield LicenseEntryWithLineBreaks(['Lucide'], isc);
   });
   runApp(
     ProviderScope(

@@ -1,28 +1,30 @@
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 
 /// The icon for a category icon key (DESIGN §8).
-// shortcut: Material rounded icons stand in for the designs' 1.9-stroke line
-// icons until the icon set lands in the fidelity pass (task 4.2).
-IconData categoryIcon(CategoryIconKey key) => switch (key) {
-  CategoryIconKey.food => Icons.restaurant_rounded,
-  CategoryIconKey.coffee => Icons.coffee_outlined,
-  CategoryIconKey.car => Icons.directions_car_outlined,
-  CategoryIconKey.bag => Icons.shopping_bag_outlined,
-  CategoryIconKey.bolt => Icons.bolt_rounded,
-  CategoryIconKey.film => Icons.movie_outlined,
-  CategoryIconKey.heart => Icons.favorite_border_rounded,
-  CategoryIconKey.gift => Icons.card_giftcard_rounded,
-  CategoryIconKey.book => Icons.menu_book_outlined,
-  CategoryIconKey.travel => Icons.near_me_outlined,
-  CategoryIconKey.home => Icons.home_outlined,
-  CategoryIconKey.phone => Icons.smartphone_rounded,
-  CategoryIconKey.wallet => Icons.account_balance_wallet_outlined,
+AppIcon categoryIcon(CategoryIconKey key) => switch (key) {
+  CategoryIconKey.food => AppIcon.food,
+  CategoryIconKey.coffee => AppIcon.coffee,
+  CategoryIconKey.car => AppIcon.car,
+  CategoryIconKey.bag => AppIcon.bag,
+  CategoryIconKey.bolt => AppIcon.bolt,
+  CategoryIconKey.film => AppIcon.film,
+  CategoryIconKey.heart => AppIcon.heart,
+  CategoryIconKey.gift => AppIcon.gift,
+  CategoryIconKey.book => AppIcon.book,
+  CategoryIconKey.travel => AppIcon.plane,
+  CategoryIconKey.home => AppIcon.home,
+  CategoryIconKey.phone => AppIcon.phone,
+  CategoryIconKey.wallet => AppIcon.wallet,
 };
 
 enum CategoryTileSize {
+  /// 56 × 56, radius 20: a screen's own subject, as S23's header.
+  large(56, AppRadius.r20, 26),
+
   /// 48 × 48, radius 16: most screens.
   regular(48, AppRadius.r16, 22),
 
@@ -57,7 +59,7 @@ class CategoryTile extends StatelessWidget {
     super.key,
   }) : icon = categoryIcon(iconKey);
 
-  final IconData icon;
+  final AppIcon icon;
   final CategoryColorKey color;
   final CategoryTileSize size;
 
@@ -72,7 +74,12 @@ class CategoryTile extends StatelessWidget {
           color: colors.tile,
           borderRadius: BorderRadius.circular(size.radius),
         ),
-        child: Icon(icon, size: size.iconSize, color: colors.icon),
+        child: AppIconView(
+          icon,
+          size: size.iconSize,
+          color: colors.icon,
+          stroke: AppIconStroke.tile,
+        ),
       ),
     );
   }

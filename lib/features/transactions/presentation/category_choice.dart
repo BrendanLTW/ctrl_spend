@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/category_picker_tile.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
@@ -101,8 +102,9 @@ class CategoryChoice extends StatelessWidget {
                     style: text.rowTitle.copyWith(color: colors.ink),
                   ),
                   const SizedBox(width: 4),
-                  Icon(
-                    Icons.chevron_right_rounded,
+                  AppIconView(
+                    AppIcon.chevronRight,
+                    stroke: AppIconStroke.chevron,
                     size: 20,
                     color: colors.ink,
                   ),

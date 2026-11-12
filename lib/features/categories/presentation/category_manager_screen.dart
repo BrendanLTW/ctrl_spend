@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
@@ -23,7 +24,6 @@ import 'package:go_router/go_router.dart';
 /// S22 Category manager: expense and income categories, the archived ones
 /// with Restore, and Add (S24). Swipe a row left to remove it: the
 /// repository deletes it if unused, otherwise archives it.
-// shortcut: rows open S23 Category detail once task 3.6 builds it.
 class CategoryManagerScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -105,7 +105,11 @@ class CategoryManagerScreen extends ConsumerWidget {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),

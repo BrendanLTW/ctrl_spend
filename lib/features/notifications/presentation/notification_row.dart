@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
@@ -122,13 +123,13 @@ class NotificationRow extends StatelessWidget {
   }
 }
 
-IconData _kindIcon(NotificationKind kind) => switch (kind) {
+AppIcon _kindIcon(NotificationKind kind) => switch (kind) {
   NotificationKind.budgetWarning ||
-  NotificationKind.overBudget => Icons.warning_amber_rounded,
-  NotificationKind.dailyReminder => Icons.notifications_none_rounded,
-  NotificationKind.incomeRecorded => Icons.account_balance_wallet_outlined,
-  NotificationKind.weeklySummary => Icons.insert_chart_outlined_rounded,
-  NotificationKind.periodStarted => Icons.calendar_today_outlined,
+  NotificationKind.overBudget => AppIcon.warning,
+  NotificationKind.dailyReminder => AppIcon.bell,
+  NotificationKind.incomeRecorded => AppIcon.wallet,
+  NotificationKind.weeklySummary => AppIcon.chartBars,
+  NotificationKind.periodStarted => AppIcon.calendar,
 };
 
 CategoryColorKey _kindColour(NotificationKind kind) => switch (kind) {

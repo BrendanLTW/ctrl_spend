@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
@@ -170,7 +171,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
         padding: const EdgeInsets.all(AppSpacing.screenX),
         sliver: SliverToBoxAdapter(
           child: EmptyState(
-            icon: Icons.receipt_long_outlined,
+            icon: AppIcon.receipt,
             title: l10n.noTransactionsTitle,
             body: l10n.noTransactionsBody,
             actionLabel: l10n.addFirstExpense,
@@ -186,7 +187,7 @@ class _ActivityScreenState extends ConsumerState<ActivityScreen> {
           // S39 No results.
           child: EmptyState(
             card: false,
-            icon: Icons.search_off_rounded,
+            icon: AppIcon.searchOff,
             title: query.isEmpty
                 ? l10n.nothingHereTitle
                 : l10n.noResultsTitle(query),

@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -102,7 +103,7 @@ class CategoryIconGrid extends StatelessWidget {
           splashFactory: NoSplash.splashFactory,
           child: SizedBox(
             height: 48,
-            child: Icon(
+            child: AppIconView(
               categoryIcon(icon),
               size: 22,
               color: chosen ? colors.onInk : colors.ink,

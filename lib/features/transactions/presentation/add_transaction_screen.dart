@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -188,7 +189,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.close,
-          icon: const Icon(Icons.close_rounded),
+          icon: const AppIconView(AppIcon.close),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),
@@ -261,7 +262,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
                   AppTextField(
                     controller: _note,
                     hint: l10n.addNote,
-                    icon: Icons.edit_note_rounded,
+                    icon: AppIcon.note,
                     maxLength: AddTransactionScreen.maxTitleLength,
                     textCapitalization: TextCapitalization.sentences,
                     textInputAction: TextInputAction.done,
@@ -316,11 +317,7 @@ class _DateRow extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: 20),
-                Icon(
-                  Icons.calendar_today_outlined,
-                  size: 22,
-                  color: colors.muted,
-                ),
+                AppIconView(AppIcon.calendar, size: 22, color: colors.muted),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Text(
@@ -331,7 +328,12 @@ class _DateRow extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.chevron_right_rounded, size: 20, color: colors.ink),
+                AppIconView(
+                  AppIcon.chevronRight,
+                  stroke: AppIconStroke.chevron,
+                  size: 20,
+                  color: colors.ink,
+                ),
                 const SizedBox(width: 16),
               ],
             ),

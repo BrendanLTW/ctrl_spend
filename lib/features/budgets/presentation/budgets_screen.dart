@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
@@ -67,7 +68,7 @@ class BudgetsScreen extends ConsumerWidget {
         context,
         title: l10n.monthlyBudget,
         leading: const CategoryTile(
-          icon: Icons.account_balance_wallet_outlined,
+          icon: AppIcon.wallet,
           color: CategoryColorKey.neutral,
         ),
         currency: currency,
@@ -209,7 +210,7 @@ class BudgetsScreen extends ConsumerWidget {
                       foregroundColor: colors.ink,
                       overlayColor: colors.raised,
                     ),
-                    icon: Icon(Icons.add_rounded, size: 20, color: colors.ink),
+                    icon: AppIconView(AppIcon.add, size: 20, color: colors.ink),
                     label: Text(
                       l10n.add,
                       style: text.rowTitle.copyWith(color: colors.ink),

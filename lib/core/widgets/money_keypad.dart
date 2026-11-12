@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/money/amount_input.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/money_keypad_key.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -50,11 +51,9 @@ class MoneyKeypad extends StatelessWidget {
             semanticLabel: l10n.keypadDoubleZero,
             onTap: press,
           ),
-          // shortcut: Material icon stands in for the designs' backspace
-          // glyph; swap for the AppIcon set once the SVGs are exported.
           BackspaceKey() => MoneyKeypadKey(
             size: size,
-            icon: Icons.backspace_outlined,
+            icon: AppIcon.backspace,
             semanticLabel: l10n.keypadBackspace,
             onTap: press,
           ),

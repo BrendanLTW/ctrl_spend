@@ -1,9 +1,11 @@
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/find_app_icon.dart';
 import '../../helpers/themed.dart';
 
 void main() {
@@ -20,7 +22,7 @@ void main() {
               title: 'Month starts on',
               value: '15th',
               leading: const CategoryTile(
-                icon: Icons.calendar_today_outlined,
+                icon: AppIcon.calendar,
                 color: CategoryColorKey.orange,
               ),
               onTap: () {},
@@ -84,7 +86,7 @@ void main() {
         ],
       ),
     );
-    expect(find.byIcon(Icons.chevron_right_rounded), findsOneWidget);
+    expect(findAppIcon(AppIcon.chevronRight), findsOneWidget);
     await tester.tap(find.text('Categories'));
     expect(taps, 1);
   });

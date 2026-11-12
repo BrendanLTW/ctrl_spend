@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/money_keypad.dart';
 import 'package:flutter/material.dart';
 
@@ -18,7 +19,7 @@ class MoneyKeypadKey extends StatelessWidget {
   final MoneyKeypadSize size;
   final VoidCallback onTap;
   final String? text;
-  final IconData? icon;
+  final AppIcon? icon;
 
   /// Read instead of [text]; required for icon keys.
   final String? semanticLabel;
@@ -48,9 +49,14 @@ class MoneyKeypadKey extends StatelessWidget {
           child: SizedBox(
             height: full ? 56 : 48,
             child: Center(
-              child: icon != null
-                  ? Icon(icon, size: style.fontSize, color: colors.ink)
-                  : Text(text!, style: style),
+              child: switch (icon) {
+                final icon? => AppIconView(
+                  icon,
+                  size: style.fontSize,
+                  color: colors.ink,
+                ),
+                null => Text(text!, style: style),
+              },
             ),
           ),
         ),

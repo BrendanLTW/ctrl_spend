@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
@@ -8,6 +9,7 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/find_app_icon.dart';
 import '../../helpers/themed.dart';
 
 /// A button that runs [onPressed] with a context under the app's theme.
@@ -27,7 +29,7 @@ void main() {
           tester,
           t.theme,
           EmptyState(
-            icon: Icons.receipt_long_outlined,
+            icon: AppIcon.receipt,
             title: 'No transactions yet',
             body: 'Add what you spend and your budget updates as you go.',
             actionLabel: 'Add your first expense',
@@ -46,7 +48,7 @@ void main() {
         final tile = tester.widget<Container>(
           find
               .ancestor(
-                of: find.byIcon(Icons.receipt_long_outlined),
+                of: findAppIcon(AppIcon.receipt),
                 matching: find.byType(Container),
               )
               .first,
@@ -56,7 +58,7 @@ void main() {
           tester.getSize(
             find
                 .ancestor(
-                  of: find.byIcon(Icons.receipt_long_outlined),
+                  of: findAppIcon(AppIcon.receipt),
                   matching: find.byType(Container),
                 )
                 .first,
@@ -79,7 +81,7 @@ void main() {
         tester,
         themes.first.theme,
         EmptyState(
-          icon: Icons.search_off_rounded,
+          icon: AppIcon.searchOff,
           title: 'No results for "netflix"',
           body: 'Nothing matches in Expense.',
           actionLabel: 'Search all',
@@ -88,7 +90,7 @@ void main() {
         ),
       );
       final circle = find.ancestor(
-        of: find.byIcon(Icons.search_off_rounded),
+        of: findAppIcon(AppIcon.searchOff),
         matching: find.byType(Container),
       );
       expect(tester.getSize(circle.first), const Size(96, 96));
@@ -288,7 +290,7 @@ void main() {
         launcher((c) async {
           result = await showAppDialog(
             c,
-            icon: Icons.delete_outline_rounded,
+            icon: AppIcon.trash,
             title: 'Delete this transaction?',
             body: 'Nasi lemak (RM 12.50) will be removed.',
             confirmLabel: 'Delete',
@@ -307,7 +309,7 @@ void main() {
           tester,
           t.theme,
           const AppDialog(
-            icon: Icons.delete_outline_rounded,
+            icon: AppIcon.trash,
             title: 'Delete this transaction?',
             body: 'Nasi lemak (RM 12.50) will be removed.',
             confirmLabel: 'Delete',
@@ -328,7 +330,7 @@ void main() {
         final circle = tester.widget<Container>(
           find
               .ancestor(
-                of: find.byIcon(Icons.delete_outline_rounded),
+                of: findAppIcon(AppIcon.trash),
                 matching: find.byType(Container),
               )
               .first,
@@ -363,7 +365,7 @@ void main() {
           launcher((c) async {
             result = await showAppDialog(
               c,
-              icon: Icons.delete_outline_rounded,
+              icon: AppIcon.trash,
               title: 'Delete?',
               body: 'Body',
               confirmLabel: 'Delete',

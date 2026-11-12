@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -58,7 +59,7 @@ class MonthCalendar extends StatelessWidget {
         Row(
           children: [
             _MonthButton(
-              icon: Icons.chevron_left_rounded,
+              icon: AppIcon.chevronLeft,
               tooltip: l10n.previousMonth,
               onPressed: canGoBack
                   ? () => onMonthChanged(DateTime(month.year, month.month - 1))
@@ -75,7 +76,7 @@ class MonthCalendar extends StatelessWidget {
               ),
             ),
             _MonthButton(
-              icon: Icons.chevron_right_rounded,
+              icon: AppIcon.chevronRight,
               tooltip: l10n.nextMonth,
               onPressed: canGoForward
                   ? () => onMonthChanged(DateTime(month.year, month.month + 1))
@@ -159,7 +160,7 @@ class _MonthButton extends StatelessWidget {
     required this.onPressed,
   });
 
-  final IconData icon;
+  final AppIcon icon;
   final String tooltip;
   final VoidCallback? onPressed;
 
@@ -176,7 +177,7 @@ class _MonthButton extends StatelessWidget {
         disabledBackgroundColor: colors.raised,
         disabledForegroundColor: colors.disabled,
       ),
-      icon: Icon(icon, size: 22),
+      icon: AppIconView(icon, size: 22),
     );
   }
 }

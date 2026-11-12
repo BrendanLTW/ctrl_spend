@@ -53,7 +53,7 @@ Each P0 screen was rendered with Poppins at 390 × 844 in both themes and compar
 | S41 Transaction | Yes | Note row only when a note exists (S12 has one text field) |
 | S42 Delete dialog | Yes | Destructive red is the light theme's in both themes, for 4.5:1 contrast |
 
-Placeholder icons (Material) stand in for the designed line icons everywhere until the fidelity pass (4.2).
+Icons were placeholders (Material) until the fidelity pass (4.2), which replaced them with bundled Lucide line icons; see `docs/design-notes.md`.
 
 ## Gaps found and fixed in this review
 

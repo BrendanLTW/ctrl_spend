@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_shadows.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/pill_button.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -12,7 +13,7 @@ import 'package:flutter/material.dart';
 /// confirm action is chosen, false on Cancel or dismiss.
 Future<bool> showAppDialog(
   BuildContext context, {
-  required IconData icon,
+  required AppIcon icon,
   required String title,
   required String body,
   required String confirmLabel,
@@ -42,7 +43,7 @@ class AppDialog extends StatelessWidget {
     super.key,
   });
 
-  final IconData icon;
+  final AppIcon icon;
   final String title;
   final String body;
   final String confirmLabel;
@@ -83,7 +84,7 @@ class AppDialog extends StatelessWidget {
                   color: tint.tile,
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, size: 26, color: tint.icon),
+                child: AppIconView(icon, size: 26, color: tint.icon),
               ),
             ),
             const SizedBox(height: 20),

@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
@@ -79,8 +80,9 @@ class RecentActivities extends StatelessWidget {
                       style: text.rowTitle.copyWith(color: colors.ink),
                     ),
                     const SizedBox(width: 4),
-                    Icon(
-                      Icons.chevron_right_rounded,
+                    AppIconView(
+                      AppIcon.chevronRight,
+                      stroke: AppIconStroke.chevron,
                       size: 20,
                       color: colors.ink,
                     ),
@@ -92,7 +94,7 @@ class RecentActivities extends StatelessWidget {
         const SizedBox(height: 8),
         if (transactions.isEmpty)
           EmptyState(
-            icon: Icons.receipt_long_outlined,
+            icon: AppIcon.receipt,
             title: l10n.noTransactionsTitle,
             body: l10n.noTransactionsBody,
             actionLabel: l10n.addFirstExpense,

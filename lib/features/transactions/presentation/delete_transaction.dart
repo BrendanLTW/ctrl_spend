@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -20,7 +21,7 @@ Future<bool> confirmAndDeleteTransaction(
   final amount = MoneyFormatter(currency).format(transaction.amountMinor);
   final confirmed = await showAppDialog(
     context,
-    icon: Icons.delete_outline_rounded,
+    icon: AppIcon.trash,
     title: l10n.deleteTransactionTitle,
     body: transaction.type == TransactionType.expense && category != null
         ? l10n.deleteExpenseBody(transaction.title, amount, category.name)

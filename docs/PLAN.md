@@ -124,7 +124,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 - [x] **4.1 Accessibility pass.** Screen-reader labels, chart and progress text alternatives, 44 px targets, contrast in both themes, and 200% text scale on every screen.
   Refs: DESIGN §10, PRD §9
-- [ ] **4.2 Design fidelity pass.** Run the DESIGN §12 checklist for every v1.0 screen in light and dark; fix differences or log intentional ones in `docs/design-notes.md`.
+- [x] **4.2 Design fidelity pass.** Run the DESIGN §12 checklist for every v1.0 screen in light and dark; fix differences or log intentional ones in `docs/design-notes.md`.
   Refs: DESIGN §12
 - [ ] **4.3 Performance.** A debug-only generator for 5,000 transactions; measure cold start and list scrolling on a mid-range Android device; fix anything below target.
   Refs: PRD §10

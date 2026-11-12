@@ -7,6 +7,7 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
 import 'package:ctrl_spend/core/widgets/amount_text.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/donut_painter.dart';
@@ -168,7 +169,7 @@ class _Chip extends StatelessWidget {
             width: 32,
             height: 32,
             decoration: BoxDecoration(color: tile.tile, shape: BoxShape.circle),
-            child: Icon(categoryIcon(icon), size: 16, color: tile.icon),
+            child: AppIconView(categoryIcon(icon), size: 16, color: tile.icon),
           ),
           const SizedBox(width: 10),
           Flexible(

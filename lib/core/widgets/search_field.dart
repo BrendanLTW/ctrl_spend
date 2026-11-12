@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -48,7 +49,7 @@ class SearchField extends StatelessWidget {
           contentPadding: EdgeInsets.zero,
           prefixIcon: Padding(
             padding: const EdgeInsets.only(left: 18, right: 12),
-            child: Icon(Icons.search_rounded, size: 20, color: colors.muted),
+            child: AppIconView(AppIcon.search, size: 20, color: colors.muted),
           ),
           prefixIconConstraints: const BoxConstraints(),
           suffixIcon: value.text.isEmpty
@@ -61,7 +62,7 @@ class SearchField extends StatelessWidget {
                       backgroundColor: colors.raised,
                       foregroundColor: colors.ink,
                     ),
-                    icon: const Icon(Icons.close_rounded, size: 18),
+                    icon: const AppIconView(AppIcon.close, size: 18),
                     onPressed: () {
                       controller.clear();
                       onChanged('');

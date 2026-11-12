@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/app_toggle.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
@@ -134,7 +135,11 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),

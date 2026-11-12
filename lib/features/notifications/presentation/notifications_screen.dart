@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
@@ -97,7 +98,11 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),
@@ -108,7 +113,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
         actions: [
           IconButton(
             tooltip: l10n.notificationSettings,
-            icon: const Icon(Icons.tune_rounded, size: 24),
+            icon: const AppIconView(AppIcon.sliders, size: 24),
             color: colors.ink,
             onPressed: () => showNotificationSettingsSheet(context),
           ),
@@ -178,7 +183,7 @@ class _Empty extends ConsumerWidget {
         const SizedBox(height: 32),
         EmptyState(
           card: false,
-          icon: Icons.notifications_none_rounded,
+          icon: AppIcon.bell,
           title: l10n.noNotificationsTitle,
           body: l10n.noNotificationsBody,
         ),
@@ -188,7 +193,7 @@ class _Empty extends ConsumerWidget {
           children: [
             ListGroupRow(
               leading: const CategoryTile(
-                icon: Icons.warning_amber_rounded,
+                icon: AppIcon.warning,
                 color: CategoryColorKey.orange,
               ),
               title: l10n.budgetAlerts,
@@ -198,7 +203,7 @@ class _Empty extends ConsumerWidget {
             ),
             ListGroupRow(
               leading: const CategoryTile(
-                icon: Icons.schedule_rounded,
+                icon: AppIcon.clock,
                 color: CategoryColorKey.purple,
               ),
               title: l10n.dailyReminder,
@@ -210,7 +215,7 @@ class _Empty extends ConsumerWidget {
             ),
             ListGroupRow(
               leading: const CategoryTile(
-                icon: Icons.insert_chart_outlined_rounded,
+                icon: AppIcon.chartBars,
                 color: CategoryColorKey.blue,
               ),
               title: l10n.weeklySummary,

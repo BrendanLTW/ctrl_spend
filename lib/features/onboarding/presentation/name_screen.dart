@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -52,7 +53,7 @@ class _NameScreenState extends ConsumerState<NameScreen> {
       body: AppTextField(
         controller: _name,
         hint: l10n.firstName,
-        icon: Icons.person_outline_rounded,
+        icon: AppIcon.user,
         maxLength: NameScreen.maxLength,
         autofocus: true,
         textCapitalization: TextCapitalization.words,

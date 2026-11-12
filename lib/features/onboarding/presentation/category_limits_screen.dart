@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
@@ -248,8 +249,8 @@ class _LimitRow extends StatelessWidget {
                     ? Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(
-                            Icons.add_rounded,
+                          AppIconView(
+                            AppIcon.add,
                             size: 18,
                             color: colors.muted,
                           ),

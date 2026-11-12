@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/stat_card.dart';
@@ -93,14 +94,14 @@ class DashboardScreen extends ConsumerWidget {
                   label: l10n.spentLabel,
                   minor: totals.spentMinor,
                   currency: currency,
-                  icon: Icons.arrow_upward_rounded,
+                  icon: AppIcon.arrowUp,
                   tint: CategoryColorKey.red,
                 ),
                 _TotalCard(
                   label: l10n.incomeLabel,
                   minor: totals.incomeMinor,
                   currency: currency,
-                  icon: Icons.arrow_downward_rounded,
+                  icon: AppIcon.arrowDown,
                   tint: CategoryColorKey.green,
                 ),
               ],
@@ -136,7 +137,7 @@ class _TotalCard extends StatelessWidget {
   final String label;
   final int minor;
   final Currency currency;
-  final IconData icon;
+  final AppIcon icon;
   final CategoryColorKey tint;
 
   @override

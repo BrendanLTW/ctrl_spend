@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -22,7 +23,7 @@ class AppTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final String hint;
-  final IconData? icon;
+  final AppIcon? icon;
 
   /// Stops typing past this many characters, without a counter.
   final int? maxLength;
@@ -65,12 +66,13 @@ class AppTextField extends StatelessWidget {
           horizontal: 20,
           vertical: 17,
         ),
-        prefixIcon: icon == null
-            ? null
-            : Padding(
-                padding: const EdgeInsets.only(left: 20, right: 14),
-                child: Icon(icon, size: 22, color: colors.muted),
-              ),
+        prefixIcon: switch (icon) {
+          null => null,
+          final icon => Padding(
+            padding: const EdgeInsets.only(left: 20, right: 14),
+            child: AppIconView(icon, size: 22, color: colors.muted),
+          ),
+        },
         prefixIconConstraints: const BoxConstraints(),
         border: border,
         enabledBorder: border,

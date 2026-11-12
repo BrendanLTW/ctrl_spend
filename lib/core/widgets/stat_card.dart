@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ class StatCard extends StatelessWidget {
   /// The whole card read as one, e.g. "Spent, RM 760".
   final String semanticLabel;
   final String? caption;
-  final IconData? icon;
+  final AppIcon? icon;
 
   /// The circle's tint, from the category palette (spent: red, income:
   /// green).
@@ -84,7 +85,7 @@ class StatCard extends StatelessWidget {
 class _IconCircle extends StatelessWidget {
   const new({required this.icon, required this.tint});
 
-  final IconData icon;
+  final AppIcon icon;
   final CategoryColorKey tint;
 
   @override
@@ -94,7 +95,7 @@ class _IconCircle extends StatelessWidget {
       width: 46,
       height: 46,
       decoration: BoxDecoration(color: tile.tile, shape: BoxShape.circle),
-      child: Icon(icon, size: 22, color: tile.icon),
+      child: AppIconView(icon, size: 22, color: tile.icon),
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
@@ -61,7 +62,11 @@ class CategoryDetailScreen extends ConsumerWidget {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),

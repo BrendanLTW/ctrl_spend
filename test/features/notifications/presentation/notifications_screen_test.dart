@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toggle.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
@@ -124,7 +125,7 @@ void main() {
       );
       expect(tile(0).icon, categoryIcon(CategoryIconKey.food));
       expect(tile(0).color, CategoryColorKey.orange);
-      expect(tile(2).icon, Icons.notifications_none_rounded);
+      expect(tile(2).icon, AppIcon.bell);
       expect(tile(2).color, CategoryColorKey.purple);
     });
 

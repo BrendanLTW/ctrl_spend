@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 
 /// A choosable category (DESIGN §7): a 60 × 60 tile with the label below
@@ -14,7 +15,7 @@ class CategoryPickerTile extends StatelessWidget {
     super.key,
   });
 
-  final IconData icon;
+  final AppIcon icon;
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -42,10 +43,11 @@ class CategoryPickerTile extends StatelessWidget {
                 color: selected ? colors.ink : colors.surface,
                 borderRadius: BorderRadius.circular(AppRadius.r20),
               ),
-              child: Icon(
+              child: AppIconView(
                 icon,
                 size: 24,
                 color: selected ? colors.onInk : colors.ink,
+                stroke: AppIconStroke.tile,
               ),
             ),
             const SizedBox(height: 8),

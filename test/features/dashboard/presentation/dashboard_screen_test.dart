@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
@@ -19,6 +20,7 @@ import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_preferences_repository.dart';
 import '../../../helpers/fake_repositories.dart';
 import '../../../helpers/fake_transaction_repository.dart';
+import '../../../helpers/find_app_icon.dart';
 
 const String minus = MoneyFormatter.minus;
 
@@ -106,7 +108,7 @@ void main() {
   testWidgets('without a name it greets "Hi there"', (tester) async {
     await pumpHome(tester, prefs: const Preferences(onboardingComplete: true));
     expect(find.text('Hi there'), findsOneWidget);
-    expect(find.byIcon(Icons.person_outline_rounded), findsOneWidget);
+    expect(findAppIcon(AppIcon.user), findsOneWidget);
   });
 
   testWidgets('the hero, Spent and Income follow this period', (tester) async {

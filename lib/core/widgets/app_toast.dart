@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_shadows.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 
 /// The toast (DESIGN §7): `ink` fill, message, optional action. The action
@@ -48,7 +49,7 @@ class AppToast extends StatelessWidget {
         child: Row(
           children: [
             if (success) ...[
-              Icon(Icons.check_rounded, size: 22, color: other.positive),
+              AppIconView(AppIcon.check, size: 22, color: other.positive),
               const SizedBox(width: 14),
             ],
             Expanded(

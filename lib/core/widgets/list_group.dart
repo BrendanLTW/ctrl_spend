@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:flutter/material.dart';
 
@@ -138,10 +139,8 @@ class ListGroupRow extends StatelessWidget {
                 if (selected || onTap != null)
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
-                    child: Icon(
-                      selected
-                          ? Icons.check_rounded
-                          : Icons.chevron_right_rounded,
+                    child: AppIconView(
+                      selected ? AppIcon.check : AppIcon.chevronRight,
                       size: 20,
                       color: colors.ink,
                     ),

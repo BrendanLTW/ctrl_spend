@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
@@ -75,7 +76,11 @@ class OnboardingScaffold extends StatelessWidget {
                         onPressed: () => Navigator.of(context).maybePop(),
                         tooltip: l10n.back,
                         color: colors.ink,
-                        icon: const Icon(Icons.chevron_left_rounded, size: 30),
+                        icon: const AppIconView(
+                          AppIcon.chevronLeft,
+                          stroke: AppIconStroke.chevron,
+                          size: 30,
+                        ),
                       ),
                     ),
                   ),

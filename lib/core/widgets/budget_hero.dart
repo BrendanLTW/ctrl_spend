@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_text.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -103,8 +104,8 @@ class BudgetHero extends StatelessWidget {
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        Icons.account_balance_wallet_outlined,
+                      child: AppIconView(
+                        AppIcon.wallet,
                         size: 24,
                         color: AppColors.light.ink,
                       ),
@@ -134,8 +135,8 @@ class BudgetHero extends StatelessWidget {
                     ),
                     Align(
                       alignment: Alignment.topRight,
-                      child: Icon(
-                        Icons.north_east_rounded,
+                      child: AppIconView(
+                        AppIcon.arrowUpRight,
                         size: 22,
                         color: onHero.ink,
                       ),

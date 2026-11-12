@@ -9,6 +9,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
 import 'package:ctrl_spend/features/insights/presentation/insight_bar_chart.dart';
 import 'package:ctrl_spend/features/insights/presentation/insight_chart_card.dart';
@@ -172,8 +173,9 @@ class _ViewPastPeriods extends StatelessWidget {
                 ),
                 const SizedBox(width: 6),
                 ExcludeSemantics(
-                  child: Icon(
-                    Icons.chevron_right_rounded,
+                  child: AppIconView(
+                    AppIcon.chevronRight,
+                    stroke: AppIconStroke.chevron,
                     size: 20,
                     color: colors.ink,
                   ),

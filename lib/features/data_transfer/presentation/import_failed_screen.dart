@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
@@ -48,7 +49,11 @@ class ImportFailedScreen extends ConsumerWidget {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),
@@ -79,8 +84,8 @@ class ImportFailedScreen extends ConsumerWidget {
                         color: alert.tile,
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(
-                        Icons.warning_amber_rounded,
+                      child: AppIconView(
+                        AppIcon.warning,
                         size: 38,
                         color: alert.icon,
                       ),
@@ -89,12 +94,16 @@ class ImportFailedScreen extends ConsumerWidget {
                   const SizedBox(height: 20),
                   Semantics(
                     header: true,
-                    // One line, as designed; shrinks on narrow screens.
-                    child: FittedBox(
-                      fit: BoxFit.scaleDown,
-                      child: Text(
-                        l10n.importFailedTitle,
-                        style: text.pageTitle.copyWith(color: colors.ink),
+                    // One line, as designed, with the design's margins;
+                    // shrinks on narrow screens.
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          l10n.importFailedTitle,
+                          style: text.pageTitle.copyWith(color: colors.ink),
+                        ),
                       ),
                     ),
                   ),

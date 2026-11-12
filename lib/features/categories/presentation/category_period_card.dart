@@ -91,7 +91,11 @@ class CategoryPeriodCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                CategoryTile.forKey(category.iconKey, color: category.colorKey),
+                CategoryTile.forKey(
+                  category.iconKey,
+                  color: category.colorKey,
+                  size: CategoryTileSize.large,
+                ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(

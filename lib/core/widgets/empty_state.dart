@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/pill_button.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class EmptyState extends StatelessWidget {
 
   final String title;
   final String body;
-  final IconData? icon;
+  final AppIcon? icon;
   final Widget? graphic;
   final String? actionLabel;
   final VoidCallback? onAction;
@@ -49,7 +50,11 @@ class EmptyState extends StatelessWidget {
                       : null,
                   shape: card ? BoxShape.rectangle : BoxShape.circle,
                 ),
-                child: Icon(icon, size: card ? 28 : 36, color: colors.ink),
+                child: AppIconView(
+                  icon!,
+                  size: card ? 28 : 36,
+                  color: colors.ink,
+                ),
               ),
         ),
         const SizedBox(height: 20),

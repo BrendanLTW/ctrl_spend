@@ -1,8 +1,10 @@
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/stat_card.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/find_app_icon.dart';
 import '../../helpers/themed.dart';
 
 void main() {
@@ -15,7 +17,7 @@ void main() {
           label: 'Spent',
           value: Text('RM 760'),
           semanticLabel: 'Spent, RM 760',
-          icon: Icons.arrow_upward_rounded,
+          icon: AppIcon.arrowUp,
           iconColor: CategoryColorKey.red,
         ),
       );
@@ -37,7 +39,7 @@ void main() {
       final circle = tester.widget<Container>(
         find
             .ancestor(
-              of: find.byIcon(Icons.arrow_upward_rounded),
+              of: findAppIcon(AppIcon.arrowUp),
               matching: find.byType(Container),
             )
             .first,
@@ -45,7 +47,7 @@ void main() {
       final palette = t.categories.of(CategoryColorKey.red);
       expect((circle.decoration! as BoxDecoration).color, palette.tile);
       expect(
-        tester.widget<Icon>(find.byIcon(Icons.arrow_upward_rounded)).color,
+        tester.widget<AppIconView>(findAppIcon(AppIcon.arrowUp)).color,
         palette.icon,
       );
     });
@@ -61,7 +63,7 @@ void main() {
           semanticLabel: 'Under pace, 6 of 7 days this week',
         ),
       );
-      expect(find.byType(Icon), findsNothing);
+      expect(find.byType(AppIconView), findsNothing);
       final caption = tester.widget<Text>(find.text('days this week'));
       expect(caption.style!.color, t.colors.muted);
     });
@@ -76,7 +78,7 @@ void main() {
         label: 'Income',
         value: Text('RM 4,800'),
         semanticLabel: 'Income, RM 4,800',
-        icon: Icons.arrow_downward_rounded,
+        icon: AppIcon.arrowDown,
         iconColor: CategoryColorKey.green,
       ),
     );

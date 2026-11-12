@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ void main() {
       final palette = t.categories.of(CategoryColorKey.orange);
       expect(decoration.color, palette.tile);
       expect(decoration.borderRadius, BorderRadius.circular(16));
-      final icon = tester.widget<Icon>(find.byType(Icon));
+      final icon = tester.widget<AppIconView>(find.byType(AppIconView));
       expect(icon.icon, categoryIcon(CategoryIconKey.food));
       expect(icon.color, palette.icon);
       expect(tester.getSize(find.byType(Container)), const Size(48, 48));
@@ -40,7 +41,7 @@ void main() {
       tester,
       themes.first.theme,
       const CategoryTile(
-        icon: Icons.settings,
+        icon: AppIcon.sliders,
         color: CategoryColorKey.purple,
         size: CategoryTileSize.compact,
       ),

@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
@@ -213,7 +214,7 @@ class _LimitRow extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: 18),
-                Icon(Icons.track_changes_rounded, size: 22, color: colors.ink),
+                AppIconView(AppIcon.target, size: 22, color: colors.ink),
                 const SizedBox(width: 14),
                 Expanded(
                   child: Padding(
@@ -231,7 +232,12 @@ class _LimitRow extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 6),
-                Icon(Icons.chevron_right_rounded, size: 20, color: colors.ink),
+                AppIconView(
+                  AppIcon.chevronRight,
+                  stroke: AppIconStroke.chevron,
+                  size: 20,
+                  color: colors.ink,
+                ),
                 const SizedBox(width: 14),
               ],
             ),

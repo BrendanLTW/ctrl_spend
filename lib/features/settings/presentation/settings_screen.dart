@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
@@ -40,7 +41,7 @@ class SettingsScreen extends ConsumerWidget {
     final categoryCount =
         (ref.watch(categoriesProvider()).value ?? const <Category>[]).length;
 
-    CategoryTile tile(IconData icon, CategoryColorKey color) =>
+    CategoryTile tile(AppIcon icon, CategoryColorKey color) =>
         CategoryTile(icon: icon, color: color);
 
     return Scaffold(
@@ -51,7 +52,11 @@ class SettingsScreen extends ConsumerWidget {
         centerTitle: true,
         leading: IconButton(
           tooltip: l10n.back,
-          icon: const Icon(Icons.chevron_left_rounded, size: 30),
+          icon: const AppIconView(
+            AppIcon.chevronLeft,
+            stroke: AppIconStroke.chevron,
+            size: 30,
+          ),
           color: colors.ink,
           onPressed: () => context.pop(),
         ),
@@ -77,16 +82,13 @@ class SettingsScreen extends ConsumerWidget {
           ListGroup(
             children: [
               ListGroupRow(
-                leading: tile(
-                  Icons.calendar_today_outlined,
-                  CategoryColorKey.orange,
-                ),
+                leading: tile(AppIcon.calendar, CategoryColorKey.orange),
                 title: l10n.monthStartsOn,
                 value: l10n.startDayLabel(prefs.monthStartDay),
                 onTap: () => context.push(Routes.monthStart),
               ),
               ListGroupRow(
-                leading: tile(Icons.palette_outlined, CategoryColorKey.purple),
+                leading: tile(AppIcon.palette, CategoryColorKey.purple),
                 title: l10n.themeRow,
                 value: switch (prefs.theme) {
                   AppTheme.light => l10n.themeLight,
@@ -96,10 +98,7 @@ class SettingsScreen extends ConsumerWidget {
                 onTap: () => context.push(Routes.theme),
               ),
               ListGroupRow(
-                leading: tile(
-                  Icons.attach_money_rounded,
-                  CategoryColorKey.green,
-                ),
+                leading: tile(AppIcon.currency, CategoryColorKey.green),
                 title: l10n.currency,
                 value: Currency.fromCode(prefs.currencyCode).symbol,
                 onTap: () => context.push(Routes.currency),
@@ -111,18 +110,18 @@ class SettingsScreen extends ConsumerWidget {
           ListGroup(
             children: [
               ListGroupRow(
-                leading: tile(Icons.grid_view_rounded, CategoryColorKey.pink),
+                leading: tile(AppIcon.grid, CategoryColorKey.pink),
                 title: l10n.categories,
                 value: '$categoryCount',
                 onTap: () => context.push(Routes.categories),
               ),
               ListGroupRow(
-                leading: tile(Icons.download_rounded, CategoryColorKey.blue),
+                leading: tile(AppIcon.download, CategoryColorKey.blue),
                 title: l10n.exportCsv,
                 onTap: () => context.push(Routes.export),
               ),
               ListGroupRow(
-                leading: tile(Icons.upload_rounded, CategoryColorKey.blue),
+                leading: tile(AppIcon.upload, CategoryColorKey.blue),
                 title: l10n.importCsv,
                 onTap: () => importCsv(context, ref),
               ),
@@ -132,10 +131,7 @@ class SettingsScreen extends ConsumerWidget {
           ListGroup(
             children: [
               ListGroupRow(
-                leading: tile(
-                  Icons.delete_outline_rounded,
-                  CategoryColorKey.red,
-                ),
+                leading: tile(AppIcon.trash, CategoryColorKey.red),
                 title: l10n.deleteAllData,
                 titleColor: colors.negative,
                 onTap: () => confirmAndDeleteAllData(context, ref),
@@ -205,7 +201,7 @@ class _ProfileCard extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                   child: trimmed.isEmpty
-                      ? Icon(Icons.person_outline_rounded, color: colors.onInk)
+                      ? AppIconView(AppIcon.user, color: colors.onInk)
                       : Text(
                           trimmed.characters.first.toUpperCase(),
                           style: text.header.copyWith(color: colors.onInk),
@@ -272,7 +268,7 @@ class _NameSheetBodyState extends State<_NameSheetBody> {
         AppTextField(
           controller: _name,
           hint: l10n.firstName,
-          icon: Icons.person_outline_rounded,
+          icon: AppIcon.user,
           maxLength: SettingsScreen.nameMaxLength,
           autofocus: true,
           textCapitalization: TextCapitalization.words,

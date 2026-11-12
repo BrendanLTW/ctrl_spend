@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/text_link.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
@@ -24,7 +25,7 @@ Future<void> confirmAndDeleteAllData(
   final choice = await showDialog<Object>(
     context: context,
     builder: (dialogContext) => AppDialog(
-      icon: Icons.delete_outline_rounded,
+      icon: AppIcon.trash,
       title: l10n.deleteAllDataTitle,
       body: l10n.deleteAllDataBody,
       confirmLabel: l10n.deleteEverything,

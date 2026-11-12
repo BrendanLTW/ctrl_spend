@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
@@ -32,7 +33,7 @@ class HowItWorksScreen extends StatelessWidget {
             children: [
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.account_balance_wallet_outlined,
+                  icon: AppIcon.wallet,
                   color: CategoryColorKey.orange,
                 ),
                 title: l10n.howBudgetTitle,
@@ -40,7 +41,7 @@ class HowItWorksScreen extends StatelessWidget {
               ),
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.add_rounded,
+                  icon: AppIcon.add,
                   color: CategoryColorKey.purple,
                 ),
                 title: l10n.howLogTitle,
@@ -48,7 +49,7 @@ class HowItWorksScreen extends StatelessWidget {
               ),
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.insert_chart_outlined_rounded,
+                  icon: AppIcon.chartBars,
                   color: CategoryColorKey.blue,
                 ),
                 title: l10n.howSeeTitle,
@@ -62,7 +63,7 @@ class HowItWorksScreen extends StatelessWidget {
             children: [
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.verified_user_outlined,
+                  icon: AppIcon.shield,
                   color: CategoryColorKey.green,
                 ),
                 title: l10n.howPrivacyTitle,

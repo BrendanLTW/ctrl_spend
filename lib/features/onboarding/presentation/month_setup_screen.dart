@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/period/period_format.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
@@ -58,7 +59,7 @@ class MonthSetupScreen extends ConsumerWidget {
             children: [
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.attach_money_rounded,
+                  icon: AppIcon.currency,
                   color: CategoryColorKey.green,
                 ),
                 title: l10n.currencyName(currency),
@@ -100,7 +101,7 @@ class MonthSetupScreen extends ConsumerWidget {
             children: [
               ListGroupRow(
                 leading: const CategoryTile(
-                  icon: Icons.calendar_today_outlined,
+                  icon: AppIcon.calendar,
                   color: CategoryColorKey.blue,
                 ),
                 title: l10n.currentPeriod,
