@@ -8,6 +8,7 @@ import 'package:ctrl_spend/core/widgets/app_toggle.dart';
 import 'package:ctrl_spend/core/widgets/brand_symbol.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -35,9 +36,11 @@ class RemindersScreen extends ConsumerWidget {
       title: l10n.remindersTitle,
       subtitle: l10n.remindersSubtitle,
       primaryLabel: l10n.turnOnNotifications,
-      // shortcut: asks for the OS permission once task 3.8 adds the
-      // notification service; until then it only moves on.
-      onPrimary: next,
+      // Moves on whatever the answer; the toggles stay as set.
+      onPrimary: () async {
+        await ref.read(notificationServiceProvider).requestPermission();
+        if (context.mounted) next();
+      },
       secondaryLabel: l10n.notNow,
       onSecondary: next,
       body: Column(

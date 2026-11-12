@@ -12,7 +12,7 @@
 | timezone | 0.11.2 | `zonedSchedule` needs a `TZDateTime` |
 | flutter_timezone | 5.1.1 | Reads the device's IANA zone so 9:00 PM means local 9:00 PM |
 
-`timezone` and `flutter_timezone` aren't in the CLAUDE.md package list. They're needed for scheduled notifications, so they need approval before P1.
+`timezone` and `flutter_timezone` were approved and added in task 3.8.
 
 ### What was verified
 
@@ -118,3 +118,9 @@ await plugin.zonedSchedule(
 - **Budget alerts at 80% and 100%:** show them with `show()` right after a transaction is saved, using the shared threshold function. No scheduling is needed.
 - **S07 flow:** initialise without prompting. "Turn on notifications" calls the platform permission request, and "Not now" continues without it. Settings can re-check status later.
 - **Before P1:** approve `timezone` and `flutter_timezone`, add the monochrome icon and `keep.xml`, and test on one real Android 13+ phone and one iPhone.
+
+### Status after task 3.8
+
+Built into the app: `LocalNotificationScheduler`, the manifest receivers and boot permission, the `ic_notification` vector icon with `res/raw/keep.xml`, and the iOS foreground delegate. Schedules are inexact, so `SCHEDULE_EXACT_ALARM` isn't declared.
+
+**Still to verify on a real Android 13+ phone and an iPhone:** the permission prompt from S07, that the 9:00 PM reminder, the Sunday 7:00 PM summary and the period-start notification fire (also with the app killed and after a reboot on Android), and the icon in a release build.

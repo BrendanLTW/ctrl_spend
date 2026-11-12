@@ -990,5 +990,137 @@
         "type": "String"
       }
     }
+  },
+  "notifyCategoryWarningTitle": "{category} is at {percent}% of its limit",
+  "@notifyCategoryWarningTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyBudgetWarningTitle": "Your budget is at {percent}%",
+  "@notifyBudgetWarningTitle": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyWarningBody": "{count, plural, =0{{amount} left for the rest of today.} =1{{amount} left with 1 day to go.} other{{amount} left with {count} days to go.}}",
+  "@notifyWarningBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyCategoryOverTitle": "{category} is over budget",
+  "@notifyCategoryOverTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyCategoryOverBody": "You've spent {spent} of your {limit} limit.",
+  "@notifyCategoryOverBody": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyBudgetOverTitle": "You're over budget",
+  "notifyBudgetOverBody": "You've spent {spent} of your {budget} budget.",
+  "@notifyBudgetOverBody": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIncomeTitle": "{category} added",
+  "@notifyIncomeTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIncomeBody": "{amount} · {title}",
+  "@notifyIncomeBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyDailyTitle": "Log today's spending?",
+  "notifyDailyBody": "Take a moment to add what you spent today.",
+  "notifyWeeklyTitle": "Your weekly summary",
+  "notifyWeeklyLess": "You spent {spent} last week, {difference} less than the week before.",
+  "@notifyWeeklyLess": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklyMore": "You spent {spent} last week, {difference} more than the week before.",
+  "@notifyWeeklyMore": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklySame": "You spent {spent} last week, the same as the week before.",
+  "@notifyWeeklySame": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklyReadyTitle": "Your weekly summary is ready",
+  "notifyWeeklyReadyBody": "See how last week went.",
+  "notifyPeriodTitle": "New period started",
+  "notifyPeriodBudgetBody": "Your {budget} budget has reset.",
+  "@notifyPeriodBudgetBody": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyPeriodBody": "Your new period runs {range}.",
+  "@notifyPeriodBody": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
   }
 }

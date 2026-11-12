@@ -13,6 +13,7 @@ abstract final class PreferenceKeys {
   static const budgetAlertsOn = 'budgetAlertsOn';
   static const weeklySummaryOn = 'weeklySummaryOn';
   static const onboardingComplete = 'onboardingComplete';
+  static const notificationsCheckedAt = 'notificationsCheckedAt';
 }
 
 /// Builds [Preferences] from the table's key-value pairs. A missing or
@@ -49,6 +50,9 @@ Preferences preferencesFromValues(Map<String, String> values) {
         flag(PreferenceKeys.weeklySummaryOn) ?? defaults.weeklySummaryOn,
     onboardingComplete:
         flag(PreferenceKeys.onboardingComplete) ?? defaults.onboardingComplete,
+    notificationsCheckedAt: DateTime.tryParse(
+      values[PreferenceKeys.notificationsCheckedAt] ?? '',
+    ),
   );
 }
 
@@ -68,6 +72,9 @@ Map<String, String?> preferencesToValues(Preferences prefs) => {
   PreferenceKeys.budgetAlertsOn: '${prefs.budgetAlertsOn}',
   PreferenceKeys.weeklySummaryOn: '${prefs.weeklySummaryOn}',
   PreferenceKeys.onboardingComplete: '${prefs.onboardingComplete}',
+  PreferenceKeys.notificationsCheckedAt: prefs.notificationsCheckedAt
+      ?.toUtc()
+      .toIso8601String(),
 };
 
 MonthStartDay? _parseStartDay(String? value) {

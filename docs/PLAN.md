@@ -107,7 +107,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S23, PRD §5.9, FR-15
 - [x] **3.7 Theme and currency.** S33 Theme (Light, Dark, System) and S34 Currency (search, Suggested, All currencies, symbol-only note). Wire the S04 currency row and the S21 rows.
   Refs: S33, S34, PRD §5.8, FR-10
-- [ ] **3.8 Local notifications.** A notification service using the spike findings: permission request from S07, daily reminder, budget alerts at 80% and 100%, weekly summary, new period started and income recorded. Each writes a Notification row. Tests with a fake scheduler and injected clock.
+- [x] **3.8 Local notifications.** A notification service using the spike findings: permission request from S07, daily reminder, budget alerts at 80% and 100%, weekly summary, new period started and income recorded. Each writes a Notification row. Tests with a fake scheduler and injected clock.
   Refs: S07, PRD §5.4, FR-12
 - [ ] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
   Refs: S14, S15, PRD §5.4, FR-12

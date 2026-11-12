@@ -1785,6 +1785,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No currencies match “{query}”'**
   String noCurrencyMatch(String query);
+
+  /// No description provided for @notifyCategoryWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} is at {percent}% of its limit'**
+  String notifyCategoryWarningTitle(String category, int percent);
+
+  /// No description provided for @notifyBudgetWarningTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your budget is at {percent}%'**
+  String notifyBudgetWarningTitle(int percent);
+
+  /// No description provided for @notifyWarningBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{{amount} left for the rest of today.} =1{{amount} left with 1 day to go.} other{{amount} left with {count} days to go.}}'**
+  String notifyWarningBody(String amount, int count);
+
+  /// No description provided for @notifyCategoryOverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} is over budget'**
+  String notifyCategoryOverTitle(String category);
+
+  /// No description provided for @notifyCategoryOverBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve spent {spent} of your {limit} limit.'**
+  String notifyCategoryOverBody(String spent, String limit);
+
+  /// No description provided for @notifyBudgetOverTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re over budget'**
+  String get notifyBudgetOverTitle;
+
+  /// No description provided for @notifyBudgetOverBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ve spent {spent} of your {budget} budget.'**
+  String notifyBudgetOverBody(String spent, String budget);
+
+  /// No description provided for @notifyIncomeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{category} added'**
+  String notifyIncomeTitle(String category);
+
+  /// No description provided for @notifyIncomeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} · {title}'**
+  String notifyIncomeBody(String amount, String title);
+
+  /// No description provided for @notifyDailyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Log today\'s spending?'**
+  String get notifyDailyTitle;
+
+  /// No description provided for @notifyDailyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a moment to add what you spent today.'**
+  String get notifyDailyBody;
+
+  /// No description provided for @notifyWeeklyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your weekly summary'**
+  String get notifyWeeklyTitle;
+
+  /// No description provided for @notifyWeeklyLess.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent {spent} last week, {difference} less than the week before.'**
+  String notifyWeeklyLess(String spent, String difference);
+
+  /// No description provided for @notifyWeeklyMore.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent {spent} last week, {difference} more than the week before.'**
+  String notifyWeeklyMore(String spent, String difference);
+
+  /// No description provided for @notifyWeeklySame.
+  ///
+  /// In en, this message translates to:
+  /// **'You spent {spent} last week, the same as the week before.'**
+  String notifyWeeklySame(String spent);
+
+  /// No description provided for @notifyWeeklyReadyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your weekly summary is ready'**
+  String get notifyWeeklyReadyTitle;
+
+  /// No description provided for @notifyWeeklyReadyBody.
+  ///
+  /// In en, this message translates to:
+  /// **'See how last week went.'**
+  String get notifyWeeklyReadyBody;
+
+  /// No description provided for @notifyPeriodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'New period started'**
+  String get notifyPeriodTitle;
+
+  /// No description provided for @notifyPeriodBudgetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your {budget} budget has reset.'**
+  String notifyPeriodBudgetBody(String budget);
+
+  /// No description provided for @notifyPeriodBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your new period runs {range}.'**
+  String notifyPeriodBody(String range);
 }
 
 class _AppLocalizationsDelegate

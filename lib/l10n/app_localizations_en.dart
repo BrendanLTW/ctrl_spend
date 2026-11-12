@@ -1103,4 +1103,97 @@ class AppLocalizationsEn extends AppLocalizations {
   String noCurrencyMatch(String query) {
     return 'No currencies match “$query”';
   }
+
+  @override
+  String notifyCategoryWarningTitle(String category, int percent) {
+    return '$category is at $percent% of its limit';
+  }
+
+  @override
+  String notifyBudgetWarningTitle(int percent) {
+    return 'Your budget is at $percent%';
+  }
+
+  @override
+  String notifyWarningBody(String amount, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$amount left with $count days to go.',
+      one: '$amount left with 1 day to go.',
+      zero: '$amount left for the rest of today.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String notifyCategoryOverTitle(String category) {
+    return '$category is over budget';
+  }
+
+  @override
+  String notifyCategoryOverBody(String spent, String limit) {
+    return 'You\'ve spent $spent of your $limit limit.';
+  }
+
+  @override
+  String get notifyBudgetOverTitle => 'You\'re over budget';
+
+  @override
+  String notifyBudgetOverBody(String spent, String budget) {
+    return 'You\'ve spent $spent of your $budget budget.';
+  }
+
+  @override
+  String notifyIncomeTitle(String category) {
+    return '$category added';
+  }
+
+  @override
+  String notifyIncomeBody(String amount, String title) {
+    return '$amount · $title';
+  }
+
+  @override
+  String get notifyDailyTitle => 'Log today\'s spending?';
+
+  @override
+  String get notifyDailyBody => 'Take a moment to add what you spent today.';
+
+  @override
+  String get notifyWeeklyTitle => 'Your weekly summary';
+
+  @override
+  String notifyWeeklyLess(String spent, String difference) {
+    return 'You spent $spent last week, $difference less than the week before.';
+  }
+
+  @override
+  String notifyWeeklyMore(String spent, String difference) {
+    return 'You spent $spent last week, $difference more than the week before.';
+  }
+
+  @override
+  String notifyWeeklySame(String spent) {
+    return 'You spent $spent last week, the same as the week before.';
+  }
+
+  @override
+  String get notifyWeeklyReadyTitle => 'Your weekly summary is ready';
+
+  @override
+  String get notifyWeeklyReadyBody => 'See how last week went.';
+
+  @override
+  String get notifyPeriodTitle => 'New period started';
+
+  @override
+  String notifyPeriodBudgetBody(String budget) {
+    return 'Your $budget budget has reset.';
+  }
+
+  @override
+  String notifyPeriodBody(String range) {
+    return 'Your new period runs $range.';
+  }
 }

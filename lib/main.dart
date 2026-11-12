@@ -4,6 +4,11 @@ import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/notifications/data/drift_notification_repository.dart';
+import 'package:ctrl_spend/features/notifications/data/local_notification_scheduler.dart';
+import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
+import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
@@ -33,6 +38,12 @@ void main() {
         preferencesRepositoryProvider.overrideWith(
           (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),
         ),
+        notificationRepositoryProvider.overrideWith(
+          (ref) => DriftNotificationRepository(ref.watch(appDatabaseProvider)),
+        ),
+        notificationSchedulerProvider.overrideWith(
+          (ref) => LocalNotificationScheduler(),
+        ),
       ],
       child: const MainApp(),
     ),
@@ -44,6 +55,8 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // Starts scheduling and inbox upkeep for the app's lifetime.
+    ref.watch(notificationServiceProvider);
     return MaterialApp.router(
       theme: buildLightTheme(),
       darkTheme: buildDarkTheme(),

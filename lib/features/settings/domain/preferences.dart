@@ -25,5 +25,9 @@ abstract class Preferences with _$Preferences {
     @Default(true) bool budgetAlertsOn,
     @Default(false) bool weeklySummaryOn,
     @Default(false) bool onboardingComplete,
+
+    /// When scheduled notifications were last turned into inbox rows (PRD
+    /// §5.4). Null until the first check.
+    DateTime? notificationsCheckedAt,
   }) = _Preferences;
 }
