@@ -2,7 +2,6 @@ import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/dev/domain/sample_data.dart';
-import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:ctrl_spend/main.dart';
@@ -48,13 +47,10 @@ void main() {
   ) async {
     final container = ProviderContainer(
       overrides: [
-        ...appOverrides(),
+        // No OS notifications from a test run.
+        ...appOverrides(scheduler: FakeNotificationScheduler()),
         appDatabaseProvider.overrideWithValue(
           AppDatabase(NativeDatabase.memory()),
-        ),
-        // No OS notifications from a test run.
-        notificationSchedulerProvider.overrideWithValue(
-          FakeNotificationScheduler(),
         ),
       ],
     );

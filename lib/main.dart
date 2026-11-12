@@ -38,8 +38,8 @@ void main() {
 
 /// The real implementations behind each repository and platform service.
 /// Wired here so screens never import `data/`; the integration tests use
-/// them too.
-List<Override> appOverrides() => [
+/// them too, with a [scheduler] that doesn't post OS notifications.
+List<Override> appOverrides({NotificationScheduler? scheduler}) => [
   categoryRepositoryProvider.overrideWith(
     (ref) => DriftCategoryRepository(ref.watch(appDatabaseProvider)),
   ),
@@ -53,7 +53,7 @@ List<Override> appOverrides() => [
     (ref) => DriftNotificationRepository(ref.watch(appDatabaseProvider)),
   ),
   notificationSchedulerProvider.overrideWith(
-    (ref) => LocalNotificationScheduler(),
+    (ref) => scheduler ?? LocalNotificationScheduler(),
   ),
   fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
   csvFilePickerProvider.overrideWith((ref) => SystemCsvFilePicker()),
