@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_text.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
@@ -86,26 +87,21 @@ class PeriodSpentCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 16),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    result,
-                    style: footerStyle.copyWith(
-                      color: switch (left) {
-                        null => onHero.muted,
-                        _ when over => onHero.negative,
-                        _ => onHero.positive,
-                      },
-                    ),
-                  ),
+            SpreadOrStack(
+              start: Text(
+                result,
+                style: footerStyle.copyWith(
+                  color: switch (left) {
+                    null => onHero.muted,
+                    _ when over => onHero.negative,
+                    _ => onHero.positive,
+                  },
                 ),
-                if (budgetLabel != null)
-                  Text(
-                    budgetLabel,
-                    style: footerStyle.copyWith(color: onHero.ink),
-                  ),
-              ],
+              ),
+              end: Text(
+                budgetLabel ?? '',
+                style: footerStyle.copyWith(color: onHero.ink),
+              ),
             ),
           ],
         ),

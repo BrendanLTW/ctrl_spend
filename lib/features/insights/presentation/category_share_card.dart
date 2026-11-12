@@ -58,11 +58,14 @@ class CategoryShareCard extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 10),
-            Text(
-              amount,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: text.statValue.copyWith(color: colors.ink),
+            // Never cut short (DESIGN §10): scales down instead.
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              alignment: Alignment.centerLeft,
+              child: Text(
+                amount,
+                style: text.statValue.copyWith(color: colors.ink),
+              ),
             ),
             Text(
               category.name,

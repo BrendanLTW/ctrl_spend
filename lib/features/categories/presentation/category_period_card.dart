@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -125,20 +126,28 @@ class CategoryPeriodCard extends StatelessWidget {
               style: text.label.copyWith(color: colors.muted),
             ),
             const SizedBox(height: 2),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
+            // The amount stays on one line, scaling down if it must
+            // (DESIGN §10); "of RM 400" drops below it if there's no room.
+            Wrap(
+              crossAxisAlignment: WrapCrossAlignment.end,
+              spacing: 8,
               children: [
-                Flexible(
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
                   child: Text(
                     spent,
                     style: text.amount.copyWith(color: colors.ink),
                   ),
                 ),
-                if (of != null) ...[
-                  const SizedBox(width: 8),
-                  Text(of, style: text.body.copyWith(color: colors.muted)),
-                ],
+                if (of != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 4),
+                    child: Text(
+                      of,
+                      style: text.body.copyWith(color: colors.muted),
+                    ),
+                  ),
               ],
             ),
             if (limit != null) ...[
@@ -150,19 +159,17 @@ class CategoryPeriodCard extends StatelessWidget {
               ),
             ],
             const SizedBox(height: 12),
-            Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    footerLeft,
-                    style: result == null
-                        ? text.body.copyWith(color: colors.muted)
-                        : text.rowTitleSm.copyWith(color: accent),
-                  ),
-                ),
-                if (result != null)
-                  Text(days, style: text.body.copyWith(color: colors.muted)),
-              ],
+            SpreadOrStack(
+              start: Text(
+                footerLeft,
+                style: result == null
+                    ? text.body.copyWith(color: colors.muted)
+                    : text.rowTitleSm.copyWith(color: accent),
+              ),
+              end: Text(
+                result == null ? '' : days,
+                style: text.body.copyWith(color: colors.muted),
+              ),
             ),
           ],
         ),

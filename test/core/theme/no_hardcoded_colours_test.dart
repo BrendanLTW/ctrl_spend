@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Colours outside `core/theme/` that are deliberate, with how many times
-/// each file may use them and why (docs/dark-mode-audit.md). Anything
+/// each file may use them and why (docs/quality-audit.md). Anything
 /// else must come from the theme tokens.
 const _allowed = {
   // White on the hero, which is dark in both themes (DESIGN §7).

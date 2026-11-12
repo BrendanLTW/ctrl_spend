@@ -8,6 +8,7 @@ import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/filter_chips.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/search_field.dart';
 import 'package:ctrl_spend/core/widgets/swipe_to_delete.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
@@ -285,16 +286,12 @@ class _DayHeader extends StatelessWidget {
           AppSpacing.textX - AppSpacing.screenX,
           12,
         ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Text(
-                label.toUpperCase(),
-                style: text.label.copyWith(color: colors.muted),
-              ),
-            ),
-            Text(net, style: text.rowTitleSm.copyWith(color: colors.muted)),
-          ],
+        child: SpreadOrStack(
+          start: Text(
+            label.toUpperCase(),
+            style: text.label.copyWith(color: colors.muted),
+          ),
+          end: Text(net, style: text.rowTitleSm.copyWith(color: colors.muted)),
         ),
       ),
     );

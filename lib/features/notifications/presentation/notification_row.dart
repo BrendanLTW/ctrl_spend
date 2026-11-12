@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
@@ -71,20 +72,18 @@ class NotificationRow extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
+                  SpreadOrStack(
+                    gap: 8,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          notification.title,
-                          style: text.rowTitle.copyWith(color: colors.ink),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      if (unread) ...[
-                        Padding(
-                          padding: const EdgeInsets.only(top: 7),
-                          child: Container(
+                    start: Text(
+                      notification.title,
+                      style: text.rowTitle.copyWith(color: colors.ink),
+                    ),
+                    end: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        if (unread) ...[
+                          Container(
                             width: 8,
                             height: 8,
                             decoration: BoxDecoration(
@@ -94,20 +93,19 @@ class NotificationRow extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                        ),
-                        const SizedBox(width: 6),
-                      ],
-                      Padding(
-                        padding: const EdgeInsets.only(top: 1),
-                        child: Text(
-                          time,
-                          style: text.caption.copyWith(
-                            color: colors.muted,
-                            fontWeight: FontWeight.w500,
+                          const SizedBox(width: 6),
+                        ],
+                        Flexible(
+                          child: Text(
+                            time,
+                            style: text.caption.copyWith(
+                              color: colors.muted,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   const SizedBox(height: 2),
                   Text(

@@ -25,14 +25,23 @@ class PrimaryButton extends StatelessWidget {
           onTap: onPressed,
           highlightColor: colors.inkPressed,
           splashFactory: NoSplash.splashFactory,
-          child: SizedBox(
-            height: 58,
-            width: double.infinity,
-            child: Center(
-              child: Text(
-                label,
-                style: context.text.button.copyWith(
-                  color: enabled ? colors.onInk : colors.disabled,
+          // At least 58 high; taller when large text wraps the label.
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: 58,
+              minWidth: double.infinity,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Center(
+                widthFactor: 1,
+                heightFactor: 1,
+                child: Text(
+                  label,
+                  textAlign: TextAlign.center,
+                  style: context.text.button.copyWith(
+                    color: enabled ? colors.onInk : colors.disabled,
+                  ),
                 ),
               ),
             ),

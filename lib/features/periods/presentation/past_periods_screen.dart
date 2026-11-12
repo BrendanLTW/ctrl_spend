@@ -10,6 +10,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
@@ -178,18 +179,15 @@ class _CurrentPeriodCard extends StatelessWidget {
               style: text.label.copyWith(color: colors.muted),
             ),
             const SizedBox(height: 4),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                Expanded(
-                  child: Text(
-                    range,
-                    style: text.header.copyWith(color: colors.ink),
-                  ),
-                ),
-                Text(daysLeft, style: text.body.copyWith(color: colors.muted)),
-              ],
+            SpreadOrStack(
+              start: Text(
+                range,
+                style: text.header.copyWith(color: colors.ink),
+              ),
+              end: Text(
+                daysLeft,
+                style: text.body.copyWith(color: colors.muted),
+              ),
             ),
             if (budget != null) ...[
               const SizedBox(height: 18),

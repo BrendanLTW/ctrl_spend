@@ -7,6 +7,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/stat_card.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
@@ -86,26 +87,21 @@ class DashboardScreen extends ConsumerWidget {
               onSetBudget: () => context.go(Routes.budgets),
             ),
             const SizedBox(height: AppSpacing.cardGap),
-            Row(
+            PairOrStack(
               children: [
-                Expanded(
-                  child: _TotalCard(
-                    label: l10n.spentLabel,
-                    minor: totals.spentMinor,
-                    currency: currency,
-                    icon: Icons.arrow_upward_rounded,
-                    tint: CategoryColorKey.red,
-                  ),
+                _TotalCard(
+                  label: l10n.spentLabel,
+                  minor: totals.spentMinor,
+                  currency: currency,
+                  icon: Icons.arrow_upward_rounded,
+                  tint: CategoryColorKey.red,
                 ),
-                const SizedBox(width: AppSpacing.cardGap),
-                Expanded(
-                  child: _TotalCard(
-                    label: l10n.incomeLabel,
-                    minor: totals.incomeMinor,
-                    currency: currency,
-                    icon: Icons.arrow_downward_rounded,
-                    tint: CategoryColorKey.green,
-                  ),
+                _TotalCard(
+                  label: l10n.incomeLabel,
+                  minor: totals.incomeMinor,
+                  currency: currency,
+                  icon: Icons.arrow_downward_rounded,
+                  tint: CategoryColorKey.green,
                 ),
               ],
             ),

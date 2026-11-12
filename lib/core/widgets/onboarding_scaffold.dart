@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
 import 'package:ctrl_spend/core/widgets/text_link.dart';
@@ -45,7 +46,8 @@ class OnboardingScaffold extends StatelessWidget {
   final VoidCallback? onSecondary;
 
   /// Pinned above the primary button, outside the scrolling content, so
-  /// it always stays on screen (S05's keypad).
+  /// it always stays on screen (S05's keypad). With large text it scrolls
+  /// with the content instead, or it would leave no room for it.
   final Widget? footer;
 
   @override
@@ -53,6 +55,7 @@ class OnboardingScaffold extends StatelessWidget {
     final colors = context.colors;
     final text = context.text;
     final l10n = context.l10n;
+    final pinFooter = !largeText(context);
     return Scaffold(
       backgroundColor: colors.ground,
       body: SafeArea(
@@ -130,6 +133,10 @@ class OnboardingScaffold extends StatelessWidget {
                     ),
                     const SizedBox(height: AppSpacing.sectionTop),
                     body,
+                    if (footer case final footer? when !pinFooter) ...[
+                      const SizedBox(height: 16),
+                      footer,
+                    ],
                   ],
                 ),
               ),
@@ -143,7 +150,7 @@ class OnboardingScaffold extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  if (footer case final footer?) ...[
+                  if (footer case final footer? when pinFooter) ...[
                     footer,
                     const SizedBox(height: 16),
                   ],

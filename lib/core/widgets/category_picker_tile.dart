@@ -49,12 +49,17 @@ class CategoryPickerTile extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                label.toUpperCase(),
-                maxLines: 1,
-                style: context.text.label.copyWith(color: colors.ink),
+            // Scales down to fit its column; the padding keeps neighbours
+            // from running together at large text sizes.
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 3),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  label.toUpperCase(),
+                  maxLines: 1,
+                  style: context.text.label.copyWith(color: colors.ink),
+                ),
               ),
             ),
           ],

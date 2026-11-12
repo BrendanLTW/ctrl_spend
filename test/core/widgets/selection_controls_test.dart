@@ -44,15 +44,15 @@ void main() {
         );
         final track =
             tester
-                    .widget<Container>(
+                    .widget<DecoratedBox>(
                       find
                           .descendant(
                             of: find.byType(SegmentedControl<String>),
-                            matching: find.byType(Container),
+                            matching: find.byType(DecoratedBox),
                           )
                           .first,
                     )
-                    .decoration!
+                    .decoration
                 as BoxDecoration;
         expect(track.color, t.colors.surface);
       });
@@ -62,15 +62,15 @@ void main() {
         expect(tester.getSize(segment('Week')).height, 42);
         final track =
             tester
-                    .widget<Container>(
+                    .widget<DecoratedBox>(
                       find
                           .descendant(
                             of: find.byType(SegmentedControl<String>),
-                            matching: find.byType(Container),
+                            matching: find.byType(DecoratedBox),
                           )
                           .first,
                     )
-                    .decoration!
+                    .decoration
                 as BoxDecoration;
         expect(track.color, t.colors.fillSoft);
       });

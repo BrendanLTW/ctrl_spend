@@ -4,6 +4,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/period/period_format.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
@@ -85,18 +86,16 @@ class InsightsMonthView extends ConsumerWidget {
         ),
         const SizedBox(height: 16),
         SectionLabel(l10n.spendingCategories),
+        // Two to a row; one with large text.
         for (var i = 0; i < cards.length; i += 2) ...[
           if (i > 0) const SizedBox(height: AppSpacing.cardGap),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          PairOrStack(
             children: [
-              Expanded(child: cards[i]),
-              const SizedBox(width: AppSpacing.cardGap),
-              Expanded(
-                child: i + 1 < cards.length
-                    ? cards[i + 1]
-                    : const SizedBox.shrink(),
-              ),
+              cards[i],
+              if (i + 1 < cards.length)
+                cards[i + 1]
+              else if (!largeText(context))
+                const SizedBox.shrink(),
             ],
           ),
         ],

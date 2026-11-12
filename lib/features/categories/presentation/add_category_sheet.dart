@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
@@ -207,22 +208,27 @@ class _LimitRow extends StatelessWidget {
           onTap: onTap,
           highlightColor: colors.raised,
           splashFactory: NoSplash.splashFactory,
-          child: SizedBox(
-            height: 60,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(minHeight: 60),
             child: Row(
               children: [
                 const SizedBox(width: 18),
                 Icon(Icons.track_changes_rounded, size: 22, color: colors.ink),
                 const SizedBox(width: 14),
                 Expanded(
-                  child: Text(
-                    l10n.monthlyLimit,
-                    style: text.rowTitle.copyWith(color: colors.ink),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: SpreadOrStack(
+                      start: Text(
+                        l10n.monthlyLimit,
+                        style: text.rowTitle.copyWith(color: colors.ink),
+                      ),
+                      end: Text(
+                        value,
+                        style: text.rowTitleSm.copyWith(color: colors.muted),
+                      ),
+                    ),
                   ),
-                ),
-                Text(
-                  value,
-                  style: text.rowTitleSm.copyWith(color: colors.muted),
                 ),
                 const SizedBox(width: 6),
                 Icon(Icons.chevron_right_rounded, size: 20, color: colors.ink),

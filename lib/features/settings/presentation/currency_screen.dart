@@ -186,11 +186,16 @@ class _CurrencyRow extends StatelessWidget {
                   color: colors.raised,
                   borderRadius: BorderRadius.circular(AppRadius.r16),
                 ),
-                child: Text(
-                  currency.symbol,
-                  style: text.rowTitleSm.copyWith(
-                    color: colors.ink,
-                    fontWeight: FontWeight.w800,
+                padding: const EdgeInsets.all(4),
+                // Whole symbol even at large text ("RM", not "R").
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    currency.symbol,
+                    style: text.rowTitleSm.copyWith(
+                      color: colors.ink,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),

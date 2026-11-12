@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
@@ -145,38 +146,41 @@ class _CategoryResultRow extends StatelessWidget {
             ),
             const SizedBox(width: 14),
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    category.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: text.rowTitle.copyWith(color: colors.ink),
-                  ),
-                  Text.rich(
-                    TextSpan(
-                      children: [
-                        TextSpan(
-                          text: status,
-                          style: over
-                              ? subtitleStyle.copyWith(color: colors.negative)
-                              : null,
-                        ),
-                        if (limitText != null) TextSpan(text: ' · $limitText'),
-                      ],
+              child: SpreadOrStack(
+                gap: 10,
+                start: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      category.name,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: text.rowTitle.copyWith(color: colors.ink),
                     ),
-                    style: subtitleStyle,
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: status,
+                            style: over
+                                ? subtitleStyle.copyWith(color: colors.negative)
+                                : null,
+                          ),
+                          if (limitText != null)
+                            TextSpan(text: ' · $limitText'),
+                        ],
+                      ),
+                      style: subtitleStyle,
+                    ),
+                  ],
+                ),
+                end: Text(
+                  amount,
+                  style: text.rowTitleSm.copyWith(
+                    color: colors.ink,
+                    fontWeight: FontWeight.w700,
                   ),
-                ],
-              ),
-            ),
-            const SizedBox(width: 10),
-            Text(
-              amount,
-              style: text.rowTitleSm.copyWith(
-                color: colors.ink,
-                fontWeight: FontWeight.w700,
+                ),
               ),
             ),
           ],

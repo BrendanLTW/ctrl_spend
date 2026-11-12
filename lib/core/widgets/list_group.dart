@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:flutter/material.dart';
 
 /// A rounded card of rows with dividers between them (DESIGN §7).
@@ -70,6 +71,16 @@ class ListGroupRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
+    // With large text the value goes under the title, so neither is
+    // squeezed into a narrow column (DESIGN §10).
+    final stacked = largeText(context);
+    final valueText = switch (value) {
+      final value? => Text(
+        value,
+        style: text.rowTitleSm.copyWith(color: valueColor ?? colors.muted),
+      ),
+      null => null,
+    };
     return Semantics(
       button: onTap != null,
       selected: selected,
@@ -107,18 +118,17 @@ class ListGroupRow extends StatelessWidget {
                           style: text.body.copyWith(color: colors.muted),
                         ),
                       ],
+                      if (valueText case final valueText? when stacked) ...[
+                        const SizedBox(height: 2),
+                        valueText,
+                      ],
                     ],
                   ),
                 ),
-                if (value case final value?)
+                if (valueText case final valueText? when !stacked)
                   Padding(
                     padding: const EdgeInsets.only(left: 12),
-                    child: Text(
-                      value,
-                      style: text.rowTitleSm.copyWith(
-                        color: valueColor ?? colors.muted,
-                      ),
-                    ),
+                    child: valueText,
                   ),
                 if (trailing case final trailing?)
                   Padding(
@@ -159,20 +169,23 @@ class KeyValueRow extends StatelessWidget {
     return Semantics(
       label: '$label, $value',
       excludeSemantics: true,
-      child: SizedBox(
-        height: 58,
+      // At least 58 high; taller when large text stacks the value.
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 58),
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(
-                  label,
-                  style: text.body.copyWith(color: colors.muted),
-                ),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+          child: Center(
+            heightFactor: 1,
+            child: SpreadOrStack(
+              start: Text(
+                label,
+                style: text.body.copyWith(color: colors.muted),
               ),
-              Text(value, style: text.rowTitleSm.copyWith(color: colors.ink)),
-            ],
+              end: Text(
+                value,
+                style: text.rowTitleSm.copyWith(color: colors.ink),
+              ),
+            ),
           ),
         ),
       ),

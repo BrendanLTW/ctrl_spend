@@ -45,12 +45,15 @@ class DaySelector extends StatelessWidget {
           onTap: onTap,
           highlightColor: selected ? colors.inkPressed : colors.raised,
           splashFactory: NoSplash.splashFactory,
-          child: SizedBox(
-            height: compact ? 44 : 56,
+          // At least 44 (56) high; taller when large text wraps "Last day
+          // of the month".
+          child: ConstrainedBox(
+            constraints: BoxConstraints(minHeight: compact ? 44 : 56),
             child: Center(
+              heightFactor: 1,
               child: Text(
                 label,
-                maxLines: 1,
+                textAlign: TextAlign.center,
                 style: context.text.rowTitle.copyWith(
                   color: selected ? colors.onInk : colors.ink,
                 ),

@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/stat_card.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -49,31 +50,36 @@ class InsightChartCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          label.toUpperCase(),
-                          style: text.label.copyWith(color: colors.muted),
-                        ),
-                        Text(
+              Builder(
+                builder: (context) {
+                  final summary = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        label.toUpperCase(),
+                        style: text.label.copyWith(color: colors.muted),
+                      ),
+                      // One line: the figure scales down rather than wrap.
+                      FittedBox(
+                        fit: BoxFit.scaleDown,
+                        alignment: Alignment.centerLeft,
+                        child: Text(
                           amount,
                           style: text.amount.copyWith(color: colors.ink),
                         ),
-                        Text(
-                          caption,
-                          style: text.body.copyWith(color: colors.muted),
-                        ),
-                      ],
-                    ),
-                  ),
-                  if (chip case final chip?) ...[
-                    const SizedBox(width: 12),
-                    Container(
+                      ),
+                      Text(
+                        caption,
+                        style: text.body.copyWith(color: colors.muted),
+                      ),
+                    ],
+                  );
+                  final chipText = chip;
+                  if (chipText == null) return summary;
+                  return SpreadOrStack(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    start: summary,
+                    end: Container(
                       padding: const EdgeInsets.symmetric(
                         horizontal: 12,
                         vertical: 6,
@@ -83,15 +89,15 @@ class InsightChartCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(AppRadius.pill),
                       ),
                       child: Text(
-                        chip,
+                        chipText,
                         style: text.caption.copyWith(
                           color: colors.ink,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
-                  ],
-                ],
+                  );
+                },
               ),
               const SizedBox(height: 24),
               chart,
@@ -116,24 +122,19 @@ class InsightChartCard extends StatelessWidget {
         ),
         if (stats.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.cardGap),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          PairOrStack(
             children: [
-              for (final (i, stat) in stats.indexed) ...[
-                if (i > 0) const SizedBox(width: AppSpacing.cardGap),
-                Expanded(
-                  child: StatCard(
-                    label: stat.label,
-                    value: Text(stat.value),
-                    caption: stat.caption,
-                    semanticLabel: l10n.statCaptionLabel(
-                      stat.label,
-                      stat.value,
-                      stat.caption,
-                    ),
+              for (final stat in stats)
+                StatCard(
+                  label: stat.label,
+                  value: Text(stat.value),
+                  caption: stat.caption,
+                  semanticLabel: l10n.statCaptionLabel(
+                    stat.label,
+                    stat.value,
+                    stat.caption,
                   ),
                 ),
-              ],
             ],
           ),
         ],

@@ -149,7 +149,7 @@ class _ThemeOption extends StatelessWidget {
                 Flexible(
                   child: Text(
                     label,
-                    maxLines: 1,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: context.text.rowTitle.copyWith(color: colors.ink),
                   ),

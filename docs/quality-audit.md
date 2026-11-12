@@ -1,8 +1,12 @@
-# Dark mode audit (task 3.12)
+# Quality audit
+
+Dark mode (task 3.12) and accessibility (task 4.1) for every v1.0 screen.
+
+## Dark mode (task 3.12)
 
 Every v1.0 screen was rendered in dark with Poppins at 390 × 844 and compared with its dark design in `docs/design/`. Remaining differences come from sample data or app state (for example S12 opening with its keypad sheet), not from the theme.
 
-## Screens
+### Screens
 
 | Screen | Dark design | Matches | Notes |
 |---|---|---|---|
@@ -41,7 +45,7 @@ Every v1.0 screen was rendered in dark with Poppins at 390 × 844 and compared w
 | S42 Delete dialog | Dialog · Delete transaction · Dark | Yes | See deviations |
 | S43 Date picker | Picker · Date · Dark | Yes | Future days disabled for transactions |
 
-## Deviations from the dark designs or DESIGN.md
+### Deviations from the dark designs or DESIGN.md
 
 Where a dark design looked like a mistake, or disagreed with DESIGN.md, the app follows the screen or the shared rules, as agreed during each task.
 
@@ -55,7 +59,7 @@ Where a dark design looked like a mistake, or disagreed with DESIGN.md, the app 
 | S14 unread dot | DESIGN §7: `ink` | The blue category icon colour | Matches both screens |
 | S42 and swipe-to-delete red | — | The light theme's red in both themes | White on the dark theme's red falls below 4.5:1 |
 
-## Fixed colours outside the theme
+### Fixed colours outside the theme
 
 `test/core/theme/no_hardcoded_colours_test.dart` fails on any `Color(0x…)`, `Color.fromRGBO/ARGB` or `Colors.<name>` (other than `transparent`) outside `lib/core/theme/`, except these, each with a reason in the code:
 
@@ -66,3 +70,33 @@ Where a dark design looked like a mistake, or disagreed with DESIGN.md, the app 
 Fixed in this task: the toggle knob's shadow was a literal; it is now the `toggleKnob` token in `AppShadows`.
 
 Every screen has widget tests that run in both themes.
+
+## Accessibility (task 4.1)
+
+Checked on every screen listed in `test/helpers/screens.dart` (31, with sample data), against DESIGN §10.
+
+### What the tests enforce
+
+- `test/accessibility/guidelines_test.dart`: every screen, in light and dark, meets Flutter's guidelines: tap targets of at least 48 px (Android) and 44 px (iOS), every tap target labelled, and text contrast.
+- `test/accessibility/large_text_test.dart`: every screen at 200% text, with Poppins loaded, lays out without errors, and no amount on screen is cut short with an ellipsis.
+- Charts and progress bars have screen-reader labels with their values; their widget tests check the exact text.
+
+### Found and fixed
+
+| Problem | Fix |
+|---|---|
+| Segmented control segments were 46 px (42 in sheets), under Android's 48 and, in sheets, iOS's 44 | The track's padding is part of each segment's tap area: 62 px (54 in sheets), same look |
+| Segment labels cut short at large text ("This p…") | Up to two lines; the control grows |
+| Primary button cut off a wrapped label | 58 px is now the minimum height |
+| S05's pinned keypad left no room for the content at large text | `OnboardingScaffold` scrolls its footer with the content at 150% text and up |
+| Label-and-value rows squeezed the label to a character per line (S19/S20 headers, S25, S26, S14, S24, S32, S06, S16 day headers, settings rows) | `SpreadOrStack`: side by side normally, the value below the label from 150% text; the value never takes more than 60% of the row |
+| Pairs of cards too narrow at large text (S09 Spent/Income, Insights stats, S18 grid) | `PairOrStack`: one per row from 150% text |
+| Amounts truncated or broken across lines (S18 cards, S23, S19/S20 totals, S34 symbols) | Kept on one line, scaled down only if they still don't fit |
+| S12 category labels ran together at large text | Small padding between the scaled-down labels |
+| S32's Last day of the month button clipped its label | Minimum height instead of a fixed one |
+
+### Accepted
+
+- Transaction titles in Activity and Recent activities can truncate at large text; DESIGN §10 asks only that amounts never do.
+- At 200%, long single words can break mid-word on a 390 px screen ("notifica-tions" on S15). Nothing is clipped.
+- The bottom bar shows the active tab's label truncated at 200%; every tab still has its full label for screen readers.

@@ -7,6 +7,7 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
@@ -135,19 +136,15 @@ class _AllocatedCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Row(
-            children: [
-              Expanded(
-                child: Text(
-                  l10n.allocated.toUpperCase(),
-                  style: text.label.copyWith(color: colors.muted),
-                ),
-              ),
-              _AllocatedOf(
-                allocated: formatter.formatCompact(allocatedMinor),
-                budget: formatter.formatCompact(budgetMinor),
-              ),
-            ],
+          SpreadOrStack(
+            start: Text(
+              l10n.allocated.toUpperCase(),
+              style: text.label.copyWith(color: colors.muted),
+            ),
+            end: _AllocatedOf(
+              allocated: formatter.formatCompact(allocatedMinor),
+              budget: formatter.formatCompact(budgetMinor),
+            ),
           ),
           const SizedBox(height: 14),
           AppProgressBar(
