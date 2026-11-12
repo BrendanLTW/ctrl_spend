@@ -14,6 +14,8 @@ import 'package:ctrl_spend/features/onboarding/presentation/onboarding_controlle
 import 'package:ctrl_spend/features/onboarding/presentation/reminders_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
+import 'package:ctrl_spend/features/periods/presentation/past_periods_screen.dart';
+import 'package:ctrl_spend/features/periods/presentation/period_detail_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -46,6 +48,14 @@ abstract final class Routes {
 
   /// S22 Category manager.
   static const categories = '/settings/categories';
+
+  /// S25 Past periods.
+  static const pastPeriods = '/periods';
+
+  /// S26 for the period starting on [start].
+  static String period(DateTime start) =>
+      '/periods/${start.year}-${_two(start.month)}-${_two(start.day)}';
+  static String _two(int n) => n.toString().padLeft(2, '0');
   static const splash = '/splash';
 
   /// S02 Welcome; the other steps sit under it.
@@ -126,6 +136,19 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.categories,
         builder: (context, state) => const CategoryManagerScreen(),
+      ),
+      GoRoute(
+        path: Routes.pastPeriods,
+        builder: (context, state) => const PastPeriodsScreen(),
+      ),
+      GoRoute(
+        path: '/periods/:start',
+        builder: (context, state) => PeriodDetailScreen(
+          // A local date; a bad one falls back to today's period.
+          date:
+              DateTime.tryParse(state.pathParameters['start'] ?? '') ??
+              DateTime.now(),
+        ),
       ),
       GoRoute(
         path: Routes.monthStart,

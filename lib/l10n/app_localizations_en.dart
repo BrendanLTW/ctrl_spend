@@ -990,4 +990,39 @@ class AppLocalizationsEn extends AppLocalizations {
   String periodSoFar(String month, String amount) {
     return '$month $amount, so far';
   }
+
+  @override
+  String get pastPeriods => 'Past periods';
+
+  @override
+  String get viewPastPeriods => 'View past periods';
+
+  @override
+  String get previousPeriods => 'Previous';
+
+  @override
+  String amountUnder(String amount) {
+    return '$amount under';
+  }
+
+  @override
+  String spentOfAmount(String spent, String budget) {
+    return '$spent of $budget';
+  }
+
+  @override
+  String get noBudget => 'No budget';
+
+  @override
+  String get noLimit => 'No limit';
+
+  @override
+  String amountOver(String amount) {
+    return '$amount over';
+  }
+
+  @override
+  String limitAmount(String limit) {
+    return 'limit $limit';
+  }
 }

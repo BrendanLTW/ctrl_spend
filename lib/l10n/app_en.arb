@@ -885,5 +885,45 @@
         "type": "String"
       }
     }
+  },
+  "pastPeriods": "Past periods",
+  "viewPastPeriods": "View past periods",
+  "previousPeriods": "Previous",
+  "amountUnder": "{amount} under",
+  "@amountUnder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfAmount": "{spent} of {budget}",
+  "@spentOfAmount": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "noBudget": "No budget",
+  "noLimit": "No limit",
+  "amountOver": "{amount} over",
+  "@amountOver": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "limitAmount": "limit {limit}",
+  "@limitAmount": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
   }
 }

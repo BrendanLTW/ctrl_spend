@@ -1,7 +1,13 @@
+import 'dart:async';
+
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/theme/app_radius.dart';
+import 'package:ctrl_spend/core/theme/app_spacing.dart';
+import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
 import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
 import 'package:ctrl_spend/features/insights/presentation/insight_bar_chart.dart';
@@ -13,6 +19,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 /// S20's 6 months view: the last six periods against the budget, each
@@ -93,7 +100,7 @@ class InsightsTrendView extends ConsumerWidget {
       null => null,
     };
 
-    return InsightChartCard(
+    final card = InsightChartCard(
       label: l10n.avgPerMonth,
       amount: average == null ? '—' : formatter.formatCompact(average),
       caption: range == null
@@ -125,6 +132,57 @@ class InsightsTrendView extends ConsumerWidget {
         (colors.ink, l10n.thisPeriod),
       ],
       stats: [?underBudget, ?highest],
+    );
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        card,
+        const SizedBox(height: AppSpacing.cardGap),
+        const _ViewPastPeriods(),
+      ],
+    );
+  }
+}
+
+/// Opens S25: `surface` with `ink` text in both themes.
+class _ViewPastPeriods extends StatelessWidget {
+  const new();
+
+  @override
+  Widget build(BuildContext context) {
+    final colors = context.colors;
+    return Material(
+      color: colors.surface,
+      borderRadius: BorderRadius.circular(AppRadius.r24),
+      clipBehavior: Clip.antiAlias,
+      child: Semantics(
+        button: true,
+        child: InkWell(
+          onTap: () => unawaited(context.push(Routes.pastPeriods)),
+          highlightColor: colors.raised,
+          splashFactory: NoSplash.splashFactory,
+          child: SizedBox(
+            height: 48,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  context.l10n.viewPastPeriods,
+                  style: context.text.rowTitle.copyWith(color: colors.ink),
+                ),
+                const SizedBox(width: 6),
+                ExcludeSemantics(
+                  child: Icon(
+                    Icons.chevron_right_rounded,
+                    size: 20,
+                    color: colors.ink,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

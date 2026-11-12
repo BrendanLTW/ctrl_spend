@@ -37,6 +37,7 @@ class ListGroupRow extends StatelessWidget {
     this.subtitle,
     this.leading,
     this.value,
+    this.valueColor,
     this.onTap,
     this.selected = false,
     super.key,
@@ -48,6 +49,10 @@ class ListGroupRow extends StatelessWidget {
   final String? subtitle;
   final Widget? leading;
   final String? value;
+
+  /// Defaults to `muted`; a status colour for results like "Over by RM 10"
+  /// (S25).
+  final Color? valueColor;
   final VoidCallback? onTap;
 
   /// Shows a check instead of the chevron, for single-choice lists.
@@ -100,7 +105,9 @@ class ListGroupRow extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 12),
                     child: Text(
                       value,
-                      style: text.rowTitleSm.copyWith(color: colors.muted),
+                      style: text.rowTitleSm.copyWith(
+                        color: valueColor ?? colors.muted,
+                      ),
                     ),
                   ),
                 if (selected || onTap != null)

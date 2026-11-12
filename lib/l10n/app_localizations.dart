@@ -1629,6 +1629,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{month} {amount}, so far'**
   String periodSoFar(String month, String amount);
+
+  /// No description provided for @pastPeriods.
+  ///
+  /// In en, this message translates to:
+  /// **'Past periods'**
+  String get pastPeriods;
+
+  /// No description provided for @viewPastPeriods.
+  ///
+  /// In en, this message translates to:
+  /// **'View past periods'**
+  String get viewPastPeriods;
+
+  /// No description provided for @previousPeriods.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get previousPeriods;
+
+  /// No description provided for @amountUnder.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} under'**
+  String amountUnder(String amount);
+
+  /// No description provided for @spentOfAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{spent} of {budget}'**
+  String spentOfAmount(String spent, String budget);
+
+  /// No description provided for @noBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'No budget'**
+  String get noBudget;
+
+  /// No description provided for @noLimit.
+  ///
+  /// In en, this message translates to:
+  /// **'No limit'**
+  String get noLimit;
+
+  /// No description provided for @amountOver.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} over'**
+  String amountOver(String amount);
+
+  /// No description provided for @limitAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'limit {limit}'**
+  String limitAmount(String limit);
 }
 
 class _AppLocalizationsDelegate

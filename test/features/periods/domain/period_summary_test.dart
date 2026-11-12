@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
@@ -94,5 +95,49 @@ void main() {
     expect(byId[2]!.leftMinor, isNull, reason: 'No limit');
     expect(byId[3]!.spentMinor, 0);
     expect(byId[3]!.leftMinor, 20000);
+  });
+
+  group('previousPeriods', () {
+    final today = DateTime(2026, 11, 4, 9);
+    const startDay = DayOfMonth(15);
+
+    test('none without a first transaction', () {
+      expect(previousPeriods(today: today, startDay: startDay), isEmpty);
+    });
+
+    test('none when the first transaction is this period', () {
+      expect(
+        previousPeriods(
+          today: today,
+          startDay: startDay,
+          since: DateTime(2026, 10, 15),
+        ),
+        isEmpty,
+      );
+    });
+
+    test('newest first, back to the first transaction', () {
+      final periods = previousPeriods(
+        today: today,
+        startDay: startDay,
+        since: DateTime(2026, 8, 20, 12),
+      );
+      expect(periods, [
+        (start: DateTime(2026, 9, 15), end: DateTime(2026, 10, 14)),
+        (start: DateTime(2026, 8, 15), end: DateTime(2026, 9, 14)),
+      ]);
+    });
+
+    test('follows the last-day start through February', () {
+      final periods = previousPeriods(
+        today: DateTime(2028, 4, 5),
+        startDay: const LastDayOfMonth(),
+        since: DateTime(2028, 1, 31),
+      );
+      expect(periods, [
+        (start: DateTime(2028, 2, 29), end: DateTime(2028, 3, 30)),
+        (start: DateTime(2028, 1, 31), end: DateTime(2028, 2, 28)),
+      ]);
+    });
   });
 }

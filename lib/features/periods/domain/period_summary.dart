@@ -61,3 +61,25 @@ PeriodSummary periodSummary(
     categories: results,
   );
 }
+
+/// The periods before the one containing [today], newest first, back to
+/// the one containing [since] (the first transaction). None without it.
+List<Period> previousPeriods({
+  required DateTime today,
+  required MonthStartDay startDay,
+  DateTime? since,
+}) {
+  if (since == null) return [];
+  final first = periodFor(since, startDay).start;
+  final periods = <Period>[];
+  var start = periodFor(today, startDay).start;
+  while (start.isAfter(first)) {
+    final previous = periodFor(
+      DateTime(start.year, start.month, start.day - 1),
+      startDay,
+    );
+    periods.add(previous);
+    start = previous.start;
+  }
+  return periods;
+}
