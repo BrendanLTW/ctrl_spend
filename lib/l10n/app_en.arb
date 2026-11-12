@@ -698,8 +698,8 @@
   "todayBubble": "today",
   "underPace": "Under pace",
   "overPace": "Over pace",
-  "underPaceDays": "{count} of {total}",
-  "@underPaceDays": {
+  "countOfTotal": "{count} of {total}",
+  "@countOfTotal": {
     "placeholders": {
       "count": {
         "type": "int"
@@ -774,10 +774,10 @@
       }
     }
   },
-  "dayAmount": "{day} {amount}",
-  "@dayAmount": {
+  "labelAmount": "{label} {amount}",
+  "@labelAmount": {
     "placeholders": {
-      "day": {
+      "label": {
         "type": "String"
       },
       "amount": {
@@ -795,6 +795,93 @@
         "type": "String"
       },
       "caption": {
+        "type": "String"
+      }
+    }
+  },
+  "avgPerMonth": "Avg per month",
+  "fullMonthsRange": "{range}, {count, plural, =1{full month} other{full months}}",
+  "@fullMonthsRange": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noFullMonths": "No full months yet",
+  "budgetChip": "Budget {amount}",
+  "@budgetChip": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetLine": "Budget",
+  "underBudget": "Under budget",
+  "overBudget": "Over budget",
+  "thisPeriod": "This period",
+  "soFar": "so far",
+  "fullMonths": "{count, plural, =1{full month} other{full months}}",
+  "@fullMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "highestMonth": "Highest month",
+  "trendChartLabel": "Monthly spending, budget {budget}: {periods}",
+  "@trendChartLabel": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      },
+      "periods": {
+        "type": "String"
+      }
+    }
+  },
+  "trendChartLabelNoBudget": "Monthly spending: {periods}",
+  "@trendChartLabelNoBudget": {
+    "placeholders": {
+      "periods": {
+        "type": "String"
+      }
+    }
+  },
+  "periodUnderBudget": "{month} {amount}, under budget",
+  "@periodUnderBudget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "periodOverBudget": "{month} {amount}, over budget",
+  "@periodOverBudget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "periodSoFar": "{month} {amount}, so far",
+  "@periodSoFar": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
         "type": "String"
       }
     }

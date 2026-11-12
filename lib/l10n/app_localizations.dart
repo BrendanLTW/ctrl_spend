@@ -1468,11 +1468,11 @@ abstract class AppLocalizations {
   /// **'Over pace'**
   String get overPace;
 
-  /// No description provided for @underPaceDays.
+  /// No description provided for @countOfTotal.
   ///
   /// In en, this message translates to:
   /// **'{count} of {total}'**
-  String underPaceDays(int count, int total);
+  String countOfTotal(int count, int total);
 
   /// No description provided for @daysThisWeek.
   ///
@@ -1522,17 +1522,113 @@ abstract class AppLocalizations {
   /// **'{day} {amount}, today'**
   String dayToday(String day, String amount);
 
-  /// No description provided for @dayAmount.
+  /// No description provided for @labelAmount.
   ///
   /// In en, this message translates to:
-  /// **'{day} {amount}'**
-  String dayAmount(String day, String amount);
+  /// **'{label} {amount}'**
+  String labelAmount(String label, String amount);
 
   /// No description provided for @statCaptionLabel.
   ///
   /// In en, this message translates to:
   /// **'{label}, {value} {caption}'**
   String statCaptionLabel(String label, String value, String caption);
+
+  /// No description provided for @avgPerMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Avg per month'**
+  String get avgPerMonth;
+
+  /// No description provided for @fullMonthsRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{range}, {count, plural, =1{full month} other{full months}}'**
+  String fullMonthsRange(String range, int count);
+
+  /// No description provided for @noFullMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'No full months yet'**
+  String get noFullMonths;
+
+  /// No description provided for @budgetChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget {amount}'**
+  String budgetChip(String amount);
+
+  /// No description provided for @budgetLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Budget'**
+  String get budgetLine;
+
+  /// No description provided for @underBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Under budget'**
+  String get underBudget;
+
+  /// No description provided for @overBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Over budget'**
+  String get overBudget;
+
+  /// No description provided for @thisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'This period'**
+  String get thisPeriod;
+
+  /// No description provided for @soFar.
+  ///
+  /// In en, this message translates to:
+  /// **'so far'**
+  String get soFar;
+
+  /// No description provided for @fullMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{full month} other{full months}}'**
+  String fullMonths(int count);
+
+  /// No description provided for @highestMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Highest month'**
+  String get highestMonth;
+
+  /// No description provided for @trendChartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly spending, budget {budget}: {periods}'**
+  String trendChartLabel(String budget, String periods);
+
+  /// No description provided for @trendChartLabelNoBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly spending: {periods}'**
+  String trendChartLabelNoBudget(String periods);
+
+  /// No description provided for @periodUnderBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} {amount}, under budget'**
+  String periodUnderBudget(String month, String amount);
+
+  /// No description provided for @periodOverBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} {amount}, over budget'**
+  String periodOverBudget(String month, String amount);
+
+  /// No description provided for @periodSoFar.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} {amount}, so far'**
+  String periodSoFar(String month, String amount);
 }
 
 class _AppLocalizationsDelegate

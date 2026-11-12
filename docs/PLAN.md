@@ -99,9 +99,9 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S18, S40, PRD §5.7, FR-09
 - [x] **3.3 Insights · Week.** S19 daily bars against the pace line, under/over marking, today highlighted, Under pace and Biggest day stats, and the chart's text alternative.
   Refs: S19, PRD §5.7, FR-09
-- [ ] **3.4 Insights · 6 months.** S20 monthly bars against the budget line, "so far" for the current period, Under budget and Highest month stats, and View past periods.
+- [x] **3.4 Insights · 6 months.** S20 monthly bars against the budget line, "so far" for the current period, Under budget and Highest month stats, and View past periods (moved to 3.5, with S25).
   Refs: S20, PRD §5.7, FR-09
-- [ ] **3.5 Past periods.** S25 current and previous periods, and S26 period detail with per-category results against limits.
+- [ ] **3.5 Past periods.** S25 current and previous periods, and S26 period detail with per-category results against limits. Add S20's View past periods row (`surface`, `ink` text in both themes).
   Refs: S25, S26, PRD §5.10, FR-13
 - [ ] **3.6 Category detail.** S23 with this-period stats, Name, Icon & colour and Monthly limit rows, recent transactions and Archive category.
   Refs: S23, PRD §5.9, FR-15

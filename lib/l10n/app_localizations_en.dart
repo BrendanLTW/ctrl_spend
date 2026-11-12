@@ -865,7 +865,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get overPace => 'Over pace';
 
   @override
-  String underPaceDays(int count, int total) {
+  String countOfTotal(int count, int total) {
     return '$count of $total';
   }
 
@@ -906,12 +906,88 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String dayAmount(String day, String amount) {
-    return '$day $amount';
+  String labelAmount(String label, String amount) {
+    return '$label $amount';
   }
 
   @override
   String statCaptionLabel(String label, String value, String caption) {
     return '$label, $value $caption';
+  }
+
+  @override
+  String get avgPerMonth => 'Avg per month';
+
+  @override
+  String fullMonthsRange(String range, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'full months',
+      one: 'full month',
+    );
+    return '$range, $_temp0';
+  }
+
+  @override
+  String get noFullMonths => 'No full months yet';
+
+  @override
+  String budgetChip(String amount) {
+    return 'Budget $amount';
+  }
+
+  @override
+  String get budgetLine => 'Budget';
+
+  @override
+  String get underBudget => 'Under budget';
+
+  @override
+  String get overBudget => 'Over budget';
+
+  @override
+  String get thisPeriod => 'This period';
+
+  @override
+  String get soFar => 'so far';
+
+  @override
+  String fullMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'full months',
+      one: 'full month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get highestMonth => 'Highest month';
+
+  @override
+  String trendChartLabel(String budget, String periods) {
+    return 'Monthly spending, budget $budget: $periods';
+  }
+
+  @override
+  String trendChartLabelNoBudget(String periods) {
+    return 'Monthly spending: $periods';
+  }
+
+  @override
+  String periodUnderBudget(String month, String amount) {
+    return '$month $amount, under budget';
+  }
+
+  @override
+  String periodOverBudget(String month, String amount) {
+    return '$month $amount, over budget';
+  }
+
+  @override
+  String periodSoFar(String month, String amount) {
+    return '$month $amount, so far';
   }
 }

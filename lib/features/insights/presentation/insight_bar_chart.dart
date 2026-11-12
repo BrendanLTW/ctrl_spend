@@ -1,69 +1,62 @@
 import 'dart:math' as math;
 
-import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/theme/chart_palette.dart';
-import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-/// S19's daily bars: the last 7 days against the daily pace line, each bar
-/// coral when over pace and grey when under, today in `ink` with its
-/// amount above it. Without a [paceMinor] there's no line and every past
-/// day is grey. Screen readers get every day's amount and result.
-class WeekBarChart extends StatelessWidget {
+typedef InsightBar = ({String label, int valueMinor, Color color});
+
+typedef ReferenceLine = ({int valueMinor, String label, bool labelRight});
+
+/// S19 and S20's bars against a dashed reference line (daily pace,
+/// budget). The last bar is the current one: its label is bold and
+/// [bubbleAmount] / [bubbleNote] float above it ("RM 30.70 / today").
+/// Read by screen readers as [semanticLabel] alone.
+class InsightBarChart extends StatelessWidget {
   const new({
-    required this.days,
-    required this.paceMinor,
-    required this.currency,
+    required this.bars,
+    required this.bubbleAmount,
+    required this.bubbleNote,
+    required this.semanticLabel,
+    this.reference,
+    this.barWidth = 26,
     super.key,
   });
 
-  /// Oldest first; the last one is today.
-  final List<DaySpend> days;
-  final int? paceMinor;
-  final Currency currency;
-
-  static const double _barWidth = 26;
+  /// Oldest first; the last one is the current one.
+  final List<InsightBar> bars;
+  final String bubbleAmount;
+  final String bubbleNote;
+  final String semanticLabel;
+  final ReferenceLine? reference;
+  final double barWidth;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
-    final l10n = context.l10n;
-    final locale = Localizations.localeOf(context).toLanguageTag();
-    final formatter = MoneyFormatter(currency);
-    final todayIndex = days.length - 1;
-    final pace = paceMinor;
+    final current = bars.length - 1;
+    final line = reference;
 
     final top = math.max(
-      days.fold(0, (m, d) => math.max(m, d.spentMinor)),
-      pace ?? 0,
+      bars.fold(0, (m, b) => math.max(m, b.valueMinor)),
+      line?.valueMinor ?? 0,
     );
-    // A short stub keeps quiet days visible; the label has the real value.
+    // A short stub keeps quiet bars visible; the label has the real value.
     final stub = top * 0.04;
-
-    Color barColor(int i) {
-      if (i == todayIndex) return colors.ink;
-      return days[i].underPace ?? true ? colors.disabled : ChartPalette.over;
-    }
-
-    final dayLabels = [
-      for (final (i, d) in days.indexed)
-        _dayLabel(l10n, d, i == todayIndex, formatter, locale),
-    ];
-    final semanticLabel = pace == null
-        ? l10n.weekChartLabelNoPace(dayLabels.join('; '))
-        : l10n.weekChartLabel(formatter.format(pace), dayLabels.join('; '));
+    final lineLabelStyle = text.caption.copyWith(
+      color: colors.muted,
+      fontWeight: FontWeight.w600,
+    );
 
     return Semantics(
       label: semanticLabel,
       excludeSemantics: true,
-      child: SizedBox(
-        height: 230,
+      child: Container(
+        height: 250,
+        // Room above the chart for the line's label and the bubble.
+        padding: const EdgeInsets.only(top: 20),
         child: BarChart(
           BarChartData(
             minY: 0,
@@ -80,15 +73,14 @@ class WeekBarChart extends StatelessWidget {
                   showTitles: true,
                   reservedSize: 34,
                   getTitlesWidget: (value, meta) {
-                    final i = value.toInt();
-                    final isToday = i == todayIndex;
+                    final isCurrent = value.toInt() == current;
                     return SideTitleWidget(
                       meta: meta,
                       child: Text(
-                        DateFormat('EEE', locale).format(days[i].day),
+                        bars[value.toInt()].label,
                         style: text.rowTitleSm.copyWith(
-                          color: isToday ? colors.ink : colors.muted,
-                          fontWeight: isToday ? FontWeight.w700 : null,
+                          color: isCurrent ? colors.ink : colors.muted,
+                          fontWeight: isCurrent ? FontWeight.w700 : null,
                         ),
                       ),
                     );
@@ -98,20 +90,20 @@ class WeekBarChart extends StatelessWidget {
             ),
             extraLinesData: ExtraLinesData(
               horizontalLines: [
-                if (pace != null)
+                if (line != null)
                   HorizontalLine(
-                    y: pace.toDouble(),
+                    y: line.valueMinor.toDouble(),
                     color: colors.muted,
                     strokeWidth: 1.5,
                     dashArray: const [4, 4],
                     label: HorizontalLineLabel(
                       show: true,
+                      alignment: line.labelRight
+                          ? Alignment.topRight
+                          : Alignment.topLeft,
                       padding: const EdgeInsets.only(bottom: 10),
-                      style: text.caption.copyWith(
-                        color: colors.muted,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      labelResolver: (_) => l10n.dailyPace,
+                      style: lineLabelStyle,
+                      labelResolver: (_) => line.label,
                     ),
                   ),
               ],
@@ -131,14 +123,14 @@ class WeekBarChart extends StatelessWidget {
                 fitInsideVertically: true,
                 getTooltipItem: (group, groupIndex, rod, rodIndex) =>
                     BarTooltipItem(
-                      '${formatter.format(days[groupIndex].spentMinor)}\n',
+                      '$bubbleAmount\n',
                       text.caption.copyWith(
                         color: colors.onInk,
                         fontWeight: FontWeight.w700,
                       ),
                       children: [
                         TextSpan(
-                          text: l10n.todayBubble,
+                          text: bubbleNote,
                           style: text.labelSm.copyWith(
                             color: colors.onInk,
                             letterSpacing: 0,
@@ -149,16 +141,16 @@ class WeekBarChart extends StatelessWidget {
               ),
             ),
             barGroups: [
-              for (final (i, d) in days.indexed)
+              for (final (i, b) in bars.indexed)
                 BarChartGroupData(
                   x: i,
-                  showingTooltipIndicators: [if (i == todayIndex) 0],
+                  showingTooltipIndicators: [if (i == current) 0],
                   barRods: [
                     BarChartRodData(
-                      toY: math.max(d.spentMinor.toDouble(), stub),
-                      color: barColor(i),
-                      width: _barWidth,
-                      borderRadius: BorderRadius.circular(_barWidth / 2),
+                      toY: math.max(b.valueMinor.toDouble(), stub),
+                      color: b.color,
+                      width: barWidth,
+                      borderRadius: BorderRadius.circular(barWidth / 2),
                     ),
                   ],
                 ),
@@ -168,22 +160,5 @@ class WeekBarChart extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  String _dayLabel(
-    AppLocalizations l10n,
-    DaySpend d,
-    bool isToday,
-    MoneyFormatter formatter,
-    String locale,
-  ) {
-    final day = DateFormat('EEEE', locale).format(d.day);
-    final amount = formatter.format(d.spentMinor);
-    if (isToday) return l10n.dayToday(day, amount);
-    return switch (d.underPace) {
-      true => l10n.dayUnderPace(day, amount),
-      false => l10n.dayOverPace(day, amount),
-      null => l10n.dayAmount(day, amount),
-    };
   }
 }

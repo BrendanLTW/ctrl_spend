@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_month_view.dart';
+import 'package:ctrl_spend/features/insights/presentation/insights_trend_view.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_week_view.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
@@ -70,9 +71,7 @@ class _InsightsScreenState extends State<InsightsScreen> {
               switch (_range) {
                 InsightsRange.month => const InsightsMonthView(),
                 InsightsRange.week => const InsightsWeekView(),
-                // shortcut: 6 months (S20) is task 3.4; until then it shows
-                // nothing.
-                InsightsRange.sixMonths => const SizedBox.shrink(),
+                InsightsRange.sixMonths => const InsightsTrendView(),
               },
             ],
           ),
