@@ -24,6 +24,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod/misc.dart';
 
 void main() {
   LicenseRegistry.addLicense(() async* {
@@ -32,36 +33,34 @@ void main() {
     final isc = await rootBundle.loadString('assets/icons/LICENSE');
     yield LicenseEntryWithLineBreaks(['Lucide'], isc);
   });
-  runApp(
-    ProviderScope(
-      // Repository implementations are wired here so screens never import
-      // `data/`.
-      overrides: [
-        categoryRepositoryProvider.overrideWith(
-          (ref) => DriftCategoryRepository(ref.watch(appDatabaseProvider)),
-        ),
-        transactionRepositoryProvider.overrideWith(
-          (ref) => DriftTransactionRepository(ref.watch(appDatabaseProvider)),
-        ),
-        preferencesRepositoryProvider.overrideWith(
-          (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),
-        ),
-        notificationRepositoryProvider.overrideWith(
-          (ref) => DriftNotificationRepository(ref.watch(appDatabaseProvider)),
-        ),
-        notificationSchedulerProvider.overrideWith(
-          (ref) => LocalNotificationScheduler(),
-        ),
-        fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
-        csvFilePickerProvider.overrideWith((ref) => SystemCsvFilePicker()),
-        dataEraserProvider.overrideWith(
-          (ref) => DriftDataEraser(ref.watch(appDatabaseProvider)),
-        ),
-      ],
-      child: const MainApp(),
-    ),
-  );
+  runApp(ProviderScope(overrides: appOverrides(), child: const MainApp()));
 }
+
+/// The real implementations behind each repository and platform service.
+/// Wired here so screens never import `data/`; the integration tests use
+/// them too.
+List<Override> appOverrides() => [
+  categoryRepositoryProvider.overrideWith(
+    (ref) => DriftCategoryRepository(ref.watch(appDatabaseProvider)),
+  ),
+  transactionRepositoryProvider.overrideWith(
+    (ref) => DriftTransactionRepository(ref.watch(appDatabaseProvider)),
+  ),
+  preferencesRepositoryProvider.overrideWith(
+    (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),
+  ),
+  notificationRepositoryProvider.overrideWith(
+    (ref) => DriftNotificationRepository(ref.watch(appDatabaseProvider)),
+  ),
+  notificationSchedulerProvider.overrideWith(
+    (ref) => LocalNotificationScheduler(),
+  ),
+  fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
+  csvFilePickerProvider.overrideWith((ref) => SystemCsvFilePicker()),
+  dataEraserProvider.overrideWith(
+    (ref) => DriftDataEraser(ref.watch(appDatabaseProvider)),
+  ),
+];
 
 class MainApp extends ConsumerWidget {
   const new({super.key});

@@ -1400,4 +1400,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get exportFirst => 'Export first';
+
+  @override
+  String get devSection => 'Developer';
+
+  @override
+  String get devAddSampleData => 'Add 5,000 sample transactions';
+
+  @override
+  String get devAddSampleDataDetail =>
+      'Debug builds only, for performance checks';
+
+  @override
+  String get devSampleDataAdded => 'Added 5,000 sample transactions';
 }

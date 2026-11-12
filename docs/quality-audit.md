@@ -100,3 +100,37 @@ Checked on every screen listed in `test/helpers/screens.dart` (31, with sample d
 - Transaction titles in Activity and Recent activities can truncate at large text; DESIGN §10 asks only that amounts never do.
 - At 200%, long single words can break mid-word on a 390 px screen ("notifica-tions" on S15). Nothing is clipped.
 - The bottom bar shows the active tab's label truncated at 200%; every tab still has its full label for screen readers.
+
+## Performance (task 4.3)
+
+PRD §10: with 5,000 transactions, an interactive dashboard within 2 s of a cold start on a mid-range Android phone, and lists at 60 fps.
+
+### Sample data
+
+Debug builds have **Settings → Developer → Add 5,000 sample transactions** (`lib/features/dev/`): 12 months of realistic expenses and income in the default categories, saved in one database transaction. The section only shows when `kDebugMode` is true, so release builds never show it.
+
+### Calculations
+
+`test/benchmarks/hot_paths_test.dart` times what screens compute over every transaction when data changes, with the 5,000-transaction sample. Medians on the Dart VM in debug (JIT), so slower than a release build on a phone:
+
+| Work | Before | After |
+|---|---|---|
+| Activity: group by day | 5.5 ms | 5.5 ms |
+| S18: category shares | 2.8 ms | 2.6 ms |
+| S19: last seven days | 2.8 ms | 2.6 ms |
+| S20: six periods | 15.7 ms | 13.1 ms |
+| S25: twelve previous periods | 62.4 ms | 16.7 ms |
+| Notifications: compare after a save | 10.6 ms | 10.4 ms |
+| Notifications: catch-up | 5.2 ms | 5.1 ms |
+
+Fixed: S20 and S25 rescanned every transaction for each period. `transactionsByPeriod` now groups them in one pass. The test fails if any of these passes 100 ms, which would mean quadratic work crept back in. Activity builds its rows lazily, so scrolling doesn't rebuild the list.
+
+### On a device (pending)
+
+Not yet measured: no Android phone was available. To measure, on a mid-range Android phone in profile mode:
+
+1. Frame timings and dashboard readiness with 5,000 transactions:
+   `flutter drive --profile --driver=test_driver/integration_test.dart --target=integration_test/performance_test.dart`
+   The test fails if the dashboard takes 2 s or more, or if the 90th-percentile build or raster time passes 16.7 ms while scrolling Activity, switching Insights views or opening Categories. Summaries are written to `build/integration_response_data.json`.
+2. Cold start from launch: `flutter run --profile --trace-startup`, then read `timeToFirstFrameMicros` in `build/start_up_info.json`.
+

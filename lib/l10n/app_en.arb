@@ -1262,5 +1262,9 @@
   "deleteAllDataTitle": "Delete all data?",
   "deleteAllDataBody": "This erases every transaction, category, notification and setting on this phone. It can't be undone.",
   "deleteEverything": "Delete everything",
-  "exportFirst": "Export first"
+  "exportFirst": "Export first",
+  "devSection": "Developer",
+  "devAddSampleData": "Add 5,000 sample transactions",
+  "devAddSampleDataDetail": "Debug builds only, for performance checks",
+  "devSampleDataAdded": "Added 5,000 sample transactions"
 }

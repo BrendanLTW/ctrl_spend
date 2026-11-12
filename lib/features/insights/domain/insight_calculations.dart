@@ -172,9 +172,10 @@ TrendSummary recentPeriods(
   }
   final firstStart = first == null ? null : periodFor(first, startDay).start;
 
+  final byPeriod = transactionsByPeriod(transactions, startDay);
   final spends = <PeriodSpend>[];
   for (final (i, p) in periods.indexed) {
-    final spent = periodTotals(transactions, p).spentMinor;
+    final spent = periodTotals(byPeriod[p.start] ?? const [], p).spentMinor;
     spends.add((
       period: p,
       spentMinor: spent,

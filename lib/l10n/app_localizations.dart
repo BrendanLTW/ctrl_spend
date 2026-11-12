@@ -2199,6 +2199,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Export first'**
   String get exportFirst;
+
+  /// No description provided for @devSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Developer'**
+  String get devSection;
+
+  /// No description provided for @devAddSampleData.
+  ///
+  /// In en, this message translates to:
+  /// **'Add 5,000 sample transactions'**
+  String get devAddSampleData;
+
+  /// No description provided for @devAddSampleDataDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug builds only, for performance checks'**
+  String get devAddSampleDataDetail;
+
+  /// No description provided for @devSampleDataAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'Added 5,000 sample transactions'**
+  String get devSampleDataAdded;
 }
 
 class _AppLocalizationsDelegate

@@ -126,7 +126,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: DESIGN §10, PRD §9
 - [x] **4.2 Design fidelity pass.** Run the DESIGN §12 checklist for every v1.0 screen in light and dark; fix differences or log intentional ones in `docs/design-notes.md`.
   Refs: DESIGN §12
-- [ ] **4.3 Performance.** A debug-only generator for 5,000 transactions; measure cold start and list scrolling on a mid-range Android device; fix anything below target.
+- [ ] **4.3 Performance.** A debug-only generator for 5,000 transactions; measure cold start and list scrolling on a mid-range Android device; fix anything below target. *(Generator, benchmarks and the device test are done; the device run is pending, see `docs/quality-audit.md`.)*
   Refs: PRD §10
 - [ ] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
   Refs: PRD §10

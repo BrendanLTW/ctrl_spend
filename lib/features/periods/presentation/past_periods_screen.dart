@@ -50,7 +50,12 @@ class PastPeriodsScreen extends ConsumerWidget {
       if (first == null || t.occurredAt.isBefore(first)) first = t.occurredAt;
     }
     final current = periodFor(today, prefs.monthStartDay);
-    final spentNow = periodTotals(transactions, current).spentMinor;
+    // One pass over the transactions, not one per period.
+    final byPeriod = transactionsByPeriod(transactions, prefs.monthStartDay);
+    final spentNow = periodTotals(
+      byPeriod[current.start] ?? const [],
+      current,
+    ).spentMinor;
     final previous = [
       for (final p in previousPeriods(
         today: today,
@@ -58,7 +63,7 @@ class PastPeriodsScreen extends ConsumerWidget {
         since: first,
       ))
         periodSummary(
-          transactions,
+          byPeriod[p.start] ?? const [],
           period: p,
           categories: const [],
           budgetMinor: budget,

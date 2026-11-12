@@ -16,6 +16,7 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
+import 'package:ctrl_spend/features/dev/presentation/sample_data_section.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -138,6 +139,7 @@ class SettingsScreen extends ConsumerWidget {
               ),
             ],
           ),
+          const SampleDataSection(),
         ],
       ),
     );

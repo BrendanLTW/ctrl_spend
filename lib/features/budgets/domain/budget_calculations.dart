@@ -113,3 +113,17 @@ int? limitsOverBudgetBy({
   final over = allocated(categories) - budgetMinor;
   return over > 0 ? over : null;
 }
+
+/// [transactions] grouped by the start of their period, in one pass, so
+/// summing several periods doesn't rescan every transaction for each
+/// (S20, S25 with thousands of transactions).
+Map<DateTime, List<Transaction>> transactionsByPeriod(
+  Iterable<Transaction> transactions,
+  MonthStartDay startDay,
+) {
+  final byStart = <DateTime, List<Transaction>>{};
+  for (final t in transactions) {
+    (byStart[periodFor(t.occurredAt, startDay).start] ??= []).add(t);
+  }
+  return byStart;
+}

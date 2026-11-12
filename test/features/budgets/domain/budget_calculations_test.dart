@@ -204,4 +204,19 @@ void main() {
       );
     });
   });
+
+  test('transactionsByPeriod groups by period start in one pass', () {
+    final late = tx(100, at: DateTime(2026, 10, 14, 23, 59));
+    final early = tx(200, at: DateTime(2026, 10, 15));
+    final nov = tx(300, at: DateTime(2026, 11, 14, 12));
+    final grouped = transactionsByPeriod([
+      late,
+      early,
+      nov,
+    ], const DayOfMonth(15));
+    expect(grouped, {
+      DateTime(2026, 9, 15): [late],
+      DateTime(2026, 10, 15): [early, nov],
+    });
+  });
 }
