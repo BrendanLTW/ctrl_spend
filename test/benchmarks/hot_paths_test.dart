@@ -12,10 +12,11 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// What screens compute over every transaction when data changes, timed
-/// with the 5,000-transaction sample (task 4.3, PRD §10). The bound only
-/// catches a blow-up (say, quadratic work); the printed medians are the
-/// numbers in docs/quality-audit.md. Device timings come from
-/// integration_test/performance_test.dart.
+/// with the 5,000-transaction sample (task 4.3, PRD §10). The printed
+/// medians are the numbers in docs/quality-audit.md. The check compares
+/// 5,000 with 1,000 transactions, so it holds on any machine: linear work
+/// takes about 5 times as long, quadratic work about 25 times. Device
+/// timings come from integration_test/performance_test.dart.
 void main() {
   final today = DateTime(2026, 11, 4, 9);
   const startDay = DayOfMonth(15);
@@ -37,8 +38,8 @@ void main() {
       ),
   ];
   final ids = {for (final c in categories) c.name: c.id};
-  final transactions = [
-    for (final (i, r) in sampleTransactions(today: today).indexed)
+  List<Transaction> sample(int count) => [
+    for (final (i, r) in sampleTransactions(today: today, count: count).indexed)
       Transaction(
         id: i + 1,
         amountMinor: r.amountMinor,
@@ -63,7 +64,7 @@ void main() {
     return (runs..sort())[10];
   }
 
-  final cases = <String, void Function()>{
+  Map<String, void Function()> cases(List<Transaction> transactions) => {
     'Activity: group by day': () => groupByDay(transactions),
     'S18: category shares': () => categoryShares(transactions, period),
     'S19: last seven days': () => lastSevenDays(
@@ -108,13 +109,16 @@ void main() {
     ),
   };
 
-  for (final MapEntry(key: name, value: work) in cases.entries) {
-    test('$name stays fast with 5,000 transactions', () {
+  final small = cases(sample(1000));
+  final full = cases(sample(5000));
+  for (final MapEntry(key: name, value: work) in full.entries) {
+    test('$name stays linear up to 5,000 transactions', () {
       final ms = time(work);
+      final ratio = ms / time(small[name]!);
       // The numbers are the point of the test.
       // ignore: avoid_print
-      print('$name: ${ms.toStringAsFixed(2)} ms');
-      expect(ms, lessThan(100), reason: '$name took $ms ms');
+      print('$name: ${ms.toStringAsFixed(2)} ms, ${ratio.toStringAsFixed(1)}x');
+      expect(ratio, lessThan(12), reason: '$name grew ${ratio}x for 5x data');
     });
   }
 }

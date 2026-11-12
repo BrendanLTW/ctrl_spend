@@ -123,7 +123,7 @@ Debug builds have **Settings → Developer → Add 5,000 sample transactions** (
 | Notifications: compare after a save | 10.6 ms | 10.4 ms |
 | Notifications: catch-up | 5.2 ms | 5.1 ms |
 
-Fixed: S20 and S25 rescanned every transaction for each period. `transactionsByPeriod` now groups them in one pass. The test fails if any of these passes 100 ms, which would mean quadratic work crept back in. Activity builds its rows lazily, so scrolling doesn't rebuild the list.
+Fixed: S20 and S25 rescanned every transaction for each period. `transactionsByPeriod` now groups them in one pass. The test also times each one with 1,000 transactions and fails if 5 times the data takes 12 times as long or more: linear work measures about 5 times, quadratic about 25. A ratio holds on any machine, where a fixed limit in milliseconds failed on the slower CI runner. Activity builds its rows lazily, so scrolling doesn't rebuild the list.
 
 ### On a device (pending)
 
