@@ -24,7 +24,7 @@ Every P0 acceptance criterion (FR-01 to FR-07) checked against the code and the 
 | FR-06 | Archived categories hidden from pickers, history kept | Met for P0 | Pickers: `category_manager_screen_test`; Activity: `activity_screen_test`; Home: `dashboard_screen_test`. Insights and past periods are P1 |
 | FR-06 | 8 default categories seeded on first launch | Met | `drift_category_repository_test` |
 | FR-07 | Changing the month start recalculates every period, budget and chart | Met for P0 | `settings_screen_test`: Home's period after Save; every screen reads the start day through `periodFor`. Charts are P1 |
-| FR-07 | `periodFor` handles start days 1–28 and last, short months, leap years | Met | `period_test`, including a 4-year sweep and a DST time zone |
+| FR-07 | `periodFor` handles start days 1–28 and last, short months, leap years | Met | `period_test`, including a 4-year sweep and UTC times on their local day |
 
 ## Screens
 

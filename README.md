@@ -66,7 +66,7 @@ lib/
 ## Key decisions
 
 - **Money is integer minor units** (`amountMinor`), formatted only at the edge. Switching currency changes the symbol, never the amounts.
-- **One period function.** Every screen gets its dates from `periodFor(date, startDay)`, which is tested across start days 1, 15, 28 and the last day, leap years and a daylight-saving time zone.
+- **One period function.** Every screen gets its dates from `periodFor(date, startDay)`, which is tested across start days 1, 15, 28 and the last day, short months and leap years, a four-year sweep with no gaps, and UTC times landing on the local day.
 - **One threshold rule.** `budgetStatus` (below 80%, 80–99%, 100% and over, no budget) drives the hero, budgets, categories and notifications alike.
 - **History is never lost.** A category with transactions is archived instead of deleted, and keeps its history in Activity, Insights and past periods.
 - **CSV import is all or nothing**: every row is checked first, then everything is saved in one database transaction. The format is in [`docs/csv-format.md`](docs/csv-format.md).
