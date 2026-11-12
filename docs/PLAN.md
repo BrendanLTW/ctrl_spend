@@ -130,7 +130,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §10
 - [x] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
   Refs: PRD §10
-- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
+- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`. *(README and screenshots done; the release waits for the 4.3 device run, the brand SVG and release signing.)*
   Refs: PRD §2
 
 ## Phase 5 — v1.1 (start only after v1.0 is released)
