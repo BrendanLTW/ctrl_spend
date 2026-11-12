@@ -30,7 +30,7 @@ The single reference for how ctrlSpend looks. Values come from the "CtrlSpend UI
 | Splash footer | "by BrendanLTW" |
 | Small sizes | The symbol must stay legible at 24 px; below 48 px use the symbol without the wordmark |
 
-The app icon and splash use the symbol tile. Export the symbol from the brand board as SVG into `assets/brand/`.
+The app icon and splash use the symbol tile. The SVGs are in `assets/brand/`: `symbol.svg` (the coin and caret) and `app_icon.svg` (the tile with the coin), measured from the brand board.
 
 ---
 

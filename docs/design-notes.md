@@ -24,7 +24,6 @@ DESIGN §8 asks for line icons on a 24 grid, round caps and joins, stored as SVG
 
 | Screen | Canvas | App | Why |
 |---|---|---|---|
-| S01, S02 brand symbol | Brand-board artwork | Drawn in code | The symbol SVG isn't exported yet (`brand_symbol.dart`, `shortcut:`) |
 | S03a Your name | Not on the canvas | Built in the onboarding steps' style | Added for the greeting |
 | S04 step indicator | 4 pills | 5 pills | S03a is a step |
 | S08 All set | — | Shows "0 of 6" etc. from real data | Sample data only |
