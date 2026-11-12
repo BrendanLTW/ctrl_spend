@@ -1155,5 +1155,25 @@
         "type": "int"
       }
     }
-  }
+  },
+  "exportTitle": "Export data",
+  "exportIntro": "Save your transactions as a CSV file you can open in Sheets or Excel, or import on a new phone.",
+  "rangeSection": "Range",
+  "includeSection": "Include",
+  "rangeAllTime": "All time",
+  "rangeCustom": "Custom",
+  "expensesLabel": "Expenses",
+  "notesLabel": "Notes",
+  "fromLabel": "From",
+  "toLabel": "To",
+  "exportCsvButton": "Export CSV",
+  "exportSaved": "{count, plural, =1{Saved 1 transaction to Files} other{Saved {count} transactions to Files}}",
+  "@exportSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nothingToExport": "No transactions to export"
 }

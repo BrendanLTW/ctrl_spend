@@ -8,12 +8,21 @@ import 'package:flutter/material.dart';
 
 /// The toast (DESIGN §7): `ink` fill, message, optional action. The action
 /// is amber on the dark toast and dark amber on the light (dark-mode) one,
-/// which are the other theme's `warning`.
+/// which are the other theme's `warning`. [success] adds a green tick and
+/// [detail] a muted second line, e.g. S35's file name.
 class AppToast extends StatelessWidget {
-  const new({required this.message, this.actionLabel, this.onAction, super.key})
-    : assert((actionLabel == null) == (onAction == null), 'label + action');
+  const new({
+    required this.message,
+    this.detail,
+    this.success = false,
+    this.actionLabel,
+    this.onAction,
+    super.key,
+  }) : assert((actionLabel == null) == (onAction == null), 'label + action');
 
   final String message;
+  final String? detail;
+  final bool success;
   final String? actionLabel;
   final VoidCallback? onAction;
 
@@ -21,9 +30,11 @@ class AppToast extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
-    final actionColor = Theme.of(context).brightness == Brightness.light
-        ? AppColors.dark.warning
-        : AppColors.light.warning;
+    // The toast is the other theme's colours, so its accents are too.
+    final other = Theme.of(context).brightness == Brightness.light
+        ? AppColors.dark
+        : AppColors.light;
+    final actionColor = other.warning;
     return Semantics(
       liveRegion: true,
       child: Container(
@@ -36,15 +47,30 @@ class AppToast extends StatelessWidget {
         ),
         child: Row(
           children: [
+            if (success) ...[
+              Icon(Icons.check_rounded, size: 22, color: other.positive),
+              const SizedBox(width: 14),
+            ],
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 14),
-                child: Text(
-                  message,
-                  style: text.body.copyWith(
-                    color: colors.onInk,
-                    fontWeight: FontWeight.w500,
-                  ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      message,
+                      style: text.body.copyWith(
+                        color: colors.onInk,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    if (detail case final detail?)
+                      Text(
+                        detail,
+                        style: text.caption.copyWith(color: other.muted),
+                      ),
+                  ],
                 ),
               ),
             ),
@@ -79,6 +105,8 @@ class AppToast extends StatelessWidget {
 void showAppToast(
   BuildContext context, {
   required String message,
+  String? detail,
+  bool success = false,
   String? actionLabel,
   VoidCallback? onAction,
   Duration duration = const Duration(seconds: 5),
@@ -96,6 +124,8 @@ void showAppToast(
         type: MaterialType.transparency,
         child: AppToast(
           message: message,
+          detail: detail,
+          success: success,
           actionLabel: actionLabel,
           onAction: onAction == null
               ? null

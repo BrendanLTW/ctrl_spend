@@ -1977,6 +1977,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =0{Notifications} =1{Notifications, 1 unread} other{Notifications, {count} unread}}'**
   String notificationsUnread(int count);
+
+  /// No description provided for @exportTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Export data'**
+  String get exportTitle;
+
+  /// No description provided for @exportIntro.
+  ///
+  /// In en, this message translates to:
+  /// **'Save your transactions as a CSV file you can open in Sheets or Excel, or import on a new phone.'**
+  String get exportIntro;
+
+  /// No description provided for @rangeSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get rangeSection;
+
+  /// No description provided for @includeSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Include'**
+  String get includeSection;
+
+  /// No description provided for @rangeAllTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get rangeAllTime;
+
+  /// No description provided for @rangeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get rangeCustom;
+
+  /// No description provided for @expensesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get expensesLabel;
+
+  /// No description provided for @notesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get notesLabel;
+
+  /// No description provided for @fromLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get fromLabel;
+
+  /// No description provided for @toLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get toLabel;
+
+  /// No description provided for @exportCsvButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Export CSV'**
+  String get exportCsvButton;
+
+  /// No description provided for @exportSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Saved 1 transaction to Files} other{Saved {count} transactions to Files}}'**
+  String exportSaved(int count);
+
+  /// No description provided for @nothingToExport.
+  ///
+  /// In en, this message translates to:
+  /// **'No transactions to export'**
+  String get nothingToExport;
 }
 
 class _AppLocalizationsDelegate

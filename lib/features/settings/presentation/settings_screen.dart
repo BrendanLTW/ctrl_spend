@@ -114,11 +114,12 @@ class SettingsScreen extends ConsumerWidget {
                 value: '$categoryCount',
                 onTap: () => context.push(Routes.categories),
               ),
-              // shortcut: Export and Import open S35/S36 in tasks 3.10–3.11.
               ListGroupRow(
                 leading: tile(Icons.download_rounded, CategoryColorKey.blue),
                 title: l10n.exportCsv,
+                onTap: () => context.push(Routes.export),
               ),
+              // shortcut: Import opens S36 in task 3.11.
               ListGroupRow(
                 leading: tile(Icons.upload_rounded, CategoryColorKey.blue),
                 title: l10n.importCsv,

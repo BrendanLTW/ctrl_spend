@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -6,6 +7,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:flutter_riverpod/misc.dart';
 
 import 'fake_category_repository.dart';
+import 'fake_file_sharer.dart';
 import 'fake_notification_repository.dart';
 import 'fake_notification_scheduler.dart';
 import 'fake_preferences_repository.dart';
@@ -19,6 +21,7 @@ List<Override> fakeRepositories({
   TransactionRepository? transactions,
   NotificationRepository? notifications,
   NotificationScheduler? scheduler,
+  FileSharer? sharer,
 }) => [
   preferencesRepositoryProvider.overrideWithValue(
     preferences ?? FakePreferencesRepository(),
@@ -35,4 +38,5 @@ List<Override> fakeRepositories({
   notificationSchedulerProvider.overrideWithValue(
     scheduler ?? FakeNotificationScheduler(),
   ),
+  fileSharerProvider.overrideWithValue(sharer ?? FakeFileSharer()),
 ];

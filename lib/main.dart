@@ -4,6 +4,8 @@ import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/data_transfer/data/share_plus_file_sharer.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/notifications/data/drift_notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/data/local_notification_scheduler.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
@@ -44,6 +46,7 @@ void main() {
         notificationSchedulerProvider.overrideWith(
           (ref) => LocalNotificationScheduler(),
         ),
+        fileSharerProvider.overrideWith((ref) => SharePlusFileSharer()),
       ],
       child: const MainApp(),
     ),

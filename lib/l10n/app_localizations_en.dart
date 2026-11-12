@@ -1247,4 +1247,52 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get exportTitle => 'Export data';
+
+  @override
+  String get exportIntro =>
+      'Save your transactions as a CSV file you can open in Sheets or Excel, or import on a new phone.';
+
+  @override
+  String get rangeSection => 'Range';
+
+  @override
+  String get includeSection => 'Include';
+
+  @override
+  String get rangeAllTime => 'All time';
+
+  @override
+  String get rangeCustom => 'Custom';
+
+  @override
+  String get expensesLabel => 'Expenses';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get fromLabel => 'From';
+
+  @override
+  String get toLabel => 'To';
+
+  @override
+  String get exportCsvButton => 'Export CSV';
+
+  @override
+  String exportSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Saved $count transactions to Files',
+      one: 'Saved 1 transaction to Files',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingToExport => 'No transactions to export';
 }

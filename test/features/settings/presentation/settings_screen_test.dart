@@ -108,9 +108,8 @@ void main() {
       expect(row(tester, 'Categories').onTap, isNotNull);
       expect(row(tester, 'Theme').onTap, isNotNull);
       expect(row(tester, 'Currency').onTap, isNotNull);
-      for (final title in ['Export to CSV', 'Import from CSV']) {
-        expect(row(tester, title).onTap, isNull, reason: title);
-      }
+      expect(row(tester, 'Export to CSV').onTap, isNotNull);
+      expect(row(tester, 'Import from CSV').onTap, isNull);
     });
 
     testWidgets('the last day shows as "Last day"', (tester) async {

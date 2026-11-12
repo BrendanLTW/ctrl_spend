@@ -111,7 +111,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S07, PRD §5.4, FR-12
 - [x] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
   Refs: S14, S15, PRD §5.4, FR-12
-- [ ] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
+- [x] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
   Refs: S35, PRD §5.8, FR-14
 - [ ] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
   Refs: S36, PRD §5.8, FR-14

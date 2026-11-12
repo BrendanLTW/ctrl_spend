@@ -47,7 +47,7 @@ Each P0 screen was rendered with Poppins at 390 × 844 in both themes and compar
 | S12 / S13 Add, edit | Yes | Keypad in a sheet (no keypad on the canvas); dark amount card uses `surface` (canvas shows white) |
 | S16 Activity | Yes | Search and chips in 3.1 |
 | S17 Budgets | Yes | By category rows designed from the PRD (hidden by the sheet on the canvas) |
-| S21 Settings | Yes | Export, Import not tappable until 3.10–3.11 |
+| S21 Settings | Yes | Import not tappable until 3.11 |
 | S22 / S24 Categories | Yes | Rows open S23 in 3.6 |
 | S32 Month start | Yes | |
 | S41 Transaction | Yes | Note row only when a note exists (S12 has one text field) |
