@@ -17,8 +17,10 @@ import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
 import 'package:ctrl_spend/features/periods/presentation/past_periods_screen.dart';
 import 'package:ctrl_spend/features/periods/presentation/period_detail_screen.dart';
+import 'package:ctrl_spend/features/settings/presentation/currency_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
+import 'package:ctrl_spend/features/settings/presentation/theme_screen.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
 import 'package:ctrl_spend/features/transactions/presentation/transaction_detail_screen.dart';
@@ -47,6 +49,12 @@ abstract final class Routes {
   /// S32; under onboarding it's [onboardingMonthStart] (S04's Other).
   static const monthStart = '/settings/month-start';
 
+  /// S33 Theme.
+  static const theme = '/settings/theme';
+
+  /// S34; under onboarding it's [onboardingCurrency] (S04's currency row).
+  static const currency = '/settings/currency';
+
   /// S22 Category manager.
   static const categories = '/settings/categories';
 
@@ -68,6 +76,7 @@ abstract final class Routes {
   static const onboardingName = '/onboarding/name';
   static const onboardingMonth = '/onboarding/month';
   static const onboardingMonthStart = '/onboarding/month-start';
+  static const onboardingCurrency = '/onboarding/currency';
   static const onboardingBudget = '/onboarding/budget';
   static const onboardingCategories = '/onboarding/categories';
   static const onboardingReminders = '/onboarding/reminders';
@@ -138,6 +147,14 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const SettingsScreen(),
       ),
       GoRoute(
+        path: Routes.theme,
+        builder: (context, state) => const ThemeScreen(),
+      ),
+      GoRoute(
+        path: Routes.currency,
+        builder: (context, state) => const CurrencyScreen(),
+      ),
+      GoRoute(
         path: Routes.categories,
         builder: (context, state) => const CategoryManagerScreen(),
       ),
@@ -187,6 +204,10 @@ GoRouter appRouter(Ref ref) {
           GoRoute(
             path: 'month-start',
             builder: (context, state) => const MonthStartScreen(),
+          ),
+          GoRoute(
+            path: 'currency',
+            builder: (context, state) => const CurrencyScreen(),
           ),
           GoRoute(
             path: 'budget',

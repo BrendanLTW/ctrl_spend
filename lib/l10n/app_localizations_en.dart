@@ -1076,4 +1076,31 @@ class AppLocalizationsEn extends AppLocalizations {
   String categoryPeriodLabel(String spent, String detail) {
     return 'This period, $spent, $detail';
   }
+
+  @override
+  String get themeNote =>
+      'System matches your phone\'s light or dark setting automatically.';
+
+  @override
+  String get searchCurrencies => 'Search currencies';
+
+  @override
+  String get suggestedSection => 'Suggested';
+
+  @override
+  String get allCurrencies => 'All currencies';
+
+  @override
+  String currencyCurrent(String code) {
+    return '$code · current';
+  }
+
+  @override
+  String get currencyNote =>
+      'Switching currency changes the symbol only. Existing amounts aren\'t converted.';
+
+  @override
+  String noCurrencyMatch(String query) {
+    return 'No currencies match “$query”';
+  }
 }

@@ -106,12 +106,9 @@ void main() {
       await pumpAt(tester, Routes.settings);
       expect(row(tester, 'Month starts on').onTap, isNotNull);
       expect(row(tester, 'Categories').onTap, isNotNull);
-      for (final title in [
-        'Theme',
-        'Currency',
-        'Export to CSV',
-        'Import from CSV',
-      ]) {
+      expect(row(tester, 'Theme').onTap, isNotNull);
+      expect(row(tester, 'Currency').onTap, isNotNull);
+      for (final title in ['Export to CSV', 'Import from CSV']) {
         expect(row(tester, title).onTap, isNull, reason: title);
       }
     });

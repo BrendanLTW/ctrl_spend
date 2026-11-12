@@ -56,7 +56,6 @@ class MonthSetupScreen extends ConsumerWidget {
           SectionLabel(l10n.currency),
           ListGroup(
             children: [
-              // shortcut: the row opens S34 Currency once task 3.7 builds it.
               ListGroupRow(
                 leading: const CategoryTile(
                   icon: Icons.attach_money_rounded,
@@ -64,6 +63,7 @@ class MonthSetupScreen extends ConsumerWidget {
                 ),
                 title: l10n.currencyName(currency),
                 value: currency.symbol,
+                onTap: () => context.push(Routes.onboardingCurrency),
               ),
             ],
           ),

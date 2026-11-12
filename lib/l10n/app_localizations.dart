@@ -1743,6 +1743,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This period, {spent}, {detail}'**
   String categoryPeriodLabel(String spent, String detail);
+
+  /// No description provided for @themeNote.
+  ///
+  /// In en, this message translates to:
+  /// **'System matches your phone\'s light or dark setting automatically.'**
+  String get themeNote;
+
+  /// No description provided for @searchCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'Search currencies'**
+  String get searchCurrencies;
+
+  /// No description provided for @suggestedSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Suggested'**
+  String get suggestedSection;
+
+  /// No description provided for @allCurrencies.
+  ///
+  /// In en, this message translates to:
+  /// **'All currencies'**
+  String get allCurrencies;
+
+  /// No description provided for @currencyCurrent.
+  ///
+  /// In en, this message translates to:
+  /// **'{code} · current'**
+  String currencyCurrent(String code);
+
+  /// No description provided for @currencyNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Switching currency changes the symbol only. Existing amounts aren\'t converted.'**
+  String get currencyNote;
+
+  /// No description provided for @noCurrencyMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No currencies match “{query}”'**
+  String noCurrencyMatch(String query);
 }
 
 class _AppLocalizationsDelegate

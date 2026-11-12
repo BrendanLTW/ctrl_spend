@@ -83,7 +83,6 @@ class SettingsScreen extends ConsumerWidget {
                 value: l10n.startDayLabel(prefs.monthStartDay),
                 onTap: () => context.push(Routes.monthStart),
               ),
-              // shortcut: Theme and Currency open S33/S34 in task 3.7.
               ListGroupRow(
                 leading: tile(Icons.palette_outlined, CategoryColorKey.purple),
                 title: l10n.themeRow,
@@ -92,6 +91,7 @@ class SettingsScreen extends ConsumerWidget {
                   AppTheme.dark => l10n.themeDark,
                   AppTheme.system => l10n.themeSystem,
                 },
+                onTap: () => context.push(Routes.theme),
               ),
               ListGroupRow(
                 leading: tile(
@@ -100,6 +100,7 @@ class SettingsScreen extends ConsumerWidget {
                 ),
                 title: l10n.currency,
                 value: Currency.fromCode(prefs.currencyCode).symbol,
+                onTap: () => context.push(Routes.currency),
               ),
             ],
           ),

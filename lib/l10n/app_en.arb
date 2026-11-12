@@ -969,5 +969,26 @@
         "type": "String"
       }
     }
+  },
+  "themeNote": "System matches your phone's light or dark setting automatically.",
+  "searchCurrencies": "Search currencies",
+  "suggestedSection": "Suggested",
+  "allCurrencies": "All currencies",
+  "currencyCurrent": "{code} · current",
+  "@currencyCurrent": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyNote": "Switching currency changes the symbol only. Existing amounts aren't converted.",
+  "noCurrencyMatch": "No currencies match “{query}”",
+  "@noCurrencyMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
   }
 }
