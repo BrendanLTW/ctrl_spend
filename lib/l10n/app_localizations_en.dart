@@ -838,4 +838,80 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addAnExpense => 'Add an expense';
+
+  @override
+  String get last7Days => 'Last 7 days';
+
+  @override
+  String weekRangeAverage(String range, String amount) {
+    return '$range · avg $amount a day';
+  }
+
+  @override
+  String paceChip(String amount) {
+    return 'Pace $amount/day';
+  }
+
+  @override
+  String get dailyPace => 'Daily pace';
+
+  @override
+  String get todayBubble => 'today';
+
+  @override
+  String get underPace => 'Under pace';
+
+  @override
+  String get overPace => 'Over pace';
+
+  @override
+  String underPaceDays(int count, int total) {
+    return '$count of $total';
+  }
+
+  @override
+  String get daysThisWeek => 'days this week';
+
+  @override
+  String get biggestDay => 'Biggest day';
+
+  @override
+  String biggestDayCaption(String day, String title) {
+    return '$day · $title';
+  }
+
+  @override
+  String weekChartLabel(String pace, String days) {
+    return 'Daily spending, pace $pace a day: $days';
+  }
+
+  @override
+  String weekChartLabelNoPace(String days) {
+    return 'Daily spending: $days';
+  }
+
+  @override
+  String dayUnderPace(String day, String amount) {
+    return '$day $amount, under pace';
+  }
+
+  @override
+  String dayOverPace(String day, String amount) {
+    return '$day $amount, over pace';
+  }
+
+  @override
+  String dayToday(String day, String amount) {
+    return '$day $amount, today';
+  }
+
+  @override
+  String dayAmount(String day, String amount) {
+    return '$day $amount';
+  }
+
+  @override
+  String statCaptionLabel(String label, String value, String caption) {
+    return '$label, $value $caption';
+  }
 }

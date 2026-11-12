@@ -673,5 +673,130 @@
   },
   "insightsEmptyTitle": "Not enough data yet",
   "insightsEmptyBody": "Charts appear once you've logged a few days of spending.",
-  "addAnExpense": "Add an expense"
+  "addAnExpense": "Add an expense",
+  "last7Days": "Last 7 days",
+  "weekRangeAverage": "{range} · avg {amount} a day",
+  "@weekRangeAverage": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paceChip": "Pace {amount}/day",
+  "@paceChip": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyPace": "Daily pace",
+  "todayBubble": "today",
+  "underPace": "Under pace",
+  "overPace": "Over pace",
+  "underPaceDays": "{count} of {total}",
+  "@underPaceDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "daysThisWeek": "days this week",
+  "biggestDay": "Biggest day",
+  "biggestDayCaption": "{day} · {title}",
+  "@biggestDayCaption": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "weekChartLabel": "Daily spending, pace {pace} a day: {days}",
+  "@weekChartLabel": {
+    "placeholders": {
+      "pace": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "weekChartLabelNoPace": "Daily spending: {days}",
+  "@weekChartLabelNoPace": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "dayUnderPace": "{day} {amount}, under pace",
+  "@dayUnderPace": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dayOverPace": "{day} {amount}, over pace",
+  "@dayOverPace": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dayToday": "{day} {amount}, today",
+  "@dayToday": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dayAmount": "{day} {amount}",
+  "@dayAmount": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "statCaptionLabel": "{label}, {value} {caption}",
+  "@statCaptionLabel": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "caption": {
+        "type": "String"
+      }
+    }
+  }
 }

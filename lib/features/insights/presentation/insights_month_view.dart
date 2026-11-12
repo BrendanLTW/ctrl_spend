@@ -2,15 +2,14 @@ import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/period/period_format.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
-import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
 import 'package:ctrl_spend/features/insights/presentation/category_share_card.dart';
+import 'package:ctrl_spend/features/insights/presentation/insights_empty.dart';
 import 'package:ctrl_spend/features/insights/presentation/spending_donut.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -18,7 +17,6 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 /// S18's Month view: this period's spending as a ring and ranked category
 /// cards. With no spending yet it shows S40.
@@ -46,27 +44,7 @@ class InsightsMonthView extends ConsumerWidget {
         if (categories[s.categoryId] case final category?) (s, category),
     ];
 
-    if (shares.isEmpty) {
-      return Column(
-        children: [
-          const SizedBox(height: 28),
-          EmptyState(
-            card: false,
-            graphic: SpendingDonut(
-              segments: const [],
-              caption: l10n.spentLabel,
-              totalMinor: 0,
-              currency: currency,
-              semanticLabel: '',
-            ),
-            title: l10n.insightsEmptyTitle,
-            body: l10n.insightsEmptyBody,
-            actionLabel: l10n.addAnExpense,
-            onAction: () => context.push(Routes.add),
-          ),
-        ],
-      );
-    }
+    if (shares.isEmpty) return InsightsEmpty(currency: currency);
 
     final total = shares.fold(0, (sum, s) => sum + s.$1.spentMinor);
     final shareLabels = [

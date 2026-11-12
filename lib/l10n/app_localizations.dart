@@ -1425,6 +1425,114 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add an expense'**
   String get addAnExpense;
+
+  /// No description provided for @last7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get last7Days;
+
+  /// No description provided for @weekRangeAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'{range} · avg {amount} a day'**
+  String weekRangeAverage(String range, String amount);
+
+  /// No description provided for @paceChip.
+  ///
+  /// In en, this message translates to:
+  /// **'Pace {amount}/day'**
+  String paceChip(String amount);
+
+  /// No description provided for @dailyPace.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily pace'**
+  String get dailyPace;
+
+  /// No description provided for @todayBubble.
+  ///
+  /// In en, this message translates to:
+  /// **'today'**
+  String get todayBubble;
+
+  /// No description provided for @underPace.
+  ///
+  /// In en, this message translates to:
+  /// **'Under pace'**
+  String get underPace;
+
+  /// No description provided for @overPace.
+  ///
+  /// In en, this message translates to:
+  /// **'Over pace'**
+  String get overPace;
+
+  /// No description provided for @underPaceDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of {total}'**
+  String underPaceDays(int count, int total);
+
+  /// No description provided for @daysThisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'days this week'**
+  String get daysThisWeek;
+
+  /// No description provided for @biggestDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Biggest day'**
+  String get biggestDay;
+
+  /// No description provided for @biggestDayCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} · {title}'**
+  String biggestDayCaption(String day, String title);
+
+  /// No description provided for @weekChartLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily spending, pace {pace} a day: {days}'**
+  String weekChartLabel(String pace, String days);
+
+  /// No description provided for @weekChartLabelNoPace.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily spending: {days}'**
+  String weekChartLabelNoPace(String days);
+
+  /// No description provided for @dayUnderPace.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {amount}, under pace'**
+  String dayUnderPace(String day, String amount);
+
+  /// No description provided for @dayOverPace.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {amount}, over pace'**
+  String dayOverPace(String day, String amount);
+
+  /// No description provided for @dayToday.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {amount}, today'**
+  String dayToday(String day, String amount);
+
+  /// No description provided for @dayAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {amount}'**
+  String dayAmount(String day, String amount);
+
+  /// No description provided for @statCaptionLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}, {value} {caption}'**
+  String statCaptionLabel(String label, String value, String caption);
 }
 
 class _AppLocalizationsDelegate

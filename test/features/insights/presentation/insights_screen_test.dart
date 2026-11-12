@@ -29,6 +29,7 @@ late ProviderContainer container;
 Future<void> pumpInsights(
   WidgetTester tester, {
   AppTheme theme = AppTheme.system,
+  int? budget = 200000,
   Future<void> Function()? seed,
 }) async {
   tester.view.physicalSize = const Size(390 * 3, 844 * 3);
@@ -44,7 +45,7 @@ Future<void> pumpInsights(
           Preferences(
             onboardingComplete: true,
             monthStartDay: const DayOfMonth(15),
-            monthlyBudgetMinor: 200000,
+            monthlyBudgetMinor: budget,
             theme: theme,
           ),
         ),
@@ -68,12 +69,13 @@ Future<void> spend(
   String category, {
   DateTime? at,
   TransactionType type = TransactionType.expense,
+  String? title,
 }) => transactions.add(
   amountMinor: minor,
   type: type,
   categoryId: categories.byName(category).id,
   occurredAt: at ?? DateTime(2026, 11, 2, 12),
-  title: category,
+  title: title ?? category,
 );
 
 /// The design's month: RM 760 over four categories.

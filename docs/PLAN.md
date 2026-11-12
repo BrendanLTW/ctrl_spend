@@ -97,7 +97,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S16, S39, PRD §5.5, FR-08
 - [x] **3.2 Insights · Month.** S18 with the Week/Month/6 months control, period total, ranked spending categories with a screen-reader summary, and the S40 empty state.
   Refs: S18, S40, PRD §5.7, FR-09
-- [ ] **3.3 Insights · Week.** S19 daily bars against the pace line, under/over marking, today highlighted, Under pace and Biggest day stats, and the chart's text alternative.
+- [x] **3.3 Insights · Week.** S19 daily bars against the pace line, under/over marking, today highlighted, Under pace and Biggest day stats, and the chart's text alternative.
   Refs: S19, PRD §5.7, FR-09
 - [ ] **3.4 Insights · 6 months.** S20 monthly bars against the budget line, "so far" for the current period, Under budget and Highest month stats, and View past periods.
   Refs: S20, PRD §5.7, FR-09
