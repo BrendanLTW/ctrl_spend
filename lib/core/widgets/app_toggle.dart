@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/theme/app_shadows.dart';
 import 'package:flutter/material.dart';
 
 /// A 52 × 32 pill switch (DESIGN §7): `control` with a white thumb off,
@@ -49,13 +50,7 @@ class AppToggle extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: value ? colors.onInk : Colors.white,
                   shape: BoxShape.circle,
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 1),
-                      blurRadius: 3,
-                      color: Color.fromRGBO(16, 24, 40, 0.2),
-                    ),
-                  ],
+                  boxShadow: context.shadows.toggleKnob,
                 ),
               ),
             ),

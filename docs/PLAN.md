@@ -115,7 +115,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S35, PRD §5.8, FR-14
 - [x] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
   Refs: S36, PRD §5.8, FR-14
-- [ ] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
+- [x] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
   Refs: FR-11, DESIGN §9
 
 ## Phase 4 — Ship v1.0
