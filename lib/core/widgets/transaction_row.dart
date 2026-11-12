@@ -11,19 +11,20 @@ import 'package:flutter/material.dart';
 /// differ ("Today · Food" on Home, "Food" in Activity).
 class TransactionRow extends StatelessWidget {
   const new({
-    required this.tile,
     required this.title,
     required this.caption,
     required this.amountMinor,
     required this.type,
     required this.currency,
+    this.tile,
     this.compact = false,
     this.onTap,
     super.key,
   });
 
-  /// Usually a [CategoryTile] sized to match [compact].
-  final Widget tile;
+  /// Usually a [CategoryTile] sized to match [compact]. Left out where
+  /// the category is already known (S23's Recent).
+  final Widget? tile;
   final String title;
   final String caption;
   final int amountMinor;
@@ -61,11 +62,13 @@ class TransactionRow extends StatelessWidget {
           child: ConstrainedBox(
             constraints: BoxConstraints(minHeight: compact ? 66 : 72),
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(12, 12, 18, 12),
+              padding: EdgeInsets.fromLTRB(tile == null ? 18 : 12, 12, 18, 12),
               child: Row(
                 children: [
-                  tile,
-                  const SizedBox(width: 14),
+                  if (tile case final tile?) ...[
+                    tile,
+                    const SizedBox(width: 14),
+                  ],
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,

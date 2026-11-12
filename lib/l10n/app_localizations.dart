@@ -1683,6 +1683,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'limit {limit}'**
   String limitAmount(String limit);
+
+  /// No description provided for @categoryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get categoryTitle;
+
+  /// No description provided for @categoryTypeCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{type} · {count, plural, =1{1 transaction} other{{count} transactions}}'**
+  String categoryTypeCount(String type, int count);
+
+  /// No description provided for @daysToGo.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Last day} =1{1 day to go} other{{count} days to go}}'**
+  String daysToGo(int count);
+
+  /// No description provided for @noLimitWithDays.
+  ///
+  /// In en, this message translates to:
+  /// **'No limit · {days}'**
+  String noLimitWithDays(String days);
+
+  /// No description provided for @nameLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get nameLabel;
+
+  /// No description provided for @iconAndColour.
+  ///
+  /// In en, this message translates to:
+  /// **'Icon & colour'**
+  String get iconAndColour;
+
+  /// No description provided for @recentSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent'**
+  String get recentSection;
+
+  /// No description provided for @archiveCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Archive category'**
+  String get archiveCategory;
+
+  /// No description provided for @restoreCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore category'**
+  String get restoreCategory;
+
+  /// No description provided for @categoryPeriodLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'This period, {spent}, {detail}'**
+  String categoryPeriodLabel(String spent, String detail);
 }
 
 class _AppLocalizationsDelegate

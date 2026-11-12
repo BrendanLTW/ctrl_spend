@@ -66,12 +66,7 @@ class FakeCategoryRepository implements CategoryRepository {
     required CategoryColorKey colorKey,
     int? limitMinor,
   }) async {
-    // The same rule as the real repository: unique per type, any case.
-    final taken = _byId.values.any(
-      (c) =>
-          c.type == type && c.name.toLowerCase() == name.trim().toLowerCase(),
-    );
-    if (taken) throw DuplicateCategoryNameException(name.trim());
+    _checkNameFree(name, type);
     final id = _byId.keys.fold(0, (a, b) => a > b ? a : b) + 1;
     final category = Category(
       id: id,
@@ -89,8 +84,20 @@ class FakeCategoryRepository implements CategoryRepository {
 
   @override
   Future<void> update(Category category) async {
-    _byId[category.id] = category;
+    _checkNameFree(category.name, category.type, exceptId: category.id);
+    _byId[category.id] = category.copyWith(name: category.name.trim());
     _changes.add(null);
+  }
+
+  /// The same rule as the real repository: unique per type, any case.
+  void _checkNameFree(String name, TransactionType type, {int? exceptId}) {
+    final taken = _byId.values.any(
+      (c) =>
+          c.id != exceptId &&
+          c.type == type &&
+          c.name.toLowerCase() == name.trim().toLowerCase(),
+    );
+    if (taken) throw DuplicateCategoryNameException(name.trim());
   }
 
   @override

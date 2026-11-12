@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
@@ -75,6 +78,7 @@ class CategoryManagerScreen extends ConsumerWidget {
                   child: ListGroupRow(
                     leading: CategoryTile.forKey(c.iconKey, color: c.colorKey),
                     title: c.name,
+                    onTap: () => unawaited(context.push(Routes.category(c.id))),
                   ),
                 ),
               ),

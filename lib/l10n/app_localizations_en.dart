@@ -1025,4 +1025,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String limitAmount(String limit) {
     return 'limit $limit';
   }
+
+  @override
+  String get categoryTitle => 'Category';
+
+  @override
+  String categoryTypeCount(String type, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return '$type · $_temp0';
+  }
+
+  @override
+  String daysToGo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days to go',
+      one: '1 day to go',
+      zero: 'Last day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noLimitWithDays(String days) {
+    return 'No limit · $days';
+  }
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get iconAndColour => 'Icon & colour';
+
+  @override
+  String get recentSection => 'Recent';
+
+  @override
+  String get archiveCategory => 'Archive category';
+
+  @override
+  String get restoreCategory => 'Restore category';
+
+  @override
+  String categoryPeriodLabel(String spent, String detail) {
+    return 'This period, $spent, $detail';
+  }
 }

@@ -925,5 +925,49 @@
         "type": "String"
       }
     }
+  },
+  "categoryTitle": "Category",
+  "categoryTypeCount": "{type} · {count, plural, =1{1 transaction} other{{count} transactions}}",
+  "@categoryTypeCount": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysToGo": "{count, plural, =0{Last day} =1{1 day to go} other{{count} days to go}}",
+  "@daysToGo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noLimitWithDays": "No limit · {days}",
+  "@noLimitWithDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "nameLabel": "Name",
+  "iconAndColour": "Icon & colour",
+  "recentSection": "Recent",
+  "archiveCategory": "Archive category",
+  "restoreCategory": "Restore category",
+  "categoryPeriodLabel": "This period, {spent}, {detail}",
+  "@categoryPeriodLabel": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
   }
 }

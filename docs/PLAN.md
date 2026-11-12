@@ -103,7 +103,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S20, PRD §5.7, FR-09
 - [x] **3.5 Past periods.** S25 current and previous periods, and S26 period detail with per-category results against limits. Add S20's View past periods row (`surface`, `ink` text in both themes).
   Refs: S25, S26, PRD §5.10, FR-13
-- [ ] **3.6 Category detail.** S23 with this-period stats, Name, Icon & colour and Monthly limit rows, recent transactions and Archive category.
+- [x] **3.6 Category detail.** S23 with this-period stats, Name, Icon & colour and Monthly limit rows, recent transactions and Archive category.
   Refs: S23, PRD §5.9, FR-15
 - [ ] **3.7 Theme and currency.** S33 Theme (Light, Dark, System) and S34 Currency (search, Suggested, All currencies, symbol-only note). Wire the S04 currency row and the S21 rows.
   Refs: S33, S34, PRD §5.8, FR-10

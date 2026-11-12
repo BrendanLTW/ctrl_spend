@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
+import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
@@ -48,6 +49,9 @@ abstract final class Routes {
 
   /// S22 Category manager.
   static const categories = '/settings/categories';
+
+  /// S23 Category detail.
+  static String category(int id) => '/settings/categories/$id';
 
   /// S25 Past periods.
   static const pastPeriods = '/periods';
@@ -136,6 +140,12 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.categories,
         builder: (context, state) => const CategoryManagerScreen(),
+      ),
+      GoRoute(
+        path: '/settings/categories/:id',
+        builder: (context, state) => CategoryDetailScreen(
+          categoryId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+        ),
       ),
       GoRoute(
         path: Routes.pastPeriods,
