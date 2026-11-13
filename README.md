@@ -117,7 +117,6 @@ Debug builds have **Settings → Developer → Add 5,000 sample transactions**.
 All v1.0 features are built. Before tagging v1.0.0:
 
 - On-device performance numbers for a mid-range Android phone are still to be measured.
-- Release signing isn't set up yet.
 
 ## Credits
 
