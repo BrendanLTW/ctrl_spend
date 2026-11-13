@@ -20,8 +20,8 @@ Before building a screen, read its section in the PRD and look at both its light
 - Database: Drift (SQLite), reactive streams, versioned migrations
 - Navigation: go_router with a `StatefulShellRoute` for the bottom bar
 - Models: freezed + json_serializable
-- Charts: fl_chart · Formatting: intl
-- Notifications: flutter_local_notifications (P1)
+- Charts: fl_chart · Formatting: intl · Icons: flutter_svg with bundled Lucide SVGs (`AppIcon`)
+- Notifications: flutter_local_notifications, timezone, flutter_timezone (P1)
 - CSV: `csv` package, file_picker, share_plus (P1)
 - Secure storage and biometrics: flutter_secure_storage, local_auth (v1.1 only)
 - Testing: flutter_test, mocktail, integration_test

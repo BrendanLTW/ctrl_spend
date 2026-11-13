@@ -46,6 +46,14 @@ class Notifications extends Table {
   TextColumn get body => text()();
   DateTimeColumn get createdAt => dateTime()();
   DateTimeColumn get readAt => dateTime().nullable()();
+
+  /// The category a budget alert or income row is about, for its tile
+  /// (S14). Added in schema v2.
+  IntColumn get categoryId => integer().nullable().references(
+    Categories,
+    #id,
+    onDelete: KeyAction.setNull,
+  )();
 }
 
 /// Key-value settings (PRD §8 Preferences).

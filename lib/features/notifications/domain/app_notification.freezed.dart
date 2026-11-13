@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$AppNotification {
 
  int get id; NotificationKind get kind; String get title; String get body; DateTime get createdAt;/// Null while unread.
- DateTime? get readAt;
+ DateTime? get readAt;/// The category a budget alert or income row is about, for its tile.
+ int? get categoryId;
 /// Create a copy of AppNotification
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,20 +29,20 @@ $AppNotificationCopyWith<AppNotification> get copyWith => _$AppNotificationCopyW
 @override
 bool operator ==(Object other) {
   final _this = this as AppNotification;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppNotification&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.body, _this.body) || other.body == _this.body)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.readAt, _this.readAt) || other.readAt == _this.readAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppNotification&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.kind, _this.kind) || other.kind == _this.kind)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.body, _this.body) || other.body == _this.body)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.readAt, _this.readAt) || other.readAt == _this.readAt)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId));
 }
 
 
 @override
 int get hashCode {
   final _this = this as AppNotification;
-  return Object.hash(runtimeType,_this.id,_this.kind,_this.title,_this.body,_this.createdAt,_this.readAt);
+  return Object.hash(runtimeType,_this.id,_this.kind,_this.title,_this.body,_this.createdAt,_this.readAt,_this.categoryId);
 }
 
 @override
 String toString() {
   final _this = this as AppNotification;
-  return 'AppNotification(id: ${_this.id}, kind: ${_this.kind}, title: ${_this.title}, body: ${_this.body}, createdAt: ${_this.createdAt}, readAt: ${_this.readAt})';
+  return 'AppNotification(id: ${_this.id}, kind: ${_this.kind}, title: ${_this.title}, body: ${_this.body}, createdAt: ${_this.createdAt}, readAt: ${_this.readAt}, categoryId: ${_this.categoryId})';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $AppNotificationCopyWith<$Res>  {
   factory $AppNotificationCopyWith(AppNotification value, $Res Function(AppNotification) _then) = _$AppNotificationCopyWithImpl;
 @useResult
 $Res call({
- int id, NotificationKind kind, String title, String body, DateTime createdAt, DateTime? readAt
+ int id, NotificationKind kind, String title, String body, DateTime createdAt, DateTime? readAt, int? categoryId
 });
 
 
@@ -69,7 +70,7 @@ class _$AppNotificationCopyWithImpl<$Res>
 
 /// Create a copy of AppNotification
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? body = null,Object? createdAt = null,Object? readAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? body = null,Object? createdAt = null,Object? readAt = freezed,Object? categoryId = freezed,}) {
   return _then(AppNotification(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
@@ -77,7 +78,8 @@ as NotificationKind,title: null == title ? _self.title : title // ignore: cast_n
 as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,readAt: freezed == readAt ? _self.readAt : readAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -162,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt,  int? categoryId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AppNotification() when $default != null:
-return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt);case _:
+return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt,_that.categoryId);case _:
   return orElse();
 
 }
@@ -183,10 +185,10 @@ return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt,  int? categoryId)  $default,) {final _that = this;
 switch (_that) {
 case _AppNotification():
-return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt);case _:
+return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt,_that.categoryId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -203,10 +205,10 @@ return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  NotificationKind kind,  String title,  String body,  DateTime createdAt,  DateTime? readAt,  int? categoryId)?  $default,) {final _that = this;
 switch (_that) {
 case _AppNotification() when $default != null:
-return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt);case _:
+return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that.readAt,_that.categoryId);case _:
   return null;
 
 }
@@ -218,7 +220,7 @@ return $default(_that.id,_that.kind,_that.title,_that.body,_that.createdAt,_that
 
 
 class _AppNotification implements AppNotification {
-  const _AppNotification({required this.id, required this.kind, required this.title, required this.body, required this.createdAt, this.readAt});
+  const _AppNotification({required this.id, required this.kind, required this.title, required this.body, required this.createdAt, this.readAt, this.categoryId});
   
 
 @override final  int id;
@@ -228,6 +230,8 @@ class _AppNotification implements AppNotification {
 @override final  DateTime createdAt;
 /// Null while unread.
 @override final  DateTime? readAt;
+/// The category a budget alert or income row is about, for its tile.
+@override final  int? categoryId;
 
 /// Create a copy of AppNotification
 /// with the given fields replaced by the non-null parameter values.
@@ -239,18 +243,18 @@ _$AppNotificationCopyWith<_AppNotification> get copyWith => __$AppNotificationCo
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppNotification&&(identical(other.id, id) || other.id == id)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.title, title) || other.title == title)&&(identical(other.body, body) || other.body == body)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.readAt, readAt) || other.readAt == readAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppNotification&&(identical(other.id, id) || other.id == id)&&(identical(other.kind, kind) || other.kind == kind)&&(identical(other.title, title) || other.title == title)&&(identical(other.body, body) || other.body == body)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.readAt, readAt) || other.readAt == readAt)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,kind,title,body,createdAt,readAt);
+    return Object.hash(runtimeType,id,kind,title,body,createdAt,readAt,categoryId);
 }
 
 @override
 String toString() {
-    return 'AppNotification(id: $id, kind: $kind, title: $title, body: $body, createdAt: $createdAt, readAt: $readAt)';
+    return 'AppNotification(id: $id, kind: $kind, title: $title, body: $body, createdAt: $createdAt, readAt: $readAt, categoryId: $categoryId)';
 }
 
 
@@ -261,7 +265,7 @@ abstract mixin class _$AppNotificationCopyWith<$Res> implements $AppNotification
   factory _$AppNotificationCopyWith(_AppNotification value, $Res Function(_AppNotification) _then) = __$AppNotificationCopyWithImpl;
 @override @useResult
 $Res call({
- int id, NotificationKind kind, String title, String body, DateTime createdAt, DateTime? readAt
+ int id, NotificationKind kind, String title, String body, DateTime createdAt, DateTime? readAt, int? categoryId
 });
 
 
@@ -278,7 +282,7 @@ class __$AppNotificationCopyWithImpl<$Res>
 
 /// Create a copy of AppNotification
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? body = null,Object? createdAt = null,Object? readAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? kind = null,Object? title = null,Object? body = null,Object? createdAt = null,Object? readAt = freezed,Object? categoryId = freezed,}) {
   return _then(_AppNotification(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,kind: null == kind ? _self.kind : kind // ignore: cast_nullable_to_non_nullable
@@ -286,7 +290,8 @@ as NotificationKind,title: null == title ? _self.title : title // ignore: cast_n
 as String,body: null == body ? _self.body : body // ignore: cast_nullable_to_non_nullable
 as String,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,readAt: freezed == readAt ? _self.readAt : readAt // ignore: cast_nullable_to_non_nullable
-as DateTime?,
+as DateTime?,categoryId: freezed == categoryId ? _self.categoryId : categoryId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

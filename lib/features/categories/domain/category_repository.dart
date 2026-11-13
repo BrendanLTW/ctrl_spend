@@ -53,3 +53,12 @@ abstract interface class CategoryRepository {
 @Riverpod(keepAlive: true)
 CategoryRepository categoryRepository(Ref ref) =>
     throw UnimplementedError('Override categoryRepositoryProvider');
+
+/// Categories, live, with [CategoryRepository.watch]'s filters.
+@riverpod
+Stream<List<Category>> categories(
+  Ref ref, {
+  TransactionType? type,
+  bool? archived,
+}) =>
+    ref.watch(categoryRepositoryProvider).watch(type: type, archived: archived);

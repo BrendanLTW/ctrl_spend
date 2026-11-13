@@ -39,6 +39,20 @@ void main() {
     expect(preferencesFromValues(stored(prefs)), prefs);
   });
 
+  test('the last notification check is stored as a UTC instant', () {
+    final at = DateTime(2026, 11, 4, 9, 30);
+    final prefs = preferencesFromValues(
+      stored(Preferences(notificationsCheckedAt: at)),
+    );
+    expect(prefs.notificationsCheckedAt, at.toUtc());
+    expect(prefs.notificationsCheckedAt!.isAtSameMomentAs(at), isTrue);
+    expect(
+      preferencesFromValues({'notificationsCheckedAt': 'soon'})
+          .notificationsCheckedAt,
+      isNull,
+    );
+  });
+
   test('a start day read back equals a newly built one', () {
     final prefs = preferencesFromValues({'monthStartDay': '15'});
     expect(prefs, const Preferences(monthStartDay: DayOfMonth(15)));

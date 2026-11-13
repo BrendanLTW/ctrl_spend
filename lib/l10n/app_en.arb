@@ -7,7 +7,1264 @@
   "addTransaction": "Add transaction",
   "close": "Close",
   "settings": "Settings",
-  "finishOnboarding": "Finish onboarding",
   "keypadBackspace": "Backspace",
-  "keypadDoubleZero": "Double zero"
+  "keypadDoubleZero": "Double zero",
+  "cancel": "Cancel",
+  "previousMonth": "Previous month",
+  "nextMonth": "Next month",
+  "stepIndicator": "Step {current} of {total}",
+  "@stepIndicator": {
+    "placeholders": {
+      "current": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "back": "Back",
+  "skip": "Skip",
+  "continueAction": "Continue",
+  "appName": "ctrlSpend",
+  "splashTagline": "Know what's left to spend.",
+  "splashBy": "by",
+  "welcomeTitle": "Know what's left to spend, every day.",
+  "welcomeBody": "Set one monthly budget, log what you spend, and ctrlSpend keeps count.",
+  "getStarted": "Get started",
+  "skipTheTour": "Skip the tour",
+  "welcomePreviewLabel": "Dashboard preview: {amount} left to spend",
+  "@welcomePreviewLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "leftToSpend": "Left to spend",
+  "spent": "spent",
+  "categoryPercent": "{category} · {percent}%",
+  "@categoryPercent": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "categoryFood": "Food",
+  "howTitle": "How it works",
+  "howSubtitle": "Three steps, then you're in control.",
+  "howBasics": "The basics",
+  "howBudgetTitle": "Set one monthly budget",
+  "howBudgetBody": "Pick what you want to spend. Home shows what's left.",
+  "howLogTitle": "Log spending in seconds",
+  "howLogBody": "Tap +, type the amount, pick a category. Done.",
+  "howSeeTitle": "See where it goes",
+  "howSeeBody": "Spot the categories that eat your budget.",
+  "howPrivacy": "Your privacy",
+  "howPrivacyTitle": "Stays on this phone",
+  "howPrivacyBody": "No account, no bank login. Export a CSV whenever you like.",
+  "nameTitle": "What should we call you?",
+  "nameSubtitle": "It's how ctrlSpend says hi. Your name stays on this phone.",
+  "firstName": "First name",
+  "monthTitle": "Set up your month",
+  "monthSubtitle": "Line your budget period up with payday, so each month starts fresh when the money comes in.",
+  "currency": "Currency",
+  "monthStartsOn": "Month starts on",
+  "startDay1st": "1st",
+  "startDay15th": "15th",
+  "startDay25th": "25th",
+  "startDayOther": "Other",
+  "currentPeriod": "Current period",
+  "periodDaysLeft": "{count, plural, =0{Last day} =1{1 day left} other{{count} days left}}",
+  "@periodDaysLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "periodWithDaysLeft": "{range} · {daysLeft}",
+  "@periodWithDaysLeft": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "daysLeft": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyMyr": "Malaysian Ringgit",
+  "currencySgd": "Singapore Dollar",
+  "currencyUsd": "US Dollar",
+  "currencyAud": "Australian Dollar",
+  "currencyBnd": "Brunei Dollar",
+  "currencyEur": "Euro",
+  "currencyIdr": "Indonesian Rupiah",
+  "budgetTitle": "Set your monthly budget",
+  "budgetSubtitle": "How much do you want to spend each month? You can change this any time in Budgets.",
+  "monthlyBudget": "Monthly budget",
+  "perMonth": "per month",
+  "budgetPerMonthLabel": "Budget {amount} per month",
+  "@budgetPerMonthLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetBelowLimits": "Your category limits add up to {amount}. Set at least that.",
+  "@budgetBelowLimits": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "splitTitle": "Split by category",
+  "splitSubtitle": "Optional. Give limits to the categories you tend to overspend on.",
+  "allocated": "Allocated",
+  "allocatedOf": "{allocated} of {budget}",
+  "@allocatedOf": {
+    "placeholders": {
+      "allocated": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "flexibleRemainder": "{amount} stays flexible for everything else.",
+  "@flexibleRemainder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "allocatedLabel": "{percent}% of monthly budget allocated",
+  "@allocatedLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "categories": "Categories",
+  "addLimit": "Add limit",
+  "categoryLimitLabel": "{category}, limit {amount}",
+  "@categoryLimitLabel": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryNoLimitLabel": "{category}, add limit",
+  "@categoryNoLimitLabel": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryBudget": "{category} budget",
+  "@categoryBudget": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "remove": "Remove",
+  "save": "Save",
+  "leftToAllocate": "{amount} left to allocate",
+  "@leftToAllocate": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "remindersTitle": "Stay on track",
+  "remindersSubtitle": "A nudge at the end of the day helps you log spending before you forget it.",
+  "sampleNotification": "You have RM 72 left for Food this period. Log today's spending?",
+  "notificationNow": "now",
+  "notifyMeAbout": "Notify me about",
+  "dailyReminder": "Daily reminder",
+  "dailyReminderAt": "Every day at {time}",
+  "@dailyReminderAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetAlerts": "Budget alerts",
+  "budgetAlertsDetail": "When a budget reaches 80% and 100%",
+  "weeklySummary": "Weekly summary",
+  "weeklySummaryDetail": "Sunday evenings",
+  "turnOnNotifications": "Turn on notifications",
+  "notNow": "Not now",
+  "allSetTitle": "You're all set",
+  "allSetBody": "Add what you've spent since {date} to see what's really left this period.",
+  "@allSetBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "yourSetup": "Your setup",
+  "categoryLimits": "Category limits",
+  "limitsCount": "{limited} of {total}",
+  "@limitsCount": {
+    "placeholders": {
+      "limited": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "reminders": "Reminders",
+  "remindersDaily": "Daily, {time}",
+  "@remindersDaily": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "remindersWeekly": "Weekly, Sunday",
+  "remindersAlertsOnly": "Budget alerts only",
+  "remindersOff": "Off",
+  "notSet": "Not set",
+  "lastDay": "Last day",
+  "ordinalDay": "{day, select, 1{1st} 2{2nd} 3{3rd} 21{21st} 22{22nd} 23{23rd} other{{day}th}}",
+  "@ordinalDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "addFirstExpense": "Add your first expense",
+  "goToDashboard": "Go to dashboard",
+  "greeting": "Hi, {name}",
+  "@greeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "greetingNoName": "Hi there",
+  "notifications": "Notifications",
+  "spentLabel": "Spent",
+  "incomeLabel": "Income",
+  "statLabel": "{label}, {amount}",
+  "@statLabel": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "recentActivities": "Recent activities",
+  "viewAll": "View all",
+  "today": "Today",
+  "yesterday": "Yesterday",
+  "dayAndDetail": "{day} · {detail}",
+  "@dayAndDetail": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "overBudgetBy": "Over budget by",
+  "spentThisPeriod": "Spent this period",
+  "amountSpent": "{amount} spent",
+  "@amountSpent": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "ofAmount": "of {amount}",
+  "@ofAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "setMonthlyBudget": "Set a monthly budget",
+  "budgetSpentPercent": "{percent}% of monthly budget spent",
+  "@budgetSpentPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "noTransactionsTitle": "No transactions yet",
+  "noTransactionsBody": "Add what you spend and your budget updates as you go.",
+  "newExpense": "New expense",
+  "newIncome": "New income",
+  "editTransaction": "Edit transaction",
+  "delete": "Delete",
+  "expenseLabel": "Expense",
+  "totalAmount": "Total amount",
+  "totalAmountLabel": "Total amount {amount}",
+  "@totalAmountLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "selectCategory": "Select category",
+  "more": "More",
+  "addNote": "Add a note…",
+  "categorySheetTitle": "Category",
+  "dateSheetTitle": "Date",
+  "amountSheetTitle": "Amount",
+  "done": "Done",
+  "setDate": "Set {date}",
+  "@setDate": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateToday": "Today, {date}",
+  "@dateToday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dateYesterday": "Yesterday, {date}",
+  "@dateYesterday": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteTransactionTitle": "Delete this transaction?",
+  "deleteExpenseBody": "{title} ({amount}) will be removed and {amount} goes back to your {category} budget.",
+  "@deleteExpenseBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteIncomeBody": "{title} ({amount}) will be removed.",
+  "@deleteIncomeBody": {
+    "placeholders": {
+      "title": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionTitle": "Transaction",
+  "details": "Details",
+  "categoryRowLabel": "Category",
+  "dateRowLabelTitle": "Date",
+  "noteRowLabel": "Note",
+  "budgetImpact": "Budget impact",
+  "editAction": "Edit",
+  "deleteTransaction": "Delete transaction",
+  "amountLeft": "{amount} left",
+  "@amountLeft": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "overBy": "Over by {amount}",
+  "@overBy": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfThisPeriod": "{spent} of {limit} this period",
+  "@spentOfThisPeriod": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfInPeriod": "{spent} of {limit} in {period}",
+  "@spentOfInPeriod": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      },
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "dateAndTime": "{date} · {time}",
+  "@dateAndTime": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "percentOfSpent": "{percent}% of {name} spent",
+  "@percentOfSpent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionDeleted": "Transaction deleted",
+  "undo": "Undo",
+  "byCategory": "By category",
+  "add": "Add",
+  "leftWord": "left",
+  "overWord": "over",
+  "spentOfBudget": "{spent} of {budget} spent",
+  "@spentOfBudget": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "spentAndLeft": "Spent {spent} · Left {left}",
+  "@spentAndLeft": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "left": {
+        "type": "String"
+      }
+    }
+  },
+  "spentAndOver": "Spent {spent} · Over by {over}",
+  "@spentAndOver": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "over": {
+        "type": "String"
+      }
+    }
+  },
+  "addLimitSheetTitle": "Add a limit",
+  "budgetCardLabel": "Monthly budget, {amount} {state}, {detail}",
+  "@budgetCardLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "state": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryBudgetLabel": "{name}, {percent}%, {detail}",
+  "@categoryBudgetLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "dataStoredOnPhone": "Data stored on this phone",
+  "preferencesSection": "Preferences",
+  "manageSection": "Manage",
+  "themeRow": "Theme",
+  "themeLight": "Light",
+  "themeDark": "Dark",
+  "themeSystem": "System",
+  "exportCsv": "Export to CSV",
+  "importCsv": "Import from CSV",
+  "nameSheetTitle": "Your name",
+  "monthStartSubtitle": "Pick the day your budget resets. Most people choose payday.",
+  "lastDayOfMonth": "Last day of the month",
+  "nextPeriod": "Next period",
+  "profileLabel": "{name}, {detail}",
+  "@profileLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "newCategory": "New category",
+  "categoryName": "Category name",
+  "iconSection": "Icon",
+  "colourSection": "Colour",
+  "monthlyLimit": "Monthly limit",
+  "optional": "Optional",
+  "createCategory": "Create category",
+  "duplicateCategory": "{type, select, expense{You already have an expense category called {name}.} other{You already have an income category called {name}.}}",
+  "@duplicateCategory": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "archivedSection": "Archived",
+  "restore": "Restore",
+  "categoriesNote": "Categories with transactions are archived instead of deleted, so your history stays intact.",
+  "categoryDeleted": "Category deleted",
+  "categoryArchived": "{name} archived — it has transactions",
+  "@categoryArchived": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "colourName": "{colour, select, orange{Orange} blue{Blue} pink{Pink} yellow{Yellow} purple{Purple} green{Green} red{Red} other{Grey}}",
+  "@colourName": {
+    "placeholders": {
+      "colour": {
+        "type": "String"
+      }
+    }
+  },
+  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}",
+  "@iconName": {
+    "placeholders": {
+      "icon": {
+        "type": "String"
+      }
+    }
+  },
+  "searchHint": "Search notes and categories",
+  "clearSearch": "Clear search",
+  "allChip": "All",
+  "noResultsTitle": "No results for “{query}”",
+  "@noResultsTitle": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "noResultsInChip": "Nothing matches in {chip}. Try another word, or search all transactions.",
+  "@noResultsInChip": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
+  },
+  "noResultsAll": "Nothing matches. Try another word.",
+  "searchAll": "Search all",
+  "nothingHereTitle": "Nothing here yet",
+  "nothingInChip": "No transactions in {chip} so far.",
+  "@nothingInChip": {
+    "placeholders": {
+      "chip": {
+        "type": "String"
+      }
+    }
+  },
+  "insightsWeek": "Week",
+  "insightsMonth": "Month",
+  "insightsSixMonths": "6 months",
+  "spentInPeriod": "Spent {period}",
+  "@spentInPeriod": {
+    "placeholders": {
+      "period": {
+        "type": "String"
+      }
+    }
+  },
+  "spendingCategories": "Spending categories",
+  "spendingSummary": "Spending by category: {shares}",
+  "@spendingSummary": {
+    "placeholders": {
+      "shares": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryShare": "{category} {percent}%, {amount}",
+  "@categoryShare": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "insightsEmptyTitle": "Not enough data yet",
+  "insightsEmptyBody": "Charts appear once you've logged a few days of spending.",
+  "addAnExpense": "Add an expense",
+  "last7Days": "Last 7 days",
+  "weekRangeAverage": "{range} · avg {amount} a day",
+  "@weekRangeAverage": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paceChip": "Pace {amount}/day",
+  "@paceChip": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dailyPace": "Daily pace",
+  "todayBubble": "today",
+  "underPace": "Under pace",
+  "overPace": "Over pace",
+  "countOfTotal": "{count} of {total}",
+  "@countOfTotal": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "daysThisWeek": "days this week",
+  "biggestDay": "Biggest day",
+  "biggestDayCaption": "{day} · {title}",
+  "@biggestDayCaption": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "title": {
+        "type": "String"
+      }
+    }
+  },
+  "weekChartLabel": "Daily spending, pace {pace} a day: {days}",
+  "@weekChartLabel": {
+    "placeholders": {
+      "pace": {
+        "type": "String"
+      },
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "weekChartLabelNoPace": "Daily spending: {days}",
+  "@weekChartLabelNoPace": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "dayUnderPace": "{day} {amount}, under pace",
+  "@dayUnderPace": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dayOverPace": "{day} {amount}, over pace",
+  "@dayOverPace": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dayToday": "{day} {amount}, today",
+  "@dayToday": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "labelAmount": "{label} {amount}",
+  "@labelAmount": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "statCaptionLabel": "{label}, {value} {caption}",
+  "@statCaptionLabel": {
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      },
+      "caption": {
+        "type": "String"
+      }
+    }
+  },
+  "avgPerMonth": "Avg per month",
+  "fullMonthsRange": "{range}, {count, plural, =1{full month} other{full months}}",
+  "@fullMonthsRange": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noFullMonths": "No full months yet",
+  "budgetChip": "Budget {amount}",
+  "@budgetChip": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "budgetLine": "Budget",
+  "underBudget": "Under budget",
+  "overBudget": "Over budget",
+  "thisPeriod": "This period",
+  "soFar": "so far",
+  "fullMonths": "{count, plural, =1{full month} other{full months}}",
+  "@fullMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "highestMonth": "Highest month",
+  "trendChartLabel": "Monthly spending, budget {budget}: {periods}",
+  "@trendChartLabel": {
+    "placeholders": {
+      "budget": {
+        "type": "String"
+      },
+      "periods": {
+        "type": "String"
+      }
+    }
+  },
+  "trendChartLabelNoBudget": "Monthly spending: {periods}",
+  "@trendChartLabelNoBudget": {
+    "placeholders": {
+      "periods": {
+        "type": "String"
+      }
+    }
+  },
+  "periodUnderBudget": "{month} {amount}, under budget",
+  "@periodUnderBudget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "periodOverBudget": "{month} {amount}, over budget",
+  "@periodOverBudget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "periodSoFar": "{month} {amount}, so far",
+  "@periodSoFar": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "pastPeriods": "Past periods",
+  "viewPastPeriods": "View past periods",
+  "previousPeriods": "Previous",
+  "amountUnder": "{amount} under",
+  "@amountUnder": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "spentOfAmount": "{spent} of {budget}",
+  "@spentOfAmount": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "noBudget": "No budget",
+  "noLimit": "No limit",
+  "amountOver": "{amount} over",
+  "@amountOver": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "limitAmount": "limit {limit}",
+  "@limitAmount": {
+    "placeholders": {
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "categoryTitle": "Category",
+  "categoryTypeCount": "{type} · {count, plural, =1{1 transaction} other{{count} transactions}}",
+  "@categoryTypeCount": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "daysToGo": "{count, plural, =0{Last day} =1{1 day to go} other{{count} days to go}}",
+  "@daysToGo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noLimitWithDays": "No limit · {days}",
+  "@noLimitWithDays": {
+    "placeholders": {
+      "days": {
+        "type": "String"
+      }
+    }
+  },
+  "nameLabel": "Name",
+  "iconAndColour": "Icon & colour",
+  "recentSection": "Recent",
+  "archiveCategory": "Archive category",
+  "restoreCategory": "Restore category",
+  "categoryPeriodLabel": "This period, {spent}, {detail}",
+  "@categoryPeriodLabel": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "detail": {
+        "type": "String"
+      }
+    }
+  },
+  "themeNote": "System matches your phone's light or dark setting automatically.",
+  "searchCurrencies": "Search currencies",
+  "suggestedSection": "Suggested",
+  "allCurrencies": "All currencies",
+  "currencyCurrent": "{code} · current",
+  "@currencyCurrent": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "currencyNote": "Switching currency changes the symbol only. Existing amounts aren't converted.",
+  "noCurrencyMatch": "No currencies match “{query}”",
+  "@noCurrencyMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyCategoryWarningTitle": "{category} is at {percent}% of its limit",
+  "@notifyCategoryWarningTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyBudgetWarningTitle": "Your budget is at {percent}%",
+  "@notifyBudgetWarningTitle": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyWarningBody": "{count, plural, =0{{amount} left for the rest of today.} =1{{amount} left with 1 day to go.} other{{amount} left with {count} days to go.}}",
+  "@notifyWarningBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyCategoryOverTitle": "{category} is over budget",
+  "@notifyCategoryOverTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyCategoryOverBody": "You've spent {spent} of your {limit} limit.",
+  "@notifyCategoryOverBody": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "limit": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyBudgetOverTitle": "You're over budget",
+  "notifyBudgetOverBody": "You've spent {spent} of your {budget} budget.",
+  "@notifyBudgetOverBody": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIncomeTitle": "{category} added",
+  "@notifyIncomeTitle": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyIncomeBody": "{amount} recorded as Income.",
+  "@notifyIncomeBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyDailyTitle": "Daily reminder",
+  "notifyDailyBody": "Anything to log from today? It takes ten seconds.",
+  "notifyWeeklyTitle": "Your weekly summary",
+  "notifyWeeklyLess": "You spent {spent} last week, {difference} less than the week before.",
+  "@notifyWeeklyLess": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklyMore": "You spent {spent} last week, {difference} more than the week before.",
+  "@notifyWeeklyMore": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklySame": "You spent {spent} last week, the same as the week before.",
+  "@notifyWeeklySame": {
+    "placeholders": {
+      "spent": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyWeeklyReadyTitle": "Your weekly summary is ready",
+  "notifyWeeklyReadyBody": "See how last week went.",
+  "notifyPeriodTitle": "New period started",
+  "notifyPeriodBudgetBody": "{range}. Your {budget} budget has reset.",
+  "@notifyPeriodBudgetBody": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyPeriodBody": "Your new period runs {range}.",
+  "@notifyPeriodBody": {
+    "placeholders": {
+      "range": {
+        "type": "String"
+      }
+    }
+  },
+  "earlierSection": "Earlier",
+  "unread": "Unread",
+  "minutesAgo": "{count}m",
+  "@minutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hoursAgo": "{count}h",
+  "@hoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "notificationSettings": "Notification settings",
+  "noNotificationsTitle": "No notifications yet",
+  "noNotificationsBody": "We'll let you know when a budget gets close to its limit, and remind you to log your spending.",
+  "youllHearAbout": "You'll hear about",
+  "at80And100": "At 80% and 100%",
+  "onLabel": "On",
+  "offLabel": "Off",
+  "notificationsUnread": "{count, plural, =0{Notifications} =1{Notifications, 1 unread} other{Notifications, {count} unread}}",
+  "@notificationsUnread": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportTitle": "Export data",
+  "exportIntro": "Save your transactions as a CSV file you can open in Sheets or Excel, or import on a new phone.",
+  "rangeSection": "Range",
+  "includeSection": "Include",
+  "rangeAllTime": "All time",
+  "rangeCustom": "Custom",
+  "expensesLabel": "Expenses",
+  "notesLabel": "Notes",
+  "fromLabel": "From",
+  "toLabel": "To",
+  "exportCsvButton": "Export CSV",
+  "exportSaved": "{count, plural, =1{Saved 1 transaction to Files} other{Saved {count} transactions to Files}}",
+  "@exportSaved": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "nothingToExport": "No transactions to export",
+  "importTitle": "Import data",
+  "importFailedTitle": "We couldn't import that file",
+  "importFailedBody": "{count, plural, =1{1 row has a problem, so nothing was imported. Fix it and try again.} other{{count} rows have problems, so nothing was imported. Fix them and try again.}}",
+  "@importFailedBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "rowNumber": "Row {row}",
+  "@rowNumber": {
+    "placeholders": {
+      "row": {
+        "type": "int"
+      }
+    }
+  },
+  "problemNotADate": "“{value}” isn't a real date",
+  "@problemNotADate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotATime": "“{value}” isn't a time",
+  "@problemNotATime": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotAnAmount": "“{value}” isn't an amount",
+  "@problemNotAnAmount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotAType": "“{value}” isn't expense or income",
+  "@problemNotAType": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "problemEmpty": "{column} is empty",
+  "@problemEmpty": {
+    "placeholders": {
+      "column": {
+        "type": "String"
+      }
+    }
+  },
+  "problemMissingColumns": "The first row must name the columns {columns}",
+  "@problemMissingColumns": {
+    "placeholders": {
+      "columns": {
+        "type": "String"
+      }
+    }
+  },
+  "problemNotText": "The file isn't readable text",
+  "chooseAnotherFile": "Choose another file",
+  "downloadSampleCsv": "Download a sample CSV",
+  "importedTransactions": "{count, plural, =1{Imported 1 transaction} other{Imported {count} transactions}}",
+  "@importedTransactions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importEmpty": "That file has no transactions",
+  "columnDate": "Date",
+  "columnType": "Type",
+  "columnCategory": "Category",
+  "columnAmount": "Amount",
+  "deleteAllData": "Delete all data",
+  "deleteAllDataTitle": "Delete all data?",
+  "deleteAllDataBody": "This erases every transaction, category, notification and setting on this phone. It can't be undone.",
+  "deleteEverything": "Delete everything",
+  "exportFirst": "Export first",
+  "devSection": "Developer",
+  "devAddSampleData": "Add 5,000 sample transactions",
+  "devAddSampleDataDetail": "Debug builds only, for performance checks",
+  "devSampleDataAdded": "Added 5,000 sample transactions"
 }

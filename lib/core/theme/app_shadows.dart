@@ -9,6 +9,7 @@ class AppShadows extends ThemeExtension<AppShadows> {
     required this.addButton,
     required this.toast,
     required this.dialog,
+    required this.toggleKnob,
   });
 
   static const light = AppShadows(
@@ -28,6 +29,7 @@ class AppShadows extends ThemeExtension<AppShadows> {
     ],
     toast: [_toast],
     dialog: [_dialog],
+    toggleKnob: [_toggleKnob],
   );
 
   static const dark = AppShadows(
@@ -47,12 +49,20 @@ class AppShadows extends ThemeExtension<AppShadows> {
     ],
     toast: [_toast],
     dialog: [_dialog],
+    toggleKnob: [_toggleKnob],
   );
 
   static const _toast = BoxShadow(
     offset: Offset(0, 10),
     blurRadius: 24,
     color: Color.fromRGBO(16, 24, 40, 0.25),
+  );
+
+  /// The same in both themes: the knob is always light (DESIGN §7).
+  static const _toggleKnob = BoxShadow(
+    offset: Offset(0, 1),
+    blurRadius: 3,
+    color: Color.fromRGBO(16, 24, 40, 0.2),
   );
   static const _dialog = BoxShadow(
     offset: Offset(0, 24),
@@ -64,6 +74,7 @@ class AppShadows extends ThemeExtension<AppShadows> {
   final List<BoxShadow> addButton;
   final List<BoxShadow> toast;
   final List<BoxShadow> dialog;
+  final List<BoxShadow> toggleKnob;
 
   @override
   AppShadows copyWith({
@@ -71,12 +82,14 @@ class AppShadows extends ThemeExtension<AppShadows> {
     List<BoxShadow>? addButton,
     List<BoxShadow>? toast,
     List<BoxShadow>? dialog,
+    List<BoxShadow>? toggleKnob,
   }) {
     return AppShadows(
       bottomBar: bottomBar ?? this.bottomBar,
       addButton: addButton ?? this.addButton,
       toast: toast ?? this.toast,
       dialog: dialog ?? this.dialog,
+      toggleKnob: toggleKnob ?? this.toggleKnob,
     );
   }
 
@@ -88,6 +101,7 @@ class AppShadows extends ThemeExtension<AppShadows> {
       addButton: BoxShadow.lerpList(addButton, other.addButton, t)!,
       toast: BoxShadow.lerpList(toast, other.toast, t)!,
       dialog: BoxShadow.lerpList(dialog, other.dialog, t)!,
+      toggleKnob: BoxShadow.lerpList(toggleKnob, other.toggleKnob, t)!,
     );
   }
 }

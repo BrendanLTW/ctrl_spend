@@ -53,87 +53,89 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §5.3, §5.5
 - [x] **1.6 Preferences repository.** Read and watch `userName`, `currencyCode`, `monthStartDay`, `monthlyBudgetMinor`, `theme`, reminder settings and `onboardingComplete`, with defaults. Wire the theme-mode provider from 0.4 to it. Unit tests.
   Refs: PRD §8
-- [ ] **1.7 Budget calculations.** Pure domain functions with tests: spent and income for a period, left to spend, the shared threshold function (neutral, warning, negative, no budget), category used %, allocated and flexible, and validation that category limits don't exceed the monthly budget.
+- [x] **1.7 Budget calculations.** Pure domain functions with tests: spent and income for a period, left to spend, the shared threshold function (neutral, warning, negative, no budget), category used %, allocated and flexible, and validation that category limits don't exceed the monthly budget.
   Refs: PRD §6.3, §8 Derived values
-- [ ] **1.8 Insight calculations.** Pure domain functions with tests: category shares for a period, daily totals and daily pace, under/over pace per day, monthly totals, averages and under-budget counts over full periods only, and past-period summaries with per-category results.
+- [x] **1.8 Insight calculations.** Pure domain functions with tests: category shares for a period, daily totals and daily pace, under/over pace per day, monthly totals, averages and under-budget counts over full periods only, and past-period summaries with per-category results.
   Refs: PRD §5.7, §5.10, §8
 
 ## Phase 2 — Core (P0)
 
-- [ ] **2.1 Shared widgets, part 1.** `CategoryTile`, `TransactionRow`, `ListGroup` / `ListGroupRow` / `KeyValueRow`, `AppProgressBar` (with label), `StatCard`. Widget tests in both themes.
+- [x] **2.1 Shared widgets, part 1.** `CategoryTile`, `TransactionRow`, `ListGroup` / `ListGroupRow` / `KeyValueRow`, `AppProgressBar` (with label), `StatCard`. Widget tests in both themes.
   Refs: DESIGN §7, §11
-- [ ] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
+- [x] **2.2 Shared widgets, part 2.** `SegmentedControl` (both variants), `AppToggle`, `AppRadio`, `DaySelector`, `StepIndicator`, `EmptyState`, `AppToast`, `AppSheet`, `AppDialog`, `MonthCalendar`. Widget tests in both themes.
   Refs: DESIGN §7, §11
-- [ ] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
+- [x] **2.3 Onboarding intro.** S01 Splash (with "by BrendanLTW"), S02 Welcome (with the hero preview), S03 How it works, and `OnboardingScaffold`. The onboarding redirect now uses `onboardingComplete`.
   Refs: S01–S03, PRD §5.1, FR-01
-- [ ] **2.4 Name and month setup.** S03a Your name (validation, 30-character limit) and S04 Set up your month (currency row showing RM, month-start segments, live period preview). "Other" opens S32 (task 2.13).
+- [x] **2.4 Name and month setup.** S03a Your name (validation, 30-character limit) and S04 Set up your month (currency row showing RM, month-start segments, live period preview). "Other" opens S32 (task 2.13).
   Refs: S03a, S04, PRD §5.1, FR-01, FR-07
-- [ ] **2.5 Budget and category limits.** S05 Set your monthly budget (keypad, Skip leaves no budget) and S06 Split by category (allocated summary, add limit per category, can't exceed the budget).
+- [x] **2.5 Budget and category limits.** S05 Set your monthly budget (keypad, Skip leaves no budget) and S06 Split by category (allocated summary, add limit per category, can't exceed the budget).
   Refs: S05, S06, PRD §5.1, FR-01, FR-05
-- [ ] **2.6 Reminders and finish.** S07 Stay on track (save toggle preferences only; the permission prompt comes in 3.8) and S08 You're all set (summary, Add your first expense, Go to dashboard). Back keeps values on every step.
+- [x] **2.6 Reminders and finish.** S07 Stay on track (save toggle preferences only; the permission prompt comes in 3.8) and S08 You're all set (summary, Add your first expense, Go to dashboard). Back keeps values on every step.
   Refs: S07, S08, PRD §5.1
-- [ ] **2.7 Dashboard.** S09 with header (period, greeting, bell, avatar → Settings), `BudgetHero` in all four states (S11), Spent and Income cards, and Recent activities with View all. Figures update live.
+- [x] **2.7 Dashboard.** S09 with header (period, greeting, bell, avatar → Settings), `BudgetHero` in all four states (S11), Spent and Income cards, and Recent activities with View all. Figures update live.
   Refs: S09, S11, PRD §5.2, FR-02
-- [ ] **2.8 Dashboard first run.** S10 empty state with Add your first expense.
+- [x] **2.8 Dashboard first run.** S10 empty state with Add your first expense.
   Refs: S10, PRD §5.2, FR-02
-- [ ] **2.9 Add and edit transaction.** S12 and S13: Expense/Income toggle swapping category sets, keypad amount, category row with More, date row opening the S43 date picker, note, Save disabled for amount 0 or no category, edit mode prefilled with Delete.
+- [x] **2.9 Add and edit transaction.** S12 and S13: Expense/Income toggle swapping category sets, keypad amount, category row with More, date row opening the S43 date picker, note, Save disabled for amount 0 or no category, edit mode prefilled with Delete.
   Refs: S12, S13, S43, PRD §5.3, FR-03
-- [ ] **2.10 Transaction detail and delete.** S41 with details and budget impact; S42 confirmation dialog; deleting returns to the previous screen.
+- [x] **2.10 Transaction detail and delete.** S41 with details and budget impact; S42 confirmation dialog; deleting returns to the previous screen.
   Refs: S41, S42, PRD §5.13, FR-03
-- [ ] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
+- [x] **2.11 Activity list.** S16 day groups with net totals, rows opening S41, swipe left to delete, and the Transaction deleted toast with 5-second Undo. (Search and chips come in 3.1.)
   Refs: S16, PRD §5.5, FR-04
-- [ ] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
+- [x] **2.12 Budgets.** S17 monthly budget card, By category list with thresholds, and the edit sheet (keypad, Remove, Save) for both the monthly budget and category limits.
   Refs: S17, PRD §5.6, FR-05
-- [ ] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
+- [x] **2.13 Settings and month start.** S21 with the profile row (edit name), Month starts on, Categories, and placeholders for P1 rows; v1.1 rows hidden. S32 Month start with day grid, Last day of the month and period previews; saving recalculates everything.
   Refs: S21, S32, PRD §5.8, FR-07
-- [ ] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
+- [x] **2.14 Categories.** S22 Category manager (Expense, Income, Archived with Restore) and S24 Add category sheet (type, name, icon, colour, optional limit). Deleting or archiving follows the repository rule.
   Refs: S22, S24, PRD §5.9, FR-06
-- [ ] **2.15 P0 review.** Walk through every acceptance criterion for FR-01 to FR-07 and every P0 screen against its light and dark design. List gaps, fix them, and confirm all P0 tests pass.
+- [x] **2.15 P0 review.** Walk through every acceptance criterion for FR-01 to FR-07 and every P0 screen against its light and dark design. List gaps, fix them, and confirm all P0 tests pass.
   Refs: PRD §7
 
 ## Phase 3 — Complete (P1)
 
-- [ ] **3.1 Search and filters.** Search field and chips (All, Expense, Income, categories) on S16, and the S39 No results state with Search all.
+- [x] **3.1 Search and filters.** Search field and chips (All, Expense, Income, categories) on S16, and the S39 No results state with Search all.
   Refs: S16, S39, PRD §5.5, FR-08
-- [ ] **3.2 Insights · Month.** S18 with the Week/Month/6 months control, period total, ranked spending categories with a screen-reader summary, and the S40 empty state.
+- [x] **3.2 Insights · Month.** S18 with the Week/Month/6 months control, period total, ranked spending categories with a screen-reader summary, and the S40 empty state.
   Refs: S18, S40, PRD §5.7, FR-09
-- [ ] **3.3 Insights · Week.** S19 daily bars against the pace line, under/over marking, today highlighted, Under pace and Biggest day stats, and the chart's text alternative.
+- [x] **3.3 Insights · Week.** S19 daily bars against the pace line, under/over marking, today highlighted, Under pace and Biggest day stats, and the chart's text alternative.
   Refs: S19, PRD §5.7, FR-09
-- [ ] **3.4 Insights · 6 months.** S20 monthly bars against the budget line, "so far" for the current period, Under budget and Highest month stats, and View past periods.
+- [x] **3.4 Insights · 6 months.** S20 monthly bars against the budget line, "so far" for the current period, Under budget and Highest month stats, and View past periods (moved to 3.5, with S25).
   Refs: S20, PRD §5.7, FR-09
-- [ ] **3.5 Past periods.** S25 current and previous periods, and S26 period detail with per-category results against limits.
+- [x] **3.5 Past periods.** S25 current and previous periods, and S26 period detail with per-category results against limits. Add S20's View past periods row (`surface`, `ink` text in both themes).
   Refs: S25, S26, PRD §5.10, FR-13
-- [ ] **3.6 Category detail.** S23 with this-period stats, Name, Icon & colour and Monthly limit rows, recent transactions and Archive category.
+- [x] **3.6 Category detail.** S23 with this-period stats, Name, Icon & colour and Monthly limit rows, recent transactions and Archive category.
   Refs: S23, PRD §5.9, FR-15
-- [ ] **3.7 Theme and currency.** S33 Theme (Light, Dark, System) and S34 Currency (search, Suggested, All currencies, symbol-only note). Wire the S04 currency row and the S21 rows.
+- [x] **3.7 Theme and currency.** S33 Theme (Light, Dark, System) and S34 Currency (search, Suggested, All currencies, symbol-only note). Wire the S04 currency row and the S21 rows.
   Refs: S33, S34, PRD §5.8, FR-10
-- [ ] **3.8 Local notifications.** A notification service using the spike findings: permission request from S07, daily reminder, budget alerts at 80% and 100%, weekly summary, new period started and income recorded. Each writes a Notification row. Tests with a fake scheduler and injected clock.
+- [x] **3.8 Local notifications.** A notification service using the spike findings: permission request from S07, daily reminder, budget alerts at 80% and 100%, weekly summary, new period started and income recorded. Each writes a Notification row. Tests with a fake scheduler and injected clock.
   Refs: S07, PRD §5.4, FR-12
-- [ ] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
+- [x] **3.9 Notifications inbox.** S14 grouped Today/Earlier with unread markers, S15 empty state, the bell badge on S09, and mark-as-read on open.
   Refs: S14, S15, PRD §5.4, FR-12
-- [ ] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
+- [x] **3.10 CSV export.** S35 range and include options, `ctrlspend-YYYY-MM-DD.csv` via the share sheet, and the "Saved {n} transactions to Files" toast. Define the CSV format in `docs/csv-format.md`.
   Refs: S35, PRD §5.8, FR-14
-- [ ] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
+- [x] **3.11 CSV import.** Import from Settings: validate every row first, import all or nothing, S36 error screen listing problems by row, Choose another file and Download a sample CSV. Round-trip test with export.
   Refs: S36, PRD §5.8, FR-14
-- [ ] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
+- [x] **3.12 Dark mode audit.** Check every v1.0 screen against its dark design; make sure every screen's widget tests run in both themes; fix any hard-coded colours.
   Refs: FR-11, DESIGN §9
+- [x] **3.13 Delete all data.** *(Added on request.)* A red S21 row and S42-style dialog with Export first; erase every table in one transaction, re-seed the default categories, cancel scheduled notifications and return to onboarding.
+  Refs: PRD §5.8 (addition)
 
 ## Phase 4 — Ship v1.0
 
-- [ ] **4.1 Accessibility pass.** Screen-reader labels, chart and progress text alternatives, 44 px targets, contrast in both themes, and 200% text scale on every screen.
+- [x] **4.1 Accessibility pass.** Screen-reader labels, chart and progress text alternatives, 44 px targets, contrast in both themes, and 200% text scale on every screen.
   Refs: DESIGN §10, PRD §9
-- [ ] **4.2 Design fidelity pass.** Run the DESIGN §12 checklist for every v1.0 screen in light and dark; fix differences or log intentional ones in `docs/design-notes.md`.
+- [x] **4.2 Design fidelity pass.** Run the DESIGN §12 checklist for every v1.0 screen in light and dark; fix differences or log intentional ones in `docs/design-notes.md`.
   Refs: DESIGN §12
-- [ ] **4.3 Performance.** A debug-only generator for 5,000 transactions; measure cold start and list scrolling on a mid-range Android device; fix anything below target.
+- [ ] **4.3 Performance.** A debug-only generator for 5,000 transactions; measure cold start and list scrolling on a mid-range Android device; fix anything below target. *(Generator, benchmarks and the device test are done; the device run is pending, see `docs/quality-audit.md`.)*
   Refs: PRD §10
-- [ ] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
+- [x] **4.4 End-to-end test.** Integration test: onboarding → add expense → dashboard → delete → undo.
   Refs: PRD §10
-- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`.
+- [ ] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`. *(README and screenshots done; the release waits for the 4.3 device run; the brand SVGs are in `assets/brand/`. No store release, so the APK keeps the debug signing.)*
   Refs: PRD §2
 
 ## Phase 5 — v1.1 (start only after v1.0 is released)
 
-- [ ] **5.1 Schema v2.** Add Bill, Goal and GoalContribution tables (schemaVersion 2), the migration step and a migration test from v1.0 data.
+- [ ] **5.1 Schema v2.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data.
   Refs: PRD §8
 - [ ] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests.
   Refs: PRD §5.11, §8

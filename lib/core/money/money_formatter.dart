@@ -15,6 +15,12 @@ enum Currency {
 
   final String code;
   final String symbol;
+
+  /// The currency for a stored ISO code, or MYR if it's unknown.
+  static Currency fromCode(String code) => Currency.values.firstWhere(
+    (c) => c.code == code,
+    orElse: () => Currency.myr,
+  );
 }
 
 enum MoneySign {
@@ -43,6 +49,12 @@ class MoneyFormatter {
   String format(int minor, {MoneySign sign = MoneySign.auto}) {
     final (:head, :cents) = split(minor, sign: sign);
     return '$head$cents';
+  }
+
+  /// Leaves out ".00": "RM 900" but "RM 12.50" (summary figures, chips).
+  String formatCompact(int minor, {MoneySign sign = MoneySign.auto}) {
+    final (:head, :cents) = split(minor, sign: sign);
+    return minor % 100 == 0 ? head : '$head$cents';
   }
 
   /// The amount without its cents, and the cents with their point, so large

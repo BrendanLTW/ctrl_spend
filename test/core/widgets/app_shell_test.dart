@@ -1,11 +1,14 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_shadows.dart';
 import 'package:ctrl_spend/core/theme/app_theme.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import '../../helpers/find_app_icon.dart';
 
 void main() {
   late List<int> selected;
@@ -78,7 +81,10 @@ void main() {
         find.descendant(of: add, matching: find.byType(Material)),
       );
       expect(addFill.color, colors.ink);
-      expect(tester.widget<Icon>(find.byIcon(Icons.add)).color, colors.onInk);
+      expect(
+        tester.widget<AppIconView>(findAppIcon(AppIcon.add)).color,
+        colors.onInk,
+      );
 
       // Only the active tab shows its label, on a navSelected pill.
       expect(find.text('Home'), findsOneWidget);

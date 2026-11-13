@@ -24,5 +24,8 @@ abstract class AppNotification with _$AppNotification {
 
     /// Null while unread.
     DateTime? readAt,
+
+    /// The category a budget alert or income row is about, for its tile.
+    int? categoryId,
   }) = _AppNotification;
 }

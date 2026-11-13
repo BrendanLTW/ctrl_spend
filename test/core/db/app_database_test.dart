@@ -38,8 +38,8 @@ void main() {
         ),
       );
 
-  test('schema v1 has the four v1.0 tables and no P2 tables', () async {
-    expect(db.schemaVersion, 1);
+  test('schema v2 has the four v1.0 tables and no P2 tables', () async {
+    expect(db.schemaVersion, 2);
     final tables = await db
         .customSelect(
           "SELECT name FROM sqlite_master WHERE type = 'table' "

@@ -26,6 +26,16 @@ final class ArchivedCategoryException implements Exception {
   String toString() => 'ArchivedCategoryException: category $categoryId';
 }
 
+/// A transaction from a CSV file (S36), its category still a name.
+typedef ImportedTransaction = ({
+  DateTime occurredAt,
+  TransactionType type,
+  String category,
+  String title,
+  int amountMinor,
+  String? note,
+});
+
 /// Expenses and income (PRD §5.3, §5.5, §8).
 abstract interface class TransactionRepository {
   /// Transactions, newest first. [period] limits them to its local days;
@@ -60,6 +70,12 @@ abstract interface class TransactionRepository {
 
   /// Puts back a deleted transaction exactly, with its id (Undo, S16).
   Future<void> restore(Transaction transaction);
+
+  /// Saves all of [rows] or, on any error, none (CSV import, PRD §5.8).
+  /// Each category is matched by name and type, ignoring case and
+  /// including archived ones, so history comes back; a missing one is
+  /// created with the wallet icon and the neutral colour.
+  Future<void> importAll(List<ImportedTransaction> rows);
 }
 
 /// Overridden in `main.dart` with the Drift implementation, so screens
@@ -67,3 +83,15 @@ abstract interface class TransactionRepository {
 @Riverpod(keepAlive: true)
 TransactionRepository transactionRepository(Ref ref) =>
     throw UnimplementedError('Override transactionRepositoryProvider');
+
+/// Transactions, live, with [TransactionRepository.watch]'s filters.
+@riverpod
+Stream<List<Transaction>> transactions(
+  Ref ref, {
+  Period? period,
+  TransactionType? type,
+  int? categoryId,
+  String? search,
+}) => ref
+    .watch(transactionRepositoryProvider)
+    .watch(period: period, type: type, categoryId: categoryId, search: search);

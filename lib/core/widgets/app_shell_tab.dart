@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 
 /// One bottom-bar item. Icon-only, or a `navSelected` pill with icon and
@@ -13,7 +14,7 @@ class AppShellTab extends StatelessWidget {
     super.key,
   });
 
-  final IconData icon;
+  final AppIcon icon;
   final String label;
   final bool selected;
   final VoidCallback onTap;
@@ -46,7 +47,12 @@ class AppShellTab extends StatelessWidget {
                 mainAxisSize: selected ? MainAxisSize.min : MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(icon, size: iconSize, color: colors.ink),
+                  AppIconView(
+                    icon,
+                    size: iconSize,
+                    color: colors.ink,
+                    stroke: AppIconStroke.nav,
+                  ),
                   if (selected)
                     Flexible(
                       child: Padding(

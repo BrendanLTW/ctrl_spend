@@ -5,7 +5,6 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -13,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_preferences_repository.dart';
+import '../../helpers/fake_repositories.dart';
 
 class _Sample extends StatelessWidget {
   const new();
@@ -91,7 +91,7 @@ void main() {
     setUp(() {
       prefs = FakePreferencesRepository();
       container = ProviderContainer(
-        overrides: [preferencesRepositoryProvider.overrideWithValue(prefs)],
+        overrides: fakeRepositories(preferences: prefs),
       );
       addTearDown(container.dispose);
     });

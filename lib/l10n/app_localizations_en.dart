@@ -31,11 +31,1386 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settings => 'Settings';
 
   @override
-  String get finishOnboarding => 'Finish onboarding';
-
-  @override
   String get keypadBackspace => 'Backspace';
 
   @override
   String get keypadDoubleZero => 'Double zero';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get previousMonth => 'Previous month';
+
+  @override
+  String get nextMonth => 'Next month';
+
+  @override
+  String stepIndicator(int current, int total) {
+    return 'Step $current of $total';
+  }
+
+  @override
+  String get back => 'Back';
+
+  @override
+  String get skip => 'Skip';
+
+  @override
+  String get continueAction => 'Continue';
+
+  @override
+  String get appName => 'ctrlSpend';
+
+  @override
+  String get splashTagline => 'Know what\'s left to spend.';
+
+  @override
+  String get splashBy => 'by';
+
+  @override
+  String get welcomeTitle => 'Know what\'s left to spend, every day.';
+
+  @override
+  String get welcomeBody =>
+      'Set one monthly budget, log what you spend, and ctrlSpend keeps count.';
+
+  @override
+  String get getStarted => 'Get started';
+
+  @override
+  String get skipTheTour => 'Skip the tour';
+
+  @override
+  String welcomePreviewLabel(String amount) {
+    return 'Dashboard preview: $amount left to spend';
+  }
+
+  @override
+  String get leftToSpend => 'Left to spend';
+
+  @override
+  String get spent => 'spent';
+
+  @override
+  String categoryPercent(String category, int percent) {
+    return '$category · $percent%';
+  }
+
+  @override
+  String get categoryFood => 'Food';
+
+  @override
+  String get howTitle => 'How it works';
+
+  @override
+  String get howSubtitle => 'Three steps, then you\'re in control.';
+
+  @override
+  String get howBasics => 'The basics';
+
+  @override
+  String get howBudgetTitle => 'Set one monthly budget';
+
+  @override
+  String get howBudgetBody =>
+      'Pick what you want to spend. Home shows what\'s left.';
+
+  @override
+  String get howLogTitle => 'Log spending in seconds';
+
+  @override
+  String get howLogBody => 'Tap +, type the amount, pick a category. Done.';
+
+  @override
+  String get howSeeTitle => 'See where it goes';
+
+  @override
+  String get howSeeBody => 'Spot the categories that eat your budget.';
+
+  @override
+  String get howPrivacy => 'Your privacy';
+
+  @override
+  String get howPrivacyTitle => 'Stays on this phone';
+
+  @override
+  String get howPrivacyBody =>
+      'No account, no bank login. Export a CSV whenever you like.';
+
+  @override
+  String get nameTitle => 'What should we call you?';
+
+  @override
+  String get nameSubtitle =>
+      'It\'s how ctrlSpend says hi. Your name stays on this phone.';
+
+  @override
+  String get firstName => 'First name';
+
+  @override
+  String get monthTitle => 'Set up your month';
+
+  @override
+  String get monthSubtitle =>
+      'Line your budget period up with payday, so each month starts fresh when the money comes in.';
+
+  @override
+  String get currency => 'Currency';
+
+  @override
+  String get monthStartsOn => 'Month starts on';
+
+  @override
+  String get startDay1st => '1st';
+
+  @override
+  String get startDay15th => '15th';
+
+  @override
+  String get startDay25th => '25th';
+
+  @override
+  String get startDayOther => 'Other';
+
+  @override
+  String get currentPeriod => 'Current period';
+
+  @override
+  String periodDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Last day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String periodWithDaysLeft(String range, String daysLeft) {
+    return '$range · $daysLeft';
+  }
+
+  @override
+  String get currencyMyr => 'Malaysian Ringgit';
+
+  @override
+  String get currencySgd => 'Singapore Dollar';
+
+  @override
+  String get currencyUsd => 'US Dollar';
+
+  @override
+  String get currencyAud => 'Australian Dollar';
+
+  @override
+  String get currencyBnd => 'Brunei Dollar';
+
+  @override
+  String get currencyEur => 'Euro';
+
+  @override
+  String get currencyIdr => 'Indonesian Rupiah';
+
+  @override
+  String get budgetTitle => 'Set your monthly budget';
+
+  @override
+  String get budgetSubtitle =>
+      'How much do you want to spend each month? You can change this any time in Budgets.';
+
+  @override
+  String get monthlyBudget => 'Monthly budget';
+
+  @override
+  String get perMonth => 'per month';
+
+  @override
+  String budgetPerMonthLabel(String amount) {
+    return 'Budget $amount per month';
+  }
+
+  @override
+  String budgetBelowLimits(String amount) {
+    return 'Your category limits add up to $amount. Set at least that.';
+  }
+
+  @override
+  String get splitTitle => 'Split by category';
+
+  @override
+  String get splitSubtitle =>
+      'Optional. Give limits to the categories you tend to overspend on.';
+
+  @override
+  String get allocated => 'Allocated';
+
+  @override
+  String allocatedOf(String allocated, String budget) {
+    return '$allocated of $budget';
+  }
+
+  @override
+  String flexibleRemainder(String amount) {
+    return '$amount stays flexible for everything else.';
+  }
+
+  @override
+  String allocatedLabel(int percent) {
+    return '$percent% of monthly budget allocated';
+  }
+
+  @override
+  String get categories => 'Categories';
+
+  @override
+  String get addLimit => 'Add limit';
+
+  @override
+  String categoryLimitLabel(String category, String amount) {
+    return '$category, limit $amount';
+  }
+
+  @override
+  String categoryNoLimitLabel(String category) {
+    return '$category, add limit';
+  }
+
+  @override
+  String categoryBudget(String category) {
+    return '$category budget';
+  }
+
+  @override
+  String get remove => 'Remove';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String leftToAllocate(String amount) {
+    return '$amount left to allocate';
+  }
+
+  @override
+  String get remindersTitle => 'Stay on track';
+
+  @override
+  String get remindersSubtitle =>
+      'A nudge at the end of the day helps you log spending before you forget it.';
+
+  @override
+  String get sampleNotification =>
+      'You have RM 72 left for Food this period. Log today\'s spending?';
+
+  @override
+  String get notificationNow => 'now';
+
+  @override
+  String get notifyMeAbout => 'Notify me about';
+
+  @override
+  String get dailyReminder => 'Daily reminder';
+
+  @override
+  String dailyReminderAt(String time) {
+    return 'Every day at $time';
+  }
+
+  @override
+  String get budgetAlerts => 'Budget alerts';
+
+  @override
+  String get budgetAlertsDetail => 'When a budget reaches 80% and 100%';
+
+  @override
+  String get weeklySummary => 'Weekly summary';
+
+  @override
+  String get weeklySummaryDetail => 'Sunday evenings';
+
+  @override
+  String get turnOnNotifications => 'Turn on notifications';
+
+  @override
+  String get notNow => 'Not now';
+
+  @override
+  String get allSetTitle => 'You\'re all set';
+
+  @override
+  String allSetBody(String date) {
+    return 'Add what you\'ve spent since $date to see what\'s really left this period.';
+  }
+
+  @override
+  String get yourSetup => 'Your setup';
+
+  @override
+  String get categoryLimits => 'Category limits';
+
+  @override
+  String limitsCount(int limited, int total) {
+    return '$limited of $total';
+  }
+
+  @override
+  String get reminders => 'Reminders';
+
+  @override
+  String remindersDaily(String time) {
+    return 'Daily, $time';
+  }
+
+  @override
+  String get remindersWeekly => 'Weekly, Sunday';
+
+  @override
+  String get remindersAlertsOnly => 'Budget alerts only';
+
+  @override
+  String get remindersOff => 'Off';
+
+  @override
+  String get notSet => 'Not set';
+
+  @override
+  String get lastDay => 'Last day';
+
+  @override
+  String ordinalDay(String day) {
+    String _temp0 = intl.Intl.selectLogic(day, {
+      '1': '1st',
+      '2': '2nd',
+      '3': '3rd',
+      '21': '21st',
+      '22': '22nd',
+      '23': '23rd',
+      'other': '${day}th',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get addFirstExpense => 'Add your first expense';
+
+  @override
+  String get goToDashboard => 'Go to dashboard';
+
+  @override
+  String greeting(String name) {
+    return 'Hi, $name';
+  }
+
+  @override
+  String get greetingNoName => 'Hi there';
+
+  @override
+  String get notifications => 'Notifications';
+
+  @override
+  String get spentLabel => 'Spent';
+
+  @override
+  String get incomeLabel => 'Income';
+
+  @override
+  String statLabel(String label, String amount) {
+    return '$label, $amount';
+  }
+
+  @override
+  String get recentActivities => 'Recent activities';
+
+  @override
+  String get viewAll => 'View all';
+
+  @override
+  String get today => 'Today';
+
+  @override
+  String get yesterday => 'Yesterday';
+
+  @override
+  String dayAndDetail(String day, String detail) {
+    return '$day · $detail';
+  }
+
+  @override
+  String get overBudgetBy => 'Over budget by';
+
+  @override
+  String get spentThisPeriod => 'Spent this period';
+
+  @override
+  String amountSpent(String amount) {
+    return '$amount spent';
+  }
+
+  @override
+  String ofAmount(String amount) {
+    return 'of $amount';
+  }
+
+  @override
+  String get setMonthlyBudget => 'Set a monthly budget';
+
+  @override
+  String budgetSpentPercent(int percent) {
+    return '$percent% of monthly budget spent';
+  }
+
+  @override
+  String get noTransactionsTitle => 'No transactions yet';
+
+  @override
+  String get noTransactionsBody =>
+      'Add what you spend and your budget updates as you go.';
+
+  @override
+  String get newExpense => 'New expense';
+
+  @override
+  String get newIncome => 'New income';
+
+  @override
+  String get editTransaction => 'Edit transaction';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get expenseLabel => 'Expense';
+
+  @override
+  String get totalAmount => 'Total amount';
+
+  @override
+  String totalAmountLabel(String amount) {
+    return 'Total amount $amount';
+  }
+
+  @override
+  String get selectCategory => 'Select category';
+
+  @override
+  String get more => 'More';
+
+  @override
+  String get addNote => 'Add a note…';
+
+  @override
+  String get categorySheetTitle => 'Category';
+
+  @override
+  String get dateSheetTitle => 'Date';
+
+  @override
+  String get amountSheetTitle => 'Amount';
+
+  @override
+  String get done => 'Done';
+
+  @override
+  String setDate(String date) {
+    return 'Set $date';
+  }
+
+  @override
+  String dateToday(String date) {
+    return 'Today, $date';
+  }
+
+  @override
+  String dateYesterday(String date) {
+    return 'Yesterday, $date';
+  }
+
+  @override
+  String get deleteTransactionTitle => 'Delete this transaction?';
+
+  @override
+  String deleteExpenseBody(String title, String amount, String category) {
+    return '$title ($amount) will be removed and $amount goes back to your $category budget.';
+  }
+
+  @override
+  String deleteIncomeBody(String title, String amount) {
+    return '$title ($amount) will be removed.';
+  }
+
+  @override
+  String get transactionTitle => 'Transaction';
+
+  @override
+  String get details => 'Details';
+
+  @override
+  String get categoryRowLabel => 'Category';
+
+  @override
+  String get dateRowLabelTitle => 'Date';
+
+  @override
+  String get noteRowLabel => 'Note';
+
+  @override
+  String get budgetImpact => 'Budget impact';
+
+  @override
+  String get editAction => 'Edit';
+
+  @override
+  String get deleteTransaction => 'Delete transaction';
+
+  @override
+  String amountLeft(String amount) {
+    return '$amount left';
+  }
+
+  @override
+  String overBy(String amount) {
+    return 'Over by $amount';
+  }
+
+  @override
+  String spentOfThisPeriod(String spent, String limit) {
+    return '$spent of $limit this period';
+  }
+
+  @override
+  String spentOfInPeriod(String spent, String limit, String period) {
+    return '$spent of $limit in $period';
+  }
+
+  @override
+  String dateAndTime(String date, String time) {
+    return '$date · $time';
+  }
+
+  @override
+  String percentOfSpent(int percent, String name) {
+    return '$percent% of $name spent';
+  }
+
+  @override
+  String get transactionDeleted => 'Transaction deleted';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String get byCategory => 'By category';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get leftWord => 'left';
+
+  @override
+  String get overWord => 'over';
+
+  @override
+  String spentOfBudget(String spent, String budget) {
+    return '$spent of $budget spent';
+  }
+
+  @override
+  String spentAndLeft(String spent, String left) {
+    return 'Spent $spent · Left $left';
+  }
+
+  @override
+  String spentAndOver(String spent, String over) {
+    return 'Spent $spent · Over by $over';
+  }
+
+  @override
+  String get addLimitSheetTitle => 'Add a limit';
+
+  @override
+  String budgetCardLabel(String amount, String state, String detail) {
+    return 'Monthly budget, $amount $state, $detail';
+  }
+
+  @override
+  String categoryBudgetLabel(String name, int percent, String detail) {
+    return '$name, $percent%, $detail';
+  }
+
+  @override
+  String get dataStoredOnPhone => 'Data stored on this phone';
+
+  @override
+  String get preferencesSection => 'Preferences';
+
+  @override
+  String get manageSection => 'Manage';
+
+  @override
+  String get themeRow => 'Theme';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get themeSystem => 'System';
+
+  @override
+  String get exportCsv => 'Export to CSV';
+
+  @override
+  String get importCsv => 'Import from CSV';
+
+  @override
+  String get nameSheetTitle => 'Your name';
+
+  @override
+  String get monthStartSubtitle =>
+      'Pick the day your budget resets. Most people choose payday.';
+
+  @override
+  String get lastDayOfMonth => 'Last day of the month';
+
+  @override
+  String get nextPeriod => 'Next period';
+
+  @override
+  String profileLabel(String name, String detail) {
+    return '$name, $detail';
+  }
+
+  @override
+  String get newCategory => 'New category';
+
+  @override
+  String get categoryName => 'Category name';
+
+  @override
+  String get iconSection => 'Icon';
+
+  @override
+  String get colourSection => 'Colour';
+
+  @override
+  String get monthlyLimit => 'Monthly limit';
+
+  @override
+  String get optional => 'Optional';
+
+  @override
+  String get createCategory => 'Create category';
+
+  @override
+  String duplicateCategory(String type, String name) {
+    String _temp0 = intl.Intl.selectLogic(type, {
+      'expense': 'You already have an expense category called $name.',
+      'other': 'You already have an income category called $name.',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get archivedSection => 'Archived';
+
+  @override
+  String get restore => 'Restore';
+
+  @override
+  String get categoriesNote =>
+      'Categories with transactions are archived instead of deleted, so your history stays intact.';
+
+  @override
+  String get categoryDeleted => 'Category deleted';
+
+  @override
+  String categoryArchived(String name) {
+    return '$name archived — it has transactions';
+  }
+
+  @override
+  String colourName(String colour) {
+    String _temp0 = intl.Intl.selectLogic(colour, {
+      'orange': 'Orange',
+      'blue': 'Blue',
+      'pink': 'Pink',
+      'yellow': 'Yellow',
+      'purple': 'Purple',
+      'green': 'Green',
+      'red': 'Red',
+      'other': 'Grey',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String iconName(String icon) {
+    String _temp0 = intl.Intl.selectLogic(icon, {
+      'food': 'Food',
+      'coffee': 'Coffee',
+      'car': 'Car',
+      'bag': 'Bag',
+      'bolt': 'Bolt',
+      'film': 'Film',
+      'heart': 'Heart',
+      'gift': 'Gift',
+      'book': 'Book',
+      'travel': 'Travel',
+      'home': 'Home',
+      'phone': 'Phone',
+      'other': 'Wallet',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get searchHint => 'Search notes and categories';
+
+  @override
+  String get clearSearch => 'Clear search';
+
+  @override
+  String get allChip => 'All';
+
+  @override
+  String noResultsTitle(String query) {
+    return 'No results for “$query”';
+  }
+
+  @override
+  String noResultsInChip(String chip) {
+    return 'Nothing matches in $chip. Try another word, or search all transactions.';
+  }
+
+  @override
+  String get noResultsAll => 'Nothing matches. Try another word.';
+
+  @override
+  String get searchAll => 'Search all';
+
+  @override
+  String get nothingHereTitle => 'Nothing here yet';
+
+  @override
+  String nothingInChip(String chip) {
+    return 'No transactions in $chip so far.';
+  }
+
+  @override
+  String get insightsWeek => 'Week';
+
+  @override
+  String get insightsMonth => 'Month';
+
+  @override
+  String get insightsSixMonths => '6 months';
+
+  @override
+  String spentInPeriod(String period) {
+    return 'Spent $period';
+  }
+
+  @override
+  String get spendingCategories => 'Spending categories';
+
+  @override
+  String spendingSummary(String shares) {
+    return 'Spending by category: $shares';
+  }
+
+  @override
+  String categoryShare(String category, int percent, String amount) {
+    return '$category $percent%, $amount';
+  }
+
+  @override
+  String get insightsEmptyTitle => 'Not enough data yet';
+
+  @override
+  String get insightsEmptyBody =>
+      'Charts appear once you\'ve logged a few days of spending.';
+
+  @override
+  String get addAnExpense => 'Add an expense';
+
+  @override
+  String get last7Days => 'Last 7 days';
+
+  @override
+  String weekRangeAverage(String range, String amount) {
+    return '$range · avg $amount a day';
+  }
+
+  @override
+  String paceChip(String amount) {
+    return 'Pace $amount/day';
+  }
+
+  @override
+  String get dailyPace => 'Daily pace';
+
+  @override
+  String get todayBubble => 'today';
+
+  @override
+  String get underPace => 'Under pace';
+
+  @override
+  String get overPace => 'Over pace';
+
+  @override
+  String countOfTotal(int count, int total) {
+    return '$count of $total';
+  }
+
+  @override
+  String get daysThisWeek => 'days this week';
+
+  @override
+  String get biggestDay => 'Biggest day';
+
+  @override
+  String biggestDayCaption(String day, String title) {
+    return '$day · $title';
+  }
+
+  @override
+  String weekChartLabel(String pace, String days) {
+    return 'Daily spending, pace $pace a day: $days';
+  }
+
+  @override
+  String weekChartLabelNoPace(String days) {
+    return 'Daily spending: $days';
+  }
+
+  @override
+  String dayUnderPace(String day, String amount) {
+    return '$day $amount, under pace';
+  }
+
+  @override
+  String dayOverPace(String day, String amount) {
+    return '$day $amount, over pace';
+  }
+
+  @override
+  String dayToday(String day, String amount) {
+    return '$day $amount, today';
+  }
+
+  @override
+  String labelAmount(String label, String amount) {
+    return '$label $amount';
+  }
+
+  @override
+  String statCaptionLabel(String label, String value, String caption) {
+    return '$label, $value $caption';
+  }
+
+  @override
+  String get avgPerMonth => 'Avg per month';
+
+  @override
+  String fullMonthsRange(String range, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'full months',
+      one: 'full month',
+    );
+    return '$range, $_temp0';
+  }
+
+  @override
+  String get noFullMonths => 'No full months yet';
+
+  @override
+  String budgetChip(String amount) {
+    return 'Budget $amount';
+  }
+
+  @override
+  String get budgetLine => 'Budget';
+
+  @override
+  String get underBudget => 'Under budget';
+
+  @override
+  String get overBudget => 'Over budget';
+
+  @override
+  String get thisPeriod => 'This period';
+
+  @override
+  String get soFar => 'so far';
+
+  @override
+  String fullMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'full months',
+      one: 'full month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get highestMonth => 'Highest month';
+
+  @override
+  String trendChartLabel(String budget, String periods) {
+    return 'Monthly spending, budget $budget: $periods';
+  }
+
+  @override
+  String trendChartLabelNoBudget(String periods) {
+    return 'Monthly spending: $periods';
+  }
+
+  @override
+  String periodUnderBudget(String month, String amount) {
+    return '$month $amount, under budget';
+  }
+
+  @override
+  String periodOverBudget(String month, String amount) {
+    return '$month $amount, over budget';
+  }
+
+  @override
+  String periodSoFar(String month, String amount) {
+    return '$month $amount, so far';
+  }
+
+  @override
+  String get pastPeriods => 'Past periods';
+
+  @override
+  String get viewPastPeriods => 'View past periods';
+
+  @override
+  String get previousPeriods => 'Previous';
+
+  @override
+  String amountUnder(String amount) {
+    return '$amount under';
+  }
+
+  @override
+  String spentOfAmount(String spent, String budget) {
+    return '$spent of $budget';
+  }
+
+  @override
+  String get noBudget => 'No budget';
+
+  @override
+  String get noLimit => 'No limit';
+
+  @override
+  String amountOver(String amount) {
+    return '$amount over';
+  }
+
+  @override
+  String limitAmount(String limit) {
+    return 'limit $limit';
+  }
+
+  @override
+  String get categoryTitle => 'Category';
+
+  @override
+  String categoryTypeCount(String type, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return '$type · $_temp0';
+  }
+
+  @override
+  String daysToGo(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days to go',
+      one: '1 day to go',
+      zero: 'Last day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String noLimitWithDays(String days) {
+    return 'No limit · $days';
+  }
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get iconAndColour => 'Icon & colour';
+
+  @override
+  String get recentSection => 'Recent';
+
+  @override
+  String get archiveCategory => 'Archive category';
+
+  @override
+  String get restoreCategory => 'Restore category';
+
+  @override
+  String categoryPeriodLabel(String spent, String detail) {
+    return 'This period, $spent, $detail';
+  }
+
+  @override
+  String get themeNote =>
+      'System matches your phone\'s light or dark setting automatically.';
+
+  @override
+  String get searchCurrencies => 'Search currencies';
+
+  @override
+  String get suggestedSection => 'Suggested';
+
+  @override
+  String get allCurrencies => 'All currencies';
+
+  @override
+  String currencyCurrent(String code) {
+    return '$code · current';
+  }
+
+  @override
+  String get currencyNote =>
+      'Switching currency changes the symbol only. Existing amounts aren\'t converted.';
+
+  @override
+  String noCurrencyMatch(String query) {
+    return 'No currencies match “$query”';
+  }
+
+  @override
+  String notifyCategoryWarningTitle(String category, int percent) {
+    return '$category is at $percent% of its limit';
+  }
+
+  @override
+  String notifyBudgetWarningTitle(int percent) {
+    return 'Your budget is at $percent%';
+  }
+
+  @override
+  String notifyWarningBody(String amount, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$amount left with $count days to go.',
+      one: '$amount left with 1 day to go.',
+      zero: '$amount left for the rest of today.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String notifyCategoryOverTitle(String category) {
+    return '$category is over budget';
+  }
+
+  @override
+  String notifyCategoryOverBody(String spent, String limit) {
+    return 'You\'ve spent $spent of your $limit limit.';
+  }
+
+  @override
+  String get notifyBudgetOverTitle => 'You\'re over budget';
+
+  @override
+  String notifyBudgetOverBody(String spent, String budget) {
+    return 'You\'ve spent $spent of your $budget budget.';
+  }
+
+  @override
+  String notifyIncomeTitle(String category) {
+    return '$category added';
+  }
+
+  @override
+  String notifyIncomeBody(String amount) {
+    return '$amount recorded as Income.';
+  }
+
+  @override
+  String get notifyDailyTitle => 'Daily reminder';
+
+  @override
+  String get notifyDailyBody =>
+      'Anything to log from today? It takes ten seconds.';
+
+  @override
+  String get notifyWeeklyTitle => 'Your weekly summary';
+
+  @override
+  String notifyWeeklyLess(String spent, String difference) {
+    return 'You spent $spent last week, $difference less than the week before.';
+  }
+
+  @override
+  String notifyWeeklyMore(String spent, String difference) {
+    return 'You spent $spent last week, $difference more than the week before.';
+  }
+
+  @override
+  String notifyWeeklySame(String spent) {
+    return 'You spent $spent last week, the same as the week before.';
+  }
+
+  @override
+  String get notifyWeeklyReadyTitle => 'Your weekly summary is ready';
+
+  @override
+  String get notifyWeeklyReadyBody => 'See how last week went.';
+
+  @override
+  String get notifyPeriodTitle => 'New period started';
+
+  @override
+  String notifyPeriodBudgetBody(String range, String budget) {
+    return '$range. Your $budget budget has reset.';
+  }
+
+  @override
+  String notifyPeriodBody(String range) {
+    return 'Your new period runs $range.';
+  }
+
+  @override
+  String get earlierSection => 'Earlier';
+
+  @override
+  String get unread => 'Unread';
+
+  @override
+  String minutesAgo(int count) {
+    return '${count}m';
+  }
+
+  @override
+  String hoursAgo(int count) {
+    return '${count}h';
+  }
+
+  @override
+  String get notificationSettings => 'Notification settings';
+
+  @override
+  String get noNotificationsTitle => 'No notifications yet';
+
+  @override
+  String get noNotificationsBody =>
+      'We\'ll let you know when a budget gets close to its limit, and remind you to log your spending.';
+
+  @override
+  String get youllHearAbout => 'You\'ll hear about';
+
+  @override
+  String get at80And100 => 'At 80% and 100%';
+
+  @override
+  String get onLabel => 'On';
+
+  @override
+  String get offLabel => 'Off';
+
+  @override
+  String notificationsUnread(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Notifications, $count unread',
+      one: 'Notifications, 1 unread',
+      zero: 'Notifications',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get exportTitle => 'Export data';
+
+  @override
+  String get exportIntro =>
+      'Save your transactions as a CSV file you can open in Sheets or Excel, or import on a new phone.';
+
+  @override
+  String get rangeSection => 'Range';
+
+  @override
+  String get includeSection => 'Include';
+
+  @override
+  String get rangeAllTime => 'All time';
+
+  @override
+  String get rangeCustom => 'Custom';
+
+  @override
+  String get expensesLabel => 'Expenses';
+
+  @override
+  String get notesLabel => 'Notes';
+
+  @override
+  String get fromLabel => 'From';
+
+  @override
+  String get toLabel => 'To';
+
+  @override
+  String get exportCsvButton => 'Export CSV';
+
+  @override
+  String exportSaved(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Saved $count transactions to Files',
+      one: 'Saved 1 transaction to Files',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get nothingToExport => 'No transactions to export';
+
+  @override
+  String get importTitle => 'Import data';
+
+  @override
+  String get importFailedTitle => 'We couldn\'t import that file';
+
+  @override
+  String importFailedBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count rows have problems, so nothing was imported. Fix them and try again.',
+      one:
+          '1 row has a problem, so nothing was imported. Fix it and try again.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String rowNumber(int row) {
+    return 'Row $row';
+  }
+
+  @override
+  String problemNotADate(String value) {
+    return '“$value” isn\'t a real date';
+  }
+
+  @override
+  String problemNotATime(String value) {
+    return '“$value” isn\'t a time';
+  }
+
+  @override
+  String problemNotAnAmount(String value) {
+    return '“$value” isn\'t an amount';
+  }
+
+  @override
+  String problemNotAType(String value) {
+    return '“$value” isn\'t expense or income';
+  }
+
+  @override
+  String problemEmpty(String column) {
+    return '$column is empty';
+  }
+
+  @override
+  String problemMissingColumns(String columns) {
+    return 'The first row must name the columns $columns';
+  }
+
+  @override
+  String get problemNotText => 'The file isn\'t readable text';
+
+  @override
+  String get chooseAnotherFile => 'Choose another file';
+
+  @override
+  String get downloadSampleCsv => 'Download a sample CSV';
+
+  @override
+  String importedTransactions(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Imported $count transactions',
+      one: 'Imported 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importEmpty => 'That file has no transactions';
+
+  @override
+  String get columnDate => 'Date';
+
+  @override
+  String get columnType => 'Type';
+
+  @override
+  String get columnCategory => 'Category';
+
+  @override
+  String get columnAmount => 'Amount';
+
+  @override
+  String get deleteAllData => 'Delete all data';
+
+  @override
+  String get deleteAllDataTitle => 'Delete all data?';
+
+  @override
+  String get deleteAllDataBody =>
+      'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.';
+
+  @override
+  String get deleteEverything => 'Delete everything';
+
+  @override
+  String get exportFirst => 'Export first';
+
+  @override
+  String get devSection => 'Developer';
+
+  @override
+  String get devAddSampleData => 'Add 5,000 sample transactions';
+
+  @override
+  String get devAddSampleDataDetail =>
+      'Debug builds only, for performance checks';
+
+  @override
+  String get devSampleDataAdded => 'Added 5,000 sample transactions';
 }
