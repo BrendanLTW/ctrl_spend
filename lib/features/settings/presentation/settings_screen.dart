@@ -21,12 +21,13 @@ import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:ctrl_spend/l10n/setting_labels.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// S21 Settings: the profile, preferences and data. v1.1 rows (App lock,
-/// Recurring bills, Savings goals) are hidden.
+/// Recurring bills, Savings goals) are hidden in release builds.
 class SettingsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -116,6 +117,13 @@ class SettingsScreen extends ConsumerWidget {
                 value: '$categoryCount',
                 onTap: () => context.push(Routes.categories),
               ),
+              // v1.1 rows show in debug builds until task 5.9 unhides them.
+              if (kDebugMode)
+                ListGroupRow(
+                  leading: tile(AppIcon.receipt, CategoryColorKey.yellow),
+                  title: l10n.recurringBills,
+                  onTap: () => context.push(Routes.bills),
+                ),
               ListGroupRow(
                 leading: tile(AppIcon.download, CategoryColorKey.blue),
                 title: l10n.exportCsv,

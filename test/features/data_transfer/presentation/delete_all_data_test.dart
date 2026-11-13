@@ -104,6 +104,9 @@ Future<void> tap(WidgetTester tester, String text) async {
 
 Future<void> openDialog(WidgetTester tester) async {
   await tester.scrollUntilVisible(find.text('Delete all data'), 200);
+  // Built isn't on screen: bring the whole row into view.
+  await tester.ensureVisible(find.text('Delete all data'));
+  await tester.pumpAndSettle();
   await tap(tester, 'Delete all data');
 }
 

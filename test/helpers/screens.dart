@@ -6,6 +6,8 @@ import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/activity/presentation/activity_screen_test.dart' as act;
+import '../features/bills/presentation/add_bill_screen_test.dart' as nb;
+import '../features/bills/presentation/recurring_bills_screen_test.dart' as rb;
 import '../features/budgets/presentation/budgets_screen_test.dart' as bud;
 import '../features/categories/presentation/category_detail_screen_test.dart'
     as cdet;
@@ -129,5 +131,26 @@ final screens = <String, Drive>{
   'S36 import failed': (t, th) async {
     await imp.pumpSettings(t, theme: th);
     await imp.importFile(t, 'bank-export.csv', imp.bad);
+  },
+  'S27 recurring bills': (t, th) => rb.pumpApp(t, theme: th),
+  'S27 bills empty': (t, th) => rb.pumpApp(t, theme: th, seed: null),
+  'S27 bill actions': (t, th) => rb
+      .pumpApp(t, theme: th)
+      .then((_) => rb.openActions(t, 'Unifi Home Fibre')),
+  'S28 new bill': (t, th) async {
+    await nb.openNewBill(t, theme: th);
+    await add.done(t);
+  },
+  'S44 repeats': (t, th) async {
+    await nb.openNewBill(t, theme: th);
+    await add.done(t);
+    await nb.tapDetail(t, 'Repeats');
+  },
+  'S44 custom repeat': (t, th) async {
+    await nb.openNewBill(t, theme: th);
+    await add.done(t);
+    await nb.tapDetail(t, 'Repeats');
+    await t.tap(find.text('Custom…'));
+    await t.pumpAndSettle();
   },
 };

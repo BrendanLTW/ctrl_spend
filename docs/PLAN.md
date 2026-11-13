@@ -139,7 +139,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §8
 - [x] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests. *(Every payment due by the period end counts, so a weekly bill can count twice. A category with bills is archived, not deleted.)*
   Refs: PRD §5.11, §8
-- [ ] **5.3 Bills screens.** S27 Recurring bills, S28 Add bill, S44 Repeats picker (S43 date picker reused), and the Settings row.
+- [x] **5.3 Bills screens.** S27 Recurring bills, S28 Add bill, S44 Repeats picker (S43 date picker reused), and the Settings row. *(Bills have their own icon and colour, schema v4. Tapping a bill opens Mark paid, Edit bill and Delete bill. The Settings row shows in debug builds until 5.9.)*
   Refs: S27, S28, S43, S44, FR-16
 - [ ] **5.4 Bill reminders.** Reminders the set number of days before the due date, using the notification service.
   Refs: PRD §5.11, FR-16

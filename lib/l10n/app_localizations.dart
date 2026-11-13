@@ -1309,7 +1309,7 @@ abstract class AppLocalizations {
   /// No description provided for @iconName.
   ///
   /// In en, this message translates to:
-  /// **'{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}'**
+  /// **'{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} wifi{Wi-Fi} tv{TV} music{Music} other{Wallet}}'**
   String iconName(String icon);
 
   /// No description provided for @searchHint.
@@ -2223,6 +2223,312 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Added 5,000 sample transactions'**
   String get devSampleDataAdded;
+
+  /// No description provided for @recurringBills.
+  ///
+  /// In en, this message translates to:
+  /// **'Recurring bills'**
+  String get recurringBills;
+
+  /// No description provided for @billsDueBefore.
+  ///
+  /// In en, this message translates to:
+  /// **'Due before {date}'**
+  String billsDueBefore(String date);
+
+  /// No description provided for @billsDueCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 bill.} other{{count} bills.}}'**
+  String billsDueCount(int count);
+
+  /// No description provided for @billsLeftAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'After these, {amount} is left to spend.'**
+  String billsLeftAfter(String amount);
+
+  /// No description provided for @billsOverAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'After these, you\'re over budget by {amount}.'**
+  String billsOverAfter(String amount);
+
+  /// No description provided for @billsUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming'**
+  String get billsUpcoming;
+
+  /// No description provided for @billsPaidThisPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid this period'**
+  String get billsPaidThisPeriod;
+
+  /// No description provided for @billDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date}'**
+  String billDue(String date);
+
+  /// No description provided for @billDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due {date} · {days, plural, =0{today} =1{tomorrow} other{in {days} days}}'**
+  String billDueSoon(String date, int days);
+
+  /// No description provided for @billOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue · due {date}'**
+  String billOverdue(String date);
+
+  /// No description provided for @billPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {date}'**
+  String billPaid(String date);
+
+  /// No description provided for @noBillsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No bills yet'**
+  String get noBillsTitle;
+
+  /// No description provided for @noBillsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the bills you pay regularly to see what\'s due before your next period.'**
+  String get noBillsBody;
+
+  /// No description provided for @addBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Add bill'**
+  String get addBill;
+
+  /// No description provided for @newBill.
+  ///
+  /// In en, this message translates to:
+  /// **'New bill'**
+  String get newBill;
+
+  /// No description provided for @editBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit bill'**
+  String get editBill;
+
+  /// No description provided for @amountEachTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount each time'**
+  String get amountEachTime;
+
+  /// No description provided for @amountEachTimeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount each time {amount}'**
+  String amountEachTimeLabel(String amount);
+
+  /// No description provided for @billNameRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get billNameRow;
+
+  /// No description provided for @billNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill name'**
+  String get billNameHint;
+
+  /// No description provided for @billRepeatsRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeats'**
+  String get billRepeatsRow;
+
+  /// No description provided for @billNextDueRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Next due'**
+  String get billNextDueRow;
+
+  /// No description provided for @billRemindMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me'**
+  String get billRemindMe;
+
+  /// No description provided for @billRemindDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'2 days before it\'s due'**
+  String get billRemindDetail;
+
+  /// No description provided for @saveBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Save bill'**
+  String get saveBill;
+
+  /// No description provided for @repeatWeekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every week'**
+  String get repeatWeekly;
+
+  /// No description provided for @repeatFortnightly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 2 weeks'**
+  String get repeatFortnightly;
+
+  /// No description provided for @repeatMonthly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get repeatMonthly;
+
+  /// The day is an ordinal, such as 8th.
+  ///
+  /// In en, this message translates to:
+  /// **'On the {day}'**
+  String repeatOnDay(String day);
+
+  /// No description provided for @repeatQuarterly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every 3 months'**
+  String get repeatQuarterly;
+
+  /// No description provided for @repeatYearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Every year'**
+  String get repeatYearly;
+
+  /// No description provided for @repeatCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom…'**
+  String get repeatCustom;
+
+  /// No description provided for @repeatEveryDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Every day} other{Every {count} days}}'**
+  String repeatEveryDays(int count);
+
+  /// No description provided for @repeatEveryWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Every week} other{Every {count} weeks}}'**
+  String repeatEveryWeeks(int count);
+
+  /// No description provided for @repeatEveryMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Every month} other{Every {count} months}}'**
+  String repeatEveryMonths(int count);
+
+  /// No description provided for @repeatEveryYears.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Every year} other{Every {count} years}}'**
+  String repeatEveryYears(int count);
+
+  /// No description provided for @customRepeatTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom repeat'**
+  String get customRepeatTitle;
+
+  /// No description provided for @repeatEvery.
+  ///
+  /// In en, this message translates to:
+  /// **'Every'**
+  String get repeatEvery;
+
+  /// No description provided for @repeatDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Days'**
+  String get repeatDays;
+
+  /// No description provided for @repeatWeeks.
+  ///
+  /// In en, this message translates to:
+  /// **'Weeks'**
+  String get repeatWeeks;
+
+  /// No description provided for @repeatMonths.
+  ///
+  /// In en, this message translates to:
+  /// **'Months'**
+  String get repeatMonths;
+
+  /// No description provided for @repeatYears.
+  ///
+  /// In en, this message translates to:
+  /// **'Years'**
+  String get repeatYears;
+
+  /// No description provided for @repeatFewer.
+  ///
+  /// In en, this message translates to:
+  /// **'Fewer'**
+  String get repeatFewer;
+
+  /// No description provided for @repeatMore.
+  ///
+  /// In en, this message translates to:
+  /// **'More'**
+  String get repeatMore;
+
+  /// No description provided for @setRepeat.
+  ///
+  /// In en, this message translates to:
+  /// **'Set'**
+  String get setRepeat;
+
+  /// No description provided for @markPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark paid'**
+  String get markPaid;
+
+  /// No description provided for @deleteBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete bill'**
+  String get deleteBill;
+
+  /// No description provided for @deleteBillTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete {name}?'**
+  String deleteBillTitle(String name);
+
+  /// No description provided for @deleteBillBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its past payments stay in Activity.'**
+  String get deleteBillBody;
+
+  /// No description provided for @billMarkedPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked paid'**
+  String billMarkedPaid(String name);
+
+  /// No description provided for @billActionsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{name}, {amount}, {due}'**
+  String billActionsLabel(String name, String amount, String due);
 }
 
 class _AppLocalizationsDelegate

@@ -67,6 +67,11 @@ class Bills extends Table {
   DateTimeColumn get nextDue => dateTime()();
   IntColumn get remindDaysBefore =>
       integer().nullable().check(remindDaysBefore.isBiggerOrEqualValue(0))();
+
+  /// The row's tile on S27. Added in schema v4; earlier bills get the
+  /// Bills category's look.
+  TextColumn get iconKey => text().withDefault(const Constant('bolt'))();
+  TextColumn get colorKey => text().withDefault(const Constant('yellow'))();
 }
 
 /// Savings goals (PRD §5.12, v1.1). `targetMonth` is the first of the

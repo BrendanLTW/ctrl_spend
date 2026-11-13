@@ -21,7 +21,7 @@ class AppDatabase extends _$AppDatabase {
   new(super.e);
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -42,6 +42,12 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(goals);
         await m.createTable(goalContributions);
         await m.addColumn(transactions, transactions.billId);
+      }
+      // v4: bills have their own icon and colour (S27). Before v3,
+      // createTable above already made them.
+      if (from == 3) {
+        await m.addColumn(bills, bills.iconKey);
+        await m.addColumn(bills, bills.colorKey);
       }
     },
     // SQLite ignores foreign keys unless asked, per connection.

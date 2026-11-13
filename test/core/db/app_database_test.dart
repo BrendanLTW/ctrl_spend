@@ -39,8 +39,8 @@ void main() {
         ),
       );
 
-  test('schema v3 has the v1.0 tables plus bills and goals', () async {
-    expect(db.schemaVersion, 3);
+  test('schema v4 has the v1.0 tables plus bills and goals', () async {
+    expect(db.schemaVersion, 4);
     final tables = await db
         .customSelect(
           "SELECT name FROM sqlite_master WHERE type = 'table' "

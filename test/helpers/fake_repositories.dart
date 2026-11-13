@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
@@ -8,6 +9,7 @@ import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart'
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:flutter_riverpod/misc.dart';
 
+import 'fake_bill_repository.dart';
 import 'fake_category_repository.dart';
 import 'fake_csv_file_picker.dart';
 import 'fake_data_eraser.dart';
@@ -23,6 +25,7 @@ List<Override> fakeRepositories({
   PreferencesRepository? preferences,
   CategoryRepository? categories,
   TransactionRepository? transactions,
+  BillRepository? bills,
   NotificationRepository? notifications,
   NotificationScheduler? scheduler,
   FileSharer? sharer,
@@ -38,6 +41,7 @@ List<Override> fakeRepositories({
   transactionRepositoryProvider.overrideWithValue(
     transactions ?? FakeTransactionRepository(),
   ),
+  billRepositoryProvider.overrideWithValue(bills ?? FakeBillRepository()),
   notificationRepositoryProvider.overrideWithValue(
     notifications ?? FakeNotificationRepository(),
   ),

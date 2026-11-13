@@ -41,27 +41,10 @@ class CategoryChoice extends StatelessWidget {
   }
 
   Future<void> _openMore(BuildContext context) async {
-    final picked = await showAppSheet<Category>(
+    final picked = await showCategorySheet(
       context,
-      title: context.l10n.categorySheetTitle,
-      builder: (sheet) => ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(sheet).height * 0.6,
-        ),
-        child: SingleChildScrollView(
-          child: ListGroup(
-            children: [
-              for (final c in choices)
-                ListGroupRow(
-                  leading: CategoryTile.forKey(c.iconKey, color: c.colorKey),
-                  title: c.name,
-                  selected: c.id == selected?.id,
-                  onTap: () => Navigator.of(sheet).pop(c),
-                ),
-            ],
-          ),
-        ),
-      ),
+      choices: choices,
+      selected: selected,
     );
     if (picked != null) onSelected(picked);
   }
@@ -138,3 +121,32 @@ class CategoryChoice extends StatelessWidget {
     );
   }
 }
+
+/// Every choice in a sheet, the selected one ticked (S12's More, S28).
+/// Resolves to the tapped category, or null if dismissed.
+Future<Category?> showCategorySheet(
+  BuildContext context, {
+  required List<Category> choices,
+  Category? selected,
+}) => showAppSheet<Category>(
+  context,
+  title: context.l10n.categorySheetTitle,
+  builder: (sheet) => ConstrainedBox(
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.sizeOf(sheet).height * 0.6,
+    ),
+    child: SingleChildScrollView(
+      child: ListGroup(
+        children: [
+          for (final c in choices)
+            ListGroupRow(
+              leading: CategoryTile.forKey(c.iconKey, color: c.colorKey),
+              title: c.name,
+              selected: c.id == selected?.id,
+              onTap: () => Navigator.of(sheet).pop(c),
+            ),
+        ],
+      ),
+    ),
+  ),
+);

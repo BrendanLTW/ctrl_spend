@@ -1,5 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
@@ -70,6 +72,15 @@ abstract final class Routes {
 
   /// S23 Category detail.
   static String category(int id) => '/settings/categories/$id';
+
+  /// S27 Recurring bills (v1.1).
+  static const bills = '/settings/bills';
+
+  /// S28 New bill.
+  static const newBill = '/settings/bills/new';
+
+  /// S28 Edit bill.
+  static String editBill(int id) => '/settings/bills/$id/edit';
 
   /// S14 Notifications.
   static const notifications = '/notifications';
@@ -187,6 +198,20 @@ GoRouter appRouter(Ref ref) {
         path: '/settings/categories/:id',
         builder: (context, state) => CategoryDetailScreen(
           categoryId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+        ),
+      ),
+      GoRoute(
+        path: Routes.bills,
+        builder: (context, state) => const RecurringBillsScreen(),
+      ),
+      GoRoute(
+        path: Routes.newBill,
+        builder: (context, state) => const AddBillScreen(),
+      ),
+      GoRoute(
+        path: '/settings/bills/:id/edit',
+        builder: (context, state) => AddBillScreen(
+          billId: int.tryParse(state.pathParameters['id'] ?? ''),
         ),
       ),
       GoRoute(

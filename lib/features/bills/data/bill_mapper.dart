@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:drift/drift.dart';
 
 /// Calendar dates are stored as UTC midnight (schema v3), so a time zone
@@ -24,6 +25,8 @@ extension BillRowMapper on BillRow {
       day: repeatDay,
     ),
     nextDue: localDate(nextDue),
+    iconKey: CategoryIconKey.values.byName(iconKey),
+    colorKey: CategoryColorKey.values.byName(colorKey),
     remindDaysBefore: remindDaysBefore,
   );
 }
@@ -40,5 +43,7 @@ extension BillMapper on Bill {
     repeatDay: Value(repeat.day),
     nextDue: Value(storedDate(nextDue)),
     remindDaysBefore: Value(remindDaysBefore),
+    iconKey: Value(iconKey.name),
+    colorKey: Value(colorKey.name),
   );
 }

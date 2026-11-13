@@ -35,6 +35,12 @@ DESIGN §8 asks for line icons on a 24 grid, round caps and joins, stored as SVG
 | S23 bar | Category colour on a peach track | Shared status colours on `raised` | One threshold rule everywhere |
 | S25 results (dark) | Grey | Red and green | Colour paired with text |
 | S26 By category | Unsorted | Largest spend first | Agreed in 3.5 |
+| S27 Upcoming | Only bills due this period | Every bill, soonest first | A bill due later would otherwise appear nowhere |
+| S27 due line | Amber for the next bill | Red when overdue, amber within 7 days, muted after | One rule, with the date and "in 4 days" beside the colour |
+| S27 bill actions | Not on the canvas | Tap a bill: a sheet with Mark paid, Edit bill, Delete bill | The canvas has no way to pay, edit or delete a bill |
+| S28 icon | No icon field, yet S27 shows one per bill | An Icon section (12 bill icons and the 7 colours) | Bills get their own tile; schema v4 |
+| S44 Custom… | Not designed | A sheet: Every 1–99, Days · Weeks · Months · Years | — |
+| S44 (dark) | White card, near-invisible text | `fillSoft` card with `ink` text | Design bug |
 | S36 title | — | Kept to one line, scaling down on narrow screens | — |
 | S41 Note row | Always shown | Only when there's a note | S12 has one text field |
 | S42 and swipe-to-delete red | — | The light theme's red in both themes | Contrast |

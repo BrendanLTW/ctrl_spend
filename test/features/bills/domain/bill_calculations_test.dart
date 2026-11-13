@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -15,6 +16,8 @@ void main() {
     categoryId: 4,
     repeat: repeat,
     nextDue: due,
+    iconKey: CategoryIconKey.bolt,
+    colorKey: CategoryColorKey.yellow,
   );
 
   group('nextDue', () {

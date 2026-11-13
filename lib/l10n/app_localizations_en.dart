@@ -764,6 +764,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'travel': 'Travel',
       'home': 'Home',
       'phone': 'Phone',
+      'wifi': 'Wi-Fi',
+      'tv': 'TV',
+      'music': 'Music',
       'other': 'Wallet',
     });
     return '$_temp0';
@@ -1413,4 +1416,229 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get devSampleDataAdded => 'Added 5,000 sample transactions';
+
+  @override
+  String get recurringBills => 'Recurring bills';
+
+  @override
+  String billsDueBefore(String date) {
+    return 'Due before $date';
+  }
+
+  @override
+  String billsDueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bills.',
+      one: '1 bill.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsLeftAfter(String amount) {
+    return 'After these, $amount is left to spend.';
+  }
+
+  @override
+  String billsOverAfter(String amount) {
+    return 'After these, you\'re over budget by $amount.';
+  }
+
+  @override
+  String get billsUpcoming => 'Upcoming';
+
+  @override
+  String get billsPaidThisPeriod => 'Paid this period';
+
+  @override
+  String billDue(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String billDueSoon(String date, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'in $days days',
+      one: 'tomorrow',
+      zero: 'today',
+    );
+    return 'Due $date · $_temp0';
+  }
+
+  @override
+  String billOverdue(String date) {
+    return 'Overdue · due $date';
+  }
+
+  @override
+  String billPaid(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get noBillsTitle => 'No bills yet';
+
+  @override
+  String get noBillsBody =>
+      'Add the bills you pay regularly to see what\'s due before your next period.';
+
+  @override
+  String get addBill => 'Add bill';
+
+  @override
+  String get newBill => 'New bill';
+
+  @override
+  String get editBill => 'Edit bill';
+
+  @override
+  String get amountEachTime => 'Amount each time';
+
+  @override
+  String amountEachTimeLabel(String amount) {
+    return 'Amount each time $amount';
+  }
+
+  @override
+  String get billNameRow => 'Name';
+
+  @override
+  String get billNameHint => 'Bill name';
+
+  @override
+  String get billRepeatsRow => 'Repeats';
+
+  @override
+  String get billNextDueRow => 'Next due';
+
+  @override
+  String get billRemindMe => 'Remind me';
+
+  @override
+  String get billRemindDetail => '2 days before it\'s due';
+
+  @override
+  String get saveBill => 'Save bill';
+
+  @override
+  String get repeatWeekly => 'Every week';
+
+  @override
+  String get repeatFortnightly => 'Every 2 weeks';
+
+  @override
+  String get repeatMonthly => 'Every month';
+
+  @override
+  String repeatOnDay(String day) {
+    return 'On the $day';
+  }
+
+  @override
+  String get repeatQuarterly => 'Every 3 months';
+
+  @override
+  String get repeatYearly => 'Every year';
+
+  @override
+  String get repeatCustom => 'Custom…';
+
+  @override
+  String repeatEveryDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count days',
+      one: 'Every day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count weeks',
+      one: 'Every week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count months',
+      one: 'Every month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count years',
+      one: 'Every year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get customRepeatTitle => 'Custom repeat';
+
+  @override
+  String get repeatEvery => 'Every';
+
+  @override
+  String get repeatDays => 'Days';
+
+  @override
+  String get repeatWeeks => 'Weeks';
+
+  @override
+  String get repeatMonths => 'Months';
+
+  @override
+  String get repeatYears => 'Years';
+
+  @override
+  String get repeatFewer => 'Fewer';
+
+  @override
+  String get repeatMore => 'More';
+
+  @override
+  String get setRepeat => 'Set';
+
+  @override
+  String get markPaid => 'Mark paid';
+
+  @override
+  String get deleteBill => 'Delete bill';
+
+  @override
+  String deleteBillTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteBillBody => 'Its past payments stay in Activity.';
+
+  @override
+  String billMarkedPaid(String name) {
+    return '$name marked paid';
+  }
+
+  @override
+  String billActionsLabel(String name, String amount, String due) {
+    return '$name, $amount, $due';
+  }
 }

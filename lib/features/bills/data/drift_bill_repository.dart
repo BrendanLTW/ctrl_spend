@@ -3,6 +3,7 @@ import 'package:ctrl_spend/features/bills/data/bill_mapper.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/data/category_check.dart';
 import 'package:ctrl_spend/features/transactions/data/transaction_mapper.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -32,6 +33,8 @@ class DriftBillRepository implements BillRepository {
     required int categoryId,
     required BillRepeat repeat,
     required DateTime nextDue,
+    required CategoryIconKey iconKey,
+    required CategoryColorKey colorKey,
     int? remindDaysBefore,
   }) => _db.transaction(() async {
     final bill = _checked(
@@ -42,6 +45,8 @@ class DriftBillRepository implements BillRepository {
         categoryId: categoryId,
         repeat: repeat,
         nextDue: nextDue,
+        iconKey: iconKey,
+        colorKey: colorKey,
         remindDaysBefore: remindDaysBefore,
       ),
     );

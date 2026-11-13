@@ -599,7 +599,7 @@
       }
     }
   },
-  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}",
+  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} wifi{Wi-Fi} tv{TV} music{Music} other{Wallet}}",
   "@iconName": {
     "placeholders": {
       "icon": {
@@ -1266,5 +1266,185 @@
   "devSection": "Developer",
   "devAddSampleData": "Add 5,000 sample transactions",
   "devAddSampleDataDetail": "Debug builds only, for performance checks",
-  "devSampleDataAdded": "Added 5,000 sample transactions"
+  "devSampleDataAdded": "Added 5,000 sample transactions",
+  "recurringBills": "Recurring bills",
+  "billsDueBefore": "Due before {date}",
+  "@billsDueBefore": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billsDueCount": "{count, plural, =1{1 bill.} other{{count} bills.}}",
+  "@billsDueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "billsLeftAfter": "After these, {amount} is left to spend.",
+  "@billsLeftAfter": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billsOverAfter": "After these, you're over budget by {amount}.",
+  "@billsOverAfter": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billsUpcoming": "Upcoming",
+  "billsPaidThisPeriod": "Paid this period",
+  "billDue": "Due {date}",
+  "@billDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billDueSoon": "Due {date} · {days, plural, =0{today} =1{tomorrow} other{in {days} days}}",
+  "@billDueSoon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "billOverdue": "Overdue · due {date}",
+  "@billOverdue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billPaid": "Paid {date}",
+  "@billPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noBillsTitle": "No bills yet",
+  "noBillsBody": "Add the bills you pay regularly to see what's due before your next period.",
+  "addBill": "Add bill",
+  "newBill": "New bill",
+  "editBill": "Edit bill",
+  "amountEachTime": "Amount each time",
+  "amountEachTimeLabel": "Amount each time {amount}",
+  "@amountEachTimeLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billNameRow": "Name",
+  "billNameHint": "Bill name",
+  "billRepeatsRow": "Repeats",
+  "billNextDueRow": "Next due",
+  "billRemindMe": "Remind me",
+  "billRemindDetail": "2 days before it's due",
+  "saveBill": "Save bill",
+  "repeatWeekly": "Every week",
+  "repeatFortnightly": "Every 2 weeks",
+  "repeatMonthly": "Every month",
+  "repeatOnDay": "On the {day}",
+  "@repeatOnDay": {
+    "description": "The day is an ordinal, such as 8th.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatQuarterly": "Every 3 months",
+  "repeatYearly": "Every year",
+  "repeatCustom": "Custom…",
+  "repeatEveryDays": "{count, plural, =1{Every day} other{Every {count} days}}",
+  "@repeatEveryDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryWeeks": "{count, plural, =1{Every week} other{Every {count} weeks}}",
+  "@repeatEveryWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryMonths": "{count, plural, =1{Every month} other{Every {count} months}}",
+  "@repeatEveryMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryYears": "{count, plural, =1{Every year} other{Every {count} years}}",
+  "@repeatEveryYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "customRepeatTitle": "Custom repeat",
+  "repeatEvery": "Every",
+  "repeatDays": "Days",
+  "repeatWeeks": "Weeks",
+  "repeatMonths": "Months",
+  "repeatYears": "Years",
+  "repeatFewer": "Fewer",
+  "repeatMore": "More",
+  "setRepeat": "Set",
+  "markPaid": "Mark paid",
+  "deleteBill": "Delete bill",
+  "deleteBillTitle": "Delete {name}?",
+  "@deleteBillTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteBillBody": "Its past payments stay in Activity.",
+  "billMarkedPaid": "{name} marked paid",
+  "@billMarkedPaid": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billActionsLabel": "{name}, {amount}, {due}",
+  "@billActionsLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  }
 }

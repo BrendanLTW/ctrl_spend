@@ -7,12 +7,14 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
+import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/main.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -95,11 +97,17 @@ void main() {
       expect(find.text('Import from CSV'), findsOneWidget);
     });
 
-    testWidgets('v1.1 rows are hidden', (tester) async {
+    testWidgets('v1.1 rows are hidden, bar debug-only Recurring bills', (
+      tester,
+    ) async {
       await pumpAt(tester, Routes.settings);
       expect(find.text('App lock'), findsNothing);
-      expect(find.text('Recurring bills'), findsNothing);
       expect(find.text('Savings goals'), findsNothing);
+      // Tests run as debug builds, where the bills row shows until 5.9.
+      expect(kDebugMode, isTrue);
+      await tester.tap(find.text('Recurring bills'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RecurringBillsScreen), findsOneWidget);
     });
 
     testWidgets('every row can be tapped', (tester) async {

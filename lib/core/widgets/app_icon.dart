@@ -35,6 +35,9 @@ enum AppIcon {
   grid('layout-grid'),
   heart('heart'),
   home('house'),
+  minus('minus'),
+  monitor('monitor'),
+  music('music'),
   note('pen-line'),
   palette('palette'),
   phone('smartphone'),
@@ -49,7 +52,8 @@ enum AppIcon {
   upload('upload'),
   user('user'),
   wallet('wallet'),
-  warning('triangle-alert');
+  warning('triangle-alert'),
+  wifi('wifi');
 
   new(this.file);
 

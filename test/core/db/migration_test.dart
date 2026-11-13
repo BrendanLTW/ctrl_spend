@@ -9,17 +9,38 @@ void main() {
 
   setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
-  for (final from in [1, 2]) {
+  for (final from in [1, 2, 3]) {
     test(
-      'v$from upgrades to v3 with the same schema as a new database',
+      'v$from upgrades to v4 with the same schema as a new database',
       () async {
         final connection = await verifier.startAt(from);
         final db = AppDatabase(connection);
-        await verifier.migrateAndValidate(db, 3);
+        await verifier.migrateAndValidate(db, 4);
         await db.close();
       },
     );
   }
+
+  test('v3 bills keep their data and get the Bills look', () async {
+    final schema = await verifier.schemaAt(3);
+    schema.rawDatabase
+      ..execute(
+        'INSERT INTO categories (name, type, icon_key, color_key, sort_order) '
+        "VALUES ('Bills', 'expense', 'bolt', 'yellow', 0)",
+      )
+      ..execute(
+        'INSERT INTO bills (name, amount_minor, category_id, repeat_unit, '
+        'repeat_every, repeat_day, next_due) '
+        "VALUES ('Unifi', 12900, 1, 'month', 1, 8, "
+        "'2026-11-08T00:00:00.000Z')",
+      );
+    final db = AppDatabase(schema.newConnection());
+    final bill = await db.select(db.bills).getSingle();
+    expect(bill.name, 'Unifi');
+    expect(bill.repeatDay, 8);
+    expect((bill.iconKey, bill.colorKey), ('bolt', 'yellow'));
+    await db.close();
+  });
 
   test('v2 transactions keep their data and come from no bill', () async {
     final schema = await verifier.schemaAt(2);

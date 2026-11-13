@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'bill.freezed.dart';
@@ -26,6 +27,10 @@ abstract class Bill with _$Bill {
 
     /// A local calendar date, at midnight.
     required DateTime nextDue,
+
+    /// Its tile on S27, picked on S28.
+    required CategoryIconKey iconKey,
+    required CategoryColorKey colorKey,
 
     /// Days before [nextDue] to remind; null means no reminder.
     int? remindDaysBefore,

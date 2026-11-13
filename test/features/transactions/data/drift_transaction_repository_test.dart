@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -216,6 +217,8 @@ void main() {
       categoryId: 4,
       repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
       nextDue: DateTime(2026, 11, 8),
+      iconKey: CategoryIconKey.wifi,
+      colorKey: CategoryColorKey.blue,
     );
     final payment = await DriftBillRepository(db)
         .markPaid(bill.id, paidAt: DateTime(2026, 11, 8, 9));
