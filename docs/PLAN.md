@@ -133,9 +133,9 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 - [x] **4.5 README and release.** README with screenshots in both themes, architecture diagram and key decisions. Build the release APK, attach it to a GitHub Release and tag `v1.0.0`. *(README and screenshots done; the brand SVGs are in `assets/brand/`. The release was skipped: no tag, APK or GitHub Release. If one is made later, the APK keeps the debug signing.)*
   Refs: PRD §2
 
-## Phase 5 — v1.1 (start only after v1.0 is released)
+## Phase 5 — v1.1 (v1.0 is complete; its release was skipped)
 
-- [ ] **5.1 Schema v2.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data.
+- [x] **5.1 Schema v3.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data. *(Also `transactions.billId`. A repeat is a unit and a count, which covers Custom; dates are UTC midnight. 5.2 must stop a category with bills from being deleted.)*
   Refs: PRD §8
 - [ ] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests.
   Refs: PRD §5.11, §8

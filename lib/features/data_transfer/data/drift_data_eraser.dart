@@ -8,8 +8,12 @@ class DriftDataEraser implements DataEraser {
 
   @override
   Future<void> eraseAll() => _db.transaction(() async {
-    // Transactions and notifications first: both refer to categories.
+    // Children first: transactions refer to bills, and bills,
+    // transactions and notifications to categories.
     await _db.delete(_db.transactions).go();
+    await _db.delete(_db.bills).go();
+    // Contributions go with their goals.
+    await _db.delete(_db.goals).go();
     await _db.delete(_db.notifications).go();
     await _db.delete(_db.categories).go();
     await _db.delete(_db.preferences).go();

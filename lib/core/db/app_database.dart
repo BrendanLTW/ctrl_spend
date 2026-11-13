@@ -6,12 +6,22 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'app_database.g.dart';
 
-@DriftDatabase(tables: [Categories, Transactions, Notifications, Preferences])
+@DriftDatabase(
+  tables: [
+    Categories,
+    Transactions,
+    Notifications,
+    Preferences,
+    Bills,
+    Goals,
+    GoalContributions,
+  ],
+)
 class AppDatabase extends _$AppDatabase {
   new(super.e);
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -25,6 +35,13 @@ class AppDatabase extends _$AppDatabase {
       // v2: notifications remember their category (S14 tiles).
       if (from < 2) {
         await m.addColumn(notifications, notifications.categoryId);
+      }
+      // v3: bills and savings goals (v1.1).
+      if (from < 3) {
+        await m.createTable(bills);
+        await m.createTable(goals);
+        await m.createTable(goalContributions);
+        await m.addColumn(transactions, transactions.billId);
       }
     },
     // SQLite ignores foreign keys unless asked, per connection.

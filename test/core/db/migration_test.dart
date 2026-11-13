@@ -9,10 +9,36 @@ void main() {
 
   setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
-  test('v1 upgrades to v2 with the same schema as a new database', () async {
-    final connection = await verifier.startAt(1);
-    final db = AppDatabase(connection);
-    await verifier.migrateAndValidate(db, 2);
+  for (final from in [1, 2]) {
+    test(
+      'v$from upgrades to v3 with the same schema as a new database',
+      () async {
+        final connection = await verifier.startAt(from);
+        final db = AppDatabase(connection);
+        await verifier.migrateAndValidate(db, 3);
+        await db.close();
+      },
+    );
+  }
+
+  test('v2 transactions keep their data and come from no bill', () async {
+    final schema = await verifier.schemaAt(2);
+    schema.rawDatabase
+      ..execute(
+        'INSERT INTO categories (name, type, icon_key, color_key, sort_order) '
+        "VALUES ('Food', 'expense', 'food', 'orange', 0)",
+      )
+      ..execute(
+        'INSERT INTO transactions '
+        '(amount_minor, type, category_id, occurred_at, title) '
+        "VALUES (1250, 'expense', 1, '2026-11-03T12:00:00.000Z', 'Lunch')",
+      );
+    final db = AppDatabase(schema.newConnection());
+    final rows = await db.select(db.transactions).get();
+    expect(rows.single.title, 'Lunch');
+    expect(rows.single.amountMinor, 1250);
+    expect(rows.single.billId, isNull);
+    expect(await db.select(db.bills).get(), isEmpty);
     await db.close();
   });
 

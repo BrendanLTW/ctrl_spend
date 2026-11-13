@@ -8,6 +8,7 @@ import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.d
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -46,6 +47,50 @@ void main() {
       createdAt: DateTime(2026, 11, 4),
       categoryId: pets.id,
     );
+    final billId = await db
+        .into(db.bills)
+        .insert(
+          BillsCompanion.insert(
+            name: 'Vet plan',
+            amountMinor: 5000,
+            categoryId: pets.id,
+            repeatUnit: 'month',
+            repeatEvery: 1,
+            nextDue: DateTime.utc(2026, 11, 8),
+          ),
+        );
+    await db
+        .into(db.transactions)
+        .insert(
+          TransactionsCompanion.insert(
+            amountMinor: 5000,
+            type: 'expense',
+            categoryId: pets.id,
+            occurredAt: DateTime.utc(2026, 10, 8),
+            title: 'Vet plan',
+            billId: Value(billId),
+          ),
+        );
+    final goalId = await db
+        .into(db.goals)
+        .insert(
+          GoalsCompanion.insert(
+            name: 'Bali trip',
+            iconKey: 'travel',
+            targetMinor: 500000,
+            targetMonth: DateTime.utc(2027, 3),
+          ),
+        );
+    await db
+        .into(db.goalContributions)
+        .insert(
+          GoalContributionsCompanion.insert(
+            goalId: goalId,
+            amountMinor: 40000,
+            label: 'From salary',
+            date: DateTime.utc(2026, 11, 3),
+          ),
+        );
     await prefs.update(
       (p) => p.copyWith(
         userName: 'Alex',
@@ -59,6 +104,9 @@ void main() {
 
     expect(await transactions.watch().first, isEmpty);
     expect(await DriftNotificationRepository(db).watch().first, isEmpty);
+    expect(await db.select(db.bills).get(), isEmpty);
+    expect(await db.select(db.goals).get(), isEmpty);
+    expect(await db.select(db.goalContributions).get(), isEmpty);
     expect(await prefs.read(), const Preferences());
     final after = await categories.watch().first;
     expect([for (final c in after) (c.name, c.type)], defaults);

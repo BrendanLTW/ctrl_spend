@@ -35,6 +35,63 @@ class Transactions extends Table {
   DateTimeColumn get occurredAt => dateTime()();
   TextColumn get title => text()();
   TextColumn get note => text().nullable()();
+
+  /// The bill this payment came from (S27 "Paid this period"). Added in
+  /// schema v3.
+  IntColumn get billId => integer().nullable().references(
+    Bills,
+    #id,
+    onDelete: KeyAction.setNull,
+  )();
+}
+
+/// Recurring bills (PRD §5.11, v1.1). A repeat is a unit and a count:
+/// every 2 weeks is (week, 2), every 3 months is (month, 3). `repeatDay`
+/// keeps the day of the month for monthly and yearly bills, so one due on
+/// the 31st returns to it after February. `nextDue` is a calendar date,
+/// stored as UTC midnight.
+@DataClassName('BillRow')
+class Bills extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  IntColumn get amountMinor =>
+      integer().check(amountMinor.isBiggerThanValue(0))();
+  IntColumn get categoryId =>
+      integer().references(Categories, #id, onDelete: KeyAction.restrict)();
+  TextColumn get repeatUnit =>
+      text().check(repeatUnit.isIn(const ['day', 'week', 'month', 'year']))();
+  IntColumn get repeatEvery =>
+      integer().check(repeatEvery.isBiggerOrEqualValue(1))();
+  IntColumn get repeatDay =>
+      integer().nullable().check(repeatDay.isBetweenValues(1, 31))();
+  DateTimeColumn get nextDue => dateTime()();
+  IntColumn get remindDaysBefore =>
+      integer().nullable().check(remindDaysBefore.isBiggerOrEqualValue(0))();
+}
+
+/// Savings goals (PRD §5.12, v1.1). `targetMonth` is the first of the
+/// month, stored as UTC midnight.
+@DataClassName('GoalRow')
+class Goals extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  TextColumn get name => text()();
+  TextColumn get iconKey => text()();
+  IntColumn get targetMinor =>
+      integer().check(targetMinor.isBiggerThanValue(0))();
+  DateTimeColumn get targetMonth => dateTime()();
+  DateTimeColumn get completedAt => dateTime().nullable()();
+}
+
+/// Money added to (positive) or withdrawn from (negative) a goal. Never
+/// spending (PRD §8). `date` is a calendar date, stored as UTC midnight.
+@DataClassName('GoalContributionRow')
+class GoalContributions extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  IntColumn get goalId =>
+      integer().references(Goals, #id, onDelete: KeyAction.cascade)();
+  IntColumn get amountMinor => integer().check(amountMinor.equals(0).not())();
+  TextColumn get label => text()();
+  DateTimeColumn get date => dateTime()();
 }
 
 /// The notifications inbox (PRD §5.4).
