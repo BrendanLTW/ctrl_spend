@@ -135,9 +135,9 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 5 — v1.1 (v1.0 is complete; its release was skipped)
 
-- [x] **5.1 Schema v3.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data. *(Also `transactions.billId`. A repeat is a unit and a count, which covers Custom; dates are UTC midnight. 5.2 must stop a category with bills from being deleted.)*
+- [x] **5.1 Schema v3.** Add Bill, Goal and GoalContribution tables (schemaVersion 3; v2 added the notification category in 3.9), the migration step and a migration test from v1.0 data. *(Also `transactions.billId`. A repeat is a unit and a count, which covers Custom; dates are UTC midnight.)*
   Refs: PRD §8
-- [ ] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests.
+- [x] **5.2 Bills domain.** Repeat rules and next-due calculation, mark paid (creates a transaction and advances next due), left after bills. Unit tests. *(Every payment due by the period end counts, so a weekly bill can count twice. A category with bills is archived, not deleted.)*
   Refs: PRD §5.11, §8
 - [ ] **5.3 Bills screens.** S27 Recurring bills, S28 Add bill, S44 Repeats picker (S43 date picker reused), and the Settings row.
   Refs: S27, S28, S43, S44, FR-16

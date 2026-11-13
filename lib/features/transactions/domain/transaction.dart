@@ -19,5 +19,8 @@ abstract class Transaction with _$Transaction {
     required DateTime occurredAt,
     required String title,
     String? note,
+
+    /// The bill this pays, if it came from "Mark paid" (v1.1).
+    int? billId,
   }) = _Transaction;
 }

@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrl_spend/features/transactions/data/category_check.dart';
 import 'package:ctrl_spend/features/transactions/data/transaction_mapper.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -58,7 +59,7 @@ class DriftTransactionRepository implements TransactionRepository {
     String? note,
   }) => _db.transaction(() async {
     _checkAmount(amountMinor);
-    await _checkCategory(categoryId, type);
+    await _db.checkCategory(categoryId, type);
     final row = await _db
         .into(_db.transactions)
         .insertReturning(
@@ -78,7 +79,7 @@ class DriftTransactionRepository implements TransactionRepository {
   Future<void> update(Transaction transaction) => _db.transaction(() async {
     _checkAmount(transaction.amountMinor);
     final current = await _byId(transaction.id);
-    await _checkCategory(
+    await _db.checkCategory(
       transaction.categoryId,
       transaction.type,
       allowArchived: current.categoryId == transaction.categoryId,
@@ -158,24 +159,6 @@ class DriftTransactionRepository implements TransactionRepository {
   void _checkAmount(int amountMinor) {
     if (amountMinor <= 0) {
       throw ArgumentError.value(amountMinor, 'amountMinor', 'must be > 0');
-    }
-  }
-
-  Future<void> _checkCategory(
-    int categoryId,
-    TransactionType type, {
-    bool allowArchived = false,
-  }) async {
-    final category = await (_db.select(
-      _db.categories,
-    )..where((c) => c.id.equals(categoryId))).getSingleOrNull();
-    // A missing category falls through to the foreign key error.
-    if (category == null) return;
-    if (category.type != type.name) {
-      throw CategoryTypeMismatchException(categoryId, type);
-    }
-    if (category.archived && !allowArchived) {
-      throw ArchivedCategoryException(categoryId);
     }
   }
 }

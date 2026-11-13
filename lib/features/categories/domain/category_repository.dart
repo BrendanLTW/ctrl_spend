@@ -43,8 +43,8 @@ abstract interface class CategoryRepository {
 
   Future<void> restore(int id);
 
-  /// Deletes the category if it has no transactions, otherwise archives it
-  /// so its history stays intact.
+  /// Deletes the category if it has no transactions or bills, otherwise
+  /// archives it so its history stays intact.
   Future<CategoryRemoval> remove(int id);
 }
 

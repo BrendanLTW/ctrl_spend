@@ -73,12 +73,17 @@ class DriftCategoryRepository implements CategoryRepository {
   @override
   Future<CategoryRemoval> remove(int id) => _db.transaction(() async {
     // In one transaction, so a transaction saved meanwhile can't be orphaned.
-    final used =
+    final paid =
         await (_db.select(_db.transactions)
               ..where((t) => t.categoryId.equals(id))
               ..limit(1))
             .getSingleOrNull();
-    if (used != null) {
+    final billed =
+        await (_db.select(_db.bills)
+              ..where((b) => b.categoryId.equals(id))
+              ..limit(1))
+            .getSingleOrNull();
+    if (paid != null || billed != null) {
       await _setArchived(id, archived: true);
       return CategoryRemoval.archived;
     }

@@ -4,6 +4,7 @@ import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -207,6 +208,26 @@ void main() {
       expect(await repo.remove(food.id), CategoryRemoval.archived);
       expect((await byName('Food')).archived, isTrue);
       expect(await db.select(db.transactions).get(), hasLength(1));
+    });
+
+    test('archives a category with a bill, keeping the bill', () async {
+      final bills = await byName('Bills');
+      await db
+          .into(db.bills)
+          .insert(
+            BillsCompanion.insert(
+              name: 'Unifi',
+              amountMinor: 12900,
+              categoryId: bills.id,
+              repeatUnit: 'month',
+              repeatEvery: 1,
+              repeatDay: const Value(8),
+              nextDue: DateTime.utc(2026, 11, 8),
+            ),
+          );
+      expect(await repo.remove(bills.id), CategoryRemoval.archived);
+      expect((await byName('Bills')).archived, isTrue);
+      expect(await db.select(db.bills).get(), hasLength(1));
     });
   });
 }

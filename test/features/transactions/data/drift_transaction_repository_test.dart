@@ -1,5 +1,7 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -205,6 +207,25 @@ void main() {
         throwsA(isA<CategoryTypeMismatchException>()),
       );
     });
+  });
+
+  test('a bill payment keeps its bill through an edit and an undo', () async {
+    final bill = await DriftBillRepository(db).add(
+      name: 'Unifi',
+      amountMinor: 12900,
+      categoryId: 4,
+      repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
+      nextDue: DateTime(2026, 11, 8),
+    );
+    final payment = await DriftBillRepository(db)
+        .markPaid(bill.id, paidAt: DateTime(2026, 11, 8, 9));
+
+    await repo.update(payment.copyWith(note: 'Paid by card'));
+    final edited = (await repo.watch().first).single;
+    expect(edited.billId, bill.id);
+
+    await repo.restore(await repo.delete(edited.id));
+    expect((await repo.watch().first).single, edited);
   });
 
   test('delete then restore puts the entry back exactly', () async {
