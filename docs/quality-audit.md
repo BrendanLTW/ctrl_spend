@@ -125,9 +125,9 @@ Debug builds have **Settings → Developer → Add 5,000 sample transactions** (
 
 Fixed: S20 and S25 rescanned every transaction for each period. `transactionsByPeriod` now groups them in one pass. The test also times each one with 1,000 transactions and fails if 5 times the data takes 12 times as long or more: linear work measures about 5 times, quadratic about 25. A ratio holds on any machine, where a fixed limit in milliseconds failed on the slower CI runner. Activity builds its rows lazily, so scrolling doesn't rebuild the list.
 
-### On a device (pending)
+### On a device (not measured)
 
-Not yet measured: no Android phone was available. To measure, on a mid-range Android phone in profile mode:
+Skipped for v1.0: no Android phone was available, and the release went ahead on the benchmarks above. The device test is ready; to measure, on a mid-range Android phone in profile mode:
 
 1. Frame timings and dashboard readiness with 5,000 transactions:
    `flutter drive --profile --driver=test_driver/integration_test.dart --target=integration_test/performance_test.dart`
