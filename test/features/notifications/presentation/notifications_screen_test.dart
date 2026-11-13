@@ -129,6 +129,29 @@ void main() {
       expect(tile(2).color, CategoryColorKey.purple);
     });
 
+    testWidgets('a bill reminder without its category shows a receipt', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        seed: () => inbox.add(
+          kind: NotificationKind.billReminder,
+          title: 'Unifi is due in 2 days',
+          body: 'RM 129 on 8 Nov. Mark it paid in Recurring bills.',
+          createdAt: DateTime(2026, 11, 4, 8),
+        ),
+      );
+      await openInbox(tester);
+      final tile = tester.widget<CategoryTile>(
+        find.descendant(
+          of: find.byWidget(rows(tester).single),
+          matching: find.byType(CategoryTile),
+        ),
+      );
+      expect(tile.icon, AppIcon.receipt);
+      expect(tile.color, CategoryColorKey.yellow);
+    });
+
     testWidgets('opening marks all read; dots stay for this visit', (
       tester,
     ) async {

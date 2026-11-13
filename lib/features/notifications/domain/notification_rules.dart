@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
@@ -9,6 +10,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 const int weeklySummaryWeekday = DateTime.sunday;
 const int weeklySummaryMinutes = 19 * 60;
 const int periodStartedMinutes = 9 * 60;
+const int billReminderMinutes = 9 * 60;
 
 /// Something worth a notification (PRD §5.4), before it's put into words.
 /// [at] is when it happened, which becomes the inbox row's time.
@@ -120,6 +122,46 @@ final class PeriodStarted extends NotificationEvent {
   NotificationKind get kind => NotificationKind.periodStarted;
 }
 
+/// A bill due in [daysBefore] days (0 today), from its Remind me (S28).
+final class BillReminder extends NotificationEvent {
+  const new({
+    required this.name,
+    required this.amountMinor,
+    required this.due,
+    required this.daysBefore,
+    required this.categoryId,
+    required DateTime at,
+  }) : super(at);
+
+  /// [bill]'s reminder for its next due date, at [at].
+  new forBill(Bill bill, DateTime at)
+    : this(
+        name: bill.name,
+        amountMinor: bill.amountMinor,
+        due: bill.nextDue,
+        daysBefore: bill.remindDaysBefore ?? 0,
+        categoryId: bill.categoryId,
+        at: at,
+      );
+
+  final String name;
+  final int amountMinor;
+  final DateTime due;
+  final int daysBefore;
+  @override
+  final int categoryId;
+
+  @override
+  NotificationKind get kind => NotificationKind.billReminder;
+}
+
+/// When [bill]'s reminder fires: at 9:00 local, its Remind me days before
+/// its next due date. Null when Remind me is off.
+DateTime? billReminderAt(Bill bill) => switch (bill.remindDaysBefore) {
+  null => null,
+  final days => _at(_addDays(bill.nextDue, -days), billReminderMinutes),
+};
+
 /// What a change to the transactions, from [before] to [after], is worth
 /// telling: a limit or the budget crossing 80% or 100% this period (when
 /// budget alerts are on), and each new income transaction. Only an upward
@@ -208,12 +250,14 @@ List<NotificationEvent> transactionEvents({
 
 /// The scheduled notifications that fired after [from] and up to [to],
 /// for the inbox: the latest daily reminder, weekly summary and period
-/// start in that span, at most one of each, oldest first. Times are local.
+/// start in that span, at most one of each, and each of [bills]'
+/// reminders, oldest first. Times are local.
 List<NotificationEvent> scheduledEvents({
   required DateTime from,
   required DateTime to,
   required Preferences prefs,
   required Iterable<Transaction> transactions,
+  Iterable<Bill> bills = const [],
 }) {
   final events = <NotificationEvent>[];
   bool fired(DateTime at) => at.isAfter(from) && !at.isAfter(to);
@@ -263,6 +307,12 @@ List<NotificationEvent> scheduledEvents({
         at: started,
       ),
     );
+  }
+
+  for (final bill in bills) {
+    if (billReminderAt(bill) case final at? when fired(at)) {
+      events.add(BillReminder.forBill(bill, at));
+    }
   }
 
   return events..sort((a, b) => a.at.compareTo(b.at));

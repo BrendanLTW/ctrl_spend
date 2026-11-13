@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/fake_bill_repository.dart';
 import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_notification_repository.dart';
 import '../../../helpers/fake_notification_scheduler.dart';
@@ -26,6 +29,7 @@ late DateTime now;
 late FakePreferencesRepository prefs;
 late FakeCategoryRepository categories;
 late FakeTransactionRepository transactions;
+late FakeBillRepository bills;
 late FakeNotificationRepository inbox;
 late FakeNotificationScheduler scheduler;
 late ProviderContainer container;
@@ -45,6 +49,7 @@ Future<void> pumpApp(
   prefs = FakePreferencesRepository(initial);
   categories = FakeCategoryRepository();
   transactions = FakeTransactionRepository();
+  bills = FakeBillRepository(transactions: transactions);
   inbox = FakeNotificationRepository();
   scheduler = FakeNotificationScheduler();
   await seed?.call();
@@ -54,6 +59,7 @@ Future<void> pumpApp(
         preferences: prefs,
         categories: categories,
         transactions: transactions,
+        bills: bills,
         notifications: inbox,
         scheduler: scheduler,
       ),
@@ -171,6 +177,115 @@ void main() {
         scheduler.pending[NotificationService.periodId]!.at,
         DateTime(2026, 12, 15, 9),
       );
+    });
+  });
+
+  group('bill reminders', () {
+    Future<Bill> addBill({
+      String name = 'Unifi',
+      DateTime? due,
+      int? remind = 2,
+    }) => bills.add(
+      name: name,
+      amountMinor: 12900,
+      categoryId: categories.byName('Bills').id,
+      repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
+      nextDue: due ?? DateTime(2026, 11, 8),
+      iconKey: CategoryIconKey.wifi,
+      colorKey: CategoryColorKey.blue,
+      remindDaysBefore: remind,
+    );
+
+    int idOf(Bill bill) => NotificationService.billIdBase + bill.id;
+
+    testWidgets('each bill with Remind me on is scheduled', (tester) async {
+      late Bill unifi;
+      late Bill gym;
+      await pumpApp(
+        tester,
+        seed: () async {
+          unifi = await addBill();
+          gym = await addBill(name: 'Gym', remind: null);
+        },
+      );
+      final reminder = scheduler.pending[idOf(unifi)]!;
+      expect(reminder.kind, 'once');
+      expect(reminder.at, DateTime(2026, 11, 6, 9));
+      expect(reminder.title, 'Unifi is due in 2 days');
+      expect(
+        reminder.body,
+        'RM 129 on 8 Nov. Mark it paid in Recurring bills.',
+      );
+      expect(scheduler.pending[idOf(gym)], isNull);
+    });
+
+    testWidgets('a reminder already past is not scheduled', (tester) async {
+      late Bill water;
+      await pumpApp(
+        tester,
+        seed: () async => water = await addBill(due: DateTime(2026, 11, 5)),
+      );
+      // 3 Nov at 9:00 has passed on 4 Nov.
+      expect(scheduler.pending[idOf(water)], isNull);
+    });
+
+    testWidgets('paying, editing and deleting reschedule or cancel', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final unifi = await addBill();
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.at, DateTime(2026, 11, 6, 9));
+
+      await bills.markPaid(unifi.id, paidAt: now);
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.at, DateTime(2026, 12, 6, 9));
+      expect(scheduler.pending[idOf(unifi)]!.body, contains('8 Dec'));
+
+      await bills.update(bills.all.single.copyWith(remindDaysBefore: null));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+
+      await bills.update(bills.all.single.copyWith(remindDaysBefore: 2));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await bills.delete(unifi.id);
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+    });
+
+    testWidgets('a currency change rewrites the amount', (tester) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      await prefs.update((p) => p.copyWith(currencyCode: 'USD'));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.body, startsWith(r'$ 129 '));
+    });
+
+    testWidgets('one that fired while closed reaches the inbox', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        initial: onboarded.copyWith(
+          dailyReminderOn: false,
+          notificationsCheckedAt: DateTime(2026, 11, 2, 20),
+        ),
+        seed: () => addBill(due: DateTime(2026, 11, 5)),
+      );
+      final row = inbox.all.single;
+      expect(row.kind, NotificationKind.billReminder);
+      expect(row.title, 'Unifi is due in 2 days');
+      expect(row.createdAt, DateTime(2026, 11, 3, 9));
+      expect(row.categoryId, categories.byName('Bills').id);
+    });
+
+    testWidgets('Delete all data cancels them', (tester) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      await container.read(notificationServiceProvider).reset();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+      expect(scheduler.pending, isEmpty);
     });
   });
 

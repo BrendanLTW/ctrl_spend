@@ -2529,6 +2529,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{name}, {amount}, {due}'**
   String billActionsLabel(String name, String amount, String due);
+
+  /// No description provided for @notifyBillTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} is due {days, plural, =0{today} =1{tomorrow} other{in {days} days}}'**
+  String notifyBillTitle(String name, int days);
+
+  /// No description provided for @notifyBillBody.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} on {date}. Mark it paid in Recurring bills.'**
+  String notifyBillBody(String amount, String date);
 }
 
 class _AppLocalizationsDelegate

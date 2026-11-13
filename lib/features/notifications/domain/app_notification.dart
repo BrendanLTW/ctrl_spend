@@ -10,6 +10,9 @@ enum NotificationKind {
   incomeRecorded,
   weeklySummary,
   periodStarted,
+
+  /// v1.1: a bill's Remind me (S28).
+  billReminder,
 }
 
 /// An inbox entry (PRD §5.4). Not `Notification`, which Flutter already has.

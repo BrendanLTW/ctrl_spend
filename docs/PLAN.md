@@ -141,7 +141,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §5.11, §8
 - [x] **5.3 Bills screens.** S27 Recurring bills, S28 Add bill, S44 Repeats picker (S43 date picker reused), and the Settings row. *(Bills have their own icon and colour, schema v4. Tapping a bill opens Mark paid, Edit bill and Delete bill. The Settings row shows in debug builds until 5.9.)*
   Refs: S27, S28, S43, S44, FR-16
-- [ ] **5.4 Bill reminders.** Reminders the set number of days before the due date, using the notification service.
+- [x] **5.4 Bill reminders.** Reminders the set number of days before the due date, using the notification service. *(At 9:00 local; one already past isn't scheduled. Rescheduled when a bill is paid, edited or deleted; caught up into the inbox like the other scheduled kinds.)*
   Refs: PRD §5.11, FR-16
 - [ ] **5.5 Goals domain.** Goal and contribution repositories, monthly need (rounded up), completion. Contributions never touch left to spend. Unit tests.
   Refs: PRD §5.12, §8

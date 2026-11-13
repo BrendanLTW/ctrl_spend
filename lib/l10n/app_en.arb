@@ -1446,5 +1446,27 @@
         "type": "String"
       }
     }
+  },
+  "notifyBillTitle": "{name} is due {days, plural, =0{today} =1{tomorrow} other{in {days} days}}",
+  "@notifyBillTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyBillBody": "{amount} on {date}. Mark it paid in Recurring bills.",
+  "@notifyBillBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

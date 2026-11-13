@@ -1641,4 +1641,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String billActionsLabel(String name, String amount, String due) {
     return '$name, $amount, $due';
   }
+
+  @override
+  String notifyBillTitle(String name, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'in $days days',
+      one: 'tomorrow',
+      zero: 'today',
+    );
+    return '$name is due $_temp0';
+  }
+
+  @override
+  String notifyBillBody(String amount, String date) {
+    return '$amount on $date. Mark it paid in Recurring bills.';
+  }
 }

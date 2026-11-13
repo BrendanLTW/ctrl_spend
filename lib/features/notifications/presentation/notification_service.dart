@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
@@ -22,7 +24,8 @@ part 'notification_service.g.dart';
 /// Keeps notifications in step with the app (PRD §5.4), once onboarding is
 /// done:
 /// - registers the daily reminder, weekly summary and next period start
-///   with the phone, again whenever a setting they depend on changes;
+///   with the phone, again whenever a setting they depend on changes, and
+///   each bill's reminder whenever the bills change;
 /// - on launch and on resume, writes inbox rows for the ones that fired
 ///   since the last check, since the phone can't run our code when they
 ///   fire;
@@ -42,13 +45,19 @@ class NotificationService {
         transactionsProvider(),
         (_, next) => _onTransactions(next.value),
         fireImmediately: true,
-      );
+      )
+      ..listen(billsProvider, (_, next) {
+        if (next.value case final bills?) _onBills(bills);
+      }, fireImmediately: true);
     _lifecycle = AppLifecycleListener(onResume: () => unawaited(catchUp()));
   }
 
   static const dailyId = 1;
   static const weeklyId = 2;
   static const periodId = 3;
+
+  /// A bill's reminder is this plus the bill's id.
+  static const billIdBase = 1000;
 
   final Ref _ref;
   late final AppLifecycleListener _lifecycle;
@@ -58,7 +67,11 @@ class NotificationService {
   Preferences? _prefs;
   List<Category> _categories = const [];
   List<Transaction>? _transactions;
+  List<Bill>? _bills;
   Object? _scheduled;
+
+  /// Bill reminders registered with the phone, by notification id.
+  Map<int, ({DateTime at, String title, String body})> _billsScheduled = {};
   bool _caughtUpOnLaunch = false;
   Future<void>? _catchingUp;
 
@@ -85,8 +98,11 @@ class NotificationService {
     try {
       final prefs = _prefs;
       final transactions = _transactions;
-      // Runs again once both have loaded (see _catchUpOnLaunch).
-      if (prefs == null || !prefs.onboardingComplete || transactions == null) {
+      // Runs again once all have loaded (see _catchUpOnLaunch).
+      if (prefs == null ||
+          !prefs.onboardingComplete ||
+          transactions == null ||
+          _bills == null) {
         return;
       }
       final now = _now();
@@ -96,6 +112,7 @@ class NotificationService {
           to: now,
           prefs: prefs,
           transactions: transactions,
+          bills: _bills ?? const [],
         )) {
           await _write(event);
         }
@@ -118,9 +135,10 @@ class NotificationService {
     // arrives before the reset settings would catch up as if onboarded.
     _prefs = null;
     final scheduler = _ref.read(notificationSchedulerProvider);
-    for (final id in const [dailyId, weeklyId, periodId]) {
+    for (final id in [dailyId, weeklyId, periodId, ..._billsScheduled.keys]) {
       await scheduler.cancel(id);
     }
+    _billsScheduled = {};
   }
 
   void dispose() => _lifecycle.dispose();
@@ -132,13 +150,23 @@ class NotificationService {
     if (!_catchUpOnLaunch()) unawaited(_schedule());
   }
 
-  /// Starts the first catch-up once settings and transactions have both
-  /// loaded. True only when it starts it (it schedules too).
+  /// Starts the first catch-up once settings, transactions and bills have
+  /// all loaded. True only when it starts it (it schedules too).
   bool _catchUpOnLaunch() {
-    if (_caughtUpOnLaunch || !_active || _transactions == null) return false;
+    if (_caughtUpOnLaunch ||
+        !_active ||
+        _transactions == null ||
+        _bills == null) {
+      return false;
+    }
     _caughtUpOnLaunch = true;
     unawaited(catchUp());
     return true;
+  }
+
+  void _onBills(List<Bill> bills) {
+    _bills = bills;
+    if (!_catchUpOnLaunch()) unawaited(_scheduleBills());
   }
 
   void _onTransactions(List<Transaction>? transactions) {
@@ -186,6 +214,8 @@ class NotificationService {
       prefs.currencyCode,
       nextStart,
     );
+    // Bill reminders show the amount, so the currency matters to them.
+    await _scheduleBills();
     if (key == _scheduled) return;
     _scheduled = key;
 
@@ -226,6 +256,43 @@ class NotificationService {
       title: text.title,
       body: text.body,
     );
+  }
+
+  /// Registers each bill's reminder that is still to come, cancelling
+  /// the ones that changed or went: paid (a new due date), edited,
+  /// deleted or turned off.
+  Future<void> _scheduleBills() async {
+    final bills = _bills;
+    if (bills == null || !_active) return;
+    final now = _now();
+    final wanted = <int, ({DateTime at, String title, String body})>{
+      for (final bill in bills)
+        if (billReminderAt(bill) case final at? when at.isAfter(now))
+          billIdBase + bill.id: () {
+            final text = notificationText(
+              BillReminder.forBill(bill, at),
+              _l10n,
+              _formatter,
+              _locale,
+            );
+            return (at: at, title: text.title, body: text.body);
+          }(),
+    };
+    final scheduler = _ref.read(notificationSchedulerProvider);
+    final had = _billsScheduled;
+    _billsScheduled = wanted;
+    for (final id in had.keys) {
+      if (wanted[id] != had[id]) await scheduler.cancel(id);
+    }
+    for (final MapEntry(key: id, value: reminder) in wanted.entries) {
+      if (had[id] == reminder) continue;
+      await scheduler.scheduleOnce(
+        id: id,
+        at: reminder.at,
+        title: reminder.title,
+        body: reminder.body,
+      );
+    }
   }
 }
 
