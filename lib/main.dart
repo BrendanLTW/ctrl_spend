@@ -12,6 +12,8 @@ import 'package:ctrl_spend/features/data_transfer/data/system_csv_file_picker.da
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
+import 'package:ctrl_spend/features/goals/data/drift_goal_repository.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/notifications/data/drift_notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/data/local_notification_scheduler.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
@@ -50,6 +52,9 @@ List<Override> appOverrides({NotificationScheduler? scheduler}) => [
   ),
   billRepositoryProvider.overrideWith(
     (ref) => DriftBillRepository(ref.watch(appDatabaseProvider)),
+  ),
+  goalRepositoryProvider.overrideWith(
+    (ref) => DriftGoalRepository(ref.watch(appDatabaseProvider)),
   ),
   preferencesRepositoryProvider.overrideWith(
     (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),

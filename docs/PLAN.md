@@ -143,7 +143,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S27, S28, S43, S44, FR-16
 - [x] **5.4 Bill reminders.** Reminders the set number of days before the due date, using the notification service. *(At 9:00 local; one already past isn't scheduled. Rescheduled when a bill is paid, edited or deleted; caught up into the inbox like the other scheduled kinds.)*
   Refs: PRD §5.11, FR-16
-- [ ] **5.5 Goals domain.** Goal and contribution repositories, monthly need (rounded up), completion. Contributions never touch left to spend. Unit tests.
+- [x] **5.5 Goals domain.** Goal and contribution repositories, monthly need (rounded up), completion. Contributions never touch left to spend. Unit tests. *(Months left count from next month to the target month, as S31's RM 616 does; S30's RM 360 example would read RM 450. Completion follows saved and the target.)*
   Refs: PRD §5.12, §8
 - [ ] **5.6 Goals screens.** S29 Savings goals, S30 Goal detail (Add money, Withdraw), S31 Add goal, and the Settings row.
   Refs: S29–S31, FR-17

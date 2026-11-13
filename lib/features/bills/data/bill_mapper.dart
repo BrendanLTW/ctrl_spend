@@ -1,17 +1,8 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/core/db/stored_dates.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:drift/drift.dart';
-
-/// Calendar dates are stored as UTC midnight (schema v3), so a time zone
-/// change can't move them, and used as local midnight.
-DateTime storedDate(DateTime date) =>
-    DateTime.utc(date.year, date.month, date.day);
-
-DateTime localDate(DateTime stored) {
-  final utc = stored.toUtc();
-  return DateTime(utc.year, utc.month, utc.day);
-}
 
 extension BillRowMapper on BillRow {
   Bill toEntity() => Bill(
