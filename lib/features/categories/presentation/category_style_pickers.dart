@@ -108,12 +108,17 @@ class CategoryIconGrid extends StatelessWidget {
     required this.selected,
     required this.onSelected,
     this.icons = pickerIcons,
+    this.tileColor,
     super.key,
   });
 
   final CategoryIconKey selected;
   final ValueChanged<CategoryIconKey> onSelected;
   final List<CategoryIconKey> icons;
+
+  /// Unselected tiles; `fillSoft` by default, for a sheet or card. S31
+  /// passes `surface`, since its icons sit on the ground.
+  final Color? tileColor;
 
   static const _perRow = 6;
 
@@ -127,7 +132,7 @@ class CategoryIconGrid extends StatelessWidget {
       label: context.l10n.iconName(icon.name),
       excludeSemantics: true,
       child: Material(
-        color: chosen ? colors.ink : colors.fillSoft,
+        color: chosen ? colors.ink : tileColor ?? colors.fillSoft,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         clipBehavior: Clip.antiAlias,
         child: InkWell(

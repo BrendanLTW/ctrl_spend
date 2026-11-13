@@ -1,8 +1,8 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/detail_rows.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
-import 'package:ctrl_spend/features/bills/presentation/bill_detail_rows.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -31,14 +31,13 @@ Future<void> fillIn(WidgetTester tester, {String name = 'Unifi'}) async {
   await tester.pump();
 }
 
-BillDetailRow detail(WidgetTester tester, String label) =>
-    tester.widget<BillDetailRow>(
-      find.byWidgetPredicate((w) => w is BillDetailRow && w.label == label),
-    );
+DetailRow detail(WidgetTester tester, String label) => tester.widget<DetailRow>(
+  find.byWidgetPredicate((w) => w is DetailRow && w.label == label),
+);
 
 Future<void> tapDetail(WidgetTester tester, String label) async {
   await tester.tap(
-    find.byWidgetPredicate((w) => w is BillDetailRow && w.label == label),
+    find.byWidgetPredicate((w) => w is DetailRow && w.label == label),
   );
   await tester.pumpAndSettle();
 }

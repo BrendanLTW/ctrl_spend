@@ -124,6 +124,12 @@ class SettingsScreen extends ConsumerWidget {
                   title: l10n.recurringBills,
                   onTap: () => context.push(Routes.bills),
                 ),
+              if (kDebugMode)
+                ListGroupRow(
+                  leading: tile(AppIcon.target, CategoryColorKey.green),
+                  title: l10n.savingsGoals,
+                  onTap: () => context.push(Routes.goals),
+                ),
               ListGroupRow(
                 leading: tile(AppIcon.download, CategoryColorKey.blue),
                 title: l10n.exportCsv,

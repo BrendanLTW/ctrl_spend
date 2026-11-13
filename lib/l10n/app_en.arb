@@ -599,7 +599,7 @@
       }
     }
   },
-  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} wifi{Wi-Fi} tv{TV} music{Music} other{Wallet}}",
+  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} wifi{Wi-Fi} tv{TV} music{Music} laptop{Laptop} other{Wallet}}",
   "@iconName": {
     "placeholders": {
       "icon": {
@@ -1468,5 +1468,221 @@
         "type": "String"
       }
     }
-  }
+  },
+  "savingsGoals": "Savings goals",
+  "totalSaved": "Total saved",
+  "savedThisMonth": "{amount} this month",
+  "@savedThisMonth": {
+    "description": "Net saved this period, signed: +RM 400.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "activeGoals": "Active goals",
+  "completedGoals": "{count, plural, =1{1 completed goal} other{{count} completed goals}}",
+  "@completedGoals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalNameAmount": "{name} · {amount}",
+  "@goalNameAmount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalChip": "{type} · by {month}",
+  "@goalChip": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalType": "{icon, select, travel{Travel} car{Car} home{Home} laptop{Gadget} heart{Personal} other{Gift}}",
+  "@goalType": {
+    "placeholders": {
+      "icon": {
+        "type": "String"
+      }
+    }
+  },
+  "goalSavedLabel": "Saved",
+  "goalToGoLabel": "To go",
+  "goalPercent": "{percent}%",
+  "@goalPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "goalCardLabel": "{name}, {chip}, {percent}% saved, {saved} saved, {toGo} to go",
+  "@goalCardLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "chip": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "saved": {
+        "type": "String"
+      },
+      "toGo": {
+        "type": "String"
+      }
+    }
+  },
+  "noGoalsTitle": "No goals yet",
+  "noGoalsBody": "Set a target and a date, and see what to put aside each month.",
+  "addGoal": "Add goal",
+  "goalOfTarget": "of {amount}",
+  "@goalOfTarget": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalToGo": "{amount} to go",
+  "@goalToGo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalTarget": "Target {month}",
+  "@goalTarget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalProgressLabel": "{percent}% of {target} saved",
+  "@goalProgressLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "goalOnTrack": "On track",
+  "goalOnTrackBody": "Save {amount} a month to reach it by {month}.",
+  "@goalOnTrackBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalTargetReached": "Target month is here",
+  "goalTargetReachedBody": "Add {amount} to reach it.",
+  "@goalTargetReachedBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalCompleted": "Goal reached",
+  "goalCompletedBody": "You reached {amount}.",
+  "@goalCompletedBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "contributions": "Contributions",
+  "noContributions": "Nothing saved yet. Add money to start.",
+  "addMoney": "Add money",
+  "withdraw": "Withdraw",
+  "contributionAdded": "Added",
+  "contributionWithdrawn": "Withdrawn",
+  "withdrawAtMost": "{amount} saved",
+  "@withdrawAtMost": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "contributionAmountLabel": "Amount {amount}",
+  "@contributionAmountLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteGoal": "Delete goal",
+  "deleteGoalTitle": "Delete {name}?",
+  "@deleteGoalTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteGoalBody": "Its contributions go too. Your spending isn't affected.",
+  "newGoal": "New goal",
+  "editGoal": "Edit goal",
+  "targetAmount": "Target amount",
+  "goalNameHint": "Goal name",
+  "targetDateRow": "Target date",
+  "goalHintAmount": "{amount} a month",
+  "@goalHintAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalHintBody": "to reach {target} by {month}",
+  "@goalHintBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "createGoal": "Create goal",
+  "saveGoal": "Save goal",
+  "setMonth": "Set {month}",
+  "@setMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "previousYear": "Previous year",
+  "nextYear": "Next year"
 }

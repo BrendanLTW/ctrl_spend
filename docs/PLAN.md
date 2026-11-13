@@ -145,7 +145,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §5.11, FR-16
 - [x] **5.5 Goals domain.** Goal and contribution repositories, monthly need (rounded up), completion. Contributions never touch left to spend. Unit tests. *(Months left count from next month to the target month, as S31's RM 616 does; S30's RM 360 example would read RM 450. Completion follows saved and the target.)*
   Refs: PRD §5.12, §8
-- [ ] **5.6 Goals screens.** S29 Savings goals, S30 Goal detail (Add money, Withdraw), S31 Add goal, and the Settings row.
+- [x] **5.6 Goals screens.** S29 Savings goals, S30 Goal detail (Add money, Withdraw), S31 Add goal, and the Settings row. *(A goal's type and colour come from its icon. Edit and Delete live on S31, opened from S30. The Settings row shows in debug builds until 5.9.)*
   Refs: S29–S31, FR-17
 - [ ] **5.7 App lock settings.** Add flutter_secure_storage and local_auth. S37 with PIN setup and change (stored hashed in secure storage), Face ID, Lock after and Hide amounts in app switcher.
   Refs: S37, PRD §5.8, FR-18

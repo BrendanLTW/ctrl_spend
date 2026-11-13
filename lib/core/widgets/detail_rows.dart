@@ -3,21 +3,24 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toggle.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 18, vertical: 12);
 const _minHeight = BoxConstraints(minHeight: 64);
 
-/// S28's Name: the label, and the name typed in on the right.
-class BillNameRow extends StatelessWidget {
+/// A form row with [label] and a name typed in on the right (S28, S31).
+class DetailNameRow extends StatelessWidget {
   const new({
+    required this.label,
+    required this.hint,
     required this.controller,
     required this.maxLength,
     required this.onChanged,
     super.key,
   });
 
+  final String label;
+  final String hint;
   final TextEditingController controller;
   final int maxLength;
   final VoidCallback onChanged;
@@ -26,8 +29,7 @@ class BillNameRow extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
-    final l10n = context.l10n;
-    final style = text.body.copyWith(color: colors.ink, fontSize: 16);
+    final style = text.body.copyWith(color: colors.ink);
     final field = TextField(
       controller: controller,
       maxLength: maxLength,
@@ -38,18 +40,15 @@ class BillNameRow extends StatelessWidget {
       cursorColor: colors.ink,
       onChanged: (_) => onChanged(),
       decoration: InputDecoration.collapsed(
-        hintText: l10n.billNameHint,
+        hintText: hint,
         hintStyle: style.copyWith(color: colors.muted),
       ).copyWith(counterText: ''),
     );
-    final label = ExcludeSemantics(
-      child: Text(
-        l10n.billNameRow,
-        style: text.rowTitle.copyWith(color: colors.ink),
-      ),
+    final title = ExcludeSemantics(
+      child: Text(label, style: text.rowTitle.copyWith(color: colors.ink)),
     );
     return Semantics(
-      label: l10n.billNameRow,
+      label: label,
       child: ConstrainedBox(
         constraints: _minHeight,
         child: Padding(
@@ -58,11 +57,11 @@ class BillNameRow extends StatelessWidget {
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
-                  children: [label, const SizedBox(height: 4), field],
+                  children: [title, const SizedBox(height: 4), field],
                 )
               : Row(
                   children: [
-                    label,
+                    title,
                     const SizedBox(width: 16),
                     Expanded(child: field),
                   ],
@@ -73,9 +72,10 @@ class BillNameRow extends StatelessWidget {
   }
 }
 
-/// An S28 row that opens a picker: the label, an optional [tile], the
-/// value and a chevron. With large text the value goes under the label.
-class BillDetailRow extends StatelessWidget {
+/// A form row that opens a picker (S28, S31): the label, an optional
+/// [tile], the value and a chevron. With large text the value goes under
+/// the label.
+class DetailRow extends StatelessWidget {
   const new({
     required this.label,
     required this.value,
@@ -165,8 +165,9 @@ class BillDetailRow extends StatelessWidget {
   }
 }
 
-/// S28's Remind me: title, detail and a toggle; the whole row toggles.
-class BillToggleRow extends StatelessWidget {
+/// A form row with a toggle, as S28's Remind me: title, detail and a
+/// toggle. The whole row toggles.
+class DetailToggleRow extends StatelessWidget {
   const new({
     required this.title,
     required this.detail,

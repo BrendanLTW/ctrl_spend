@@ -15,14 +15,18 @@ class TextLink extends StatelessWidget {
   });
 
   final String label;
-  final VoidCallback onPressed;
+
+  /// Null disables it, as S30's Withdraw with nothing saved.
+  final VoidCallback? onPressed;
   final bool muted;
   final bool destructive;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final color = destructive
+    final color = onPressed == null
+        ? colors.disabled
+        : destructive
         ? colors.negative
         : muted
         ? colors.muted

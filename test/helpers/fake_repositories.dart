@@ -3,6 +3,7 @@ import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -14,6 +15,7 @@ import 'fake_category_repository.dart';
 import 'fake_csv_file_picker.dart';
 import 'fake_data_eraser.dart';
 import 'fake_file_sharer.dart';
+import 'fake_goal_repository.dart';
 import 'fake_notification_repository.dart';
 import 'fake_notification_scheduler.dart';
 import 'fake_preferences_repository.dart';
@@ -26,6 +28,7 @@ List<Override> fakeRepositories({
   CategoryRepository? categories,
   TransactionRepository? transactions,
   BillRepository? bills,
+  GoalRepository? goals,
   NotificationRepository? notifications,
   NotificationScheduler? scheduler,
   FileSharer? sharer,
@@ -42,6 +45,7 @@ List<Override> fakeRepositories({
     transactions ?? FakeTransactionRepository(),
   ),
   billRepositoryProvider.overrideWithValue(bills ?? FakeBillRepository()),
+  goalRepositoryProvider.overrideWithValue(goals ?? FakeGoalRepository()),
   notificationRepositoryProvider.overrideWithValue(
     notifications ?? FakeNotificationRepository(),
   ),

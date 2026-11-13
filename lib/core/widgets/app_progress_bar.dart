@@ -9,6 +9,7 @@ class AppProgressBar extends StatelessWidget {
     required this.semanticLabel,
     this.color,
     this.onHero = false,
+    this.trackColor,
     super.key,
   });
 
@@ -24,6 +25,9 @@ class AppProgressBar extends StatelessWidget {
   /// The hero card's style: `heroTrack` track, white fill.
   final bool onHero;
 
+  /// The track, when it's tinted to match the fill (S29's goal colours).
+  final Color? trackColor;
+
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -34,7 +38,7 @@ class AppProgressBar extends StatelessWidget {
       child: Container(
         height: 10,
         decoration: ShapeDecoration(
-          color: onHero ? colors.heroTrack : colors.raised,
+          color: trackColor ?? (onHero ? colors.heroTrack : colors.raised),
           shape: const StadiumBorder(),
         ),
         alignment: AlignmentDirectional.centerStart,

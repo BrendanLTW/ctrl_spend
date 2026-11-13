@@ -9,6 +9,9 @@ import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/import_failed_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/add_goal_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/goal_detail_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -81,6 +84,18 @@ abstract final class Routes {
 
   /// S28 Edit bill.
   static String editBill(int id) => '/settings/bills/$id/edit';
+
+  /// S29 Savings goals (v1.1).
+  static const goals = '/settings/goals';
+
+  /// S31 New goal.
+  static const newGoal = '/settings/goals/new';
+
+  /// S30 Goal detail.
+  static String goal(int id) => '/settings/goals/$id';
+
+  /// S31 Edit goal; pops with true when the goal was deleted.
+  static String editGoal(int id) => '/settings/goals/$id/edit';
 
   /// S14 Notifications.
   static const notifications = '/notifications';
@@ -212,6 +227,27 @@ GoRouter appRouter(Ref ref) {
         path: '/settings/bills/:id/edit',
         builder: (context, state) => AddBillScreen(
           billId: int.tryParse(state.pathParameters['id'] ?? ''),
+        ),
+      ),
+      GoRoute(
+        path: Routes.goals,
+        builder: (context, state) => const SavingsGoalsScreen(),
+      ),
+      // Before ':id', so "new" isn't read as an id.
+      GoRoute(
+        path: Routes.newGoal,
+        builder: (context, state) => const AddGoalScreen(),
+      ),
+      GoRoute(
+        path: '/settings/goals/:id',
+        builder: (context, state) => GoalDetailScreen(
+          goalId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+        ),
+      ),
+      GoRoute(
+        path: '/settings/goals/:id/edit',
+        builder: (context, state) => AddGoalScreen(
+          goalId: int.tryParse(state.pathParameters['id'] ?? ''),
         ),
       ),
       GoRoute(

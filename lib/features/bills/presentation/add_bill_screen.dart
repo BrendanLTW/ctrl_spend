@@ -7,12 +7,12 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
+import 'package:ctrl_spend/core/widgets/detail_rows.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
-import 'package:ctrl_spend/features/bills/presentation/bill_detail_rows.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_labels.dart';
 import 'package:ctrl_spend/features/bills/presentation/repeat_picker_sheet.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
@@ -238,12 +238,14 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                   SectionLabel(l10n.details),
                   ListGroup(
                     children: [
-                      BillNameRow(
+                      DetailNameRow(
+                        label: l10n.billNameRow,
+                        hint: l10n.billNameHint,
                         controller: _name,
                         maxLength: AddBillScreen.maxNameLength,
                         onChanged: () => setState(() {}),
                       ),
-                      BillDetailRow(
+                      DetailRow(
                         label: l10n.categoryRowLabel,
                         value: selected?.name ?? '',
                         tile: selected == null
@@ -255,17 +257,17 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                               ),
                         onTap: () => _pickCategory(choices, selected),
                       ),
-                      BillDetailRow(
+                      DetailRow(
                         label: l10n.billRepeatsRow,
                         value: l10n.repeatLabel(_repeat),
                         onTap: _pickRepeat,
                       ),
-                      BillDetailRow(
+                      DetailRow(
                         label: l10n.billNextDueRow,
                         value: DateFormat('d MMM y', locale).format(_nextDue),
                         onTap: _pickNextDue,
                       ),
-                      BillToggleRow(
+                      DetailToggleRow(
                         title: l10n.billRemindMe,
                         detail: l10n.billRemindDetail,
                         value: _remind,

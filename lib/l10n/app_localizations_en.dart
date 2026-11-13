@@ -767,6 +767,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'wifi': 'Wi-Fi',
       'tv': 'TV',
       'music': 'Music',
+      'laptop': 'Laptop',
       'other': 'Wallet',
     });
     return '$_temp0';
@@ -1658,4 +1659,210 @@ class AppLocalizationsEn extends AppLocalizations {
   String notifyBillBody(String amount, String date) {
     return '$amount on $date. Mark it paid in Recurring bills.';
   }
+
+  @override
+  String get savingsGoals => 'Savings goals';
+
+  @override
+  String get totalSaved => 'Total saved';
+
+  @override
+  String savedThisMonth(String amount) {
+    return '$amount this month';
+  }
+
+  @override
+  String get activeGoals => 'Active goals';
+
+  @override
+  String completedGoals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count completed goals',
+      one: '1 completed goal',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String goalNameAmount(String name, String amount) {
+    return '$name · $amount';
+  }
+
+  @override
+  String goalChip(String type, String month) {
+    return '$type · by $month';
+  }
+
+  @override
+  String goalType(String icon) {
+    String _temp0 = intl.Intl.selectLogic(icon, {
+      'travel': 'Travel',
+      'car': 'Car',
+      'home': 'Home',
+      'laptop': 'Gadget',
+      'heart': 'Personal',
+      'other': 'Gift',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get goalSavedLabel => 'Saved';
+
+  @override
+  String get goalToGoLabel => 'To go';
+
+  @override
+  String goalPercent(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String goalCardLabel(
+    String name,
+    String chip,
+    int percent,
+    String saved,
+    String toGo,
+  ) {
+    return '$name, $chip, $percent% saved, $saved saved, $toGo to go';
+  }
+
+  @override
+  String get noGoalsTitle => 'No goals yet';
+
+  @override
+  String get noGoalsBody =>
+      'Set a target and a date, and see what to put aside each month.';
+
+  @override
+  String get addGoal => 'Add goal';
+
+  @override
+  String goalOfTarget(String amount) {
+    return 'of $amount';
+  }
+
+  @override
+  String goalToGo(String amount) {
+    return '$amount to go';
+  }
+
+  @override
+  String goalTarget(String month) {
+    return 'Target $month';
+  }
+
+  @override
+  String goalProgressLabel(int percent, String target) {
+    return '$percent% of $target saved';
+  }
+
+  @override
+  String get goalOnTrack => 'On track';
+
+  @override
+  String goalOnTrackBody(String amount, String month) {
+    return 'Save $amount a month to reach it by $month.';
+  }
+
+  @override
+  String get goalTargetReached => 'Target month is here';
+
+  @override
+  String goalTargetReachedBody(String amount) {
+    return 'Add $amount to reach it.';
+  }
+
+  @override
+  String get goalCompleted => 'Goal reached';
+
+  @override
+  String goalCompletedBody(String amount) {
+    return 'You reached $amount.';
+  }
+
+  @override
+  String get contributions => 'Contributions';
+
+  @override
+  String get noContributions => 'Nothing saved yet. Add money to start.';
+
+  @override
+  String get addMoney => 'Add money';
+
+  @override
+  String get withdraw => 'Withdraw';
+
+  @override
+  String get contributionAdded => 'Added';
+
+  @override
+  String get contributionWithdrawn => 'Withdrawn';
+
+  @override
+  String withdrawAtMost(String amount) {
+    return '$amount saved';
+  }
+
+  @override
+  String contributionAmountLabel(String amount) {
+    return 'Amount $amount';
+  }
+
+  @override
+  String get deleteGoal => 'Delete goal';
+
+  @override
+  String deleteGoalTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteGoalBody =>
+      'Its contributions go too. Your spending isn\'t affected.';
+
+  @override
+  String get newGoal => 'New goal';
+
+  @override
+  String get editGoal => 'Edit goal';
+
+  @override
+  String get targetAmount => 'Target amount';
+
+  @override
+  String get goalNameHint => 'Goal name';
+
+  @override
+  String get targetDateRow => 'Target date';
+
+  @override
+  String goalHintAmount(String amount) {
+    return '$amount a month';
+  }
+
+  @override
+  String goalHintBody(String target, String month) {
+    return 'to reach $target by $month';
+  }
+
+  @override
+  String get createGoal => 'Create goal';
+
+  @override
+  String get saveGoal => 'Save goal';
+
+  @override
+  String setMonth(String month) {
+    return 'Set $month';
+  }
+
+  @override
+  String get previousYear => 'Previous year';
+
+  @override
+  String get nextYear => 'Next year';
 }

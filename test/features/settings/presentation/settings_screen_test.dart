@@ -9,6 +9,7 @@ import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
@@ -97,17 +98,21 @@ void main() {
       expect(find.text('Import from CSV'), findsOneWidget);
     });
 
-    testWidgets('v1.1 rows are hidden, bar debug-only Recurring bills', (
+    testWidgets('App lock is hidden; bills and goals show in debug', (
       tester,
     ) async {
       await pumpAt(tester, Routes.settings);
       expect(find.text('App lock'), findsNothing);
-      expect(find.text('Savings goals'), findsNothing);
-      // Tests run as debug builds, where the bills row shows until 5.9.
+      // Tests run as debug builds, where these rows show until 5.9.
       expect(kDebugMode, isTrue);
       await tester.tap(find.text('Recurring bills'));
       await tester.pumpAndSettle();
       expect(find.byType(RecurringBillsScreen), findsOneWidget);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Savings goals'));
+      await tester.pumpAndSettle();
+      expect(find.byType(SavingsGoalsScreen), findsOneWidget);
     });
 
     testWidgets('every row can be tapped', (tester) async {

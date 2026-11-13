@@ -16,6 +16,7 @@ import '../features/categories/presentation/category_manager_screen_test.dart'
 import '../features/dashboard/presentation/dashboard_screen_test.dart' as dash;
 import '../features/data_transfer/presentation/export_screen_test.dart' as exp;
 import '../features/data_transfer/presentation/import_test.dart' as imp;
+import '../features/goals/presentation/goals_screens_test.dart' as goal;
 import '../features/insights/presentation/insights_screen_test.dart' as ins;
 import '../features/insights/presentation/insights_trend_test.dart' as trend;
 import '../features/insights/presentation/insights_week_test.dart' as week;
@@ -152,5 +153,25 @@ final screens = <String, Drive>{
     await nb.tapDetail(t, 'Repeats');
     await t.tap(find.text('Custom…'));
     await t.pumpAndSettle();
+  },
+  'S29 savings goals': (t, th) => goal.pumpApp(t, theme: th),
+  'S29 goals empty': (t, th) => goal.pumpApp(t, theme: th, seed: null),
+  'S30 goal detail': (t, th) =>
+      goal.pumpApp(t, theme: th).then((_) => goal.openGoal(t, 'Bali trip')),
+  'S30 add money': (t, th) async {
+    await goal.pumpApp(t, theme: th);
+    await goal.openGoal(t, 'Bali trip');
+    await goal.tapText(t, 'Add money');
+  },
+  'S31 new goal': (t, th) async {
+    await goal.pumpApp(t, theme: th, seed: null);
+    await goal.tapText(t, 'Add goal');
+    await add.done(t);
+  },
+  'S31 month picker': (t, th) async {
+    await goal.pumpApp(t, theme: th, seed: null);
+    await goal.tapText(t, 'Add goal');
+    await add.done(t);
+    await goal.tapText(t, 'Target date');
   },
 };

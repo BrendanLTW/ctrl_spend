@@ -41,6 +41,15 @@ DESIGN §8 asks for line icons on a 24 grid, round caps and joins, stored as SVG
 | S28 icon | No icon field, yet S27 shows one per bill | An Icon section (12 bill icons and the 7 colours) | Bills get their own tile; schema v4 |
 | S44 Custom… | Not designed | A sheet: Every 1–99, Days · Weeks · Months · Years | — |
 | S44 (dark) | White card, near-invisible text | `fillSoft` card with `ink` text | Design bug |
+| S29 goal type and colour | "Travel" purple, "Gadget" pink; S31 picks only an icon | The icon sets both: Travel purple, Car blue, Home green, Gadget pink, Personal red, Gift orange | Only Travel and Gadget are on the canvas |
+| S29 Total saved | Amount wraps onto two lines | One line, with this period's net beside it | — |
+| S29 completed goals | A collapsed row | Tapping it lists them; each opens S30 | The canvas doesn't show it open |
+| S29, S30, S31 Travel icon | Paper-plane arrow | Lucide plane | The Travel icon key is shared with categories |
+| S30 monthly amount | "Save RM 360 a month" | RM 450 for that example | Months left count from next month to the target month, which gives S31's RM 616 (agreed in 5.5) |
+| S30 Edit, Delete | Not on the canvas | "Edit" in the header opens S31, which has Delete | — |
+| S30 Add money, Withdraw | Not designed | The keypad sheet with an optional note | A blank note saves as "Added" or "Withdrawn" |
+| S31 Target amount | "8,000" | "8,000.00" | Amounts show cents everywhere |
+| S31 Target date | Not designed | A month picker sheet | S43 picks days |
 | S36 title | — | Kept to one line, scaling down on narrow screens | — |
 | S41 Note row | Always shown | Only when there's a note | S12 has one text field |
 | S42 and swipe-to-delete red | — | The light theme's red in both themes | Contrast |

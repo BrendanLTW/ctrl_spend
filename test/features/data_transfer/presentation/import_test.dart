@@ -82,6 +82,9 @@ Future<void> tap(WidgetTester tester, String text) async {
 Future<void> importFile(WidgetTester tester, String name, String text) async {
   picker.willPick(name, text);
   await tester.scrollUntilVisible(find.text('Import from CSV'), 200);
+  // Built isn't on screen: bring the whole row into view.
+  await tester.ensureVisible(find.text('Import from CSV'));
+  await tester.pumpAndSettle();
   await tap(tester, 'Import from CSV');
 }
 
@@ -102,6 +105,9 @@ void main() {
   testWidgets('cancelling the picker does nothing', (tester) async {
     await pumpSettings(tester);
     await tester.scrollUntilVisible(find.text('Import from CSV'), 200);
+  // Built isn't on screen: bring the whole row into view.
+  await tester.ensureVisible(find.text('Import from CSV'));
+  await tester.pumpAndSettle();
     await tap(tester, 'Import from CSV');
     expect(picker.picks, 1);
     expect(transactions.all, isEmpty);
@@ -162,6 +168,9 @@ void main() {
       await pumpSettings(tester);
       picker.files.add((name: 'photo.csv', bytes: [0xff, 0xfe, 0x00]));
       await tester.scrollUntilVisible(find.text('Import from CSV'), 200);
+  // Built isn't on screen: bring the whole row into view.
+  await tester.ensureVisible(find.text('Import from CSV'));
+  await tester.pumpAndSettle();
       await tap(tester, 'Import from CSV');
       expect(find.text("The file isn't readable text"), findsOneWidget);
       expect(

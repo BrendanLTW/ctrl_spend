@@ -183,6 +183,7 @@ void main() {
   ]) {
     testWidgets('the row is red in ${theme.name} mode', (tester) async {
       await pumpSettings(tester, theme: theme);
+      await tester.scrollUntilVisible(find.text('Delete all data'), 200);
       final row = tester.widget<ListGroupRow>(
         find.byWidgetPredicate(
           (w) => w is ListGroupRow && w.title == 'Delete all data',
