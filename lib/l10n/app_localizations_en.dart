@@ -1865,4 +1865,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nextYear => 'Next year';
+
+  @override
+  String problemTooLong(String column, int max) {
+    return '$column is over $max characters';
+  }
+
+  @override
+  String problemFutureDate(String value) {
+    return '“$value” is in the future';
+  }
+
+  @override
+  String get columnTitle => 'Title';
+
+  @override
+  String get columnNote => 'Note';
 }

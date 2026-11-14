@@ -1684,5 +1684,26 @@
     }
   },
   "previousYear": "Previous year",
-  "nextYear": "Next year"
+  "nextYear": "Next year",
+  "problemTooLong": "{column} is over {max} characters",
+  "@problemTooLong": {
+    "placeholders": {
+      "column": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "problemFutureDate": "“{value}” is in the future",
+  "@problemFutureDate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "columnTitle": "Title",
+  "columnNote": "Note"
 }

@@ -96,15 +96,20 @@ class DriftCategoryRepository implements CategoryRepository {
         CategoriesCompanion(archived: Value(archived)),
       );
 
-  /// Throws [DuplicateCategoryNameException] if another category of [type]
-  /// has [name], compared like the table's NOCASE unique key. Call inside
-  /// the write's transaction so nothing can take the name in between.
+  /// Throws [ArgumentError] for a blank name or one over
+  /// [maxCategoryNameLength], and [DuplicateCategoryNameException] if
+  /// another category of [type] has [name], compared like the table's
+  /// NOCASE unique key. Call inside the write's transaction so nothing can
+  /// take the name in between.
   Future<void> _checkNameFree(
     String name,
     TransactionType type, {
     int? exceptId,
   }) async {
     final trimmed = name.trim();
+    if (trimmed.isEmpty || trimmed.length > maxCategoryNameLength) {
+      throw ArgumentError.value(name, 'name', 'must be 1–20 characters');
+    }
     final query = _db.select(_db.categories)
       ..where(
         (c) =>

@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/data/category_check.dart';
@@ -8,9 +9,11 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:drift/drift.dart';
 
 class DriftTransactionRepository implements TransactionRepository {
-  new(this._db);
+  /// The second argument is the app clock, for the no-future-dates rule.
+  new(this._db, [this._now = DateTime.now]);
 
   final AppDatabase _db;
+  final Clock _now;
 
   @override
   Stream<List<Transaction>> watch({
@@ -55,11 +58,18 @@ class DriftTransactionRepository implements TransactionRepository {
     required TransactionType type,
     required int categoryId,
     required DateTime occurredAt,
-    required String title,
+    String? title,
     String? note,
   }) => _db.transaction(() async {
     _checkAmount(amountMinor);
-    await _db.checkCategory(categoryId, type);
+    final category = await _db.checkCategory(categoryId, type);
+    final fields = _fields(title, note, category?.name ?? '');
+    checkTransactionFields(
+      title: fields.title,
+      note: fields.note,
+      occurredAt: occurredAt,
+      now: _now(),
+    );
     final row = await _db
         .into(_db.transactions)
         .insertReturning(
@@ -68,23 +78,52 @@ class DriftTransactionRepository implements TransactionRepository {
             type: type.name,
             categoryId: categoryId,
             occurredAt: occurredAt.toUtc(),
-            title: title,
-            note: Value(note),
+            title: fields.title,
+            note: Value(fields.note),
           ),
         );
     return row.toEntity();
   });
 
+  /// [title] and [note] trimmed; a blank title is [categoryName] and a
+  /// blank note is none.
+  ({String title, String? note}) _fields(
+    String? title,
+    String? note,
+    String categoryName,
+  ) {
+    final t = title?.trim() ?? '';
+    final n = note?.trim() ?? '';
+    return (title: t.isEmpty ? categoryName : t, note: n.isEmpty ? null : n);
+  }
+
   @override
   Future<void> update(Transaction transaction) => _db.transaction(() async {
     _checkAmount(transaction.amountMinor);
     final current = await _byId(transaction.id);
-    await _db.checkCategory(
+    final category = await _db.checkCategory(
       transaction.categoryId,
       transaction.type,
       allowArchived: current.categoryId == transaction.categoryId,
     );
-    await _db.update(_db.transactions).replace(transaction.toCompanion());
+    final fields = _fields(
+      transaction.title,
+      transaction.note,
+      category?.name ?? '',
+    );
+    checkTransactionFields(
+      title: fields.title,
+      note: fields.note,
+      occurredAt: transaction.occurredAt,
+      now: _now(),
+    );
+    await _db
+        .update(_db.transactions)
+        .replace(
+          transaction
+              .copyWith(title: fields.title, note: fields.note)
+              .toCompanion(),
+        );
   });
 
   @override
@@ -124,8 +163,15 @@ class DriftTransactionRepository implements TransactionRepository {
           return ids[key] = id;
         }
 
+        final now = _now();
         for (final t in rows) {
           _checkAmount(t.amountMinor);
+          checkTransactionFields(
+            title: t.title,
+            note: t.note,
+            occurredAt: t.occurredAt,
+            now: now,
+          );
           await _db
               .into(_db.transactions)
               .insert(

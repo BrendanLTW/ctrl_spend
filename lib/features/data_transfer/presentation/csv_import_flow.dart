@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
@@ -28,7 +29,10 @@ Future<void> importCsv(
 
   ImportResult result;
   try {
-    result = parseTransactionsCsv(utf8.decode(file.bytes));
+    result = parseTransactionsCsv(
+      utf8.decode(file.bytes),
+      now: ref.read(clockProvider)(),
+    );
   } on FormatException {
     result = (rows: const [], problems: const [NotText()]);
   }

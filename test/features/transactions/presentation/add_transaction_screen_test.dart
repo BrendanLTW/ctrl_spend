@@ -194,10 +194,7 @@ void main() {
       await done(tester);
       await tester.enterText(find.byType(TextField), 'x' * 80);
       final field = tester.widget<TextField>(find.byType(TextField));
-      expect(
-        field.controller!.text.length,
-        AddTransactionScreen.maxTitleLength,
-      );
+      expect(field.controller!.text.length, maxTitleLength);
     });
   });
 

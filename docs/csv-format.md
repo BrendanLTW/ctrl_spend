@@ -45,12 +45,12 @@ Code: `lib/features/data_transfer/domain/csv_import.dart` and `TransactionReposi
 
 | Column | Accepted | Problem shown |
 |---|---|---|
-| `date` | `YYYY-MM-DD` or `DD/MM/YYYY`, only real dates | `"31/02/2026" isn't a real date`, `Date is empty` |
+| `date` | `YYYY-MM-DD` or `DD/MM/YYYY`, only real dates, not after today | `"31/02/2026" isn't a real date`, `"2026-12-01" is in the future`, `Date is empty` |
 | `time` | `HH:mm`, 24-hour. Empty means 12:00 | `"25:00" isn't a time` |
 | `type` | `expense` or `income`, any case | `"spend" isn't expense or income`, `Type is empty` |
-| `category` | Any name. Matched by name and type, ignoring case, archived categories included. A new name creates a category with the wallet icon and the neutral colour | `Category is empty` |
-| `title` | Any text. Empty means the category name | — |
+| `category` | Up to 20 characters. Matched by name and type, ignoring case, archived categories included. A new name creates a category with the wallet icon and the neutral colour | `Category is empty`, `Category is over 20 characters` |
+| `title` | Up to 40 characters. Empty means the category name | `Title is over 40 characters` |
 | `amount` | Above 0, at most two decimals, `,` allowed as a thousands separator (`1,234.50`) | `"abc" isn't an amount`, `Amount is empty` |
-| `note` | Any text. Empty means no note | — |
+| `note` | Up to 200 characters. Empty means no note | `Note is over 200 characters` |
 
 **Download a sample CSV** on S36 shares `ctrlspend-sample.csv` with three example rows.

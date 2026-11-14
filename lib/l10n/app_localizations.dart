@@ -2835,6 +2835,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Next year'**
   String get nextYear;
+
+  /// No description provided for @problemTooLong.
+  ///
+  /// In en, this message translates to:
+  /// **'{column} is over {max} characters'**
+  String problemTooLong(String column, int max);
+
+  /// No description provided for @problemFutureDate.
+  ///
+  /// In en, this message translates to:
+  /// **'“{value}” is in the future'**
+  String problemFutureDate(String value);
+
+  /// No description provided for @columnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Title'**
+  String get columnTitle;
+
+  /// No description provided for @columnNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Note'**
+  String get columnNote;
 }
 
 class _AppLocalizationsDelegate

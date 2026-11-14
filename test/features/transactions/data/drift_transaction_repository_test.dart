@@ -139,6 +139,84 @@ void main() {
     });
   });
 
+  group('field rules (PRD §5.3)', () {
+    // 6 Nov 2026, 12:00: the clock the no-future-dates rule reads.
+    late DriftTransactionRepository fixed;
+    setUp(
+      () => fixed = DriftTransactionRepository(
+        db,
+        () => DateTime(2026, 11, 6, 12),
+      ),
+    );
+
+    Future<Transaction> save({String? title, String? note, DateTime? at}) =>
+        fixed.add(
+          amountMinor: 1000,
+          type: TransactionType.expense,
+          categoryId: food,
+          occurredAt: at ?? DateTime(2026, 11, 6, 9),
+          title: title,
+          note: note,
+        );
+
+    test(
+      'a blank title becomes the category name; a blank note none',
+      () async {
+        final t = await save(title: '  ', note: ' ');
+        expect((t.title, t.note), ('Food', null));
+        final u = await save(note: ' with egg ');
+        expect((u.title, u.note), ('Food', 'with egg'));
+      },
+    );
+
+    test('a title over 40 or a note over 200 is refused', () async {
+      expect((await save(title: 'a' * 40)).title, hasLength(40));
+      await expectLater(save(title: 'a' * 41), throwsArgumentError);
+      expect((await save(note: 'n' * 200)).note, hasLength(200));
+      await expectLater(save(note: 'n' * 201), throwsArgumentError);
+    });
+
+    test('later today is fine; tomorrow is refused', () async {
+      expect(await save(at: DateTime(2026, 11, 6, 23, 59)), isNotNull);
+      await expectLater(save(at: DateTime(2026, 11, 7)), throwsArgumentError);
+    });
+
+    test('edits follow the same rules', () async {
+      final t = await save(title: 'Lunch');
+      await expectLater(
+        fixed.update(t.copyWith(occurredAt: DateTime(2026, 11, 8).toUtc())),
+        throwsArgumentError,
+      );
+      await fixed.update(t.copyWith(title: ''));
+      expect((await fixed.watch().first).single.title, 'Food');
+    });
+
+    test('an import with a future row saves nothing', () async {
+      await expectLater(
+        fixed.importAll([
+          (
+            occurredAt: DateTime(2026, 11, 5),
+            type: TransactionType.expense,
+            category: 'Food',
+            title: 'Lunch',
+            amountMinor: 1000,
+            note: null,
+          ),
+          (
+            occurredAt: DateTime(2026, 11, 9),
+            type: TransactionType.expense,
+            category: 'Food',
+            title: 'Dinner',
+            amountMinor: 1000,
+            note: null,
+          ),
+        ]),
+        throwsArgumentError,
+      );
+      expect(await fixed.watch().first, isEmpty);
+    });
+  });
+
   group('add', () {
     test('stores the time in UTC and returns the saved entry', () async {
       final local = DateTime(2026, 11, 6, 21, 15);

@@ -1,4 +1,5 @@
 import 'package:csv/csv.dart';
+import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_export.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -57,6 +58,22 @@ final class NotAType extends ImportProblem {
   final String value;
 }
 
+/// A title, note or new category name over its limit (PRD §5.3, §5.9).
+final class TooLong extends ImportProblem {
+  const new(super.row, this.column, this.max);
+
+  /// One of [CsvColumns].
+  final String column;
+  final int max;
+}
+
+/// A date after today: no future dates (PRD §5.3).
+final class FutureDate extends ImportProblem {
+  const new(super.row, this.value);
+
+  final String value;
+}
+
 /// The rows to import, or every problem found. Never both: import is all
 /// or nothing (PRD §5.8).
 typedef ImportResult = ({List<ImportRow> rows, List<ImportProblem> problems});
@@ -70,8 +87,8 @@ const List<String> _required = [
 
 /// Checks every row of [text] (docs/csv-format.md, Import). Columns are
 /// found by their header names; `time`, `title` and `note` are optional.
-/// Blank lines are skipped.
-ImportResult parseTransactionsCsv(String text) {
+/// Blank lines are skipped. Rows dated after [now] are refused.
+ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
   final body = text.startsWith('﻿') ? text.substring(1) : text;
   final table = [
     for (final row in csv.decode(body))
@@ -126,6 +143,8 @@ ImportResult parseTransactionsCsv(String text) {
     final category = cell(row, CsvColumns.category);
     if (category.isEmpty) {
       problems.add(EmptyField(number, CsvColumns.category));
+    } else if (category.length > maxCategoryNameLength) {
+      problems.add(TooLong(number, CsvColumns.category, maxCategoryNameLength));
     }
 
     final amountText = cell(row, CsvColumns.amount);
@@ -136,11 +155,24 @@ ImportResult parseTransactionsCsv(String text) {
       problems.add(NotAnAmount(number, amountText));
     }
 
-    if (problems.length > before) continue;
     final title = cell(row, CsvColumns.title);
+    if (title.length > maxTitleLength) {
+      problems.add(TooLong(number, CsvColumns.title, maxTitleLength));
+    }
     final note = cell(row, CsvColumns.note);
+    if (note.length > maxNoteLength) {
+      problems.add(TooLong(number, CsvColumns.note, maxNoteLength));
+    }
+    final occurredAt = date == null || time == null
+        ? null
+        : DateTime(date.year, date.month, date.day, time.$1, time.$2);
+    if (occurredAt != null && isFutureDay(occurredAt, now)) {
+      problems.add(FutureDate(number, dateText));
+    }
+
+    if (problems.length > before) continue;
     rows.add((
-      occurredAt: DateTime(date!.year, date.month, date.day, time!.$1, time.$2),
+      occurredAt: occurredAt!,
       type: type!,
       category: category,
       title: title.isEmpty ? category : title,

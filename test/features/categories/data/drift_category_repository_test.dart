@@ -108,6 +108,17 @@ void main() {
     });
   });
 
+  test('a name must be 1 to 20 characters (PRD §5.9)', () async {
+    expect((await addCoffee(name: 'a' * 20)).name, hasLength(20));
+    await expectLater(addCoffee(name: 'b' * 21), throwsArgumentError);
+    await expectLater(addCoffee(name: '   '), throwsArgumentError);
+    final coffee = await byName('a' * 20);
+    await expectLater(
+      repo.update(coffee.copyWith(name: 'c' * 21)),
+      throwsArgumentError,
+    );
+  });
+
   group('add', () {
     test('trims the name and puts the category last in its type', () async {
       final coffee = await addCoffee(name: '  Coffee ');

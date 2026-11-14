@@ -45,9 +45,6 @@ final List<CategoryColorKey> pickerColours = [
     if (key != CategoryColorKey.neutral) key,
 ];
 
-/// The longest category name (S23, S24).
-const maxCategoryNameLength = 30;
-
 /// The name with a preview tile of the chosen icon and colour.
 class CategoryNameField extends StatelessWidget {
   const new({

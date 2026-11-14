@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
@@ -48,7 +49,10 @@ List<Override> appOverrides({NotificationScheduler? scheduler}) => [
     (ref) => DriftCategoryRepository(ref.watch(appDatabaseProvider)),
   ),
   transactionRepositoryProvider.overrideWith(
-    (ref) => DriftTransactionRepository(ref.watch(appDatabaseProvider)),
+    (ref) => DriftTransactionRepository(
+      ref.watch(appDatabaseProvider),
+      ref.watch(clockProvider),
+    ),
   ),
   billRepositoryProvider.overrideWith(
     (ref) => DriftBillRepository(ref.watch(appDatabaseProvider)),

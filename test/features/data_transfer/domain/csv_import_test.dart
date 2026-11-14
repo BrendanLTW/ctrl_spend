@@ -4,8 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 const header = 'date,time,type,category,title,amount,note';
 
+/// 4 Nov 2026, after every date in these files.
+final now = DateTime(2026, 11, 4, 23, 59);
+
 ImportResult parse(List<String> lines) =>
-    parseTransactionsCsv(lines.join('\r\n'));
+    parseTransactionsCsv(lines.join('\r\n'), now: now);
 
 void main() {
   test('reads an exported file', () {
@@ -53,6 +56,7 @@ void main() {
   test('a byte-order mark and blank lines are ignored', () {
     final result = parseTransactionsCsv(
       '﻿$header\r\n\r\n2026-11-04,08:05,expense,Food,x,1,\r\n,,,,,,\r\n',
+      now: now,
     );
     expect(result.problems, isEmpty);
     expect(result.rows, hasLength(1));
@@ -88,6 +92,8 @@ void main() {
             NotAType(:final value) => '${p.row} type $value',
             EmptyField(:final column) => '${p.row} empty $column',
             NotAnAmount(:final value) => '${p.row} amount $value',
+            TooLong(:final column) => '${p.row} long $column',
+            FutureDate(:final value) => '${p.row} future $value',
             MissingColumns() || NotText() => 'file',
           },
       ],
@@ -119,8 +125,39 @@ void main() {
     });
   });
 
+  test('long fields and future dates are problems by row', () {
+    final result = parse([
+      header,
+      '2026-11-04,,expense,Food,${'t' * 41},1,',
+      '2026-11-04,,expense,Food,x,1,${'n' * 201}',
+      '2026-11-04,,expense,${'c' * 21},x,1,',
+      '2026-11-05,,expense,Food,x,1,',
+      '2026-11-04,,expense,${'c' * 20},${'t' * 40},1,${'n' * 200}',
+    ]);
+    expect(result.rows, isEmpty);
+    expect(
+      [
+        for (final p in result.problems)
+          switch (p) {
+            TooLong(:final column, :final max) => '${p.row} $column $max',
+            FutureDate(:final value) => '${p.row} future $value',
+            _ => '${p.row} other',
+          },
+      ],
+      ['2 title 40', '3 note 200', '4 category 20', '5 future 2026-11-05'],
+    );
+  });
+
+  test('a row dated today with no time is not in the future', () {
+    final result = parseTransactionsCsv(
+      '$header\r\n2026-11-04,,expense,Food,x,1,\r\n',
+      now: DateTime(2026, 11, 4, 8),
+    );
+    expect(result.problems, isEmpty);
+  });
+
   test('the sample parses cleanly', () {
-    final result = parseTransactionsCsv(sampleCsv);
+    final result = parseTransactionsCsv(sampleCsv, now: now);
     expect(result.problems, isEmpty);
     expect(result.rows, hasLength(3));
   });

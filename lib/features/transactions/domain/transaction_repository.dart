@@ -48,15 +48,17 @@ abstract interface class TransactionRepository {
     String? search,
   });
 
-  /// Saves a new transaction and returns it with its id.
-  /// Throws [ArgumentError] for an amount of 0 or less,
-  /// [CategoryTypeMismatchException] or [ArchivedCategoryException].
+  /// Saves a new transaction and returns it with its id. A blank [title]
+  /// becomes the category's name; title and note are trimmed, and a blank
+  /// note is none. Throws [ArgumentError] for an amount of 0 or less or
+  /// any [checkTransactionFields] rule, [CategoryTypeMismatchException] or
+  /// [ArchivedCategoryException].
   Future<Transaction> add({
     required int amountMinor,
     required TransactionType type,
     required int categoryId,
     required DateTime occurredAt,
-    required String title,
+    String? title,
     String? note,
   });
 

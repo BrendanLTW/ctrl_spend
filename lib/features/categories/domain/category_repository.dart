@@ -26,7 +26,8 @@ abstract interface class CategoryRepository {
   Stream<List<Category>> watch({TransactionType? type, bool? archived});
 
   /// Adds a category last in its type. The name is trimmed.
-  /// Throws [DuplicateCategoryNameException].
+  /// Throws [ArgumentError] for a blank name or one over
+  /// [maxCategoryNameLength], or [DuplicateCategoryNameException].
   Future<Category> add({
     required String name,
     required TransactionType type,
@@ -36,7 +37,8 @@ abstract interface class CategoryRepository {
   });
 
   /// Saves every field of [category]. The name is trimmed.
-  /// Throws [DuplicateCategoryNameException].
+  /// Throws [ArgumentError] for a blank name or one over
+  /// [maxCategoryNameLength], or [DuplicateCategoryNameException].
   Future<void> update(Category category);
 
   Future<void> archive(int id);
