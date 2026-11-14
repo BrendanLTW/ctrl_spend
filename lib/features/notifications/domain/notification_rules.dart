@@ -162,17 +162,60 @@ DateTime? billReminderAt(Bill bill) => switch (bill.remindDaysBefore) {
   final days => _at(_addDays(bill.nextDue, -days), billReminderMinutes),
 };
 
+/// A budget alert's kind and category (null for the monthly budget). One
+/// of each is sent per period at most (PRD §5.4).
+typedef AlertKey = (NotificationKind kind, int? categoryId);
+
+/// The budget alerts already in [inbox] for [period], by when they were
+/// written.
+Set<AlertKey> alertsSentIn(Iterable<AppNotification> inbox, Period period) => {
+  for (final n in inbox)
+    if ((n.kind == NotificationKind.budgetWarning ||
+            n.kind == NotificationKind.overBudget) &&
+        period.contains(n.createdAt))
+      (n.kind, n.categoryId),
+};
+
 /// What a change to the transactions, from [before] to [after], is worth
 /// telling: a limit or the budget crossing 80% or 100% this period (when
 /// budget alerts are on), and each new income transaction. Only an upward
-/// crossing counts, so later edits above a threshold stay quiet. Jumping
-/// straight past 100% gives only the over-budget alert.
+/// crossing counts, and an alert in [alreadySent] isn't sent again this
+/// period, even if spending dropped below and crossed again (PRD §5.4).
+/// Jumping straight past 100% gives only the over-budget alert.
 List<NotificationEvent> transactionEvents({
   required Iterable<Transaction> before,
   required Iterable<Transaction> after,
   required Iterable<Category> categories,
   required Preferences prefs,
   required DateTime now,
+  Set<AlertKey> alreadySent = const {},
+}) => [
+  ...budgetAlerts(
+    before: before,
+    after: after,
+    categories: categories,
+    prefs: prefs,
+    now: now,
+    alreadySent: alreadySent,
+  ),
+  ...incomeEvents(
+    before: before,
+    after: after,
+    categories: categories,
+    now: now,
+  ),
+];
+
+/// The budget alerts in [transactionEvents]. With an empty [before], every
+/// threshold already passed this period alerts: used when the month start
+/// changes and the period with it (PRD §5.8).
+List<NotificationEvent> budgetAlerts({
+  required Iterable<Transaction> before,
+  required Iterable<Transaction> after,
+  required Iterable<Category> categories,
+  required Preferences prefs,
+  required DateTime now,
+  Set<AlertKey> alreadySent = const {},
 }) {
   final period = periodFor(now, prefs.monthStartDay);
   final days = daysLeft(period, now);
@@ -231,7 +274,20 @@ List<NotificationEvent> transactionEvents({
       if (event != null) events.add(event);
     }
   }
+  return [
+    for (final e in events)
+      if (!alreadySent.contains((e.kind, e.categoryId))) e,
+  ];
+}
 
+/// Each income transaction in [after] that wasn't in [before].
+List<NotificationEvent> incomeEvents({
+  required Iterable<Transaction> before,
+  required Iterable<Transaction> after,
+  required Iterable<Category> categories,
+  required DateTime now,
+}) {
+  final events = <NotificationEvent>[];
   final known = {for (final t in before) t.id};
   final names = {for (final c in categories) c.id: c.name};
   for (final t in after) {

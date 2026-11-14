@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_rules.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_text.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -136,6 +137,61 @@ void main() {
       expect(income.amountMinor, 480000);
       // Already known: an edit, not a new one.
       expect(events([pay], []), isEmpty);
+    });
+  });
+
+  group('alert deduplication', () {
+    test('an alert already sent this period is left out', () {
+      final big = tx(33000);
+      final fresh = events([], [big]);
+      expect(fresh.single, isA<BudgetWarning>());
+      final again = transactionEvents(
+        before: const [],
+        after: [big],
+        categories: categories,
+        prefs: prefs,
+        now: now,
+        alreadySent: {(NotificationKind.budgetWarning, food)},
+      );
+      expect(again, isEmpty);
+    });
+
+    test('income is never deduplicated', () {
+      final pay = tx(480000, categoryId: salary, type: TransactionType.income);
+      final result = transactionEvents(
+        before: const [],
+        after: [pay],
+        categories: categories,
+        prefs: prefs,
+        now: now,
+        alreadySent: {(NotificationKind.incomeRecorded, salary)},
+      );
+      expect(result.single, isA<IncomeRecorded>());
+    });
+
+    test('alertsSentIn reads budget alerts in the period only', () {
+      AppNotification n(NotificationKind kind, DateTime at, int? category) =>
+          AppNotification(
+            id: at.millisecondsSinceEpoch,
+            kind: kind,
+            title: 'x',
+            body: 'x',
+            createdAt: at,
+            categoryId: category,
+          );
+      final period = periodFor(now, const DayOfMonth(15));
+      expect(
+        alertsSentIn([
+          n(NotificationKind.budgetWarning, DateTime(2026, 11, 2), food),
+          n(NotificationKind.overBudget, DateTime(2026, 10, 20), null),
+          n(NotificationKind.budgetWarning, DateTime(2026, 10, 14), 2),
+          n(NotificationKind.incomeRecorded, DateTime(2026, 11, 2), salary),
+        ], period),
+        {
+          (NotificationKind.budgetWarning, food),
+          (NotificationKind.overBudget, null),
+        },
+      );
     });
   });
 

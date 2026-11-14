@@ -307,6 +307,109 @@ void main() {
       expect(alert.createdAt, now);
     });
 
+    testWidgets('an alert fires once per period, even after dropping back', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        seed: () => categories.update(
+          categories.byName('Food').copyWith(limitMinor: 40000),
+        ),
+      );
+      await spend(tester, 33000, 'Food', title: 'big');
+      expect(inbox.all, hasLength(1));
+      // Delete it: back under 80%. Then cross again.
+      final big = transactions.all.firstWhere((t) => t.title == 'big');
+      await transactions.delete(big.id);
+      await tester.pumpAndSettle();
+      await spend(tester, 33000, 'Food');
+      expect(inbox.all, hasLength(1));
+      // 100% is its own threshold.
+      await spend(tester, 8000, 'Food');
+      expect(
+        [for (final n in inbox.all) n.kind],
+        unorderedEquals([
+          NotificationKind.budgetWarning,
+          NotificationKind.overBudget,
+        ]),
+      );
+    });
+
+    testWidgets('two quick saves alert once', (tester) async {
+      await pumpApp(
+        tester,
+        seed: () => categories.update(
+          categories.byName('Food').copyWith(limitMinor: 40000),
+        ),
+      );
+      await spend(tester, 33000, 'Food', title: 'big');
+      final big = transactions.all.firstWhere((t) => t.title == 'big');
+      // No pump between: the inbox hasn't caught up.
+      await transactions.delete(big.id);
+      await transactions.restore(big);
+      await tester.pumpAndSettle();
+      expect(inbox.all, hasLength(1));
+    });
+
+    testWidgets('an alert from the last period does not stop this one', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        seed: () async {
+          await categories.update(
+            categories.byName('Food').copyWith(limitMinor: 40000),
+          );
+          await inbox.add(
+            kind: NotificationKind.budgetWarning,
+            title: 'Food is at 85% of its limit',
+            body: 'x',
+            createdAt: DateTime(2026, 10, 10),
+            categoryId: categories.byName('Food').id,
+          );
+        },
+      );
+      await spend(tester, 33000, 'Food');
+      expect(inbox.all, hasLength(2));
+    });
+
+    testWidgets('a new month start alerts for thresholds already passed', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        initial: onboarded.copyWith(budgetAlertsOn: false),
+        seed: () async {
+          await categories.update(
+            categories.byName('Food').copyWith(limitMinor: 40000),
+          );
+          await transactions.add(
+            amountMinor: 33000,
+            type: TransactionType.expense,
+            categoryId: categories.byName('Food').id,
+            occurredAt: DateTime(2026, 11, 2, 12),
+            title: 'x',
+          );
+        },
+      );
+      await prefs.update(
+        (p) => p.copyWith(
+          budgetAlertsOn: true,
+          monthStartDay: const DayOfMonth(1),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final alert = inbox.all.single;
+      expect(alert.kind, NotificationKind.budgetWarning);
+      expect(alert.categoryId, categories.byName('Food').id);
+      // Back to the 15th: the alert is already in that period too.
+      await prefs.update(
+        (p) => p.copyWith(monthStartDay: const DayOfMonth(15)),
+      );
+      await tester.pumpAndSettle();
+      expect(inbox.all, hasLength(1));
+    });
+
     testWidgets('going over a limit writes the PRD copy', (tester) async {
       await pumpApp(
         tester,

@@ -7,6 +7,7 @@ import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_rules.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
@@ -29,7 +30,8 @@ part 'notification_service.g.dart';
 /// - on launch and on resume, writes inbox rows for the ones that fired
 ///   since the last check, since the phone can't run our code when they
 ///   fire;
-/// - writes budget alerts and income rows as transactions change.
+/// - writes budget alerts and income rows as transactions change, each
+///   budget alert at most once per period (PRD §5.4).
 class NotificationService {
   new(this._ref) {
     _ref
@@ -48,6 +50,9 @@ class NotificationService {
       )
       ..listen(billsProvider, (_, next) {
         if (next.value case final bills?) _onBills(bills);
+      }, fireImmediately: true)
+      ..listen(notificationsProvider, (_, next) {
+        if (next.value case final inbox?) _inbox = inbox;
       }, fireImmediately: true);
     _lifecycle = AppLifecycleListener(onResume: () => unawaited(catchUp()));
   }
@@ -68,6 +73,12 @@ class NotificationService {
   List<Category> _categories = const [];
   List<Transaction>? _transactions;
   List<Bill>? _bills;
+  List<AppNotification> _inbox = const [];
+
+  /// Budget alerts written by this run, with their period's start. The
+  /// inbox stream lags a write, so this stops two quick saves both
+  /// alerting.
+  final Set<(AlertKey, DateTime)> _alerted = {};
   Object? _scheduled;
 
   /// Bill reminders registered with the phone, by notification id.
@@ -131,6 +142,7 @@ class NotificationService {
   Future<void> reset() async {
     _scheduled = null;
     _caughtUpOnLaunch = false;
+    _alerted.clear();
     // Forget the old settings too: otherwise a transactions update that
     // arrives before the reset settings would catch up as if onboarded.
     _prefs = null;
@@ -145,9 +157,49 @@ class NotificationService {
 
   void _onPreferences(Preferences? prefs) {
     if (prefs == null) return;
+    final before = _prefs;
     _prefs = prefs;
     if (!_active) return;
     if (!_catchUpOnLaunch()) unawaited(_schedule());
+    // A new month start makes a new current period: alert for thresholds
+    // it has already passed, unless already sent within it (PRD §5.8).
+    final transactions = _transactions;
+    if (before != null &&
+        before.onboardingComplete &&
+        before.monthStartDay != prefs.monthStartDay &&
+        transactions != null) {
+      _writeAlerts(
+        budgetAlerts(
+          before: const [],
+          after: transactions,
+          categories: _categories,
+          prefs: prefs,
+          now: _now(),
+          alreadySent: _alreadySent(prefs),
+        ),
+        prefs,
+      );
+    }
+  }
+
+  /// The budget alerts sent in [prefs]' current period.
+  Set<AlertKey> _alreadySent(Preferences prefs) {
+    final period = periodFor(_now(), prefs.monthStartDay);
+    return {
+      ...alertsSentIn(_inbox, period),
+      for (final (key, start) in _alerted)
+        if (start == period.start) key,
+    };
+  }
+
+  void _writeAlerts(Iterable<NotificationEvent> events, Preferences prefs) {
+    final start = periodFor(_now(), prefs.monthStartDay).start;
+    for (final event in events) {
+      if (event is BudgetWarning || event is OverBudget) {
+        _alerted.add(((event.kind, event.categoryId), start));
+      }
+      unawaited(_write(event));
+    }
   }
 
   /// Starts the first catch-up once settings, transactions and bills have
@@ -176,15 +228,17 @@ class NotificationService {
     _catchUpOnLaunch();
     final prefs = _prefs;
     if (before == null || prefs == null || !_active) return;
-    for (final event in transactionEvents(
-      before: before,
-      after: transactions,
-      categories: _categories,
-      prefs: prefs,
-      now: _now(),
-    )) {
-      unawaited(_write(event));
-    }
+    _writeAlerts(
+      transactionEvents(
+        before: before,
+        after: transactions,
+        categories: _categories,
+        prefs: prefs,
+        now: _now(),
+        alreadySent: _alreadySent(prefs),
+      ),
+      prefs,
+    );
   }
 
   Future<void> _write(NotificationEvent event) {
