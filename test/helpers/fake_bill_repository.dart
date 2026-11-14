@@ -81,12 +81,17 @@ class FakeBillRepository implements BillRepository {
   }
 
   @override
-  Future<Transaction> markPaid(int id, {required DateTime paidAt}) async {
+  Future<Transaction> markPaid(
+    int id, {
+    required DateTime paidAt,
+    int? amountMinor,
+    int? categoryId,
+  }) async {
     final bill = _byId[id]!;
     final added = await transactions.add(
-      amountMinor: bill.amountMinor,
+      amountMinor: amountMinor ?? bill.amountMinor,
       type: TransactionType.expense,
-      categoryId: bill.categoryId,
+      categoryId: categoryId ?? bill.categoryId,
       occurredAt: paidAt,
       title: bill.name,
     );

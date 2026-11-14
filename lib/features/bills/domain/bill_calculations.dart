@@ -31,9 +31,9 @@ DateTime _onDay(int year, int month, int day) {
 
 /// Every unpaid payment due by the end of [period], soonest first. A
 /// weekly bill can be due more than once, and overdue payments count:
-/// they are still to be paid.
+/// they are still to be paid. Paused bills are left out (PRD §5.11).
 List<BillPayment> paymentsDue(Iterable<Bill> bills, Period period) => [
-  for (final bill in bills)
+  for (final bill in bills.where((b) => !b.paused))
     for (
       var due = bill.nextDue;
       !due.isAfter(period.end);

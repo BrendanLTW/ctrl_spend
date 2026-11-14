@@ -156,8 +156,9 @@ final class BillReminder extends NotificationEvent {
 }
 
 /// When [bill]'s reminder fires: at 9:00 local, its Remind me days before
-/// its next due date. Null when Remind me is off.
+/// its next due date. Null when Remind me is off or the bill is paused.
 DateTime? billReminderAt(Bill bill) => switch (bill.remindDaysBefore) {
+  _ when bill.paused => null,
   null => null,
   final days => _at(_addDays(bill.nextDue, -days), billReminderMinutes),
 };
@@ -365,7 +366,7 @@ List<NotificationEvent> scheduledEvents({
     );
   }
 
-  for (final bill in bills) {
+  for (final bill in prefs.billRemindersOn ? bills : const <Bill>[]) {
     if (billReminderAt(bill) case final at? when fired(at)) {
       events.add(BillReminder.forBill(bill, at));
     }

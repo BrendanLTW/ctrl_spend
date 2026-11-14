@@ -254,6 +254,23 @@ void main() {
       expect(scheduler.pending[idOf(unifi)], isNull);
     });
 
+    testWidgets('paused bills and Bill reminders off schedule nothing', (
+      tester,
+    ) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await bills.update(bills.all.single.copyWith(paused: true));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+      await bills.update(bills.all.single.copyWith(paused: false));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await prefs.update((p) => p.copyWith(billRemindersOn: false));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+    });
+
     testWidgets('a currency change rewrites the amount', (tester) async {
       late Bill unifi;
       await pumpApp(tester, seed: () async => unifi = await addBill());

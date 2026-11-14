@@ -174,7 +174,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §6.5
 - [ ] **6.7 Shared CSV format.** Columns `date,time,type,amount,category,title,note` for export and import. Import maps columns by header name. Duplicates (same date, type, amount and category) are found and skipped by default. Unknown categories are created. At most 20,000 rows. Round-trip test, and a 20,000-row timing test.
   Refs: PRD §6.4, §10
-- [ ] **6.8 Bill rules.** Paused bills are left out of Upcoming totals, "Left after bills" and reminders. Custom repeat is every N days, weeks or months, N from 1 to 12. Mark paid takes an amount, a date and a category. Reminders use the `billDue` kind and respect `billRemindersOn`.
+- [x] **6.8 Bill rules.** Paused bills are left out of Upcoming totals, "Left after bills" and reminders. Custom repeat is every N days, weeks or months, N from 1 to 12. Mark paid takes an amount, a date and a category. Reminders use the `billDue` kind and respect `billRemindersOn`. *(Mark paid also follows the no-future-dates rule. The current Custom sheet is capped at 12 and drops Years, so it can't save a repeat the repository refuses; the full S44 rework is 6.20.)*
   Refs: PRD §5.11, §5.4, §8
 - [ ] **6.9 Goal rules.** Statuses: on track, behind, past target date, each with the monthly amount now needed. Mark as completed by hand. Contributions take a label and a date.
   Refs: PRD §5.12

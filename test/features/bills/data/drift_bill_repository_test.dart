@@ -22,7 +22,8 @@ void main() {
 
   setUp(() {
     db = AppDatabase(NativeDatabase.memory());
-    repo = DriftBillRepository(db);
+    // 31 Dec 2026: after every payment date in these tests.
+    repo = DriftBillRepository(db, () => DateTime(2026, 12, 31));
   });
   tearDown(() => db.close());
 
@@ -75,6 +76,8 @@ void main() {
         BillRepeat(unit: RepeatUnit.week, day: 8),
         BillRepeat(unit: RepeatUnit.year, day: 0),
         BillRepeat(unit: RepeatUnit.month, day: 32),
+        BillRepeat(unit: RepeatUnit.day, every: 13),
+        BillRepeat(unit: RepeatUnit.year, every: 2, day: 8),
       ]) {
         await expectLater(
           add(repeat: repeat),
@@ -140,6 +143,43 @@ void main() {
         expect((await repo.watch().first).single.nextDue, DateTime(2027, 1, 8));
       },
     );
+  });
+
+  group('markPaid with S57 changes', () {
+    test('takes another amount and category', () async {
+      final unifi = await add();
+      final payment = await repo.markPaid(
+        unifi.id,
+        paidAt: DateTime(2026, 11, 8),
+        amountMinor: 13500,
+        categoryId: food,
+      );
+      expect((payment.amountMinor, payment.categoryId), (13500, food));
+      expect(payment.billId, unifi.id);
+      // The bill itself is unchanged.
+      expect((await repo.watch().first).single.amountMinor, 12900);
+    });
+
+    test('refuses a future date, 0, or an income category', () async {
+      final unifi = await add();
+      await expectLater(
+        repo.markPaid(unifi.id, paidAt: DateTime(2027, 1, 2)),
+        throwsArgumentError,
+      );
+      await expectLater(
+        repo.markPaid(unifi.id, paidAt: DateTime(2026, 11, 8), amountMinor: 0),
+        throwsArgumentError,
+      );
+      await expectLater(
+        repo.markPaid(
+          unifi.id,
+          paidAt: DateTime(2026, 11, 8),
+          categoryId: salary,
+        ),
+        throwsA(isA<CategoryTypeMismatchException>()),
+      );
+      expect((await repo.watch().first).single.nextDue, DateTime(2026, 11, 8));
+    });
   });
 
   test('delete keeps the payments without the link', () async {

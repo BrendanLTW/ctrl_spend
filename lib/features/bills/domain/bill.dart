@@ -5,8 +5,18 @@ part 'bill.freezed.dart';
 
 enum RepeatUnit { day, week, month, year }
 
+/// The most a Custom repeat counts: every 12 days, weeks or months.
+const maxCustomEvery = 12;
+
+/// Whether [repeat] is one S44 offers: a preset or a Custom one.
+bool isValidRepeat(BillRepeat repeat) => switch (repeat.unit) {
+  RepeatUnit.year => repeat.every == 1,
+  _ => repeat.every >= 1 && repeat.every <= maxCustomEvery,
+};
+
 /// How often a bill repeats: every [every] [unit]s (S44). Every 2 weeks
-/// is (week, 2); Custom is any other pair. For month and year, [day] is
+/// is (week, 2). Custom is every 1–[maxCustomEvery] days, weeks or months;
+/// years are only "Every year" (PRD §5.11). For month and year, [day] is
 /// the day of the month to come back to, so a bill due on the 31st
 /// returns to it after a shorter month; it is null for day and week.
 @freezed

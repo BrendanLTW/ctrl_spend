@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/core/db/stored_dates.dart';
+import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/features/bills/data/bill_mapper.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
@@ -11,9 +12,11 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart';
 
 class DriftBillRepository implements BillRepository {
-  new(this._db);
+  /// The second argument is the app clock, for the no-future-dates rule.
+  new(this._db, [this._now = DateTime.now]);
 
   final AppDatabase _db;
+  final Clock _now;
 
   @override
   Stream<List<Bill>> watch() {
@@ -75,28 +78,48 @@ class DriftBillRepository implements BillRepository {
       (_db.delete(_db.bills)..where((b) => b.id.equals(id))).go();
 
   @override
-  Future<Transaction> markPaid(int id, {required DateTime paidAt}) =>
-      _db.transaction(() async {
-        final bill = await _byId(id);
-        final payment = await _db
-            .into(_db.transactions)
-            .insertReturning(
-              TransactionsCompanion.insert(
-                amountMinor: bill.amountMinor,
-                type: TransactionType.expense.name,
-                categoryId: bill.categoryId,
-                occurredAt: paidAt.toUtc(),
-                title: bill.name,
-                billId: Value(bill.id),
-              ),
-            );
-        await (_db.update(_db.bills)..where((b) => b.id.equals(id))).write(
-          BillsCompanion(
-            nextDue: Value(storedDate(nextDue(bill.nextDue, bill.repeat))),
+  Future<Transaction> markPaid(
+    int id, {
+    required DateTime paidAt,
+    int? amountMinor,
+    int? categoryId,
+  }) => _db.transaction(() async {
+    final bill = await _byId(id);
+    final amount = amountMinor ?? bill.amountMinor;
+    final category = categoryId ?? bill.categoryId;
+    if (amount <= 0) {
+      throw ArgumentError.value(amount, 'amountMinor', 'must be > 0');
+    }
+    await _db.checkCategory(
+      category,
+      TransactionType.expense,
+      allowArchived: category == bill.categoryId,
+    );
+    checkTransactionFields(
+      title: bill.name,
+      note: null,
+      occurredAt: paidAt,
+      now: _now(),
+    );
+    final payment = await _db
+        .into(_db.transactions)
+        .insertReturning(
+          TransactionsCompanion.insert(
+            amountMinor: amount,
+            type: TransactionType.expense.name,
+            categoryId: category,
+            occurredAt: paidAt.toUtc(),
+            title: bill.name,
+            billId: Value(bill.id),
           ),
         );
-        return payment.toEntity();
-      });
+    await (_db.update(_db.bills)..where((b) => b.id.equals(id))).write(
+      BillsCompanion(
+        nextDue: Value(storedDate(nextDue(bill.nextDue, bill.repeat))),
+      ),
+    );
+    return payment.toEntity();
+  });
 
   Future<Bill> _byId(int id) async => (await (_db.select(
     _db.bills,
@@ -111,9 +134,9 @@ class DriftBillRepository implements BillRepository {
     if (bill.amountMinor <= 0) {
       throw ArgumentError.value(bill.amountMinor, 'amountMinor', 'must be > 0');
     }
-    final BillRepeat(:unit, :every, :day) = bill.repeat;
+    final BillRepeat(:unit, :day) = bill.repeat;
     final needsDay = unit == RepeatUnit.month || unit == RepeatUnit.year;
-    if (every < 1 ||
+    if (!isValidRepeat(bill.repeat) ||
         needsDay != (day != null) ||
         (day != null && (day < 1 || day > 31))) {
       throw ArgumentError.value(bill.repeat, 'repeat', 'is not valid');

@@ -317,6 +317,7 @@ void main() {
         DateTime(2026, 11, 30, 9),
       );
       expect(billReminderAt(unifi(remind: null)), isNull);
+      expect(billReminderAt(unifi().copyWith(paused: true)), isNull);
     });
 
     test('one that fired since the last check goes to the inbox', () {

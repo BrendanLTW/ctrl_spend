@@ -55,7 +55,10 @@ List<Override> appOverrides({NotificationScheduler? scheduler}) => [
     ),
   ),
   billRepositoryProvider.overrideWith(
-    (ref) => DriftBillRepository(ref.watch(appDatabaseProvider)),
+    (ref) => DriftBillRepository(
+      ref.watch(appDatabaseProvider),
+      ref.watch(clockProvider),
+    ),
   ),
   goalRepositoryProvider.overrideWith(
     (ref) => DriftGoalRepository(ref.watch(appDatabaseProvider)),

@@ -20,6 +20,19 @@ void main() {
     colorKey: CategoryColorKey.yellow,
   );
 
+  test('Custom is 1–12 days, weeks or months; years are only Every year', () {
+    for (final unit in [RepeatUnit.day, RepeatUnit.week, RepeatUnit.month]) {
+      expect(isValidRepeat(BillRepeat(unit: unit, every: 12)), isTrue);
+      expect(isValidRepeat(BillRepeat(unit: unit, every: 13)), isFalse);
+      expect(isValidRepeat(BillRepeat(unit: unit, every: 0)), isFalse);
+    }
+    expect(isValidRepeat(const BillRepeat(unit: RepeatUnit.year)), isTrue);
+    expect(
+      isValidRepeat(const BillRepeat(unit: RepeatUnit.year, every: 2)),
+      isFalse,
+    );
+  });
+
   group('nextDue', () {
     test('days and weeks count calendar days', () {
       const tenDays = BillRepeat(unit: RepeatUnit.day, every: 10);
@@ -110,6 +123,11 @@ void main() {
       final dues = paymentsDue([late, lastDay], period);
       expect(dues.where((p) => p.bill == late), hasLength(7));
       expect(dues.last, (bill: lastDay, due: DateTime(2026, 11, 14)));
+    });
+
+    test('paused bills are left out', () {
+      final gym = bill('Gym', due: DateTime(2026, 11, 5));
+      expect(paymentsDue([gym.copyWith(paused: true)], period), isEmpty);
     });
 
     test('no bills, no payments', () {

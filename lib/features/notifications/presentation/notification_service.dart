@@ -317,10 +317,11 @@ class NotificationService {
   /// deleted or turned off.
   Future<void> _scheduleBills() async {
     final bills = _bills;
-    if (bills == null || !_active) return;
+    final prefs = _prefs;
+    if (bills == null || prefs == null || !_active) return;
     final now = _now();
     final wanted = <int, ({DateTime at, String title, String body})>{
-      for (final bill in bills)
+      for (final bill in prefs.billRemindersOn ? bills : const <Bill>[])
         if (billReminderAt(bill) case final at? when at.isAfter(now))
           billIdBase + bill.id: () {
             final text = notificationText(

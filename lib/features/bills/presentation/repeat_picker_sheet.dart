@@ -24,9 +24,6 @@ const repeatPresets = [
 bool sameRepeat(BillRepeat a, BillRepeat b) =>
     a.unit == b.unit && a.every == b.every;
 
-/// The longest custom repeat, in any unit.
-const maxRepeatEvery = 99;
-
 /// S44 Picker · Repeats, then the Custom sheet if chosen. [day] is the
 /// next due day, shown under Every month. Resolves to the new repeat, or
 /// null if dismissed.
@@ -169,7 +166,8 @@ class _RepeatRow extends StatelessWidget {
   }
 }
 
-/// Custom…: "Every" with a 1–99 stepper and the unit, then Set.
+/// Custom…: "Every" with a 1–12 stepper and days, weeks or months, then
+/// Set (PRD §5.11).
 class _CustomRepeatBody extends StatefulWidget {
   const new({required this.initial});
 
@@ -180,8 +178,13 @@ class _CustomRepeatBody extends StatefulWidget {
 }
 
 class _CustomRepeatBodyState extends State<_CustomRepeatBody> {
-  late int _every = widget.initial.every;
-  late RepeatUnit _unit = widget.initial.unit;
+  // A preset in years (Every year) starts the sheet at every 1 month.
+  late int _every = widget.initial.unit == RepeatUnit.year
+      ? 1
+      : widget.initial.every.clamp(1, maxCustomEvery);
+  late RepeatUnit _unit = widget.initial.unit == RepeatUnit.year
+      ? RepeatUnit.month
+      : widget.initial.unit;
 
   @override
   Widget build(BuildContext context) {
@@ -190,7 +193,7 @@ class _CustomRepeatBodyState extends State<_CustomRepeatBody> {
     final l10n = context.l10n;
     Widget step(AppIcon icon, String label, int by) {
       final next = _every + by;
-      final enabled = next >= 1 && next <= maxRepeatEvery;
+      final enabled = next >= 1 && next <= maxCustomEvery;
       return IconButton(
         tooltip: label,
         onPressed: enabled ? () => setState(() => _every = next) : null,
@@ -241,7 +244,6 @@ class _CustomRepeatBodyState extends State<_CustomRepeatBody> {
             (value: RepeatUnit.day, label: l10n.repeatDays),
             (value: RepeatUnit.week, label: l10n.repeatWeeks),
             (value: RepeatUnit.month, label: l10n.repeatMonths),
-            (value: RepeatUnit.year, label: l10n.repeatYears),
           ],
           selected: _unit,
           onChanged: (unit) => setState(() => _unit = unit),

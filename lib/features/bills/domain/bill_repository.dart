@@ -33,11 +33,18 @@ abstract interface class BillRepository {
   /// Deletes the bill. Its payments stay, no longer linked to it.
   Future<void> delete(int id);
 
-  /// Records a payment: an expense in the bill's category, titled with its
-  /// name and linked to it, on [paidAt]. Then moves the bill's next due
-  /// date one repeat on from the old one, so paying early or late keeps
-  /// its schedule. Returns the transaction.
-  Future<Transaction> markPaid(int id, {required DateTime paidAt});
+  /// Records a payment (S57): an expense titled with the bill's name and
+  /// linked to it, on [paidAt], of [amountMinor] (the bill's amount by
+  /// default) in [categoryId] (the bill's category by default). Then moves
+  /// the bill's next due date one repeat on from the old one, so paying
+  /// early or late keeps its schedule. Returns the transaction. Throws
+  /// like the transaction repository's `add`.
+  Future<Transaction> markPaid(
+    int id, {
+    required DateTime paidAt,
+    int? amountMinor,
+    int? categoryId,
+  });
 }
 
 /// Overridden in `main.dart` with the Drift implementation, so screens
