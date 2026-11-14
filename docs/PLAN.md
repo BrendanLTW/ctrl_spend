@@ -178,7 +178,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.11, §5.4, §8
 - [ ] **6.9 Goal rules.** Statuses: on track, behind, past target date, each with the monthly amount now needed. Mark as completed by hand. Contributions take a label and a date.
   Refs: PRD §5.12
-- [ ] **6.10 PIN lockout timing.** A pure function: 5 wrong PINs → 30 s, doubling every further 5, capped at 15 min. Unit tests.
+- [x] **6.10 PIN lockout timing.** A pure function: 5 wrong PINs → 30 s, doubling every further 5, capped at 15 min. Unit tests. *(Entry locks only on every fifth wrong PIN; the ones in between don't.)*
   Refs: PRD §5.8, §10
 
 ### B. Screens
