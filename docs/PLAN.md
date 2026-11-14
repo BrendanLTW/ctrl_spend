@@ -147,9 +147,66 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: PRD §5.12, §8
 - [x] **5.6 Goals screens.** S29 Savings goals, S30 Goal detail (Add money, Withdraw), S31 Add goal, and the Settings row. *(A goal's type and colour come from its icon. Edit and Delete live on S31, opened from S30. The Settings row shows in debug builds until 5.9.)*
   Refs: S29–S31, FR-17
-- [ ] **5.7 App lock settings.** Add flutter_secure_storage and local_auth. S37 with PIN setup and change (stored hashed in secure storage), Face ID, Lock after and Hide amounts in app switcher.
+- [ ] ~~**5.7 App lock settings.**~~ *Superseded by 6.22–6.23 (15 Nov spec).* Add flutter_secure_storage and local_auth. S37 with PIN setup and change (stored hashed in secure storage), Face ID, Lock after and Hide amounts in app switcher.
   Refs: S37, PRD §5.8, FR-18
-- [ ] **5.8 Lock screen.** S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled.
+- [ ] ~~**5.8 Lock screen.**~~ *Superseded by 6.22–6.23.* S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled.
   Refs: S38, FR-18
-- [ ] **5.9 v1.1 release.** Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`.
+- [ ] **5.9 v1.1 release.** *(After Phase 6.)* Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`.
   Refs: PRD §11
+
+## Phase 6 — Spec update (PRD and DESIGN of 15 Nov 2026, AUDIT.md §8)
+
+Group A (data and rules) has no UI changes. Stop for review after 6.10, and again after 6.23. Each screen task is compared with its light and dark PNGs before it's ticked.
+
+### A. Data and rules
+
+- [ ] **6.1 Schema v5.** Add the PeriodSnapshot table, with its limits in a child table (categoryId → limitMinor). Add `bills.paused` and `goals.createdAt` (existing goals get their first contribution's date, else the migration date). Rename the stored notification kind `billReminder` to `billDue`. New preference keys: `billRemindersOn`, `lockAfterMinutes`, `failedPinCount`, `lockoutUntil` (reminder time already exists). Migration tests from v1–v4 data.
+  Refs: PRD §8
+- [ ] **6.2 Period snapshots.** Write a snapshot for each period that has ended, on launch and on resume, without double-writing. Backfill past periods from the current budget and limits; this is an approximation, and the docs and the commit say so. Changing the month start recalculates the current period and leaves snapshots alone. Past-period data (S25, S26, S20) reads budgets and limits from snapshots.
+  Refs: PRD §6.2, §5.8, §5.10, §8
+- [ ] **6.3 Transaction and category rules.** Title optional and at most 40 characters, defaulting to the category name. Note at most 200 characters. No future dates. Category name at most 20 characters. Enforced in the repositories, with tests.
+  Refs: PRD §5.3, §5.9, §8
+- [ ] **6.4 Over-allocation in the domain.** Over-allocation is already blocked in the UI. Move the rules into the repositories: a limit can't make the allocated total exceed the budget, and the budget can't drop below the allocated total. Removing the budget keeps the limits.
+  Refs: PRD §5.6, §8
+- [ ] **6.5 Alert deduplication.** A budget alert fires once per category (or the monthly budget), per threshold, per period, checked against the inbox. A month-start change re-evaluates alerts for the new period.
+  Refs: PRD §5.4, §5.8
+- [ ] **6.6 Currency minor units.** Each currency carries its ISO 4217 minor units (JPY 0). Applies to MoneyFormatter, the keypad, CSV amounts and "rounded up to the whole unit".
+  Refs: PRD §6.5
+- [ ] **6.7 Shared CSV format.** Columns `date,time,type,amount,category,title,note` for export and import. Import maps columns by header name. Duplicates (same date, type, amount and category) are found and skipped by default. Unknown categories are created. At most 20,000 rows. Round-trip test, and a 20,000-row timing test.
+  Refs: PRD §6.4, §10
+- [ ] **6.8 Bill rules.** Paused bills are left out of Upcoming totals, "Left after bills" and reminders. Custom repeat is every N days, weeks or months, N from 1 to 12. Mark paid takes an amount, a date and a category. Reminders use the `billDue` kind and respect `billRemindersOn`.
+  Refs: PRD §5.11, §5.4, §8
+- [ ] **6.9 Goal rules.** Statuses: on track, behind, past target date, each with the monthly amount now needed. Mark as completed by hand. Contributions take a label and a date.
+  Refs: PRD §5.12
+- [ ] **6.10 PIN lockout timing.** A pure function: 5 wrong PINs → 30 s, doubling every further 5, capped at 15 min. Unit tests.
+  Refs: PRD §5.8, §10
+
+### B. Screens
+
+- [ ] **6.11 Tokens and shared components.** `buttonDisabled`, `scrim`, the four message boxes, `r18`/`r30`, the `amountEntry`/`stateTitle`/`message` styles. MessageBox, StatusPill, StateScreen, AppSpinner, text input with counter and error outline, sheet button, Pay pill, action sheet, and the dialog at r30 with a 96 px icon.
+  Refs: DESIGN §3, §4, §7
+- [ ] **6.12 S12, S13, S45 entry screens and S46 category picker.** Pinned keypad, one row of category tiles, Title field, Date and Note chips, Save disabled with its hint. S12 reads "New expense". Edit goes to S45. Update the end-to-end test.
+  Refs: PRD §5.3, DESIGN §6
+- [ ] **6.13 S17, S06 and S54 over-allocation.** Red outline and the S54 copy on the limit and budget sheets.
+  Refs: PRD §5.6
+- [ ] **6.14 Categories.** Every S22 row and every S18 category row opens S23. S24 name at most 20 characters.
+  Refs: PRD §5.7, §5.9
+- [ ] **6.15 S21, S21a Settings and S47, S49.** Profile row opens the S47 sheet. Notifications row opens S48. Erase all data uses the S49 dialog. Import opens S51. Footer "ctrlSpend {version} · by BrendanLTW".
+  Refs: PRD §5.8
+- [ ] **6.16 S48 Notification settings.** Remind me at (time picker), Bill reminders, and the permission-denied banner with Open phone settings. The settings icon on S14 opens it.
+  Refs: PRD §5.4
+- [ ] **6.17 S35 and S50 export range.** Custom opens S50: From and To, a live count, and "Export {n} transactions".
+  Refs: PRD §5.8
+- [ ] **6.18 Import flow S51–S53 and S36.** Checking with progress and Cancel, Review with the duplicate choice and new categories, Success.
+  Refs: PRD §5.8, §6.4
+- [ ] **6.19 Past periods S25, S26, S55, S20 and S40.** Read from snapshots. Add S55 empty. S40 shows until there's spending on 3 different days.
+  Refs: PRD §5.7, §5.10
+- [ ] **6.20 Bills S27, S56–S59, S44.** Pay pill opens S57. A row opens S56 (pause, history, Mark as paid, Edit, Delete). Overdue copy (S58), empty state (S59), Custom 1–12 days, weeks or months.
+  Refs: PRD §5.11
+- [ ] **6.21 Goals S29, S30, S60–S63.** ••• opens S62 (Edit, Mark as completed, Delete with its count, Cancel). S60/S61 sheets with the toggle, label, date and limit message. Status card with the three statuses. "Completed {date}" rows. S63 empty state.
+  Refs: PRD §5.12
+- [ ] **6.22 App lock settings S37, S68, S64, S65.** Add flutter_secure_storage and local_auth, with iOS and Android setup. PIN stored hashed in secure storage. Biometrics wording. Lock after options. Create, confirm and change PIN. Hide amounts in app switcher.
+  Refs: PRD §5.8, FR-18
+- [ ] **6.23 Lock screen S38, S66, S67.** Shown on launch and after the lock-after delay. PIN pad, biometric key, lockout countdown, Forgot PIN through biometrics or the phone passcode. Erase all data also removes the PIN.
+  Refs: PRD §5.8, FR-18
+
