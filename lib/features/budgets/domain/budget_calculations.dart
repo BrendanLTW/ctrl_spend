@@ -127,3 +127,32 @@ Map<DateTime, List<Transaction>> transactionsByPeriod(
   }
   return byStart;
 }
+
+/// Category limits would add up to more than the monthly budget (S54).
+/// [maxForCategoryMinor] is the most the changed category could have.
+final class LimitsOverBudgetException implements Exception {
+  const new({
+    required this.allocatedMinor,
+    required this.budgetMinor,
+    required this.maxForCategoryMinor,
+  });
+
+  final int allocatedMinor;
+  final int budgetMinor;
+  final int maxForCategoryMinor;
+
+  @override
+  String toString() =>
+      'LimitsOverBudgetException: limits $allocatedMinor > budget '
+      '$budgetMinor';
+}
+
+/// The monthly budget would drop below the category limits (S54).
+final class BudgetBelowLimitsException implements Exception {
+  const new(this.allocatedMinor);
+
+  final int allocatedMinor;
+
+  @override
+  String toString() => 'BudgetBelowLimitsException: limits $allocatedMinor';
+}

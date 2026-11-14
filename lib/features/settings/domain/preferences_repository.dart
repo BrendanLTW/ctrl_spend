@@ -12,7 +12,9 @@ abstract interface class PreferencesRepository {
 
   /// Applies [change] to the current settings and saves the result, in one
   /// transaction so concurrent updates don't overwrite each other:
-  /// `update((p) => p.copyWith(theme: AppTheme.dark))`.
+  /// `update((p) => p.copyWith(theme: AppTheme.dark))`. Throws the budgets
+  /// domain's `BudgetBelowLimitsException` if it would set a monthly budget
+  /// below the category limits (PRD §5.6); removing the budget is fine.
   Future<void> update(Preferences Function(Preferences) change);
 }
 

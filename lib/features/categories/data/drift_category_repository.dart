@@ -1,8 +1,10 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/data/category_mapper.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/settings/data/preferences_mapper.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart';
 
@@ -34,6 +36,17 @@ class DriftCategoryRepository implements CategoryRepository {
     int? limitMinor,
   }) => _db.transaction(() async {
     await _checkNameFree(name, type);
+    await _checkLimits(
+      Category(
+        id: 0,
+        name: name,
+        type: type,
+        iconKey: iconKey,
+        colorKey: colorKey,
+        sortOrder: 0,
+        limitMinor: limitMinor,
+      ),
+    );
     final maxOrder = _db.categories.sortOrder.max();
     final last =
         await (_db.selectOnly(_db.categories)
@@ -59,6 +72,7 @@ class DriftCategoryRepository implements CategoryRepository {
   @override
   Future<void> update(Category category) => _db.transaction(() async {
     await _checkNameFree(category.name, category.type, exceptId: category.id);
+    await _checkLimits(category);
     await _db
         .update(_db.categories)
         .replace(category.copyWith(name: category.name.trim()).toCompanion());
@@ -67,8 +81,23 @@ class DriftCategoryRepository implements CategoryRepository {
   @override
   Future<void> archive(int id) => _setArchived(id, archived: true);
 
+  /// A restored category keeps its limit if it still fits in the budget,
+  /// otherwise it comes back without one.
   @override
-  Future<void> restore(int id) => _setArchived(id, archived: false);
+  Future<void> restore(int id) => _db.transaction(() async {
+    final category = (await (_db.select(
+      _db.categories,
+    )..where((c) => c.id.equals(id))).getSingle()).toEntity();
+    final restored = category.copyWith(archived: false);
+    try {
+      await _checkLimits(restored);
+      await _setArchived(id, archived: false);
+    } on LimitsOverBudgetException {
+      await _db
+          .update(_db.categories)
+          .replace(restored.copyWith(limitMinor: null).toCompanion());
+    }
+  });
 
   @override
   Future<CategoryRemoval> remove(int id) => _db.transaction(() async {
@@ -119,6 +148,41 @@ class DriftCategoryRepository implements CategoryRepository {
     if (exceptId != null) query.where((c) => c.id.equals(exceptId).not());
     if (await query.get().then((rows) => rows.isNotEmpty)) {
       throw DuplicateCategoryNameException(trimmed);
+    }
+  }
+
+  /// Throws [ArgumentError] for a limit on an income category or below 0,
+  /// and [LimitsOverBudgetException] if saving [changed] would make the
+  /// limits add up to more than the monthly budget, and more than they do
+  /// now (PRD §5.6). Without a budget there's no cap.
+  Future<void> _checkLimits(Category changed) async {
+    final limit = changed.limitMinor;
+    if (limit != null &&
+        (limit < 0 || changed.type != TransactionType.expense)) {
+      throw ArgumentError.value(limit, 'limitMinor', 'expense only, >= 0');
+    }
+    final budget = preferencesFromValues({
+      for (final row in await _db.select(_db.preferences).get())
+        row.key: row.value,
+    }).monthlyBudgetMinor;
+    if (budget == null) return;
+    final current = [
+      for (final row in await _db.select(_db.categories).get()) row.toEntity(),
+    ];
+    final after = [
+      for (final c in current)
+        if (c.id != changed.id) c,
+      changed,
+    ];
+    final allocatedAfter = allocated(after);
+    if (allocatedAfter > budget && allocatedAfter > allocated(current)) {
+      throw LimitsOverBudgetException(
+        allocatedMinor: allocatedAfter,
+        budgetMinor: budget,
+        maxForCategoryMinor:
+            maxLimitFor(changed.id, categories: after, budgetMinor: budget) ??
+            0,
+      );
     }
   }
 }

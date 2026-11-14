@@ -31,9 +31,11 @@ void checkTransactionFields({
 bool isFutureDay(DateTime date, DateTime now) {
   final d = date.toLocal();
   final n = now.toLocal();
-  return DateTime(d.year, d.month, d.day).isAfter(
-    DateTime(n.year, n.month, n.day),
-  );
+  return DateTime(
+    d.year,
+    d.month,
+    d.day,
+  ).isAfter(DateTime(n.year, n.month, n.day));
 }
 
 /// Whether money goes out or comes in. Categories have a type too, and a

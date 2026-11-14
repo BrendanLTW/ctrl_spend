@@ -27,7 +27,10 @@ abstract interface class CategoryRepository {
 
   /// Adds a category last in its type. The name is trimmed.
   /// Throws [ArgumentError] for a blank name or one over
-  /// [maxCategoryNameLength], or [DuplicateCategoryNameException].
+  /// [maxCategoryNameLength], or a limit on an income category;
+  /// [DuplicateCategoryNameException]; or the budgets domain's
+  /// `LimitsOverBudgetException` if the limits would add up to more than
+  /// the monthly budget (PRD §5.6).
   Future<Category> add({
     required String name,
     required TransactionType type,
@@ -38,7 +41,10 @@ abstract interface class CategoryRepository {
 
   /// Saves every field of [category]. The name is trimmed.
   /// Throws [ArgumentError] for a blank name or one over
-  /// [maxCategoryNameLength], or [DuplicateCategoryNameException].
+  /// [maxCategoryNameLength], or a limit on an income category;
+  /// [DuplicateCategoryNameException]; or the budgets domain's
+  /// `LimitsOverBudgetException` if the limits would add up to more than
+  /// the monthly budget (PRD §5.6).
   Future<void> update(Category category);
 
   Future<void> archive(int id);

@@ -1,8 +1,10 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
@@ -119,6 +121,111 @@ void main() {
     );
   });
 
+  group('limits and the monthly budget (PRD §5.6)', () {
+    Future<void> setBudget(int? minor) =>
+        DriftPreferencesRepository(db)
+            .update((p) => p.copyWith(monthlyBudgetMinor: minor));
+
+    Future<void> setLimit(String name, int? minor) async {
+      await repo.update((await byName(name)).copyWith(limitMinor: minor));
+    }
+
+    test('limits may add up to the budget, not more', () async {
+      await setBudget(100000);
+      await setLimit('Food', 60000);
+      await setLimit('Transport', 40000);
+      await expectLater(
+        setLimit('Shopping', 1),
+        throwsA(
+          isA<LimitsOverBudgetException>()
+              .having((e) => e.allocatedMinor, 'allocated', 100001)
+              .having((e) => e.maxForCategoryMinor, 'max', 0),
+        ),
+      );
+      expect((await byName('Shopping')).limitMinor, isNull);
+    });
+
+    test('a new category with a limit is checked too', () async {
+      await setBudget(50000);
+      await setLimit('Food', 40000);
+      await expectLater(
+        repo.add(
+          name: 'Pets',
+          type: TransactionType.expense,
+          iconKey: CategoryIconKey.heart,
+          colorKey: CategoryColorKey.red,
+          limitMinor: 20000,
+        ),
+        throwsA(isA<LimitsOverBudgetException>()),
+      );
+    });
+
+    test('without a budget there is no cap', () async {
+      await setLimit('Food', 999999);
+      expect((await byName('Food')).limitMinor, 999999);
+    });
+
+    test('income categories take no limit', () async {
+      await expectLater(setLimit('Salary', 1000), throwsArgumentError);
+    });
+
+    test('the budget can drop to the limits, not below', () async {
+      final prefs = DriftPreferencesRepository(db);
+      await setBudget(100000);
+      await setLimit('Food', 60000);
+      await setBudget(60000);
+      await expectLater(
+        setBudget(59999),
+        throwsA(
+          isA<BudgetBelowLimitsException>().having(
+            (e) => e.allocatedMinor,
+            'allocated',
+            60000,
+          ),
+        ),
+      );
+      expect((await prefs.read()).monthlyBudgetMinor, 60000);
+    });
+
+    test('removing the budget keeps the limits', () async {
+      await setBudget(100000);
+      await setLimit('Food', 60000);
+      await setBudget(null);
+      expect((await byName('Food')).limitMinor, 60000);
+    });
+
+    test('a restored category drops a limit that no longer fits', () async {
+      await setBudget(100000);
+      await setLimit('Fun', 30000);
+      final fun = await byName('Fun');
+      await repo.archive(fun.id);
+      await setLimit('Food', 80000);
+      await repo.restore(fun.id);
+      final restored = await byName('Fun');
+      expect((restored.archived, restored.limitMinor), (false, null));
+
+      await setLimit('Shopping', 10000);
+      final shopping = await byName('Shopping');
+      await repo.archive(shopping.id);
+      await repo.restore(shopping.id);
+      expect((await byName('Shopping')).limitMinor, 10000);
+    });
+
+    test('renaming works even if old limits are already over', () async {
+      await setLimit('Food', 90000);
+      await db
+          .into(db.preferences)
+          .insertOnConflictUpdate(
+            PreferencesCompanion.insert(
+              key: 'monthlyBudgetMinor',
+              value: '50000',
+            ),
+          );
+      await repo.update((await byName('Food')).copyWith(name: 'Groceries'));
+      expect((await byName('Groceries')).limitMinor, 90000);
+    });
+  });
+
   group('add', () {
     test('trims the name and puts the category last in its type', () async {
       final coffee = await addCoffee(name: '  Coffee ');
@@ -131,10 +238,8 @@ void main() {
         type: TransactionType.income,
         iconKey: CategoryIconKey.gift,
         colorKey: CategoryColorKey.green,
-        limitMinor: 5000,
       );
       expect(bonus.sortOrder, 8);
-      expect(bonus.limitMinor, 5000);
       expect((await names(type: TransactionType.income)).last, 'Bonus');
     });
 

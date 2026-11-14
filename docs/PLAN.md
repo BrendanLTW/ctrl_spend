@@ -166,7 +166,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §6.2, §5.8, §5.10, §8
 - [x] **6.3 Transaction and category rules.** Title optional and at most 40 characters, defaulting to the category name. Note at most 200 characters. No future dates. Category name at most 20 characters. Enforced in the repositories, with tests. *("No future dates" compares calendar days, so later today is allowed. CSV import reports these per row on S36.)*
   Refs: PRD §5.3, §5.9, §8
-- [ ] **6.4 Over-allocation in the domain.** Over-allocation is already blocked in the UI. Move the rules into the repositories: a limit can't make the allocated total exceed the budget, and the budget can't drop below the allocated total. Removing the budget keeps the limits.
+- [x] **6.4 Over-allocation in the domain.** Over-allocation is already blocked in the UI. Move the rules into the repositories: a limit can't make the allocated total exceed the budget, and the budget can't drop below the allocated total. Removing the budget keeps the limits. *(Also: income categories take no limit. A restored category keeps its limit only if it still fits. Renames aren't blocked by limits that were already over.)*
   Refs: PRD §5.6, §8
 - [ ] **6.5 Alert deduplication.** A budget alert fires once per category (or the monthly budget), per threshold, per period, checked against the inbox. A month-start change re-evaluates alerts for the new period.
   Refs: PRD §5.4, §5.8
