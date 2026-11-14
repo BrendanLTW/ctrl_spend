@@ -19,6 +19,7 @@ extension BillRowMapper on BillRow {
     iconKey: CategoryIconKey.values.byName(iconKey),
     colorKey: CategoryColorKey.values.byName(colorKey),
     remindDaysBefore: remindDaysBefore,
+    paused: paused,
   );
 }
 
@@ -36,5 +37,6 @@ extension BillMapper on Bill {
     remindDaysBefore: Value(remindDaysBefore),
     iconKey: Value(iconKey.name),
     colorKey: Value(colorKey.name),
+    paused: Value(paused),
   );
 }

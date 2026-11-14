@@ -83,6 +83,7 @@ Future<Goal> addGoal(
     iconKey: icon,
     targetMinor: target,
     targetMonth: month,
+    createdAt: contributions.isEmpty ? now : contributions.first.$3,
   );
   for (final (minor, label, date) in contributions) {
     await goals.addMoney(goal.id, amountMinor: minor, label: label, date: date);

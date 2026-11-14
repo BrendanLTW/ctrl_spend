@@ -135,7 +135,7 @@ void main() {
       await pumpApp(
         tester,
         seed: () => inbox.add(
-          kind: NotificationKind.billReminder,
+          kind: NotificationKind.billDue,
           title: 'Unifi is due in 2 days',
           body: 'RM 129 on 8 Nov. Mark it paid in Recurring bills.',
           createdAt: DateTime(2026, 11, 4, 8),

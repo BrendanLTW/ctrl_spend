@@ -15,6 +15,9 @@ abstract class Goal with _$Goal {
     /// The first of the target month, local midnight.
     required DateTime targetMonth,
 
+    /// When the goal was made, the start of its on-track plan (PRD §5.12).
+    required DateTime createdAt,
+
     /// When saved first reached the target; null while it hasn't, or
     /// after a withdrawal took it back below.
     DateTime? completedAt,

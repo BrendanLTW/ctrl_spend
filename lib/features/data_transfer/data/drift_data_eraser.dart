@@ -12,8 +12,9 @@ class DriftDataEraser implements DataEraser {
     // transactions and notifications to categories.
     await _db.delete(_db.transactions).go();
     await _db.delete(_db.bills).go();
-    // Contributions go with their goals.
+    // Contributions go with their goals, limits with their snapshots.
     await _db.delete(_db.goals).go();
+    await _db.delete(_db.periodSnapshots).go();
     await _db.delete(_db.notifications).go();
     await _db.delete(_db.categories).go();
     await _db.delete(_db.preferences).go();

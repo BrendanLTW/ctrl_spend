@@ -11,6 +11,7 @@ Goal goal({int target = 800000, DateTime? month}) => Goal(
   iconKey: CategoryIconKey.car,
   targetMinor: target,
   targetMonth: month ?? DateTime(2027, 12),
+  createdAt: DateTime(2026, 11, 4),
 );
 
 var _id = 1;

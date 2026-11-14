@@ -34,5 +34,9 @@ abstract class Bill with _$Bill {
 
     /// Days before [nextDue] to remind; null means no reminder.
     int? remindDaysBefore,
+
+    /// Left out of Upcoming totals, "Left after bills" and reminders
+    /// (PRD §5.11).
+    @Default(false) bool paused,
   }) = _Bill;
 }

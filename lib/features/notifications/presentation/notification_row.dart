@@ -130,7 +130,7 @@ AppIcon _kindIcon(NotificationKind kind) => switch (kind) {
   NotificationKind.incomeRecorded => AppIcon.wallet,
   NotificationKind.weeklySummary => AppIcon.chartBars,
   NotificationKind.periodStarted => AppIcon.calendar,
-  NotificationKind.billReminder => AppIcon.receipt,
+  NotificationKind.billDue => AppIcon.receipt,
 };
 
 CategoryColorKey _kindColour(NotificationKind kind) => switch (kind) {
@@ -140,5 +140,5 @@ CategoryColorKey _kindColour(NotificationKind kind) => switch (kind) {
   NotificationKind.incomeRecorded => CategoryColorKey.green,
   NotificationKind.weeklySummary => CategoryColorKey.blue,
   NotificationKind.periodStarted => CategoryColorKey.yellow,
-  NotificationKind.billReminder => CategoryColorKey.yellow,
+  NotificationKind.billDue => CategoryColorKey.yellow,
 };

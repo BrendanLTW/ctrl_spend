@@ -24,6 +24,7 @@ void main() {
     iconKey: CategoryIconKey.travel,
     targetMinor: target,
     targetMonth: month ?? DateTime(2027, 3),
+    createdAt: DateTime(2026, 8, 1, 10),
   );
 
   Future<GoalContribution> addMoney(Goal goal, int minor, [DateTime? date]) =>
@@ -45,6 +46,7 @@ void main() {
       expect(car.name, 'Car');
       expect(car.targetMonth, DateTime(2027, 12));
       expect(car.completedAt, isNull);
+      expect(car.createdAt, DateTime(2026, 8, 1, 10).toUtc());
       expect(await repo.watch().first, [bali, car]);
     },
   );

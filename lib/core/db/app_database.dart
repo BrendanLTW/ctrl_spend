@@ -15,13 +15,15 @@ part 'app_database.g.dart';
     Bills,
     Goals,
     GoalContributions,
+    PeriodSnapshots,
+    PeriodSnapshotLimits,
   ],
 )
 class AppDatabase extends _$AppDatabase {
   new(super.e);
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -48,6 +50,34 @@ class AppDatabase extends _$AppDatabase {
       if (from == 3) {
         await m.addColumn(bills, bills.iconKey);
         await m.addColumn(bills, bills.colorKey);
+      }
+      // v5 (15 Nov 2026 spec): period snapshots, paused bills, goal
+      // creation dates and the billDue notification kind.
+      if (from < 5) {
+        await m.createTable(periodSnapshots);
+        await m.createTable(periodSnapshotLimits);
+        // Before v3, createTable above already made these.
+        if (from >= 3) {
+          await m.addColumn(bills, bills.paused);
+          await m.alterTable(
+            TableMigration(
+              goals,
+              newColumns: [goals.createdAt],
+              columnTransformer: {
+                // The first contribution's date, else now.
+                goals.createdAt: const CustomExpression<DateTime>(
+                  '(SELECT COALESCE(MIN(c.date), '
+                  "strftime('%Y-%m-%dT%H:%M:%fZ', 'now')) "
+                  'FROM goal_contributions c WHERE c.goal_id = goals.id)',
+                ),
+              },
+            ),
+          );
+          await customStatement(
+            "UPDATE notifications SET kind = 'billDue' "
+            "WHERE kind = 'billReminder'",
+          );
+        }
       }
     },
     // SQLite ignores foreign keys unless asked, per connection.

@@ -160,7 +160,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
 
 ### A. Data and rules
 
-- [ ] **6.1 Schema v5.** Add the PeriodSnapshot table, with its limits in a child table (categoryId → limitMinor). Add `bills.paused` and `goals.createdAt` (existing goals get their first contribution's date, else the migration date). Rename the stored notification kind `billReminder` to `billDue`. New preference keys: `billRemindersOn`, `lockAfterMinutes`, `failedPinCount`, `lockoutUntil` (reminder time already exists). Migration tests from v1–v4 data.
+- [x] **6.1 Schema v5.** Add the PeriodSnapshot table, with its limits in a child table (categoryId → limitMinor). Add `bills.paused` and `goals.createdAt` (existing goals get their first contribution's date, else the migration date). Rename the stored notification kind `billReminder` to `billDue`. New preference keys: `billRemindersOn`, `lockAfterMinutes`, `failedPinCount`, `lockoutUntil` (reminder time already exists). Migration tests from v1–v4 data. *(Also the other app-lock preferences in PRD §8: enabled, biometrics, hide in switcher.)*
   Refs: PRD §8
 - [ ] **6.2 Period snapshots.** Write a snapshot for each period that has ended, on launch and on resume, without double-writing. Backfill past periods from the current budget and limits; this is an approximation, and the docs and the commit say so. Changing the month start recalculates the current period and leaves snapshots alone. Past-period data (S25, S26, S20) reads budgets and limits from snapshots.
   Refs: PRD §6.2, §5.8, §5.10, §8

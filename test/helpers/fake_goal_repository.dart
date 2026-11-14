@@ -61,6 +61,7 @@ class FakeGoalRepository implements GoalRepository {
     required CategoryIconKey iconKey,
     required int targetMinor,
     required DateTime targetMonth,
+    required DateTime createdAt,
   }) async {
     final goal = Goal(
       id: _nextGoalId++,
@@ -68,6 +69,7 @@ class FakeGoalRepository implements GoalRepository {
       iconKey: iconKey,
       targetMinor: targetMinor,
       targetMonth: DateTime(targetMonth.year, targetMonth.month),
+      createdAt: createdAt,
     );
     _goals[goal.id] = goal;
     _changes.add(null);

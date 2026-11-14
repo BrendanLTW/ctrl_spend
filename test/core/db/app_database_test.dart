@@ -39,8 +39,8 @@ void main() {
         ),
       );
 
-  test('schema v4 has the v1.0 tables plus bills and goals', () async {
-    expect(db.schemaVersion, 4);
+  test('schema v5 has bills, goals and period snapshots', () async {
+    expect(db.schemaVersion, 5);
     final tables = await db
         .customSelect(
           "SELECT name FROM sqlite_master WHERE type = 'table' "
@@ -58,6 +58,8 @@ void main() {
         'bills',
         'goals',
         'goal_contributions',
+        'period_snapshots',
+        'period_snapshot_limits',
       ]),
     );
   });
@@ -202,6 +204,7 @@ void main() {
             iconKey: 'travel',
             targetMinor: 500000,
             targetMonth: DateTime.utc(2027, 3),
+            createdAt: DateTime.utc(2026, 8),
           ),
         );
 
@@ -235,6 +238,46 @@ void main() {
       final goal = await db.select(db.goals).getSingle();
       expect(goal.targetMonth, DateTime.utc(2027, 3));
       expect(goal.targetMonth.isUtc, isTrue);
+    });
+  });
+
+  group('period snapshots', () {
+    Future<int> addSnapshot(DateTime start) => db
+        .into(db.periodSnapshots)
+        .insert(
+          PeriodSnapshotsCompanion.insert(
+            periodStart: start,
+            periodEnd: DateTime.utc(2026, 11, 14),
+            budgetMinor: const Value(200000),
+            spentMinor: 76000,
+            incomeMinor: 480000,
+          ),
+        );
+
+    test('one per period start', () async {
+      await addSnapshot(DateTime.utc(2026, 10, 15));
+      await expectLater(
+        addSnapshot(DateTime.utc(2026, 10, 15)),
+        throwsA(isA<SqliteException>()),
+      );
+    });
+
+    test('limits go with their snapshot', () async {
+      final categoryId = await addCategory();
+      final snapshotId = await addSnapshot(DateTime.utc(2026, 10, 15));
+      await db
+          .into(db.periodSnapshotLimits)
+          .insert(
+            PeriodSnapshotLimitsCompanion.insert(
+              snapshotId: snapshotId,
+              categoryId: categoryId,
+              limitMinor: 40000,
+            ),
+          );
+      await (db.delete(
+        db.periodSnapshots,
+      )..where((s) => s.id.equals(snapshotId))).go();
+      expect(await db.select(db.periodSnapshotLimits).get(), isEmpty);
     });
   });
 

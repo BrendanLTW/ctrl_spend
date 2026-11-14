@@ -102,6 +102,7 @@ class _AddGoalScreenState extends ConsumerState<AddGoalScreen> {
         iconKey: _icon,
         targetMinor: _target,
         targetMonth: _month,
+        createdAt: ref.read(clockProvider)(),
       );
     } else {
       await repository.update(
@@ -157,6 +158,7 @@ class _AddGoalScreenState extends ConsumerState<AddGoalScreen> {
       iconKey: _icon,
       targetMinor: _target,
       targetMonth: _month,
+      createdAt: _today,
     );
 
     return Scaffold(

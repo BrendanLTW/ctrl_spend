@@ -72,6 +72,10 @@ class Bills extends Table {
   /// Bills category's look.
   TextColumn get iconKey => text().withDefault(const Constant('bolt'))();
   TextColumn get colorKey => text().withDefault(const Constant('yellow'))();
+
+  /// A paused bill is left out of Upcoming totals, "Left after bills" and
+  /// reminders (PRD §5.11). Added in schema v5.
+  BoolColumn get paused => boolean().withDefault(const Constant(false))();
 }
 
 /// Savings goals (PRD §5.12, v1.1). `targetMonth` is the first of the
@@ -85,6 +89,10 @@ class Goals extends Table {
       integer().check(targetMinor.isBiggerThanValue(0))();
   DateTimeColumn get targetMonth => dateTime()();
   DateTimeColumn get completedAt => dateTime().nullable()();
+
+  /// When the goal was made, for its on-track plan (PRD §5.12). Added in
+  /// schema v5; earlier goals got their first contribution's date.
+  DateTimeColumn get createdAt => dateTime()();
 }
 
 /// Money added to (positive) or withdrawn from (negative) a goal. Never
@@ -116,6 +124,39 @@ class Notifications extends Table {
     #id,
     onDelete: KeyAction.setNull,
   )();
+}
+
+/// A period's budget and totals, saved when it ends (PRD §6.2, §8), so
+/// later budget changes don't rewrite history. Dates are calendar dates,
+/// stored as UTC midnight. Added in schema v5.
+@DataClassName('PeriodSnapshotRow')
+class PeriodSnapshots extends Table {
+  IntColumn get id => integer().autoIncrement()();
+  DateTimeColumn get periodStart => dateTime().unique()();
+  DateTimeColumn get periodEnd => dateTime()();
+  IntColumn get budgetMinor =>
+      integer().nullable().check(budgetMinor.isBiggerOrEqualValue(0))();
+  IntColumn get spentMinor =>
+      integer().check(spentMinor.isBiggerOrEqualValue(0))();
+  IntColumn get incomeMinor =>
+      integer().check(incomeMinor.isBiggerOrEqualValue(0))();
+}
+
+/// A snapshot's category limits (PeriodSnapshot `limits`).
+@DataClassName('PeriodSnapshotLimitRow')
+class PeriodSnapshotLimits extends Table {
+  IntColumn get snapshotId =>
+      integer().references(PeriodSnapshots, #id, onDelete: KeyAction.cascade)();
+
+  /// A category with transactions is archived, never deleted, so only a
+  /// limit on an unused category can go with it.
+  IntColumn get categoryId =>
+      integer().references(Categories, #id, onDelete: KeyAction.cascade)();
+  IntColumn get limitMinor =>
+      integer().check(limitMinor.isBiggerOrEqualValue(0))();
+
+  @override
+  Set<Column> get primaryKey => {snapshotId, categoryId};
 }
 
 /// Key-value settings (PRD §8 Preferences).

@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$Goal {
 
  int get id; String get name; CategoryIconKey get iconKey; int get targetMinor;/// The first of the target month, local midnight.
- DateTime get targetMonth;/// When saved first reached the target; null while it hasn't, or
+ DateTime get targetMonth;/// When the goal was made, the start of its on-track plan (PRD §5.12).
+ DateTime get createdAt;/// When saved first reached the target; null while it hasn't, or
 /// after a withdrawal took it back below.
  DateTime? get completedAt;
 /// Create a copy of Goal
@@ -30,20 +31,20 @@ $GoalCopyWith<Goal> get copyWith => _$GoalCopyWithImpl<Goal>(this as Goal, _$ide
 @override
 bool operator ==(Object other) {
   final _this = this as Goal;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Goal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.iconKey, _this.iconKey) || other.iconKey == _this.iconKey)&&(identical(other.targetMinor, _this.targetMinor) || other.targetMinor == _this.targetMinor)&&(identical(other.targetMonth, _this.targetMonth) || other.targetMonth == _this.targetMonth)&&(identical(other.completedAt, _this.completedAt) || other.completedAt == _this.completedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Goal&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.iconKey, _this.iconKey) || other.iconKey == _this.iconKey)&&(identical(other.targetMinor, _this.targetMinor) || other.targetMinor == _this.targetMinor)&&(identical(other.targetMonth, _this.targetMonth) || other.targetMonth == _this.targetMonth)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.completedAt, _this.completedAt) || other.completedAt == _this.completedAt));
 }
 
 
 @override
 int get hashCode {
   final _this = this as Goal;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.iconKey,_this.targetMinor,_this.targetMonth,_this.completedAt);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.iconKey,_this.targetMinor,_this.targetMonth,_this.createdAt,_this.completedAt);
 }
 
 @override
 String toString() {
   final _this = this as Goal;
-  return 'Goal(id: ${_this.id}, name: ${_this.name}, iconKey: ${_this.iconKey}, targetMinor: ${_this.targetMinor}, targetMonth: ${_this.targetMonth}, completedAt: ${_this.completedAt})';
+  return 'Goal(id: ${_this.id}, name: ${_this.name}, iconKey: ${_this.iconKey}, targetMinor: ${_this.targetMinor}, targetMonth: ${_this.targetMonth}, createdAt: ${_this.createdAt}, completedAt: ${_this.completedAt})';
 }
 
 
@@ -54,7 +55,7 @@ abstract mixin class $GoalCopyWith<$Res>  {
   factory $GoalCopyWith(Goal value, $Res Function(Goal) _then) = _$GoalCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, CategoryIconKey iconKey, int targetMinor, DateTime targetMonth, DateTime? completedAt
+ int id, String name, CategoryIconKey iconKey, int targetMinor, DateTime targetMonth, DateTime createdAt, DateTime? completedAt
 });
 
 
@@ -71,13 +72,14 @@ class _$GoalCopyWithImpl<$Res>
 
 /// Create a copy of Goal
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? iconKey = null,Object? targetMinor = null,Object? targetMonth = null,Object? completedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? iconKey = null,Object? targetMinor = null,Object? targetMonth = null,Object? createdAt = null,Object? completedAt = freezed,}) {
   return _then(Goal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iconKey: null == iconKey ? _self.iconKey : iconKey // ignore: cast_nullable_to_non_nullable
 as CategoryIconKey,targetMinor: null == targetMinor ? _self.targetMinor : targetMinor // ignore: cast_nullable_to_non_nullable
 as int,targetMonth: null == targetMonth ? _self.targetMonth : targetMonth // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -164,10 +166,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime? completedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime createdAt,  DateTime? completedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Goal() when $default != null:
-return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.completedAt);case _:
+return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.createdAt,_that.completedAt);case _:
   return orElse();
 
 }
@@ -185,10 +187,10 @@ return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.target
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime? completedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime createdAt,  DateTime? completedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Goal():
-return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.completedAt);case _:
+return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.createdAt,_that.completedAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -205,10 +207,10 @@ return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.target
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime? completedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  CategoryIconKey iconKey,  int targetMinor,  DateTime targetMonth,  DateTime createdAt,  DateTime? completedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Goal() when $default != null:
-return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.completedAt);case _:
+return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.targetMonth,_that.createdAt,_that.completedAt);case _:
   return null;
 
 }
@@ -220,7 +222,7 @@ return $default(_that.id,_that.name,_that.iconKey,_that.targetMinor,_that.target
 
 
 class _Goal implements Goal {
-  const _Goal({required this.id, required this.name, required this.iconKey, required this.targetMinor, required this.targetMonth, this.completedAt});
+  const _Goal({required this.id, required this.name, required this.iconKey, required this.targetMinor, required this.targetMonth, required this.createdAt, this.completedAt});
   
 
 @override final  int id;
@@ -229,6 +231,8 @@ class _Goal implements Goal {
 @override final  int targetMinor;
 /// The first of the target month, local midnight.
 @override final  DateTime targetMonth;
+/// When the goal was made, the start of its on-track plan (PRD §5.12).
+@override final  DateTime createdAt;
 /// When saved first reached the target; null while it hasn't, or
 /// after a withdrawal took it back below.
 @override final  DateTime? completedAt;
@@ -243,18 +247,18 @@ _$GoalCopyWith<_Goal> get copyWith => __$GoalCopyWithImpl<_Goal>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Goal&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iconKey, iconKey) || other.iconKey == iconKey)&&(identical(other.targetMinor, targetMinor) || other.targetMinor == targetMinor)&&(identical(other.targetMonth, targetMonth) || other.targetMonth == targetMonth)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Goal&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.iconKey, iconKey) || other.iconKey == iconKey)&&(identical(other.targetMinor, targetMinor) || other.targetMinor == targetMinor)&&(identical(other.targetMonth, targetMonth) || other.targetMonth == targetMonth)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.completedAt, completedAt) || other.completedAt == completedAt));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,iconKey,targetMinor,targetMonth,completedAt);
+    return Object.hash(runtimeType,id,name,iconKey,targetMinor,targetMonth,createdAt,completedAt);
 }
 
 @override
 String toString() {
-    return 'Goal(id: $id, name: $name, iconKey: $iconKey, targetMinor: $targetMinor, targetMonth: $targetMonth, completedAt: $completedAt)';
+    return 'Goal(id: $id, name: $name, iconKey: $iconKey, targetMinor: $targetMinor, targetMonth: $targetMonth, createdAt: $createdAt, completedAt: $completedAt)';
 }
 
 
@@ -265,7 +269,7 @@ abstract mixin class _$GoalCopyWith<$Res> implements $GoalCopyWith<$Res> {
   factory _$GoalCopyWith(_Goal value, $Res Function(_Goal) _then) = __$GoalCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, CategoryIconKey iconKey, int targetMinor, DateTime targetMonth, DateTime? completedAt
+ int id, String name, CategoryIconKey iconKey, int targetMinor, DateTime targetMonth, DateTime createdAt, DateTime? completedAt
 });
 
 
@@ -282,13 +286,14 @@ class __$GoalCopyWithImpl<$Res>
 
 /// Create a copy of Goal
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? iconKey = null,Object? targetMinor = null,Object? targetMonth = null,Object? completedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? iconKey = null,Object? targetMinor = null,Object? targetMonth = null,Object? createdAt = null,Object? completedAt = freezed,}) {
   return _then(_Goal(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,iconKey: null == iconKey ? _self.iconKey : iconKey // ignore: cast_nullable_to_non_nullable
 as CategoryIconKey,targetMinor: null == targetMinor ? _self.targetMinor : targetMinor // ignore: cast_nullable_to_non_nullable
 as int,targetMonth: null == targetMonth ? _self.targetMonth : targetMonth // ignore: cast_nullable_to_non_nullable
+as DateTime,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,completedAt: freezed == completedAt ? _self.completedAt : completedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

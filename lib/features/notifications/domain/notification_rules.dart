@@ -152,7 +152,7 @@ final class BillReminder extends NotificationEvent {
   final int categoryId;
 
   @override
-  NotificationKind get kind => NotificationKind.billReminder;
+  NotificationKind get kind => NotificationKind.billDue;
 }
 
 /// When [bill]'s reminder fires: at 9:00 local, its Remind me days before

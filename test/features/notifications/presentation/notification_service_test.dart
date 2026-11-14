@@ -274,7 +274,7 @@ void main() {
         seed: () => addBill(due: DateTime(2026, 11, 5)),
       );
       final row = inbox.all.single;
-      expect(row.kind, NotificationKind.billReminder);
+      expect(row.kind, NotificationKind.billDue);
       expect(row.title, 'Unifi is due in 2 days');
       expect(row.createdAt, DateTime(2026, 11, 3, 9));
       expect(row.categoryId, categories.byName('Bills').id);

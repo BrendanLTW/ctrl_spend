@@ -9,17 +9,91 @@ void main() {
 
   setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
-  for (final from in [1, 2, 3]) {
+  for (final from in [1, 2, 3, 4]) {
     test(
-      'v$from upgrades to v4 with the same schema as a new database',
+      'v$from upgrades to v5 with the same schema as a new database',
       () async {
         final connection = await verifier.startAt(from);
         final db = AppDatabase(connection);
-        await verifier.migrateAndValidate(db, 4);
+        await verifier.migrateAndValidate(db, 5);
         await db.close();
       },
     );
   }
+
+  group('v4 data in v5', () {
+    late AppDatabase db;
+
+    setUp(() async {
+      final schema = await verifier.schemaAt(4);
+      schema.rawDatabase
+        ..execute(
+          'INSERT INTO categories '
+          '(name, type, icon_key, color_key, sort_order) '
+          "VALUES ('Bills', 'expense', 'bolt', 'yellow', 0)",
+        )
+        ..execute(
+          'INSERT INTO bills (name, amount_minor, category_id, repeat_unit, '
+          'repeat_every, repeat_day, next_due, icon_key, color_key) '
+          "VALUES ('Unifi', 12900, 1, 'month', 1, 8, "
+          "'2026-11-08T00:00:00.000Z', 'wifi', 'blue')",
+        )
+        ..execute(
+          'INSERT INTO goals (name, icon_key, target_minor, target_month) '
+          "VALUES ('Bali trip', 'travel', 500000, "
+          "'2027-03-01T00:00:00.000Z'), "
+          "('Car', 'car', 1000000, '2028-01-01T00:00:00.000Z')",
+        )
+        ..execute(
+          'INSERT INTO goal_contributions (goal_id, amount_minor, label, date) '
+          "VALUES (1, 40000, 'From salary', '2026-11-03T00:00:00.000Z'), "
+          "(1, 50000, 'From salary', '2026-09-03T00:00:00.000Z')",
+        )
+        ..execute(
+          'INSERT INTO notifications (kind, title, body, created_at) '
+          "VALUES ('billReminder', 'Unifi is due in 2 days', 'x', "
+          "'2026-11-06T01:00:00.000Z'), "
+          "('dailyReminder', 'Daily reminder', 'x', "
+          "'2026-11-03T13:00:00.000Z')",
+        );
+      db = AppDatabase(schema.newConnection());
+    });
+    tearDown(() => db.close());
+
+    test('bills keep their data and are not paused', () async {
+      final bill = await db.select(db.bills).getSingle();
+      expect((bill.name, bill.iconKey, bill.paused), ('Unifi', 'wifi', false));
+    });
+
+    test('goals were created on their first contribution', () async {
+      final goals = await db.select(db.goals).get();
+      final bali = goals.firstWhere((g) => g.name == 'Bali trip');
+      expect(bali.createdAt, DateTime.utc(2026, 9, 3));
+      expect(bali.targetMinor, 500000);
+      expect(await db.select(db.goalContributions).get(), hasLength(2));
+    });
+
+    test('a goal with no contributions was created at the upgrade', () async {
+      final before = DateTime.now().toUtc().subtract(
+        const Duration(minutes: 1),
+      );
+      final car = (await db.select(db.goals).get()).firstWhere(
+        (g) => g.name == 'Car',
+      );
+      expect(car.createdAt.isAfter(before), isTrue);
+    });
+
+    test('bill reminders become billDue; other kinds stay', () async {
+      final kinds = [
+        for (final n in await db.select(db.notifications).get()) n.kind,
+      ];
+      expect(kinds, unorderedEquals(['billDue', 'dailyReminder']));
+    });
+
+    test('there are no snapshots yet', () async {
+      expect(await db.select(db.periodSnapshots).get(), isEmpty);
+    });
+  });
 
   test('v3 bills keep their data and get the Bills look', () async {
     final schema = await verifier.schemaAt(3);

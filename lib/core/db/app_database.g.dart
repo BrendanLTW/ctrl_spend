@@ -643,6 +643,19 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
     requiredDuringInsert: false,
     defaultValue: const Constant('yellow'),
   );
+  static const VerificationMeta _pausedMeta = const VerificationMeta('paused');
+  @override
+  late final GeneratedColumn<bool> paused = GeneratedColumn<bool>(
+    'paused',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("paused" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -656,6 +669,7 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
     remindDaysBefore,
     iconKey,
     colorKey,
+    paused,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -753,6 +767,12 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
         colorKey.isAcceptableOrUnknown(data['color_key']!, _colorKeyMeta),
       );
     }
+    if (data.containsKey('paused')) {
+      context.handle(
+        _pausedMeta,
+        paused.isAcceptableOrUnknown(data['paused']!, _pausedMeta),
+      );
+    }
     return context;
   }
 
@@ -806,6 +826,10 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
         DriftSqlType.string,
         data['${effectivePrefix}color_key'],
       )!,
+      paused: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}paused'],
+      )!,
     );
   }
 
@@ -830,6 +854,10 @@ class BillRow extends DataClass implements Insertable<BillRow> {
   /// Bills category's look.
   final String iconKey;
   final String colorKey;
+
+  /// A paused bill is left out of Upcoming totals, "Left after bills" and
+  /// reminders (PRD §5.11). Added in schema v5.
+  final bool paused;
   const BillRow({
     required this.id,
     required this.name,
@@ -842,6 +870,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     this.remindDaysBefore,
     required this.iconKey,
     required this.colorKey,
+    required this.paused,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -861,6 +890,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     }
     map['icon_key'] = Variable<String>(iconKey);
     map['color_key'] = Variable<String>(colorKey);
+    map['paused'] = Variable<bool>(paused);
     return map;
   }
 
@@ -881,6 +911,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           : Value(remindDaysBefore),
       iconKey: Value(iconKey),
       colorKey: Value(colorKey),
+      paused: Value(paused),
     );
   }
 
@@ -901,6 +932,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       remindDaysBefore: serializer.fromJson<int?>(json['remindDaysBefore']),
       iconKey: serializer.fromJson<String>(json['iconKey']),
       colorKey: serializer.fromJson<String>(json['colorKey']),
+      paused: serializer.fromJson<bool>(json['paused']),
     );
   }
   @override
@@ -918,6 +950,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       'remindDaysBefore': serializer.toJson<int?>(remindDaysBefore),
       'iconKey': serializer.toJson<String>(iconKey),
       'colorKey': serializer.toJson<String>(colorKey),
+      'paused': serializer.toJson<bool>(paused),
     };
   }
 
@@ -933,6 +966,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     Value<int?> remindDaysBefore = const Value.absent(),
     String? iconKey,
     String? colorKey,
+    bool? paused,
   }) => BillRow(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -947,6 +981,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
         : this.remindDaysBefore,
     iconKey: iconKey ?? this.iconKey,
     colorKey: colorKey ?? this.colorKey,
+    paused: paused ?? this.paused,
   );
   BillRow copyWithCompanion(BillsCompanion data) {
     return BillRow(
@@ -971,6 +1006,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           : this.remindDaysBefore,
       iconKey: data.iconKey.present ? data.iconKey.value : this.iconKey,
       colorKey: data.colorKey.present ? data.colorKey.value : this.colorKey,
+      paused: data.paused.present ? data.paused.value : this.paused,
     );
   }
 
@@ -987,7 +1023,8 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           ..write('nextDue: $nextDue, ')
           ..write('remindDaysBefore: $remindDaysBefore, ')
           ..write('iconKey: $iconKey, ')
-          ..write('colorKey: $colorKey')
+          ..write('colorKey: $colorKey, ')
+          ..write('paused: $paused')
           ..write(')'))
         .toString();
   }
@@ -1005,6 +1042,7 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     remindDaysBefore,
     iconKey,
     colorKey,
+    paused,
   );
   @override
   bool operator ==(Object other) =>
@@ -1020,7 +1058,8 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           other.nextDue == this.nextDue &&
           other.remindDaysBefore == this.remindDaysBefore &&
           other.iconKey == this.iconKey &&
-          other.colorKey == this.colorKey);
+          other.colorKey == this.colorKey &&
+          other.paused == this.paused);
 }
 
 class BillsCompanion extends UpdateCompanion<BillRow> {
@@ -1035,6 +1074,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
   final Value<int?> remindDaysBefore;
   final Value<String> iconKey;
   final Value<String> colorKey;
+  final Value<bool> paused;
   const BillsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -1047,6 +1087,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     this.remindDaysBefore = const Value.absent(),
     this.iconKey = const Value.absent(),
     this.colorKey = const Value.absent(),
+    this.paused = const Value.absent(),
   });
   BillsCompanion.insert({
     this.id = const Value.absent(),
@@ -1060,6 +1101,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     this.remindDaysBefore = const Value.absent(),
     this.iconKey = const Value.absent(),
     this.colorKey = const Value.absent(),
+    this.paused = const Value.absent(),
   }) : name = Value(name),
        amountMinor = Value(amountMinor),
        categoryId = Value(categoryId),
@@ -1078,6 +1120,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     Expression<int>? remindDaysBefore,
     Expression<String>? iconKey,
     Expression<String>? colorKey,
+    Expression<bool>? paused,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -1091,6 +1134,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
       if (remindDaysBefore != null) 'remind_days_before': remindDaysBefore,
       if (iconKey != null) 'icon_key': iconKey,
       if (colorKey != null) 'color_key': colorKey,
+      if (paused != null) 'paused': paused,
     });
   }
 
@@ -1106,6 +1150,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     Value<int?>? remindDaysBefore,
     Value<String>? iconKey,
     Value<String>? colorKey,
+    Value<bool>? paused,
   }) {
     return BillsCompanion(
       id: id ?? this.id,
@@ -1119,6 +1164,7 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
       remindDaysBefore: remindDaysBefore ?? this.remindDaysBefore,
       iconKey: iconKey ?? this.iconKey,
       colorKey: colorKey ?? this.colorKey,
+      paused: paused ?? this.paused,
     );
   }
 
@@ -1158,6 +1204,9 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     if (colorKey.present) {
       map['color_key'] = Variable<String>(colorKey.value);
     }
+    if (paused.present) {
+      map['paused'] = Variable<bool>(paused.value);
+    }
     return map;
   }
 
@@ -1174,7 +1223,8 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
           ..write('nextDue: $nextDue, ')
           ..write('remindDaysBefore: $remindDaysBefore, ')
           ..write('iconKey: $iconKey, ')
-          ..write('colorKey: $colorKey')
+          ..write('colorKey: $colorKey, ')
+          ..write('paused: $paused')
           ..write(')'))
         .toString();
   }
@@ -2423,6 +2473,17 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, GoalRow> {
     type: DriftSqlType.dateTime,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
   @override
   List<GeneratedColumn> get $columns => [
     id,
@@ -2431,6 +2492,7 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, GoalRow> {
     targetMinor,
     targetMonth,
     completedAt,
+    createdAt,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -2494,6 +2556,14 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, GoalRow> {
         ),
       );
     }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_createdAtMeta);
+    }
     return context;
   }
 
@@ -2527,6 +2597,10 @@ class $GoalsTable extends Goals with TableInfo<$GoalsTable, GoalRow> {
         DriftSqlType.dateTime,
         data['${effectivePrefix}completed_at'],
       ),
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
     );
   }
 
@@ -2543,6 +2617,10 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
   final int targetMinor;
   final DateTime targetMonth;
   final DateTime? completedAt;
+
+  /// When the goal was made, for its on-track plan (PRD §5.12). Added in
+  /// schema v5; earlier goals got their first contribution's date.
+  final DateTime createdAt;
   const GoalRow({
     required this.id,
     required this.name,
@@ -2550,6 +2628,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
     required this.targetMinor,
     required this.targetMonth,
     this.completedAt,
+    required this.createdAt,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
@@ -2562,6 +2641,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
     if (!nullToAbsent || completedAt != null) {
       map['completed_at'] = Variable<DateTime>(completedAt);
     }
+    map['created_at'] = Variable<DateTime>(createdAt);
     return map;
   }
 
@@ -2575,6 +2655,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
       completedAt: completedAt == null && nullToAbsent
           ? const Value.absent()
           : Value(completedAt),
+      createdAt: Value(createdAt),
     );
   }
 
@@ -2590,6 +2671,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
       targetMinor: serializer.fromJson<int>(json['targetMinor']),
       targetMonth: serializer.fromJson<DateTime>(json['targetMonth']),
       completedAt: serializer.fromJson<DateTime?>(json['completedAt']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
     );
   }
   @override
@@ -2602,6 +2684,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
       'targetMinor': serializer.toJson<int>(targetMinor),
       'targetMonth': serializer.toJson<DateTime>(targetMonth),
       'completedAt': serializer.toJson<DateTime?>(completedAt),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
     };
   }
 
@@ -2612,6 +2695,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
     int? targetMinor,
     DateTime? targetMonth,
     Value<DateTime?> completedAt = const Value.absent(),
+    DateTime? createdAt,
   }) => GoalRow(
     id: id ?? this.id,
     name: name ?? this.name,
@@ -2619,6 +2703,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
     targetMinor: targetMinor ?? this.targetMinor,
     targetMonth: targetMonth ?? this.targetMonth,
     completedAt: completedAt.present ? completedAt.value : this.completedAt,
+    createdAt: createdAt ?? this.createdAt,
   );
   GoalRow copyWithCompanion(GoalsCompanion data) {
     return GoalRow(
@@ -2634,6 +2719,7 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
       completedAt: data.completedAt.present
           ? data.completedAt.value
           : this.completedAt,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
     );
   }
 
@@ -2645,14 +2731,22 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
           ..write('iconKey: $iconKey, ')
           ..write('targetMinor: $targetMinor, ')
           ..write('targetMonth: $targetMonth, ')
-          ..write('completedAt: $completedAt')
+          ..write('completedAt: $completedAt, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, iconKey, targetMinor, targetMonth, completedAt);
+  int get hashCode => Object.hash(
+    id,
+    name,
+    iconKey,
+    targetMinor,
+    targetMonth,
+    completedAt,
+    createdAt,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -2662,7 +2756,8 @@ class GoalRow extends DataClass implements Insertable<GoalRow> {
           other.iconKey == this.iconKey &&
           other.targetMinor == this.targetMinor &&
           other.targetMonth == this.targetMonth &&
-          other.completedAt == this.completedAt);
+          other.completedAt == this.completedAt &&
+          other.createdAt == this.createdAt);
 }
 
 class GoalsCompanion extends UpdateCompanion<GoalRow> {
@@ -2672,6 +2767,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
   final Value<int> targetMinor;
   final Value<DateTime> targetMonth;
   final Value<DateTime?> completedAt;
+  final Value<DateTime> createdAt;
   const GoalsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
@@ -2679,6 +2775,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
     this.targetMinor = const Value.absent(),
     this.targetMonth = const Value.absent(),
     this.completedAt = const Value.absent(),
+    this.createdAt = const Value.absent(),
   });
   GoalsCompanion.insert({
     this.id = const Value.absent(),
@@ -2687,10 +2784,12 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
     required int targetMinor,
     required DateTime targetMonth,
     this.completedAt = const Value.absent(),
+    required DateTime createdAt,
   }) : name = Value(name),
        iconKey = Value(iconKey),
        targetMinor = Value(targetMinor),
-       targetMonth = Value(targetMonth);
+       targetMonth = Value(targetMonth),
+       createdAt = Value(createdAt);
   static Insertable<GoalRow> custom({
     Expression<int>? id,
     Expression<String>? name,
@@ -2698,6 +2797,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
     Expression<int>? targetMinor,
     Expression<DateTime>? targetMonth,
     Expression<DateTime>? completedAt,
+    Expression<DateTime>? createdAt,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -2706,6 +2806,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
       if (targetMinor != null) 'target_minor': targetMinor,
       if (targetMonth != null) 'target_month': targetMonth,
       if (completedAt != null) 'completed_at': completedAt,
+      if (createdAt != null) 'created_at': createdAt,
     });
   }
 
@@ -2716,6 +2817,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
     Value<int>? targetMinor,
     Value<DateTime>? targetMonth,
     Value<DateTime?>? completedAt,
+    Value<DateTime>? createdAt,
   }) {
     return GoalsCompanion(
       id: id ?? this.id,
@@ -2724,6 +2826,7 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
       targetMinor: targetMinor ?? this.targetMinor,
       targetMonth: targetMonth ?? this.targetMonth,
       completedAt: completedAt ?? this.completedAt,
+      createdAt: createdAt ?? this.createdAt,
     );
   }
 
@@ -2748,6 +2851,9 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
     if (completedAt.present) {
       map['completed_at'] = Variable<DateTime>(completedAt.value);
     }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
     return map;
   }
 
@@ -2759,7 +2865,8 @@ class GoalsCompanion extends UpdateCompanion<GoalRow> {
           ..write('iconKey: $iconKey, ')
           ..write('targetMinor: $targetMinor, ')
           ..write('targetMonth: $targetMonth, ')
-          ..write('completedAt: $completedAt')
+          ..write('completedAt: $completedAt, ')
+          ..write('createdAt: $createdAt')
           ..write(')'))
         .toString();
   }
@@ -3115,6 +3222,722 @@ class GoalContributionsCompanion extends UpdateCompanion<GoalContributionRow> {
   }
 }
 
+class $PeriodSnapshotsTable extends PeriodSnapshots
+    with TableInfo<$PeriodSnapshotsTable, PeriodSnapshotRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PeriodSnapshotsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _periodStartMeta = const VerificationMeta(
+    'periodStart',
+  );
+  @override
+  late final GeneratedColumn<DateTime> periodStart = GeneratedColumn<DateTime>(
+    'period_start',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'),
+  );
+  static const VerificationMeta _periodEndMeta = const VerificationMeta(
+    'periodEnd',
+  );
+  @override
+  late final GeneratedColumn<DateTime> periodEnd = GeneratedColumn<DateTime>(
+    'period_end',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _budgetMinorMeta = const VerificationMeta(
+    'budgetMinor',
+  );
+  @override
+  late final GeneratedColumn<int> budgetMinor = GeneratedColumn<int>(
+    'budget_minor',
+    aliasedName,
+    true,
+    check: () => ComparableExpr(budgetMinor).isBiggerOrEqualValue(0),
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+  );
+  static const VerificationMeta _spentMinorMeta = const VerificationMeta(
+    'spentMinor',
+  );
+  @override
+  late final GeneratedColumn<int> spentMinor = GeneratedColumn<int>(
+    'spent_minor',
+    aliasedName,
+    false,
+    check: () => ComparableExpr(spentMinor).isBiggerOrEqualValue(0),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _incomeMinorMeta = const VerificationMeta(
+    'incomeMinor',
+  );
+  @override
+  late final GeneratedColumn<int> incomeMinor = GeneratedColumn<int>(
+    'income_minor',
+    aliasedName,
+    false,
+    check: () => ComparableExpr(incomeMinor).isBiggerOrEqualValue(0),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    id,
+    periodStart,
+    periodEnd,
+    budgetMinor,
+    spentMinor,
+    incomeMinor,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'period_snapshots';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PeriodSnapshotRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('period_start')) {
+      context.handle(
+        _periodStartMeta,
+        periodStart.isAcceptableOrUnknown(
+          data['period_start']!,
+          _periodStartMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_periodStartMeta);
+    }
+    if (data.containsKey('period_end')) {
+      context.handle(
+        _periodEndMeta,
+        periodEnd.isAcceptableOrUnknown(data['period_end']!, _periodEndMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_periodEndMeta);
+    }
+    if (data.containsKey('budget_minor')) {
+      context.handle(
+        _budgetMinorMeta,
+        budgetMinor.isAcceptableOrUnknown(
+          data['budget_minor']!,
+          _budgetMinorMeta,
+        ),
+      );
+    }
+    if (data.containsKey('spent_minor')) {
+      context.handle(
+        _spentMinorMeta,
+        spentMinor.isAcceptableOrUnknown(data['spent_minor']!, _spentMinorMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_spentMinorMeta);
+    }
+    if (data.containsKey('income_minor')) {
+      context.handle(
+        _incomeMinorMeta,
+        incomeMinor.isAcceptableOrUnknown(
+          data['income_minor']!,
+          _incomeMinorMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_incomeMinorMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PeriodSnapshotRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PeriodSnapshotRow(
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      periodStart: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}period_start'],
+      )!,
+      periodEnd: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}period_end'],
+      )!,
+      budgetMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}budget_minor'],
+      ),
+      spentMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}spent_minor'],
+      )!,
+      incomeMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}income_minor'],
+      )!,
+    );
+  }
+
+  @override
+  $PeriodSnapshotsTable createAlias(String alias) {
+    return $PeriodSnapshotsTable(attachedDatabase, alias);
+  }
+}
+
+class PeriodSnapshotRow extends DataClass
+    implements Insertable<PeriodSnapshotRow> {
+  final int id;
+  final DateTime periodStart;
+  final DateTime periodEnd;
+  final int? budgetMinor;
+  final int spentMinor;
+  final int incomeMinor;
+  const PeriodSnapshotRow({
+    required this.id,
+    required this.periodStart,
+    required this.periodEnd,
+    this.budgetMinor,
+    required this.spentMinor,
+    required this.incomeMinor,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['period_start'] = Variable<DateTime>(periodStart);
+    map['period_end'] = Variable<DateTime>(periodEnd);
+    if (!nullToAbsent || budgetMinor != null) {
+      map['budget_minor'] = Variable<int>(budgetMinor);
+    }
+    map['spent_minor'] = Variable<int>(spentMinor);
+    map['income_minor'] = Variable<int>(incomeMinor);
+    return map;
+  }
+
+  PeriodSnapshotsCompanion toCompanion(bool nullToAbsent) {
+    return PeriodSnapshotsCompanion(
+      id: Value(id),
+      periodStart: Value(periodStart),
+      periodEnd: Value(periodEnd),
+      budgetMinor: budgetMinor == null && nullToAbsent
+          ? const Value.absent()
+          : Value(budgetMinor),
+      spentMinor: Value(spentMinor),
+      incomeMinor: Value(incomeMinor),
+    );
+  }
+
+  factory PeriodSnapshotRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PeriodSnapshotRow(
+      id: serializer.fromJson<int>(json['id']),
+      periodStart: serializer.fromJson<DateTime>(json['periodStart']),
+      periodEnd: serializer.fromJson<DateTime>(json['periodEnd']),
+      budgetMinor: serializer.fromJson<int?>(json['budgetMinor']),
+      spentMinor: serializer.fromJson<int>(json['spentMinor']),
+      incomeMinor: serializer.fromJson<int>(json['incomeMinor']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'periodStart': serializer.toJson<DateTime>(periodStart),
+      'periodEnd': serializer.toJson<DateTime>(periodEnd),
+      'budgetMinor': serializer.toJson<int?>(budgetMinor),
+      'spentMinor': serializer.toJson<int>(spentMinor),
+      'incomeMinor': serializer.toJson<int>(incomeMinor),
+    };
+  }
+
+  PeriodSnapshotRow copyWith({
+    int? id,
+    DateTime? periodStart,
+    DateTime? periodEnd,
+    Value<int?> budgetMinor = const Value.absent(),
+    int? spentMinor,
+    int? incomeMinor,
+  }) => PeriodSnapshotRow(
+    id: id ?? this.id,
+    periodStart: periodStart ?? this.periodStart,
+    periodEnd: periodEnd ?? this.periodEnd,
+    budgetMinor: budgetMinor.present ? budgetMinor.value : this.budgetMinor,
+    spentMinor: spentMinor ?? this.spentMinor,
+    incomeMinor: incomeMinor ?? this.incomeMinor,
+  );
+  PeriodSnapshotRow copyWithCompanion(PeriodSnapshotsCompanion data) {
+    return PeriodSnapshotRow(
+      id: data.id.present ? data.id.value : this.id,
+      periodStart: data.periodStart.present
+          ? data.periodStart.value
+          : this.periodStart,
+      periodEnd: data.periodEnd.present ? data.periodEnd.value : this.periodEnd,
+      budgetMinor: data.budgetMinor.present
+          ? data.budgetMinor.value
+          : this.budgetMinor,
+      spentMinor: data.spentMinor.present
+          ? data.spentMinor.value
+          : this.spentMinor,
+      incomeMinor: data.incomeMinor.present
+          ? data.incomeMinor.value
+          : this.incomeMinor,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodSnapshotRow(')
+          ..write('id: $id, ')
+          ..write('periodStart: $periodStart, ')
+          ..write('periodEnd: $periodEnd, ')
+          ..write('budgetMinor: $budgetMinor, ')
+          ..write('spentMinor: $spentMinor, ')
+          ..write('incomeMinor: $incomeMinor')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    id,
+    periodStart,
+    periodEnd,
+    budgetMinor,
+    spentMinor,
+    incomeMinor,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PeriodSnapshotRow &&
+          other.id == this.id &&
+          other.periodStart == this.periodStart &&
+          other.periodEnd == this.periodEnd &&
+          other.budgetMinor == this.budgetMinor &&
+          other.spentMinor == this.spentMinor &&
+          other.incomeMinor == this.incomeMinor);
+}
+
+class PeriodSnapshotsCompanion extends UpdateCompanion<PeriodSnapshotRow> {
+  final Value<int> id;
+  final Value<DateTime> periodStart;
+  final Value<DateTime> periodEnd;
+  final Value<int?> budgetMinor;
+  final Value<int> spentMinor;
+  final Value<int> incomeMinor;
+  const PeriodSnapshotsCompanion({
+    this.id = const Value.absent(),
+    this.periodStart = const Value.absent(),
+    this.periodEnd = const Value.absent(),
+    this.budgetMinor = const Value.absent(),
+    this.spentMinor = const Value.absent(),
+    this.incomeMinor = const Value.absent(),
+  });
+  PeriodSnapshotsCompanion.insert({
+    this.id = const Value.absent(),
+    required DateTime periodStart,
+    required DateTime periodEnd,
+    this.budgetMinor = const Value.absent(),
+    required int spentMinor,
+    required int incomeMinor,
+  }) : periodStart = Value(periodStart),
+       periodEnd = Value(periodEnd),
+       spentMinor = Value(spentMinor),
+       incomeMinor = Value(incomeMinor);
+  static Insertable<PeriodSnapshotRow> custom({
+    Expression<int>? id,
+    Expression<DateTime>? periodStart,
+    Expression<DateTime>? periodEnd,
+    Expression<int>? budgetMinor,
+    Expression<int>? spentMinor,
+    Expression<int>? incomeMinor,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (periodStart != null) 'period_start': periodStart,
+      if (periodEnd != null) 'period_end': periodEnd,
+      if (budgetMinor != null) 'budget_minor': budgetMinor,
+      if (spentMinor != null) 'spent_minor': spentMinor,
+      if (incomeMinor != null) 'income_minor': incomeMinor,
+    });
+  }
+
+  PeriodSnapshotsCompanion copyWith({
+    Value<int>? id,
+    Value<DateTime>? periodStart,
+    Value<DateTime>? periodEnd,
+    Value<int?>? budgetMinor,
+    Value<int>? spentMinor,
+    Value<int>? incomeMinor,
+  }) {
+    return PeriodSnapshotsCompanion(
+      id: id ?? this.id,
+      periodStart: periodStart ?? this.periodStart,
+      periodEnd: periodEnd ?? this.periodEnd,
+      budgetMinor: budgetMinor ?? this.budgetMinor,
+      spentMinor: spentMinor ?? this.spentMinor,
+      incomeMinor: incomeMinor ?? this.incomeMinor,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (periodStart.present) {
+      map['period_start'] = Variable<DateTime>(periodStart.value);
+    }
+    if (periodEnd.present) {
+      map['period_end'] = Variable<DateTime>(periodEnd.value);
+    }
+    if (budgetMinor.present) {
+      map['budget_minor'] = Variable<int>(budgetMinor.value);
+    }
+    if (spentMinor.present) {
+      map['spent_minor'] = Variable<int>(spentMinor.value);
+    }
+    if (incomeMinor.present) {
+      map['income_minor'] = Variable<int>(incomeMinor.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodSnapshotsCompanion(')
+          ..write('id: $id, ')
+          ..write('periodStart: $periodStart, ')
+          ..write('periodEnd: $periodEnd, ')
+          ..write('budgetMinor: $budgetMinor, ')
+          ..write('spentMinor: $spentMinor, ')
+          ..write('incomeMinor: $incomeMinor')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PeriodSnapshotLimitsTable extends PeriodSnapshotLimits
+    with TableInfo<$PeriodSnapshotLimitsTable, PeriodSnapshotLimitRow> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PeriodSnapshotLimitsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _snapshotIdMeta = const VerificationMeta(
+    'snapshotId',
+  );
+  @override
+  late final GeneratedColumn<int> snapshotId = GeneratedColumn<int>(
+    'snapshot_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES period_snapshots (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _categoryIdMeta = const VerificationMeta(
+    'categoryId',
+  );
+  @override
+  late final GeneratedColumn<int> categoryId = GeneratedColumn<int>(
+    'category_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES categories (id) ON DELETE CASCADE',
+    ),
+  );
+  static const VerificationMeta _limitMinorMeta = const VerificationMeta(
+    'limitMinor',
+  );
+  @override
+  late final GeneratedColumn<int> limitMinor = GeneratedColumn<int>(
+    'limit_minor',
+    aliasedName,
+    false,
+    check: () => ComparableExpr(limitMinor).isBiggerOrEqualValue(0),
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [snapshotId, categoryId, limitMinor];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'period_snapshot_limits';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<PeriodSnapshotLimitRow> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('snapshot_id')) {
+      context.handle(
+        _snapshotIdMeta,
+        snapshotId.isAcceptableOrUnknown(data['snapshot_id']!, _snapshotIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_snapshotIdMeta);
+    }
+    if (data.containsKey('category_id')) {
+      context.handle(
+        _categoryIdMeta,
+        categoryId.isAcceptableOrUnknown(data['category_id']!, _categoryIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_categoryIdMeta);
+    }
+    if (data.containsKey('limit_minor')) {
+      context.handle(
+        _limitMinorMeta,
+        limitMinor.isAcceptableOrUnknown(data['limit_minor']!, _limitMinorMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_limitMinorMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {snapshotId, categoryId};
+  @override
+  PeriodSnapshotLimitRow map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PeriodSnapshotLimitRow(
+      snapshotId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}snapshot_id'],
+      )!,
+      categoryId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}category_id'],
+      )!,
+      limitMinor: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}limit_minor'],
+      )!,
+    );
+  }
+
+  @override
+  $PeriodSnapshotLimitsTable createAlias(String alias) {
+    return $PeriodSnapshotLimitsTable(attachedDatabase, alias);
+  }
+}
+
+class PeriodSnapshotLimitRow extends DataClass
+    implements Insertable<PeriodSnapshotLimitRow> {
+  final int snapshotId;
+
+  /// A category with transactions is archived, never deleted, so only a
+  /// limit on an unused category can go with it.
+  final int categoryId;
+  final int limitMinor;
+  const PeriodSnapshotLimitRow({
+    required this.snapshotId,
+    required this.categoryId,
+    required this.limitMinor,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['snapshot_id'] = Variable<int>(snapshotId);
+    map['category_id'] = Variable<int>(categoryId);
+    map['limit_minor'] = Variable<int>(limitMinor);
+    return map;
+  }
+
+  PeriodSnapshotLimitsCompanion toCompanion(bool nullToAbsent) {
+    return PeriodSnapshotLimitsCompanion(
+      snapshotId: Value(snapshotId),
+      categoryId: Value(categoryId),
+      limitMinor: Value(limitMinor),
+    );
+  }
+
+  factory PeriodSnapshotLimitRow.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PeriodSnapshotLimitRow(
+      snapshotId: serializer.fromJson<int>(json['snapshotId']),
+      categoryId: serializer.fromJson<int>(json['categoryId']),
+      limitMinor: serializer.fromJson<int>(json['limitMinor']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'snapshotId': serializer.toJson<int>(snapshotId),
+      'categoryId': serializer.toJson<int>(categoryId),
+      'limitMinor': serializer.toJson<int>(limitMinor),
+    };
+  }
+
+  PeriodSnapshotLimitRow copyWith({
+    int? snapshotId,
+    int? categoryId,
+    int? limitMinor,
+  }) => PeriodSnapshotLimitRow(
+    snapshotId: snapshotId ?? this.snapshotId,
+    categoryId: categoryId ?? this.categoryId,
+    limitMinor: limitMinor ?? this.limitMinor,
+  );
+  PeriodSnapshotLimitRow copyWithCompanion(PeriodSnapshotLimitsCompanion data) {
+    return PeriodSnapshotLimitRow(
+      snapshotId: data.snapshotId.present
+          ? data.snapshotId.value
+          : this.snapshotId,
+      categoryId: data.categoryId.present
+          ? data.categoryId.value
+          : this.categoryId,
+      limitMinor: data.limitMinor.present
+          ? data.limitMinor.value
+          : this.limitMinor,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodSnapshotLimitRow(')
+          ..write('snapshotId: $snapshotId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('limitMinor: $limitMinor')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(snapshotId, categoryId, limitMinor);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PeriodSnapshotLimitRow &&
+          other.snapshotId == this.snapshotId &&
+          other.categoryId == this.categoryId &&
+          other.limitMinor == this.limitMinor);
+}
+
+class PeriodSnapshotLimitsCompanion
+    extends UpdateCompanion<PeriodSnapshotLimitRow> {
+  final Value<int> snapshotId;
+  final Value<int> categoryId;
+  final Value<int> limitMinor;
+  final Value<int> rowid;
+  const PeriodSnapshotLimitsCompanion({
+    this.snapshotId = const Value.absent(),
+    this.categoryId = const Value.absent(),
+    this.limitMinor = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PeriodSnapshotLimitsCompanion.insert({
+    required int snapshotId,
+    required int categoryId,
+    required int limitMinor,
+    this.rowid = const Value.absent(),
+  }) : snapshotId = Value(snapshotId),
+       categoryId = Value(categoryId),
+       limitMinor = Value(limitMinor);
+  static Insertable<PeriodSnapshotLimitRow> custom({
+    Expression<int>? snapshotId,
+    Expression<int>? categoryId,
+    Expression<int>? limitMinor,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (snapshotId != null) 'snapshot_id': snapshotId,
+      if (categoryId != null) 'category_id': categoryId,
+      if (limitMinor != null) 'limit_minor': limitMinor,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PeriodSnapshotLimitsCompanion copyWith({
+    Value<int>? snapshotId,
+    Value<int>? categoryId,
+    Value<int>? limitMinor,
+    Value<int>? rowid,
+  }) {
+    return PeriodSnapshotLimitsCompanion(
+      snapshotId: snapshotId ?? this.snapshotId,
+      categoryId: categoryId ?? this.categoryId,
+      limitMinor: limitMinor ?? this.limitMinor,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (snapshotId.present) {
+      map['snapshot_id'] = Variable<int>(snapshotId.value);
+    }
+    if (categoryId.present) {
+      map['category_id'] = Variable<int>(categoryId.value);
+    }
+    if (limitMinor.present) {
+      map['limit_minor'] = Variable<int>(limitMinor.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PeriodSnapshotLimitsCompanion(')
+          ..write('snapshotId: $snapshotId, ')
+          ..write('categoryId: $categoryId, ')
+          ..write('limitMinor: $limitMinor, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -3126,6 +3949,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $GoalsTable goals = $GoalsTable(this);
   late final $GoalContributionsTable goalContributions =
       $GoalContributionsTable(this);
+  late final $PeriodSnapshotsTable periodSnapshots = $PeriodSnapshotsTable(
+    this,
+  );
+  late final $PeriodSnapshotLimitsTable periodSnapshotLimits =
+      $PeriodSnapshotLimitsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
@@ -3138,6 +3966,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     preferences,
     goals,
     goalContributions,
+    periodSnapshots,
+    periodSnapshotLimits,
   ];
   @override
   StreamQueryUpdateRules get streamUpdateRules => const StreamQueryUpdateRules([
@@ -3161,6 +3991,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         limitUpdateKind: UpdateKind.delete,
       ),
       result: [TableUpdate('goal_contributions', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'period_snapshots',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('period_snapshot_limits', kind: UpdateKind.delete)],
+    ),
+    WritePropagation(
+      on: TableUpdateQuery.onTableName(
+        'categories',
+        limitUpdateKind: UpdateKind.delete,
+      ),
+      result: [TableUpdate('period_snapshot_limits', kind: UpdateKind.delete)],
     ),
   ]);
   @override
@@ -3243,6 +4087,31 @@ final class $$CategoriesTableReferences
     ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_notificationsRefsTable($_db));
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+
+  static MultiTypedResultKey<
+    $PeriodSnapshotLimitsTable,
+    List<PeriodSnapshotLimitRow>
+  >
+  _periodSnapshotLimitsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.periodSnapshotLimits,
+        aliasName: 'categories__id__period_snapshot_limits__category_id',
+      );
+
+  $$PeriodSnapshotLimitsTableProcessedTableManager
+  get periodSnapshotLimitsRefs {
+    final manager = $$PeriodSnapshotLimitsTableTableManager(
+      $_db,
+      $_db.periodSnapshotLimits,
+    ).filter((f) => f.categoryId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _periodSnapshotLimitsRefsTable($_db),
+    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -3364,6 +4233,31 @@ class $$CategoriesTableFilterComposer
           }) => $$NotificationsTableFilterComposer(
             $db: $db,
             $table: $db.notifications,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+
+  Expression<bool> periodSnapshotLimitsRefs(
+    Expression<bool> Function($$PeriodSnapshotLimitsTableFilterComposer f) f,
+  ) {
+    final $$PeriodSnapshotLimitsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.periodSnapshotLimits,
+      getReferencedColumn: (t) => t.categoryId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodSnapshotLimitsTableFilterComposer(
+            $db: $db,
+            $table: $db.periodSnapshotLimits,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -3533,6 +4427,32 @@ class $$CategoriesTableAnnotationComposer
     );
     return f(composer);
   }
+
+  Expression<T> periodSnapshotLimitsRefs<T extends Object>(
+    Expression<T> Function($$PeriodSnapshotLimitsTableAnnotationComposer a) f,
+  ) {
+    final $$PeriodSnapshotLimitsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.periodSnapshotLimits,
+          getReferencedColumn: (t) => t.categoryId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PeriodSnapshotLimitsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.periodSnapshotLimits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$CategoriesTableTableManager
@@ -3552,6 +4472,7 @@ class $$CategoriesTableTableManager
             bool billsRefs,
             bool transactionsRefs,
             bool notificationsRefs,
+            bool periodSnapshotLimitsRefs,
           })
         > {
   $$CategoriesTableTableManager(_$AppDatabase db, $CategoriesTable table)
@@ -3618,6 +4539,7 @@ class $$CategoriesTableTableManager
                 billsRefs = false,
                 transactionsRefs = false,
                 notificationsRefs = false,
+                periodSnapshotLimitsRefs = false,
               }) {
                 return PrefetchHooks(
                   db: db,
@@ -3625,6 +4547,7 @@ class $$CategoriesTableTableManager
                     if (billsRefs) db.bills,
                     if (transactionsRefs) db.transactions,
                     if (notificationsRefs) db.notifications,
+                    if (periodSnapshotLimitsRefs) db.periodSnapshotLimits,
                   ],
                   addJoins: null,
                   getPrefetchedDataCallback: (items) async {
@@ -3689,6 +4612,26 @@ class $$CategoriesTableTableManager
                           referencedColumn: 'category_id',
                           typedResults: items,
                         ),
+                      if (periodSnapshotLimitsRefs)
+                        await $_getPrefetchedDataByColumns<
+                          CategoryRow,
+                          $CategoriesTable,
+                          PeriodSnapshotLimitRow,
+                          $PeriodSnapshotLimitsTable
+                        >(
+                          currentTable: table,
+                          referencedTable: $$CategoriesTableReferences
+                              ._periodSnapshotLimitsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$CategoriesTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).periodSnapshotLimitsRefs,
+                          currentColumn: 'id',
+                          referencedColumn: 'category_id',
+                          typedResults: items,
+                        ),
                     ];
                   },
                 );
@@ -3713,6 +4656,7 @@ typedef $$CategoriesTableProcessedTableManager =
         bool billsRefs,
         bool transactionsRefs,
         bool notificationsRefs,
+        bool periodSnapshotLimitsRefs,
       })
     >;
 typedef $$BillsTableCreateCompanionBuilder = BillsCompanion Function({
@@ -3727,6 +4671,7 @@ typedef $$BillsTableCreateCompanionBuilder = BillsCompanion Function({
   Value<int?> remindDaysBefore,
   Value<String> iconKey,
   Value<String> colorKey,
+  Value<bool> paused,
 });
 typedef $$BillsTableUpdateCompanionBuilder = BillsCompanion Function({
   Value<int> id,
@@ -3740,6 +4685,7 @@ typedef $$BillsTableUpdateCompanionBuilder = BillsCompanion Function({
   Value<int?> remindDaysBefore,
   Value<String> iconKey,
   Value<String> colorKey,
+  Value<bool> paused,
 });
 
 final class $$BillsTableReferences
@@ -3837,6 +4783,11 @@ class $$BillsTableFilterComposer extends Composer<_$AppDatabase, $BillsTable> {
 
   ColumnFilters<String> get colorKey => $composableBuilder(
     column: $table.colorKey,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get paused => $composableBuilder(
+    column: $table.paused,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -3948,6 +4899,11 @@ class $$BillsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
+  ColumnOrderings<bool> get paused => $composableBuilder(
+    column: $table.paused,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   $$CategoriesTableOrderingComposer get categoryId {
     final $$CategoriesTableOrderingComposer composer = $composerBuilder(
       composer: this,
@@ -4018,6 +4974,9 @@ class $$BillsTableAnnotationComposer
 
   GeneratedColumn<String> get colorKey =>
       $composableBuilder(column: $table.colorKey, builder: (column) => column);
+
+  GeneratedColumn<bool> get paused =>
+      $composableBuilder(column: $table.paused, builder: (column) => column);
 
   $$CategoriesTableAnnotationComposer get categoryId {
     final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
@@ -4107,6 +5066,7 @@ class $$BillsTableTableManager
                 Value<int?> remindDaysBefore = const Value.absent(),
                 Value<String> iconKey = const Value.absent(),
                 Value<String> colorKey = const Value.absent(),
+                Value<bool> paused = const Value.absent(),
               }) => BillsCompanion(
                 id: id,
                 name: name,
@@ -4119,6 +5079,7 @@ class $$BillsTableTableManager
                 remindDaysBefore: remindDaysBefore,
                 iconKey: iconKey,
                 colorKey: colorKey,
+                paused: paused,
               ),
           createCompanionCallback:
               ({
@@ -4133,6 +5094,7 @@ class $$BillsTableTableManager
                 Value<int?> remindDaysBefore = const Value.absent(),
                 Value<String> iconKey = const Value.absent(),
                 Value<String> colorKey = const Value.absent(),
+                Value<bool> paused = const Value.absent(),
               }) => BillsCompanion.insert(
                 id: id,
                 name: name,
@@ -4145,6 +5107,7 @@ class $$BillsTableTableManager
                 remindDaysBefore: remindDaysBefore,
                 iconKey: iconKey,
                 colorKey: colorKey,
+                paused: paused,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -5195,6 +6158,7 @@ typedef $$GoalsTableCreateCompanionBuilder = GoalsCompanion Function({
   required int targetMinor,
   required DateTime targetMonth,
   Value<DateTime?> completedAt,
+  required DateTime createdAt,
 });
 typedef $$GoalsTableUpdateCompanionBuilder = GoalsCompanion Function({
   Value<int> id,
@@ -5203,6 +6167,7 @@ typedef $$GoalsTableUpdateCompanionBuilder = GoalsCompanion Function({
   Value<int> targetMinor,
   Value<DateTime> targetMonth,
   Value<DateTime?> completedAt,
+  Value<DateTime> createdAt,
 });
 
 final class $$GoalsTableReferences
@@ -5266,6 +6231,11 @@ class $$GoalsTableFilterComposer extends Composer<_$AppDatabase, $GoalsTable> {
 
   ColumnFilters<DateTime> get completedAt => $composableBuilder(
     column: $table.completedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5333,6 +6303,11 @@ class $$GoalsTableOrderingComposer
     column: $table.completedAt,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$GoalsTableAnnotationComposer
@@ -5367,6 +6342,9 @@ class $$GoalsTableAnnotationComposer
     column: $table.completedAt,
     builder: (column) => column,
   );
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   Expression<T> goalContributionsRefs<T extends Object>(
     Expression<T> Function($$GoalContributionsTableAnnotationComposer a) f,
@@ -5429,6 +6407,7 @@ class $$GoalsTableTableManager
                 Value<int> targetMinor = const Value.absent(),
                 Value<DateTime> targetMonth = const Value.absent(),
                 Value<DateTime?> completedAt = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
               }) => GoalsCompanion(
                 id: id,
                 name: name,
@@ -5436,6 +6415,7 @@ class $$GoalsTableTableManager
                 targetMinor: targetMinor,
                 targetMonth: targetMonth,
                 completedAt: completedAt,
+                createdAt: createdAt,
               ),
           createCompanionCallback:
               ({
@@ -5445,6 +6425,7 @@ class $$GoalsTableTableManager
                 required int targetMinor,
                 required DateTime targetMonth,
                 Value<DateTime?> completedAt = const Value.absent(),
+                required DateTime createdAt,
               }) => GoalsCompanion.insert(
                 id: id,
                 name: name,
@@ -5452,6 +6433,7 @@ class $$GoalsTableTableManager
                 targetMinor: targetMinor,
                 targetMonth: targetMonth,
                 completedAt: completedAt,
+                createdAt: createdAt,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -5838,6 +6820,734 @@ typedef $$GoalContributionsTableProcessedTableManager =
       GoalContributionRow,
       PrefetchHooks Function({bool goalId})
     >;
+typedef $$PeriodSnapshotsTableCreateCompanionBuilder =
+    PeriodSnapshotsCompanion Function({
+      Value<int> id,
+      required DateTime periodStart,
+      required DateTime periodEnd,
+      Value<int?> budgetMinor,
+      required int spentMinor,
+      required int incomeMinor,
+    });
+typedef $$PeriodSnapshotsTableUpdateCompanionBuilder =
+    PeriodSnapshotsCompanion Function({
+      Value<int> id,
+      Value<DateTime> periodStart,
+      Value<DateTime> periodEnd,
+      Value<int?> budgetMinor,
+      Value<int> spentMinor,
+      Value<int> incomeMinor,
+    });
+
+final class $$PeriodSnapshotsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PeriodSnapshotsTable,
+          PeriodSnapshotRow
+        > {
+  $$PeriodSnapshotsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static MultiTypedResultKey<
+    $PeriodSnapshotLimitsTable,
+    List<PeriodSnapshotLimitRow>
+  >
+  _periodSnapshotLimitsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.periodSnapshotLimits,
+        aliasName: 'period_snapshots__id__period_snapshot_limits__snapshot_id',
+      );
+
+  $$PeriodSnapshotLimitsTableProcessedTableManager
+  get periodSnapshotLimitsRefs {
+    final manager = $$PeriodSnapshotLimitsTableTableManager(
+      $_db,
+      $_db.periodSnapshotLimits,
+    ).filter((f) => f.snapshotId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _periodSnapshotLimitsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
+}
+
+class $$PeriodSnapshotsTableFilterComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotsTable> {
+  $$PeriodSnapshotsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get periodStart => $composableBuilder(
+    column: $table.periodStart,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get periodEnd => $composableBuilder(
+    column: $table.periodEnd,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get budgetMinor => $composableBuilder(
+    column: $table.budgetMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get spentMinor => $composableBuilder(
+    column: $table.spentMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get incomeMinor => $composableBuilder(
+    column: $table.incomeMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  Expression<bool> periodSnapshotLimitsRefs(
+    Expression<bool> Function($$PeriodSnapshotLimitsTableFilterComposer f) f,
+  ) {
+    final $$PeriodSnapshotLimitsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.periodSnapshotLimits,
+      getReferencedColumn: (t) => t.snapshotId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodSnapshotLimitsTableFilterComposer(
+            $db: $db,
+            $table: $db.periodSnapshotLimits,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
+}
+
+class $$PeriodSnapshotsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotsTable> {
+  $$PeriodSnapshotsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get periodStart => $composableBuilder(
+    column: $table.periodStart,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get periodEnd => $composableBuilder(
+    column: $table.periodEnd,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get budgetMinor => $composableBuilder(
+    column: $table.budgetMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get spentMinor => $composableBuilder(
+    column: $table.spentMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get incomeMinor => $composableBuilder(
+    column: $table.incomeMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+}
+
+class $$PeriodSnapshotsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotsTable> {
+  $$PeriodSnapshotsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get periodStart => $composableBuilder(
+    column: $table.periodStart,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<DateTime> get periodEnd =>
+      $composableBuilder(column: $table.periodEnd, builder: (column) => column);
+
+  GeneratedColumn<int> get budgetMinor => $composableBuilder(
+    column: $table.budgetMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get spentMinor => $composableBuilder(
+    column: $table.spentMinor,
+    builder: (column) => column,
+  );
+
+  GeneratedColumn<int> get incomeMinor => $composableBuilder(
+    column: $table.incomeMinor,
+    builder: (column) => column,
+  );
+
+  Expression<T> periodSnapshotLimitsRefs<T extends Object>(
+    Expression<T> Function($$PeriodSnapshotLimitsTableAnnotationComposer a) f,
+  ) {
+    final $$PeriodSnapshotLimitsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.periodSnapshotLimits,
+          getReferencedColumn: (t) => t.snapshotId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$PeriodSnapshotLimitsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.periodSnapshotLimits,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
+}
+
+class $$PeriodSnapshotsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PeriodSnapshotsTable,
+          PeriodSnapshotRow,
+          $$PeriodSnapshotsTableFilterComposer,
+          $$PeriodSnapshotsTableOrderingComposer,
+          $$PeriodSnapshotsTableAnnotationComposer,
+          $$PeriodSnapshotsTableCreateCompanionBuilder,
+          $$PeriodSnapshotsTableUpdateCompanionBuilder,
+          (PeriodSnapshotRow, $$PeriodSnapshotsTableReferences),
+          PeriodSnapshotRow,
+          PrefetchHooks Function({bool periodSnapshotLimitsRefs})
+        > {
+  $$PeriodSnapshotsTableTableManager(
+    _$AppDatabase db,
+    $PeriodSnapshotsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PeriodSnapshotsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PeriodSnapshotsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PeriodSnapshotsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                Value<DateTime> periodStart = const Value.absent(),
+                Value<DateTime> periodEnd = const Value.absent(),
+                Value<int?> budgetMinor = const Value.absent(),
+                Value<int> spentMinor = const Value.absent(),
+                Value<int> incomeMinor = const Value.absent(),
+              }) => PeriodSnapshotsCompanion(
+                id: id,
+                periodStart: periodStart,
+                periodEnd: periodEnd,
+                budgetMinor: budgetMinor,
+                spentMinor: spentMinor,
+                incomeMinor: incomeMinor,
+              ),
+          createCompanionCallback:
+              ({
+                Value<int> id = const Value.absent(),
+                required DateTime periodStart,
+                required DateTime periodEnd,
+                Value<int?> budgetMinor = const Value.absent(),
+                required int spentMinor,
+                required int incomeMinor,
+              }) => PeriodSnapshotsCompanion.insert(
+                id: id,
+                periodStart: periodStart,
+                periodEnd: periodEnd,
+                budgetMinor: budgetMinor,
+                spentMinor: spentMinor,
+                incomeMinor: incomeMinor,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<$PeriodSnapshotsTable, PeriodSnapshotRow>(table),
+                  $$PeriodSnapshotsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({periodSnapshotLimitsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (periodSnapshotLimitsRefs) db.periodSnapshotLimits,
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (periodSnapshotLimitsRefs)
+                    await $_getPrefetchedDataByColumns<
+                      PeriodSnapshotRow,
+                      $PeriodSnapshotsTable,
+                      PeriodSnapshotLimitRow,
+                      $PeriodSnapshotLimitsTable
+                    >(
+                      currentTable: table,
+                      referencedTable: $$PeriodSnapshotsTableReferences
+                          ._periodSnapshotLimitsRefsTable(db),
+                      managerFromTypedResult: (p0) =>
+                          $$PeriodSnapshotsTableReferences(
+                            db,
+                            table,
+                            p0,
+                          ).periodSnapshotLimitsRefs,
+                      currentColumn: 'id',
+                      referencedColumn: 'snapshot_id',
+                      typedResults: items,
+                    ),
+                ];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PeriodSnapshotsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PeriodSnapshotsTable,
+      PeriodSnapshotRow,
+      $$PeriodSnapshotsTableFilterComposer,
+      $$PeriodSnapshotsTableOrderingComposer,
+      $$PeriodSnapshotsTableAnnotationComposer,
+      $$PeriodSnapshotsTableCreateCompanionBuilder,
+      $$PeriodSnapshotsTableUpdateCompanionBuilder,
+      (PeriodSnapshotRow, $$PeriodSnapshotsTableReferences),
+      PeriodSnapshotRow,
+      PrefetchHooks Function({bool periodSnapshotLimitsRefs})
+    >;
+typedef $$PeriodSnapshotLimitsTableCreateCompanionBuilder =
+    PeriodSnapshotLimitsCompanion Function({
+      required int snapshotId,
+      required int categoryId,
+      required int limitMinor,
+      Value<int> rowid,
+    });
+typedef $$PeriodSnapshotLimitsTableUpdateCompanionBuilder =
+    PeriodSnapshotLimitsCompanion Function({
+      Value<int> snapshotId,
+      Value<int> categoryId,
+      Value<int> limitMinor,
+      Value<int> rowid,
+    });
+
+final class $$PeriodSnapshotLimitsTableReferences
+    extends
+        BaseReferences<
+          _$AppDatabase,
+          $PeriodSnapshotLimitsTable,
+          PeriodSnapshotLimitRow
+        > {
+  $$PeriodSnapshotLimitsTableReferences(
+    super.$_db,
+    super.$_table,
+    super.$_typedResult,
+  );
+
+  static $PeriodSnapshotsTable _snapshotIdTable(_$AppDatabase db) => db
+      .periodSnapshots
+      .createAlias('period_snapshot_limits__snapshot_id__period_snapshots__id');
+
+  $$PeriodSnapshotsTableProcessedTableManager get snapshotId {
+    final $_column = $_itemColumn<int>('snapshot_id')!;
+
+    final manager = $$PeriodSnapshotsTableTableManager(
+      $_db,
+      $_db.periodSnapshots,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_snapshotIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+
+  static $CategoriesTable _categoryIdTable(_$AppDatabase db) => db.categories
+      .createAlias('period_snapshot_limits__category_id__categories__id');
+
+  $$CategoriesTableProcessedTableManager get categoryId {
+    final $_column = $_itemColumn<int>('category_id')!;
+
+    final manager = $$CategoriesTableTableManager(
+      $_db,
+      $_db.categories,
+    ).filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_categoryIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: [item]),
+    );
+  }
+}
+
+class $$PeriodSnapshotLimitsTableFilterComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotLimitsTable> {
+  $$PeriodSnapshotLimitsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get limitMinor => $composableBuilder(
+    column: $table.limitMinor,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  $$PeriodSnapshotsTableFilterComposer get snapshotId {
+    final $$PeriodSnapshotsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.snapshotId,
+      referencedTable: $db.periodSnapshots,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodSnapshotsTableFilterComposer(
+            $db: $db,
+            $table: $db.periodSnapshots,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableFilterComposer get categoryId {
+    final $$CategoriesTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableFilterComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PeriodSnapshotLimitsTableOrderingComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotLimitsTable> {
+  $$PeriodSnapshotLimitsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get limitMinor => $composableBuilder(
+    column: $table.limitMinor,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  $$PeriodSnapshotsTableOrderingComposer get snapshotId {
+    final $$PeriodSnapshotsTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.snapshotId,
+      referencedTable: $db.periodSnapshots,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodSnapshotsTableOrderingComposer(
+            $db: $db,
+            $table: $db.periodSnapshots,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableOrderingComposer get categoryId {
+    final $$CategoriesTableOrderingComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableOrderingComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PeriodSnapshotLimitsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PeriodSnapshotLimitsTable> {
+  $$PeriodSnapshotLimitsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get limitMinor => $composableBuilder(
+    column: $table.limitMinor,
+    builder: (column) => column,
+  );
+
+  $$PeriodSnapshotsTableAnnotationComposer get snapshotId {
+    final $$PeriodSnapshotsTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.snapshotId,
+      referencedTable: $db.periodSnapshots,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$PeriodSnapshotsTableAnnotationComposer(
+            $db: $db,
+            $table: $db.periodSnapshots,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+
+  $$CategoriesTableAnnotationComposer get categoryId {
+    final $$CategoriesTableAnnotationComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.categoryId,
+      referencedTable: $db.categories,
+      getReferencedColumn: (t) => t.id,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$CategoriesTableAnnotationComposer(
+            $db: $db,
+            $table: $db.categories,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return composer;
+  }
+}
+
+class $$PeriodSnapshotLimitsTableTableManager
+    extends
+        RootTableManager<
+          _$AppDatabase,
+          $PeriodSnapshotLimitsTable,
+          PeriodSnapshotLimitRow,
+          $$PeriodSnapshotLimitsTableFilterComposer,
+          $$PeriodSnapshotLimitsTableOrderingComposer,
+          $$PeriodSnapshotLimitsTableAnnotationComposer,
+          $$PeriodSnapshotLimitsTableCreateCompanionBuilder,
+          $$PeriodSnapshotLimitsTableUpdateCompanionBuilder,
+          (PeriodSnapshotLimitRow, $$PeriodSnapshotLimitsTableReferences),
+          PeriodSnapshotLimitRow,
+          PrefetchHooks Function({bool snapshotId, bool categoryId})
+        > {
+  $$PeriodSnapshotLimitsTableTableManager(
+    _$AppDatabase db,
+    $PeriodSnapshotLimitsTable table,
+  ) : super(
+        TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PeriodSnapshotLimitsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PeriodSnapshotLimitsTableOrderingComposer(
+                $db: db,
+                $table: table,
+              ),
+          createComputedFieldComposer: () =>
+              $$PeriodSnapshotLimitsTableAnnotationComposer(
+                $db: db,
+                $table: table,
+              ),
+          updateCompanionCallback:
+              ({
+                Value<int> snapshotId = const Value.absent(),
+                Value<int> categoryId = const Value.absent(),
+                Value<int> limitMinor = const Value.absent(),
+                Value<int> rowid = const Value.absent(),
+              }) => PeriodSnapshotLimitsCompanion(
+                snapshotId: snapshotId,
+                categoryId: categoryId,
+                limitMinor: limitMinor,
+                rowid: rowid,
+              ),
+          createCompanionCallback:
+              ({
+                required int snapshotId,
+                required int categoryId,
+                required int limitMinor,
+                Value<int> rowid = const Value.absent(),
+              }) => PeriodSnapshotLimitsCompanion.insert(
+                snapshotId: snapshotId,
+                categoryId: categoryId,
+                limitMinor: limitMinor,
+                rowid: rowid,
+              ),
+          withReferenceMapper: (p0) => p0
+              .map(
+                (e) => (
+                  e.readTable<
+                    $PeriodSnapshotLimitsTable,
+                    PeriodSnapshotLimitRow
+                  >(table),
+                  $$PeriodSnapshotLimitsTableReferences(db, table, e),
+                ),
+              )
+              .toList(),
+          prefetchHooksCallback: ({snapshotId = false, categoryId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins:
+                  <
+                    T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic
+                    >
+                  >(state) {
+                    if (snapshotId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.snapshotId,
+                        referencedTable: $$PeriodSnapshotLimitsTableReferences
+                            ._snapshotIdTable(db),
+                        referencedColumn: $$PeriodSnapshotLimitsTableReferences
+                            ._snapshotIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+                    if (categoryId) {
+                      state = state.withJoin(
+                        currentTable: table,
+                        currentColumn: table.categoryId,
+                        referencedTable: $$PeriodSnapshotLimitsTableReferences
+                            ._categoryIdTable(db),
+                        referencedColumn: $$PeriodSnapshotLimitsTableReferences
+                            ._categoryIdTable(db)
+                            .id,
+                      ) as T;
+                    }
+
+                    return state;
+                  },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ),
+      );
+}
+
+typedef $$PeriodSnapshotLimitsTableProcessedTableManager =
+    ProcessedTableManager<
+      _$AppDatabase,
+      $PeriodSnapshotLimitsTable,
+      PeriodSnapshotLimitRow,
+      $$PeriodSnapshotLimitsTableFilterComposer,
+      $$PeriodSnapshotLimitsTableOrderingComposer,
+      $$PeriodSnapshotLimitsTableAnnotationComposer,
+      $$PeriodSnapshotLimitsTableCreateCompanionBuilder,
+      $$PeriodSnapshotLimitsTableUpdateCompanionBuilder,
+      (PeriodSnapshotLimitRow, $$PeriodSnapshotLimitsTableReferences),
+      PeriodSnapshotLimitRow,
+      PrefetchHooks Function({bool snapshotId, bool categoryId})
+    >;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -5856,6 +7566,10 @@ class $AppDatabaseManager {
       $$GoalsTableTableManager(_db, _db.goals);
   $$GoalContributionsTableTableManager get goalContributions =>
       $$GoalContributionsTableTableManager(_db, _db.goalContributions);
+  $$PeriodSnapshotsTableTableManager get periodSnapshots =>
+      $$PeriodSnapshotsTableTableManager(_db, _db.periodSnapshots);
+  $$PeriodSnapshotLimitsTableTableManager get periodSnapshotLimits =>
+      $$PeriodSnapshotLimitsTableTableManager(_db, _db.periodSnapshotLimits);
 }
 
 // **************************************************************************

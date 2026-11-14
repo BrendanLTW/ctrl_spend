@@ -10,13 +10,15 @@ abstract interface class GoalRepository {
   /// Every goal, soonest target first.
   Stream<List<Goal>> watch();
 
-  /// Saves a new goal and returns it with its id. The name is trimmed.
-  /// Throws [ArgumentError] for a blank name or a target of 0 or less.
+  /// Saves a new goal, made at [createdAt], and returns it with its id.
+  /// The name is trimmed. Throws [ArgumentError] for a blank name or a
+  /// target of 0 or less.
   Future<Goal> add({
     required String name,
     required CategoryIconKey iconKey,
     required int targetMinor,
     required DateTime targetMonth,
+    required DateTime createdAt,
   });
 
   /// Saves every field but `completedAt`, which follows saved and the

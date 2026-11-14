@@ -79,6 +79,7 @@ void main() {
             iconKey: 'travel',
             targetMinor: 500000,
             targetMonth: DateTime.utc(2027, 3),
+            createdAt: DateTime.utc(2026, 8),
           ),
         );
     await db
@@ -89,6 +90,16 @@ void main() {
             amountMinor: 40000,
             label: 'From salary',
             date: DateTime.utc(2026, 11, 3),
+          ),
+        );
+    await db
+        .into(db.periodSnapshots)
+        .insert(
+          PeriodSnapshotsCompanion.insert(
+            periodStart: DateTime.utc(2026, 9, 15),
+            periodEnd: DateTime.utc(2026, 10, 14),
+            spentMinor: 1250,
+            incomeMinor: 0,
           ),
         );
     await prefs.update(
@@ -107,6 +118,7 @@ void main() {
     expect(await db.select(db.bills).get(), isEmpty);
     expect(await db.select(db.goals).get(), isEmpty);
     expect(await db.select(db.goalContributions).get(), isEmpty);
+    expect(await db.select(db.periodSnapshots).get(), isEmpty);
     expect(await prefs.read(), const Preferences());
     final after = await categories.watch().first;
     expect([for (final c in after) (c.name, c.type)], defaults);

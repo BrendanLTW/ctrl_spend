@@ -29,6 +29,7 @@ class DriftGoalRepository implements GoalRepository {
     required CategoryIconKey iconKey,
     required int targetMinor,
     required DateTime targetMonth,
+    required DateTime createdAt,
   }) async {
     final goal = _checked(
       Goal(
@@ -37,6 +38,7 @@ class DriftGoalRepository implements GoalRepository {
         iconKey: iconKey,
         targetMinor: targetMinor,
         targetMonth: targetMonth,
+        createdAt: createdAt,
       ),
     );
     final row = await _db

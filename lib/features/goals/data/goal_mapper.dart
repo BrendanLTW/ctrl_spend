@@ -12,6 +12,7 @@ extension GoalRowMapper on GoalRow {
     targetMinor: targetMinor,
     targetMonth: localDate(targetMonth),
     completedAt: completedAt,
+    createdAt: createdAt,
   );
 }
 
@@ -24,6 +25,7 @@ extension GoalMapper on Goal {
     targetMinor: Value(targetMinor),
     targetMonth: Value(storedDate(targetMonth)),
     completedAt: Value(completedAt?.toUtc()),
+    createdAt: Value(createdAt.toUtc()),
   );
 }
 

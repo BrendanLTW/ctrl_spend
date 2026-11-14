@@ -288,7 +288,9 @@ mixin _$Bill {
  int get id; String get name; int get amountMinor; int get categoryId; BillRepeat get repeat;/// A local calendar date, at midnight.
  DateTime get nextDue;/// Its tile on S27, picked on S28.
  CategoryIconKey get iconKey; CategoryColorKey get colorKey;/// Days before [nextDue] to remind; null means no reminder.
- int? get remindDaysBefore;
+ int? get remindDaysBefore;/// Left out of Upcoming totals, "Left after bills" and reminders
+/// (PRD §5.11).
+ bool get paused;
 /// Create a copy of Bill
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -300,20 +302,20 @@ $BillCopyWith<Bill> get copyWith => _$BillCopyWithImpl<Bill>(this as Bill, _$ide
 @override
 bool operator ==(Object other) {
   final _this = this as Bill;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Bill&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.amountMinor, _this.amountMinor) || other.amountMinor == _this.amountMinor)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.repeat, _this.repeat) || other.repeat == _this.repeat)&&(identical(other.nextDue, _this.nextDue) || other.nextDue == _this.nextDue)&&(identical(other.iconKey, _this.iconKey) || other.iconKey == _this.iconKey)&&(identical(other.colorKey, _this.colorKey) || other.colorKey == _this.colorKey)&&(identical(other.remindDaysBefore, _this.remindDaysBefore) || other.remindDaysBefore == _this.remindDaysBefore));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Bill&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.amountMinor, _this.amountMinor) || other.amountMinor == _this.amountMinor)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.repeat, _this.repeat) || other.repeat == _this.repeat)&&(identical(other.nextDue, _this.nextDue) || other.nextDue == _this.nextDue)&&(identical(other.iconKey, _this.iconKey) || other.iconKey == _this.iconKey)&&(identical(other.colorKey, _this.colorKey) || other.colorKey == _this.colorKey)&&(identical(other.remindDaysBefore, _this.remindDaysBefore) || other.remindDaysBefore == _this.remindDaysBefore)&&(identical(other.paused, _this.paused) || other.paused == _this.paused));
 }
 
 
 @override
 int get hashCode {
   final _this = this as Bill;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.amountMinor,_this.categoryId,_this.repeat,_this.nextDue,_this.iconKey,_this.colorKey,_this.remindDaysBefore);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.amountMinor,_this.categoryId,_this.repeat,_this.nextDue,_this.iconKey,_this.colorKey,_this.remindDaysBefore,_this.paused);
 }
 
 @override
 String toString() {
   final _this = this as Bill;
-  return 'Bill(id: ${_this.id}, name: ${_this.name}, amountMinor: ${_this.amountMinor}, categoryId: ${_this.categoryId}, repeat: ${_this.repeat}, nextDue: ${_this.nextDue}, iconKey: ${_this.iconKey}, colorKey: ${_this.colorKey}, remindDaysBefore: ${_this.remindDaysBefore})';
+  return 'Bill(id: ${_this.id}, name: ${_this.name}, amountMinor: ${_this.amountMinor}, categoryId: ${_this.categoryId}, repeat: ${_this.repeat}, nextDue: ${_this.nextDue}, iconKey: ${_this.iconKey}, colorKey: ${_this.colorKey}, remindDaysBefore: ${_this.remindDaysBefore}, paused: ${_this.paused})';
 }
 
 
@@ -324,7 +326,7 @@ abstract mixin class $BillCopyWith<$Res>  {
   factory $BillCopyWith(Bill value, $Res Function(Bill) _then) = _$BillCopyWithImpl;
 @useResult
 $Res call({
- int id, String name, int amountMinor, int categoryId, BillRepeat repeat, DateTime nextDue, CategoryIconKey iconKey, CategoryColorKey colorKey, int? remindDaysBefore
+ int id, String name, int amountMinor, int categoryId, BillRepeat repeat, DateTime nextDue, CategoryIconKey iconKey, CategoryColorKey colorKey, int? remindDaysBefore, bool paused
 });
 
 
@@ -341,7 +343,7 @@ class _$BillCopyWithImpl<$Res>
 
 /// Create a copy of Bill
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? amountMinor = null,Object? categoryId = null,Object? repeat = null,Object? nextDue = null,Object? iconKey = null,Object? colorKey = null,Object? remindDaysBefore = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? amountMinor = null,Object? categoryId = null,Object? repeat = null,Object? nextDue = null,Object? iconKey = null,Object? colorKey = null,Object? remindDaysBefore = freezed,Object? paused = null,}) {
   return _then(Bill(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -352,7 +354,8 @@ as BillRepeat,nextDue: null == nextDue ? _self.nextDue : nextDue // ignore: cast
 as DateTime,iconKey: null == iconKey ? _self.iconKey : iconKey // ignore: cast_nullable_to_non_nullable
 as CategoryIconKey,colorKey: null == colorKey ? _self.colorKey : colorKey // ignore: cast_nullable_to_non_nullable
 as CategoryColorKey,remindDaysBefore: freezed == remindDaysBefore ? _self.remindDaysBefore : remindDaysBefore // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,paused: null == paused ? _self.paused : paused // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 /// Create a copy of Bill
@@ -446,10 +449,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore,  bool paused)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Bill() when $default != null:
-return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore);case _:
+return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore,_that.paused);case _:
   return orElse();
 
 }
@@ -467,10 +470,10 @@ return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.rep
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore,  bool paused)  $default,) {final _that = this;
 switch (_that) {
 case _Bill():
-return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore);case _:
+return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore,_that.paused);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -487,10 +490,10 @@ return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.rep
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  String name,  int amountMinor,  int categoryId,  BillRepeat repeat,  DateTime nextDue,  CategoryIconKey iconKey,  CategoryColorKey colorKey,  int? remindDaysBefore,  bool paused)?  $default,) {final _that = this;
 switch (_that) {
 case _Bill() when $default != null:
-return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore);case _:
+return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.repeat,_that.nextDue,_that.iconKey,_that.colorKey,_that.remindDaysBefore,_that.paused);case _:
   return null;
 
 }
@@ -502,7 +505,7 @@ return $default(_that.id,_that.name,_that.amountMinor,_that.categoryId,_that.rep
 
 
 class _Bill implements Bill {
-  const _Bill({required this.id, required this.name, required this.amountMinor, required this.categoryId, required this.repeat, required this.nextDue, required this.iconKey, required this.colorKey, this.remindDaysBefore});
+  const _Bill({required this.id, required this.name, required this.amountMinor, required this.categoryId, required this.repeat, required this.nextDue, required this.iconKey, required this.colorKey, this.remindDaysBefore, this.paused = false});
   
 
 @override final  int id;
@@ -517,6 +520,9 @@ class _Bill implements Bill {
 @override final  CategoryColorKey colorKey;
 /// Days before [nextDue] to remind; null means no reminder.
 @override final  int? remindDaysBefore;
+/// Left out of Upcoming totals, "Left after bills" and reminders
+/// (PRD §5.11).
+@override@JsonKey() final  bool paused;
 
 /// Create a copy of Bill
 /// with the given fields replaced by the non-null parameter values.
@@ -528,18 +534,18 @@ _$BillCopyWith<_Bill> get copyWith => __$BillCopyWithImpl<_Bill>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Bill&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amountMinor, amountMinor) || other.amountMinor == amountMinor)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.repeat, repeat) || other.repeat == repeat)&&(identical(other.nextDue, nextDue) || other.nextDue == nextDue)&&(identical(other.iconKey, iconKey) || other.iconKey == iconKey)&&(identical(other.colorKey, colorKey) || other.colorKey == colorKey)&&(identical(other.remindDaysBefore, remindDaysBefore) || other.remindDaysBefore == remindDaysBefore));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Bill&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.amountMinor, amountMinor) || other.amountMinor == amountMinor)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.repeat, repeat) || other.repeat == repeat)&&(identical(other.nextDue, nextDue) || other.nextDue == nextDue)&&(identical(other.iconKey, iconKey) || other.iconKey == iconKey)&&(identical(other.colorKey, colorKey) || other.colorKey == colorKey)&&(identical(other.remindDaysBefore, remindDaysBefore) || other.remindDaysBefore == remindDaysBefore)&&(identical(other.paused, paused) || other.paused == paused));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,amountMinor,categoryId,repeat,nextDue,iconKey,colorKey,remindDaysBefore);
+    return Object.hash(runtimeType,id,name,amountMinor,categoryId,repeat,nextDue,iconKey,colorKey,remindDaysBefore,paused);
 }
 
 @override
 String toString() {
-    return 'Bill(id: $id, name: $name, amountMinor: $amountMinor, categoryId: $categoryId, repeat: $repeat, nextDue: $nextDue, iconKey: $iconKey, colorKey: $colorKey, remindDaysBefore: $remindDaysBefore)';
+    return 'Bill(id: $id, name: $name, amountMinor: $amountMinor, categoryId: $categoryId, repeat: $repeat, nextDue: $nextDue, iconKey: $iconKey, colorKey: $colorKey, remindDaysBefore: $remindDaysBefore, paused: $paused)';
 }
 
 
@@ -550,7 +556,7 @@ abstract mixin class _$BillCopyWith<$Res> implements $BillCopyWith<$Res> {
   factory _$BillCopyWith(_Bill value, $Res Function(_Bill) _then) = __$BillCopyWithImpl;
 @override @useResult
 $Res call({
- int id, String name, int amountMinor, int categoryId, BillRepeat repeat, DateTime nextDue, CategoryIconKey iconKey, CategoryColorKey colorKey, int? remindDaysBefore
+ int id, String name, int amountMinor, int categoryId, BillRepeat repeat, DateTime nextDue, CategoryIconKey iconKey, CategoryColorKey colorKey, int? remindDaysBefore, bool paused
 });
 
 
@@ -567,7 +573,7 @@ class __$BillCopyWithImpl<$Res>
 
 /// Create a copy of Bill
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? amountMinor = null,Object? categoryId = null,Object? repeat = null,Object? nextDue = null,Object? iconKey = null,Object? colorKey = null,Object? remindDaysBefore = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? amountMinor = null,Object? categoryId = null,Object? repeat = null,Object? nextDue = null,Object? iconKey = null,Object? colorKey = null,Object? remindDaysBefore = freezed,Object? paused = null,}) {
   return _then(_Bill(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -578,7 +584,8 @@ as BillRepeat,nextDue: null == nextDue ? _self.nextDue : nextDue // ignore: cast
 as DateTime,iconKey: null == iconKey ? _self.iconKey : iconKey // ignore: cast_nullable_to_non_nullable
 as CategoryIconKey,colorKey: null == colorKey ? _self.colorKey : colorKey // ignore: cast_nullable_to_non_nullable
 as CategoryColorKey,remindDaysBefore: freezed == remindDaysBefore ? _self.remindDaysBefore : remindDaysBefore // ignore: cast_nullable_to_non_nullable
-as int?,
+as int?,paused: null == paused ? _self.paused : paused // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 

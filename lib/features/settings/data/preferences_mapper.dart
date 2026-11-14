@@ -14,6 +14,13 @@ abstract final class PreferenceKeys {
   static const weeklySummaryOn = 'weeklySummaryOn';
   static const onboardingComplete = 'onboardingComplete';
   static const notificationsCheckedAt = 'notificationsCheckedAt';
+  static const billRemindersOn = 'billRemindersOn';
+  static const appLockOn = 'appLockOn';
+  static const biometricsOn = 'biometricsOn';
+  static const lockAfterMinutes = 'lockAfterMinutes';
+  static const hideInSwitcher = 'hideInSwitcher';
+  static const failedPinCount = 'failedPinCount';
+  static const lockoutUntil = 'lockoutUntil';
 }
 
 /// Builds [Preferences] from the table's key-value pairs. A missing or
@@ -53,6 +60,21 @@ Preferences preferencesFromValues(Map<String, String> values) {
     notificationsCheckedAt: DateTime.tryParse(
       values[PreferenceKeys.notificationsCheckedAt] ?? '',
     ),
+    billRemindersOn:
+        flag(PreferenceKeys.billRemindersOn) ?? defaults.billRemindersOn,
+    appLockOn: flag(PreferenceKeys.appLockOn) ?? defaults.appLockOn,
+    biometricsOn: flag(PreferenceKeys.biometricsOn) ?? defaults.biometricsOn,
+    lockAfterMinutes: switch (integer(PreferenceKeys.lockAfterMinutes)) {
+      final minutes? when lockAfterChoices.contains(minutes) => minutes,
+      _ => defaults.lockAfterMinutes,
+    },
+    hideInSwitcher:
+        flag(PreferenceKeys.hideInSwitcher) ?? defaults.hideInSwitcher,
+    failedPinCount: switch (integer(PreferenceKeys.failedPinCount)) {
+      final count? when count >= 0 => count,
+      _ => defaults.failedPinCount,
+    },
+    lockoutUntil: DateTime.tryParse(values[PreferenceKeys.lockoutUntil] ?? ''),
   );
 }
 
@@ -75,6 +97,13 @@ Map<String, String?> preferencesToValues(Preferences prefs) => {
   PreferenceKeys.notificationsCheckedAt: prefs.notificationsCheckedAt
       ?.toUtc()
       .toIso8601String(),
+  PreferenceKeys.billRemindersOn: '${prefs.billRemindersOn}',
+  PreferenceKeys.appLockOn: '${prefs.appLockOn}',
+  PreferenceKeys.biometricsOn: '${prefs.biometricsOn}',
+  PreferenceKeys.lockAfterMinutes: '${prefs.lockAfterMinutes}',
+  PreferenceKeys.hideInSwitcher: '${prefs.hideInSwitcher}',
+  PreferenceKeys.failedPinCount: '${prefs.failedPinCount}',
+  PreferenceKeys.lockoutUntil: prefs.lockoutUntil?.toUtc().toIso8601String(),
 };
 
 MonthStartDay? _parseStartDay(String? value) {

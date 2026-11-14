@@ -55,7 +55,10 @@ void main() {
     expect(unifi.nextDue, DateTime(2026, 11, 8));
     expect(unifi.iconKey, CategoryIconKey.wifi);
     expect(unifi.colorKey, CategoryColorKey.blue);
+    expect(unifi.paused, isFalse);
     expect(await repo.watch().first, [gym, unifi]);
+    await repo.update(unifi.copyWith(paused: true));
+    expect((await repo.watch().first).last.paused, isTrue);
   });
 
   group('add rejects', () {
