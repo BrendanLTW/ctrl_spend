@@ -117,7 +117,7 @@
       }
     }
   },
-  "budgetBelowLimits": "Your category limits add up to {amount}. Set at least that.",
+  "budgetBelowLimits": "Your category limits add up to {amount}. Lower them first, or set the budget to at least {amount}.",
   "@budgetBelowLimits": {
     "placeholders": {
       "amount": {
@@ -186,14 +186,6 @@
   },
   "remove": "Remove",
   "save": "Save",
-  "leftToAllocate": "{amount} left to allocate",
-  "@leftToAllocate": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "remindersTitle": "Stay on track",
   "remindersSubtitle": "A nudge at the end of the day helps you log spending before you forget it.",
   "sampleNotification": "You have RM 72 left for Food this period. Log today's spending?",
@@ -1761,6 +1753,23 @@
   "@noCategoryMatch": {
     "placeholders": {
       "query": {
+        "type": "String"
+      }
+    }
+  },
+  "limitsOverBudget": "Your limits would add up to {total}, which is more than your {budget} monthly budget. {category} can be up to {max}.",
+  "@limitsOverBudget": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "max": {
         "type": "String"
       }
     }

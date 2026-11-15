@@ -10,7 +10,7 @@ import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/budgets/presentation/limit_bounds.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
@@ -61,6 +61,15 @@ class _AddCategoryBodyState extends ConsumerState<_AddCategoryBody> {
   );
 
   Future<void> _editLimit(List<Category> expense) async {
+    // A new category has no id yet, so every existing limit counts.
+    final bounds = limitBounds(
+      context.l10n,
+      categoryId: -1,
+      categoryName: _name.text.trim(),
+      categories: expense,
+      budgetMinor: ref.read(preferencesProvider).value?.monthlyBudgetMinor,
+      currency: _currency,
+    );
     final result = await showAmountSheet(
       context,
       title: context.l10n.monthlyLimit,
@@ -68,12 +77,8 @@ class _AddCategoryBodyState extends ConsumerState<_AddCategoryBody> {
       currency: _currency,
       initialMinor: _limit ?? 0,
       removable: _limit != null,
-      // A new category has no id yet, so every existing limit counts.
-      maxMinor: maxLimitFor(
-        -1,
-        categories: expense,
-        budgetMinor: ref.read(preferencesProvider).value?.monthlyBudgetMinor,
-      ),
+      maxMinor: bounds.maxMinor,
+      overMessage: bounds.overMessage,
     );
     if (result == null) return;
     setState(

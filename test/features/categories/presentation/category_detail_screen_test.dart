@@ -234,8 +234,16 @@ void main() {
         },
       );
       await tapRow(tester, 'Monthly limit');
-      // RM 2,000 budget − RM 1,500 for Bills.
-      expect(find.text('RM 500 left to allocate'), findsOneWidget);
+      // RM 2,000 budget − RM 1,500 for Bills leaves RM 500 for Food.
+      await tester.tap(find.widgetWithText(InkWell, '0').last);
+      await tester.pump();
+      expect(
+        find.bySemanticsLabel(
+          'Your limits would add up to RM 5,500, which is more than your '
+          'RM 2,000 monthly budget. Food can be up to RM 500.',
+        ),
+        findsOneWidget,
+      );
       await tester.tap(find.text('Remove'));
       await tester.pumpAndSettle();
       expect(categories.byName('Food').limitMinor, isNull);

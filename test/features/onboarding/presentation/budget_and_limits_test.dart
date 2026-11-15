@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
+import 'package:ctrl_spend/core/widgets/message_box.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/step_indicator.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
@@ -129,7 +130,10 @@ void main() {
       // RM 2,000.00 → RM 200.00
       await backspace(tester, 1);
       expect(
-        find.text('Your category limits add up to RM 900. Set at least that.'),
+        find.text(
+          'Your category limits add up to RM 900. Lower them first, or set '
+          'the budget to at least RM 900.',
+        ),
         findsOneWidget,
       );
       expect(enabled(tester, continueButton), isFalse);
@@ -184,7 +188,6 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.text('Bills budget'), findsOneWidget);
       expect(find.byTooltip('Close'), findsOneWidget, reason: 'no limit yet');
-      expect(find.text('RM 2,000 left to allocate'), findsOneWidget);
       expect(enabled(tester, saveButton), isFalse, reason: 'at 0');
 
       await type(tester, '15000');
@@ -221,13 +224,33 @@ void main() {
       );
       await tester.tap(find.text('Transport'));
       await tester.pumpAndSettle();
-      final room = find.text('RM 500 left to allocate');
-      expect(room, findsOneWidget);
+      expect(find.byType(MessageBox), findsNothing);
       await type(tester, '60000');
       expect(enabled(tester, saveButton), isFalse);
-      expect(tester.widget<Text>(room).style!.color, AppColors.light.negative);
+      // S54: a red outline and the error.
+      expect(
+        find.bySemanticsLabel(
+          'Your limits would add up to RM 2,100, which is more than your '
+          'RM 2,000 monthly budget. Transport can be up to RM 500.',
+        ),
+        findsOneWidget,
+      );
+      final box =
+          tester
+                  .widget<Container>(
+                    find
+                        .ancestor(
+                          of: find.text('PER MONTH'),
+                          matching: find.byType(Container),
+                        )
+                        .first,
+                  )
+                  .decoration!
+              as BoxDecoration;
+      expect(box.border!.top.color, AppColors.light.negative);
       await backspace(tester, 1);
       expect(enabled(tester, saveButton), isTrue);
+      expect(find.byType(MessageBox), findsNothing);
     });
 
     testWidgets("editing a limit doesn't count it against itself", (
@@ -240,7 +263,11 @@ void main() {
       );
       await tester.tap(find.text('Food'));
       await tester.pumpAndSettle();
-      expect(find.text('RM 2,000 left to allocate'), findsOneWidget);
+      // RM 1,500 → RM 2,000 fits: only the other limits count.
+      await backspace(tester, 6);
+      await type(tester, '200000');
+      expect(enabled(tester, saveButton), isTrue);
+      expect(find.byType(MessageBox), findsNothing);
     });
 
     testWidgets('dismissing the sheet changes nothing', (tester) async {
@@ -269,7 +296,9 @@ void main() {
       expect(find.text('ALLOCATED'), findsNothing);
       await tester.tap(find.text('Fun'));
       await tester.pumpAndSettle();
-      expect(find.textContaining('left to allocate'), findsNothing);
+      await type(tester, '99999900');
+      expect(find.byType(MessageBox), findsNothing);
+      expect(enabled(tester, saveButton), isTrue);
     });
 
     for (final action in ['Continue', 'Skip']) {
@@ -345,7 +374,7 @@ void main() {
             )
             .first,
       );
-      expect((sheetCard.decoration! as BoxDecoration).color, colors.fillSoft);
+      expect((sheetCard.decoration! as BoxDecoration).color, colors.ground);
     });
   }
 }

@@ -5,6 +5,7 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/budget_hero.dart';
+import 'package:ctrl_spend/core/widgets/message_box.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/category_budget_row.dart';
@@ -171,7 +172,10 @@ void main() {
       // RM 2,000.00 → RM 200.00
       await backspace(tester, 1);
       expect(
-        find.text('Your category limits add up to RM 900. Set at least that.'),
+        find.bySemanticsLabel(
+          'Your category limits add up to RM 900. Lower them first, or set '
+          'the budget to at least RM 900.',
+        ),
         findsOneWidget,
       );
       expect(saveEnabled(tester), isFalse);
@@ -266,7 +270,6 @@ void main() {
       await tester.tap(find.text('Transport'));
       await tester.pumpAndSettle();
       expect(find.text('Transport budget'), findsOneWidget);
-      expect(find.text('RM 1,600 left to allocate'), findsOneWidget);
       await type(tester, '30000');
       await save(tester);
       expect(categories.byName('Transport').limitMinor, 30000);
@@ -286,9 +289,17 @@ void main() {
       );
       await tester.tap(find.text('Food'));
       await tester.pumpAndSettle();
-      expect(find.text('RM 500 left to allocate'), findsOneWidget);
+      expect(find.byType(MessageBox), findsNothing);
       await type(tester, '0');
       expect(saveEnabled(tester), isFalse, reason: 'RM 4,000 > RM 500');
+      // S54: the limits would be RM 1,500 + RM 4,000 of RM 2,000.
+      expect(
+        find.bySemanticsLabel(
+          'Your limits would add up to RM 5,500, which is more than your '
+          'RM 2,000 monthly budget. Food can be up to RM 500.',
+        ),
+        findsOneWidget,
+      );
 
       await tester.tap(find.text('Remove'));
       await tester.pumpAndSettle();
@@ -335,7 +346,9 @@ void main() {
     );
   });
 
-  testWidgets('the sheet keeps its dark-mode card colour', (tester) async {
+  testWidgets("the sheet's amount sits on the ground colour in dark", (
+    tester,
+  ) async {
     await pumpBudgets(tester, theme: AppTheme.dark);
     await tester.tap(find.byType(MonthlyBudgetCard));
     await tester.pumpAndSettle();
@@ -348,7 +361,7 @@ void main() {
           )
           .first,
     );
-    expect((card.decoration! as BoxDecoration).color, AppColors.dark.fillSoft);
+    expect((card.decoration! as BoxDecoration).color, AppColors.dark.ground);
   });
 
   for (final (theme, colors) in [

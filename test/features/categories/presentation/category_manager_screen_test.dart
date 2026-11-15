@@ -243,7 +243,19 @@ void main() {
       expect(find.text('Optional'), findsOneWidget);
       await tester.tap(find.text('Monthly limit'));
       await tester.pumpAndSettle();
-      expect(find.text('RM 500 left to allocate'), findsOneWidget);
+      for (final key in '60000'.split('')) {
+        await tester.tap(find.widgetWithText(InkWell, key).last);
+        await tester.pump();
+      }
+      // RM 600 is over the RM 500 left: S54, naming the new category.
+      expect(
+        find.bySemanticsLabel(RegExp('Coffee can be up to RM 500')),
+        findsOneWidget,
+      );
+      for (var i = 0; i < 5; i++) {
+        await tester.tap(find.bySemanticsLabel('Backspace').last);
+        await tester.pump();
+      }
       for (final key in '20000'.split('')) {
         await tester.tap(find.widgetWithText(InkWell, key).last);
         await tester.pump();

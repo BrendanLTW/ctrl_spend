@@ -187,7 +187,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: DESIGN §3, §4, §7
 - [x] **6.12 S12, S13, S45 entry screens and S46 category picker.** Pinned keypad, one row of category tiles, Title field, Date and Note chips, Save disabled with its hint. S12 reads "New expense". Edit goes to S45. Update the end-to-end test. *("Added by you" means the name and type don't match a default category. The tile row scrolls a newly picked category into view. Entry keys are drawn 44 high but take taps over 48, for the tap-target guideline.)*
   Refs: PRD §5.3, DESIGN §6
-- [ ] **6.13 S17, S06 and S54 over-allocation.** Red outline and the S54 copy on the limit and budget sheets.
+- [x] **6.13 S17, S06 and S54 over-allocation.** Red outline and the S54 copy on the limit and budget sheets.
   Refs: PRD §5.6
 - [ ] **6.14 Categories.** Every S22 row and every S18 category row opens S23. S24 name at most 20 characters.
   Refs: PRD §5.7, §5.9

@@ -493,7 +493,7 @@ abstract class AppLocalizations {
   /// No description provided for @budgetBelowLimits.
   ///
   /// In en, this message translates to:
-  /// **'Your category limits add up to {amount}. Set at least that.'**
+  /// **'Your category limits add up to {amount}. Lower them first, or set the budget to at least {amount}.'**
   String budgetBelowLimits(String amount);
 
   /// No description provided for @splitTitle.
@@ -573,12 +573,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Save'**
   String get save;
-
-  /// No description provided for @leftToAllocate.
-  ///
-  /// In en, this message translates to:
-  /// **'{amount} left to allocate'**
-  String leftToAllocate(String amount);
 
   /// No description provided for @remindersTitle.
   ///
@@ -2937,6 +2931,17 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No categories match “{query}”'**
   String noCategoryMatch(String query);
+
+  /// No description provided for @limitsOverBudget.
+  ///
+  /// In en, this message translates to:
+  /// **'Your limits would add up to {total}, which is more than your {budget} monthly budget. {category} can be up to {max}.'**
+  String limitsOverBudget(
+    String total,
+    String budget,
+    String category,
+    String max,
+  );
 }
 
 class _AppLocalizationsDelegate

@@ -234,7 +234,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String budgetBelowLimits(String amount) {
-    return 'Your category limits add up to $amount. Set at least that.';
+    return 'Your category limits add up to $amount. Lower them first, or set the budget to at least $amount.';
   }
 
   @override
@@ -288,11 +288,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
-
-  @override
-  String leftToAllocate(String amount) {
-    return '$amount left to allocate';
-  }
 
   @override
   String get remindersTitle => 'Stay on track';
@@ -1944,5 +1939,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String noCategoryMatch(String query) {
     return 'No categories match “$query”';
+  }
+
+  @override
+  String limitsOverBudget(
+    String total,
+    String budget,
+    String category,
+    String max,
+  ) {
+    return 'Your limits would add up to $total, which is more than your $budget monthly budget. $category can be up to $max.';
   }
 }

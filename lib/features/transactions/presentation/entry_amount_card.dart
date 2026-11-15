@@ -62,10 +62,7 @@ class EntryAmountCard extends StatelessWidget {
                   Text(currency.symbol, style: small),
                   const SizedBox(width: 8),
                   Text(digits, style: text.amountEntry.copyWith(color: colour)),
-                  Text(
-                    cents,
-                    style: small.copyWith(color: colors.muted),
-                  ),
+                  Text(cents, style: small.copyWith(color: colors.muted)),
                   const SizedBox(width: 4),
                   // The caret: the keypad is always typing here.
                   Container(width: 2, height: 44, color: colors.ink),
