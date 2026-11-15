@@ -56,7 +56,7 @@ class DriftGoalRepository implements GoalRepository {
         .replace(
           checked.copyWith(completedAt: current.completedAt).toCompanion(),
         );
-    // A new target can complete the goal or reopen it.
+    // A lower target can complete the goal.
     await _syncCompleted(goal.id);
   });
 
@@ -143,20 +143,26 @@ class DriftGoalRepository implements GoalRepository {
     return total ?? 0;
   }
 
+  @override
+  Future<void> markCompleted(int id, {required DateTime at}) =>
+      (_db.update(_db.goals)
+            ..where((g) => g.id.equals(id) & g.completedAt.isNull()))
+          .write(GoalsCompanion(completedAt: Value(at.toUtc())));
+
   /// Marks the goal completed when saved reaches the target, on the
-  /// latest contribution's date, and active again when it drops below.
+  /// latest contribution's date. Completion is never undone (PRD §5.12):
+  /// a withdrawal or a higher target leaves it completed.
   Future<void> _syncCompleted(int goalId) async {
     final goal = await _byId(goalId);
-    final done = await _saved(goalId) >= goal.targetMinor;
-    if (done == (goal.completedAt != null)) return;
-    final latest = done
-        ? await (_contributions()
-                ..where((c) => c.goalId.equals(goalId))
-                ..limit(1))
-              .getSingle()
-        : null;
+    if (goal.completedAt != null) return;
+    if (await _saved(goalId) < goal.targetMinor) return;
+    final latest =
+        await (_contributions()
+              ..where((c) => c.goalId.equals(goalId))
+              ..limit(1))
+            .getSingle();
     await (_db.update(_db.goals)..where((g) => g.id.equals(goalId))).write(
-      GoalsCompanion(completedAt: Value(latest?.date)),
+      GoalsCompanion(completedAt: Value(latest.date)),
     );
   }
 

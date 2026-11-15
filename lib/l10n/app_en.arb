@@ -1599,15 +1599,6 @@
       }
     }
   },
-  "goalTargetReached": "Target month is here",
-  "goalTargetReachedBody": "Add {amount} to reach it.",
-  "@goalTargetReachedBody": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "goalCompleted": "Goal reached",
   "goalCompletedBody": "You reached {amount}.",
   "@goalCompletedBody": {
@@ -1724,6 +1715,27 @@
     "placeholders": {
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "goalBehind": "Behind",
+  "goalBehindBody": "Save {amount} a month to catch up by {month}.",
+  "@goalBehindBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalPastTarget": "Past the target date",
+  "goalPastTargetBody": "Add {amount} to reach it.",
+  "@goalPastTargetBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
       }
     }
   }

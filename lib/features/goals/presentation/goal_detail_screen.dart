@@ -409,11 +409,20 @@ class _StatusCard extends StatelessWidget {
           DateFormat.MMMM(locale).format(goal.targetMonth),
         ),
       ),
-      GoalStatus.targetReached => (
+      GoalStatus.behind => (
         AppIcon.warning,
         CategoryColorKey.orange,
-        l10n.goalTargetReached,
-        l10n.goalTargetReachedBody(
+        l10n.goalBehind,
+        l10n.goalBehindBody(
+          formatter.formatCompact(monthlyNeedMinor(goal, savedMinor, today)),
+          DateFormat.MMMM(locale).format(goal.targetMonth),
+        ),
+      ),
+      GoalStatus.pastTarget => (
+        AppIcon.warning,
+        CategoryColorKey.red,
+        l10n.goalPastTarget,
+        l10n.goalPastTargetBody(
           formatter.formatCompact(toGoMinor(goal, savedMinor)),
         ),
       ),

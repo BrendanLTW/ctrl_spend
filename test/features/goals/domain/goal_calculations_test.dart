@@ -96,17 +96,44 @@ void main() {
     });
   });
 
-  test('status: completed, on track, or the target month has come', () {
-    expect(goalStatus(goal(), 800000, today), GoalStatus.completed);
-    expect(goalStatus(goal(), 100, today), GoalStatus.onTrack);
-    expect(
-      goalStatus(goal(month: DateTime(2026, 11)), 100, today),
-      GoalStatus.targetReached,
-    );
-    expect(
-      goalStatus(goal(month: DateTime(2026, 12)), 100, today),
-      GoalStatus.onTrack,
-    );
+  group('goalStatus (PRD §5.12)', () {
+    // RM 8,000 by Dec 2027, made 4 Nov 2026: 13 months to save in.
+    test('completed when saved reaches the target, or marked', () {
+      expect(goalStatus(goal(), 800000, today), GoalStatus.completed);
+      expect(
+        goalStatus(goal().copyWith(completedAt: today), 100, today),
+        GoalStatus.completed,
+      );
+    });
+
+    test('in the month it was made, always on track', () {
+      expect(goalStatus(goal(), 0, today), GoalStatus.onTrack);
+    });
+
+    test('on track at or above the even plan, behind below it', () {
+      // March 2027 is 4 of 13 months in: 8,000 × 4 ÷ 13 = RM 2,461.54.
+      final march = DateTime(2027, 3, 10);
+      expect(goalStatus(goal(), 246154, march), GoalStatus.onTrack);
+      expect(goalStatus(goal(), 246153, march), GoalStatus.behind);
+    });
+
+    test('in the target month the whole target is the plan', () {
+      final december = DateTime(2027, 12, 20);
+      expect(goalStatus(goal(), 799999, december), GoalStatus.behind);
+    });
+
+    test('past target once the target month is over', () {
+      expect(
+        goalStatus(goal(), 799999, DateTime(2028, 1, 2)),
+        GoalStatus.pastTarget,
+      );
+    });
+
+    test('a goal made in its target month is on track then', () {
+      final soon = goal(month: DateTime(2026, 11));
+      expect(goalStatus(soon, 0, today), GoalStatus.onTrack);
+      expect(goalStatus(soon, 0, DateTime(2026, 12, 2)), GoalStatus.pastTarget);
+    });
   });
 
   test('saved in a period counts its additions and withdrawals', () {

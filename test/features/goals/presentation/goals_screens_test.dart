@@ -292,7 +292,9 @@ void main() {
       expect(find.text('2 completed goals'), findsOneWidget);
     });
 
-    testWidgets('in the target month the rest is due now', (tester) async {
+    testWidgets('behind the plan in the target month: the rest is due', (
+      tester,
+    ) async {
       await pumpApp(
         tester,
         seed: () => addGoal(
@@ -304,7 +306,26 @@ void main() {
         ),
       );
       await openGoal(tester, 'Laptop');
-      expect(find.text('Target month is here'), findsOneWidget);
+      expect(find.text('Behind'), findsOneWidget);
+      expect(
+        find.text('Save RM 2,000 a month to catch up by November.'),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('past the target date', (tester) async {
+      await pumpApp(
+        tester,
+        seed: () => addGoal(
+          'Laptop',
+          300000,
+          DateTime(2026, 10),
+          CategoryIconKey.laptop,
+          [(100000, 'x', DateTime(2026, 9))],
+        ),
+      );
+      await openGoal(tester, 'Laptop');
+      expect(find.text('Past the target date'), findsOneWidget);
       expect(find.text('Add RM 2,000 to reach it.'), findsOneWidget);
     });
 

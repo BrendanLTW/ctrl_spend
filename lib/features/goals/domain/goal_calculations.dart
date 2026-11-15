@@ -3,16 +3,20 @@ import 'dart:math';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/goals/domain/goal.dart';
 
-/// Where a goal stands (S29, S30).
+/// Where a goal stands (S29, S30; PRD §5.12).
 enum GoalStatus {
-  /// Saved has reached the target.
+  /// Saved has reached the target, or it was marked completed.
   completed,
 
-  /// Not there yet, with the target month still ahead.
+  /// Saved is at least what an even monthly amount since the goal was
+  /// made would have put aside by now.
   onTrack,
 
-  /// Not there yet, and the target month has come or gone.
-  targetReached,
+  /// Saved is below that.
+  behind,
+
+  /// The target month has passed and the goal isn't reached.
+  pastTarget,
 }
 
 /// What's been saved: additions minus withdrawals.
@@ -47,13 +51,29 @@ int monthlyNeedMinor(Goal goal, int savedMinor, DateTime today) {
 
 int _ceilDiv(int a, int b) => (a + b - 1) ~/ b;
 
+/// Completed once saved reaches the target or it's marked completed; it
+/// stays completed after that (`completedAt`). Otherwise past target once
+/// the target month is over. Otherwise on track if saved is at least the
+/// plan: target × months since the creation month ÷ months from the
+/// creation month to the target month (so always on track in the month
+/// it was made), and behind if not.
 GoalStatus goalStatus(Goal goal, int savedMinor, DateTime today) {
-  if (savedMinor >= goal.targetMinor) return GoalStatus.completed;
-  final thisMonth = DateTime(today.year, today.month);
-  return goal.targetMonth.isAfter(thisMonth)
+  if (goal.completedAt != null || savedMinor >= goal.targetMinor) {
+    return GoalStatus.completed;
+  }
+  final now = _monthIndex(today);
+  final target = _monthIndex(goal.targetMonth);
+  if (now > target) return GoalStatus.pastTarget;
+  final created = _monthIndex(goal.createdAt.toLocal());
+  final total = max(1, target - created);
+  final elapsed = (now - created).clamp(0, total);
+  // saved / target >= elapsed / total, without rounding.
+  return savedMinor * total >= goal.targetMinor * elapsed
       ? GoalStatus.onTrack
-      : GoalStatus.targetReached;
+      : GoalStatus.behind;
 }
+
+int _monthIndex(DateTime date) => date.year * 12 + date.month - 1;
 
 /// Net added in [period], withdrawals included (S29 "+RM 400 this month").
 int savedInPeriodMinor(

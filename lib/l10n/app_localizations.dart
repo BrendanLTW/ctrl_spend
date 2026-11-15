@@ -2674,18 +2674,6 @@ abstract class AppLocalizations {
   /// **'Save {amount} a month to reach it by {month}.'**
   String goalOnTrackBody(String amount, String month);
 
-  /// No description provided for @goalTargetReached.
-  ///
-  /// In en, this message translates to:
-  /// **'Target month is here'**
-  String get goalTargetReached;
-
-  /// No description provided for @goalTargetReachedBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Add {amount} to reach it.'**
-  String goalTargetReachedBody(String amount);
-
   /// No description provided for @goalCompleted.
   ///
   /// In en, this message translates to:
@@ -2871,6 +2859,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 duplicate skipped} other{{count} duplicates skipped}}'**
   String importSkippedDuplicates(int count);
+
+  /// No description provided for @goalBehind.
+  ///
+  /// In en, this message translates to:
+  /// **'Behind'**
+  String get goalBehind;
+
+  /// No description provided for @goalBehindBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Save {amount} a month to catch up by {month}.'**
+  String goalBehindBody(String amount, String month);
+
+  /// No description provided for @goalPastTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Past the target date'**
+  String get goalPastTarget;
+
+  /// No description provided for @goalPastTargetBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {amount} to reach it.'**
+  String goalPastTargetBody(String amount);
 }
 
 class _AppLocalizationsDelegate

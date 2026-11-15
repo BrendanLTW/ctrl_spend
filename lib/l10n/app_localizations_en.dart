@@ -1769,14 +1769,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get goalTargetReached => 'Target month is here';
-
-  @override
-  String goalTargetReachedBody(String amount) {
-    return 'Add $amount to reach it.';
-  }
-
-  @override
   String get goalCompleted => 'Goal reached';
 
   @override
@@ -1904,5 +1896,21 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 duplicate skipped',
     );
     return '$_temp0';
+  }
+
+  @override
+  String get goalBehind => 'Behind';
+
+  @override
+  String goalBehindBody(String amount, String month) {
+    return 'Save $amount a month to catch up by $month.';
+  }
+
+  @override
+  String get goalPastTarget => 'Past the target date';
+
+  @override
+  String goalPastTargetBody(String amount) {
+    return 'Add $amount to reach it.';
   }
 }

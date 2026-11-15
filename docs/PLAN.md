@@ -176,7 +176,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §6.4, §10
 - [x] **6.8 Bill rules.** Paused bills are left out of Upcoming totals, "Left after bills" and reminders. Custom repeat is every N days, weeks or months, N from 1 to 12. Mark paid takes an amount, a date and a category. Reminders use the `billDue` kind and respect `billRemindersOn`. *(Mark paid also follows the no-future-dates rule. The current Custom sheet is capped at 12 and drops Years, so it can't save a repeat the repository refuses; the full S44 rework is 6.20.)*
   Refs: PRD §5.11, §5.4, §8
-- [ ] **6.9 Goal rules.** Statuses: on track, behind, past target date, each with the monthly amount now needed. Mark as completed by hand. Contributions take a label and a date.
+- [x] **6.9 Goal rules.** Statuses: on track, behind, past target date, each with the monthly amount now needed. Mark as completed by hand. Contributions take a label and a date. *(On track: saved ≥ target × months since the creation month ÷ months from creation to the target month, so always on track in the month it's made. Completion is sticky: once reached or marked, a withdrawal or a higher target doesn't reopen it.)*
   Refs: PRD §5.12
 - [x] **6.10 PIN lockout timing.** A pure function: 5 wrong PINs → 30 s, doubling every further 5, capped at 15 min. Unit tests. *(Entry locks only on every fifth wrong PIN; the ones in between don't.)*
   Refs: PRD §5.8, §10

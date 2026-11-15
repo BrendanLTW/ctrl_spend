@@ -21,9 +21,14 @@ abstract interface class GoalRepository {
     required DateTime createdAt,
   });
 
-  /// Saves every field but `completedAt`, which follows saved and the
-  /// target. Throws like [add].
+  /// Saves every field but `completedAt`. Lowering the target to what's
+  /// saved completes the goal; completion is never undone. Throws like
+  /// [add].
   Future<void> update(Goal goal);
+
+  /// S62's Mark as completed: completed on [at], whatever is saved. Does
+  /// nothing if it already is.
+  Future<void> markCompleted(int id, {required DateTime at});
 
   /// Deletes the goal and its contributions.
   Future<void> delete(int id);
@@ -35,7 +40,7 @@ abstract interface class GoalRepository {
   Stream<List<GoalContribution>> watchAllContributions();
 
   /// Adds [amountMinor] (more than 0) to the goal. Reaching the target
-  /// marks it completed on [date].
+  /// marks it completed on [date]; it stays completed (PRD §5.12).
   Future<GoalContribution> addMoney(
     int goalId, {
     required int amountMinor,
@@ -44,7 +49,7 @@ abstract interface class GoalRepository {
   });
 
   /// Takes [amountMinor] (more than 0, at most what's saved) out of the
-  /// goal. Dropping below the target makes it active again.
+  /// goal. A completed goal stays completed.
   Future<GoalContribution> withdraw(
     int goalId, {
     required int amountMinor,

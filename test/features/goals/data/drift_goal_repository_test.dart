@@ -95,7 +95,7 @@ void main() {
     expect(await repo.watchContributions(bali.id).first, hasLength(1));
   });
 
-  test('reaching the target completes it; dropping below reopens it', () async {
+  test('reaching the target completes it, for good', () async {
     final bali = await addGoal();
     await addMoney(bali, 400000);
     expect((await reload(bali)).completedAt, isNull);
@@ -107,7 +107,7 @@ void main() {
       label: 'x',
       date: DateTime(2026, 12, 4),
     );
-    expect((await reload(bali)).completedAt, isNull);
+    expect((await reload(bali)).completedAt, DateTime.utc(2026, 12, 3));
   });
 
   test('lowering the target to what is saved completes it', () async {
@@ -116,7 +116,17 @@ void main() {
     await repo.update((await reload(bali)).copyWith(targetMinor: 300000));
     expect((await reload(bali)).completedAt, DateTime.utc(2026, 11, 3));
     await repo.update((await reload(bali)).copyWith(targetMinor: 400000));
-    expect((await reload(bali)).completedAt, isNull);
+    expect((await reload(bali)).completedAt, DateTime.utc(2026, 11, 3));
+  });
+
+  test('Mark as completed completes it whatever is saved', () async {
+    final bali = await addGoal();
+    await addMoney(bali, 100000);
+    await repo.markCompleted(bali.id, at: DateTime(2026, 11, 5, 10));
+    expect((await reload(bali)).completedAt, DateTime(2026, 11, 5, 10).toUtc());
+    // Once is enough: a second mark doesn't move the date.
+    await repo.markCompleted(bali.id, at: DateTime(2026, 12));
+    expect((await reload(bali)).completedAt, DateTime(2026, 11, 5, 10).toUtc());
   });
 
   test('deleting a goal deletes its contributions', () async {

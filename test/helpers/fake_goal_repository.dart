@@ -4,8 +4,8 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/goals/domain/goal.dart';
 import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 
-/// In-memory goals for widget tests, soonest target first. Keeps
-/// `completedAt` in line with saved like the real one, and refuses to
+/// In-memory goals for widget tests, soonest target first. Sets
+/// `completedAt` like the real one (never undone), and refuses to
 /// withdraw more than is saved; skips its other checks.
 class FakeGoalRepository implements GoalRepository {
   final _goals = <int, Goal>{};
@@ -136,12 +136,18 @@ class FakeGoalRepository implements GoalRepository {
       .where((c) => c.goalId == goalId)
       .fold(0, (sum, c) => sum + c.amountMinor);
 
+  @override
+  Future<void> markCompleted(int id, {required DateTime at}) async {
+    final goal = _goals[id]!;
+    if (goal.completedAt != null) return;
+    _goals[id] = goal.copyWith(completedAt: at);
+    _changes.add(null);
+  }
+
+  /// Completed once saved reaches the target; never undone.
   void _sync(int goalId, {DateTime? on}) {
     final goal = _goals[goalId]!;
-    final done = _saved(goalId) >= goal.targetMinor;
-    if (done == (goal.completedAt != null)) return;
-    _goals[goalId] = goal.copyWith(
-      completedAt: done ? (on ?? contributions.first.date) : null,
-    );
+    if (goal.completedAt != null || _saved(goalId) < goal.targetMinor) return;
+    _goals[goalId] = goal.copyWith(completedAt: on ?? contributions.first.date);
   }
 }
