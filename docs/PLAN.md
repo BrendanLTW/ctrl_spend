@@ -170,7 +170,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.6, §8
 - [x] **6.5 Alert deduplication.** A budget alert fires once per category (or the monthly budget), per threshold, per period, checked against the inbox. A month-start change re-evaluates alerts for the new period.
   Refs: PRD §5.4, §5.8
-- [ ] **6.6 Currency minor units.** Each currency carries its ISO 4217 minor units (JPY 0). Applies to MoneyFormatter, the keypad, CSV amounts and "rounded up to the whole unit".
+- [x] **6.6 Currency: MYR only for now.** *(Decided 15 Nov: S34 offers Malaysian Ringgit only; the other currencies stay in code for later, and a saved one reads as MYR. Per-currency minor units (PRD §6.5, JPY 0) wait until a currency that needs them is offered; MYR has 2.)* Originally: each currency carries its ISO 4217 minor units (JPY 0), for MoneyFormatter, the keypad, CSV amounts and "rounded up to the whole unit".
   Refs: PRD §6.5
 - [ ] **6.7 Shared CSV format.** Columns `date,time,type,amount,category,title,note` for export and import. Import maps columns by header name. Duplicates (same date, type, amount and category) are found and skipped by default. Unknown categories are created. At most 20,000 rows. Round-trip test, and a 20,000-row timing test.
   Refs: PRD §6.4, §10

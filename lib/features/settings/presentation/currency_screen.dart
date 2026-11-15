@@ -16,8 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// S34 Currency: search, Suggested and All currencies. Tapping one saves
-/// it at once; only the symbol changes, amounts are never converted.
+/// S34 Currency: search, Suggested and All currencies, of the
+/// [offeredCurrencies] (only MYR for now). Tapping one saves it at once;
+/// only the symbol changes, amounts are never converted.
 class CurrencyScreen extends ConsumerStatefulWidget {
   const new({super.key});
 
@@ -60,10 +61,10 @@ class _CurrencyScreenState extends ConsumerState<CurrencyScreen> {
 
     final suggested = [
       for (final c in CurrencyScreen.suggested)
-        if (matches(c)) c,
+        if (offeredCurrencies.contains(c) && matches(c)) c,
     ];
     final others = [
-      for (final c in Currency.values)
+      for (final c in offeredCurrencies)
         if (!CurrencyScreen.suggested.contains(c) && matches(c)) c,
     ];
 

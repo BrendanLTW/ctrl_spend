@@ -26,7 +26,6 @@ void main() {
   test('every setting survives a round trip', () {
     const prefs = Preferences(
       userName: 'Alex',
-      currencyCode: 'SGD',
       monthStartDay: DayOfMonth(15),
       monthlyBudgetMinor: 200000,
       theme: AppTheme.dark,
@@ -43,6 +42,16 @@ void main() {
       failedPinCount: 7,
     );
     expect(preferencesFromValues(stored(prefs)), prefs);
+  });
+
+  test('a currency that is not offered reads as MYR', () {
+    for (final code in ['SGD', 'USD', 'XYZ', '']) {
+      expect(
+        preferencesFromValues({'currencyCode': code}).currencyCode,
+        'MYR',
+        reason: code,
+      );
+    }
   });
 
   test('a lockout ends at a UTC instant', () {

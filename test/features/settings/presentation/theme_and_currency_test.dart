@@ -1,7 +1,6 @@
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_radio.dart';
-import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/currency_screen.dart';
@@ -66,22 +65,16 @@ void main() {
   });
 
   group('S34 Currency', () {
-    testWidgets('lists Suggested and All currencies', (tester) async {
+    testWidgets('offers Malaysian Ringgit only, for now', (tester) async {
       await pumpAt(tester, Routes.currency);
       expect(find.text('SUGGESTED'), findsOneWidget);
-      expect(find.text('ALL CURRENCIES'), findsOneWidget);
+      expect(find.text('Malaysian Ringgit'), findsOneWidget);
       expect(find.text('MYR · current'), findsOneWidget);
-      for (final name in [
-        'Singapore Dollar',
-        'US Dollar',
-        'Australian Dollar',
-        'Brunei Dollar',
-        'Euro',
-        'Indonesian Rupiah',
-      ]) {
-        expect(find.text(name), findsOneWidget, reason: name);
+      expect(find.text('ALL CURRENCIES'), findsNothing);
+      for (final name in ['Singapore Dollar', 'US Dollar', 'Euro']) {
+        expect(find.text(name), findsNothing, reason: name);
       }
-      expect(radios(tester).where((on) => on), hasLength(1));
+      expect(radios(tester), [true]);
       expect(
         find.text(
           'Switching currency changes the symbol only. '
@@ -91,52 +84,29 @@ void main() {
       );
     });
 
-    testWidgets('choosing one changes the symbol, not the amounts', (
-      tester,
-    ) async {
-      await pumpAt(tester, Routes.currency);
-      await tap(tester, 'Singapore Dollar');
-      expect((await prefs.read()).currencyCode, 'SGD');
-      expect((await prefs.read()).monthlyBudgetMinor, 200000);
-      expect(find.text('SGD · current'), findsOneWidget);
-      container.read(appRouterProvider).go(Routes.home);
-      await tester.pumpAndSettle();
-      expect(find.byType(DashboardScreen), findsOneWidget);
-      expect(find.textContaining(r'S$'), findsWidgets);
-      expect(find.textContaining('RM'), findsNothing);
-    });
-
-    testWidgets('search matches name, code or symbol, any case', (
-      tester,
-    ) async {
+    testWidgets('search matches it by name, code or symbol', (tester) async {
       await pumpAt(tester, Routes.currency);
       Future<void> search(String query) async {
         await tester.enterText(find.byType(TextField), query);
         await tester.pump();
       }
 
+      for (final query in ['ringgit', 'myr', 'rm']) {
+        await search(query);
+        expect(find.text('Malaysian Ringgit'), findsOneWidget, reason: query);
+      }
       await search('dollar');
-      expect(find.text('Singapore Dollar'), findsOneWidget);
-      expect(find.text('Brunei Dollar'), findsOneWidget);
-      expect(find.text('Euro'), findsNothing);
-      await search('idr');
-      expect(find.text('Indonesian Rupiah'), findsOneWidget);
-      expect(find.text('SUGGESTED'), findsNothing);
-      await search('€');
-      expect(find.text('Euro'), findsOneWidget);
-      await search('yen');
-      expect(find.text('No currencies match “yen”'), findsOneWidget);
-      expect(find.text('ALL CURRENCIES'), findsNothing);
+      expect(find.text('No currencies match “dollar”'), findsOneWidget);
     });
 
     testWidgets('S21 opens it and shows the symbol', (tester) async {
       await pumpAt(tester, Routes.settings);
       await tap(tester, 'Currency');
       expect(find.byType(CurrencyScreen), findsOneWidget);
-      await tap(tester, 'Euro');
+      await tap(tester, 'Malaysian Ringgit');
       await tester.tap(find.byTooltip('Back'));
       await tester.pumpAndSettle();
-      expect(row(tester, 'Currency').value, '€');
+      expect(row(tester, 'Currency').value, 'RM');
     });
 
     testWidgets('S04 opens it and shows the choice', (tester) async {
@@ -147,11 +117,10 @@ void main() {
       );
       await tap(tester, 'Malaysian Ringgit');
       expect(find.byType(CurrencyScreen), findsOneWidget);
-      await tap(tester, 'US Dollar');
       await tester.tap(find.byTooltip('Back'));
       await tester.pumpAndSettle();
       expect(find.byType(MonthSetupScreen), findsOneWidget);
-      expect(find.text('US Dollar'), findsOneWidget);
+      expect(find.text('Malaysian Ringgit'), findsOneWidget);
     });
   });
 

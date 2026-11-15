@@ -41,6 +41,7 @@ DESIGN §8 asks for line icons on a 24 grid, round caps and joins, stored as SVG
 | S28 icon | No icon field, yet S27 shows one per bill | An Icon section (12 bill icons and the 7 colours) | Bills get their own tile; schema v4 |
 | S44 Custom… | Not designed | A sheet: Every 1–99, Days · Weeks · Months · Years | — |
 | S44 (dark) | White card, near-invisible text | `fillSoft` card with `ink` text | Design bug |
+| S34 Currency | Suggested (MYR, SGD, USD) and All currencies | Malaysian Ringgit only | MYR only for now (15 Nov); the other currencies stay in code for later |
 | S29 goal type and colour | "Travel" purple, "Gadget" pink; S31 picks only an icon | The icon sets both: Travel purple, Car blue, Home green, Gadget pink, Personal red, Gift orange | Only Travel and Gadget are on the canvas |
 | S29 Total saved | Amount wraps onto two lines | One line, with this period's net beside it | — |
 | S29 completed goals | A collapsed row | Tapping it lists them; each opens S30 | The canvas doesn't show it open |

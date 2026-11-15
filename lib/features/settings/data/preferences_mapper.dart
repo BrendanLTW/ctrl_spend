@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 
@@ -32,7 +33,11 @@ Preferences preferencesFromValues(Map<String, String> values) {
   bool? flag(String key) => bool.tryParse(values[key] ?? '');
   return Preferences(
     userName: values[PreferenceKeys.userName] ?? defaults.userName,
-    currencyCode: values[PreferenceKeys.currencyCode] ?? defaults.currencyCode,
+    // Only offered currencies (MYR for now) are read back.
+    currencyCode: switch (values[PreferenceKeys.currencyCode]) {
+      final code? when offeredCurrencies.any((c) => c.code == code) => code,
+      _ => defaults.currencyCode,
+    },
     monthStartDay:
         _parseStartDay(values[PreferenceKeys.monthStartDay]) ??
         defaults.monthStartDay,

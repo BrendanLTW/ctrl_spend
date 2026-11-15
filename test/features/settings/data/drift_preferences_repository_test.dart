@@ -27,7 +27,6 @@ void main() {
   test('update saves every setting', () async {
     const all = Preferences(
       userName: 'Alex',
-      currencyCode: 'SGD',
       monthStartDay: LastDayOfMonth(),
       monthlyBudgetMinor: 200000,
       theme: AppTheme.dark,
