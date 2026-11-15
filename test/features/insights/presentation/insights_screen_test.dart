@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/pill_button.dart';
+import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/category_share_card.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/spending_donut.dart';
@@ -121,6 +122,14 @@ void main() {
       expect(find.text('RM 328'), findsOneWidget);
     });
 
+    testWidgets('a category card opens S23', (tester) async {
+      await pumpInsights(tester, seed: designMonth);
+      await tester.scrollUntilVisible(find.text('Shopping'), 200);
+      await tester.tap(find.text('Shopping'));
+      await tester.pumpAndSettle();
+      expect(find.byType(CategoryDetailScreen), findsOneWidget);
+    });
+
     testWidgets('the ring reads every category share', (tester) async {
       final handle = tester.ensureSemantics();
       await pumpInsights(tester, seed: designMonth);
@@ -216,15 +225,15 @@ void main() {
             .backgroundColor,
         colors.ground,
       );
-      final card = tester.widget<Container>(
+      final card = tester.widget<Material>(
         find
             .descendant(
               of: find.byType(CategoryShareCard),
-              matching: find.byType(Container),
+              matching: find.byType(Material),
             )
             .first,
       );
-      expect((card.decoration! as BoxDecoration).color, colors.surface);
+      expect(card.color, colors.surface);
       expect(find.byType(SpendingDonut), findsOneWidget);
     });
   }

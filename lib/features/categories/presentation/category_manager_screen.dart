@@ -16,6 +16,7 @@ import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/categories/presentation/add_category_sheet.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,6 +53,12 @@ class CategoryManagerScreen extends ConsumerWidget {
     final text = context.text;
     final l10n = context.l10n;
     final all = ref.watch(categoriesProvider()).value ?? const <Category>[];
+    // Archived rows show how many transactions they keep (PRD §5.9).
+    final counts = <int, int>{};
+    for (final t
+        in ref.watch(transactionsProvider()).value ?? const <Transaction>[]) {
+      counts[t.categoryId] = (counts[t.categoryId] ?? 0) + 1;
+    }
     final active = [
       for (final c in all)
         if (!c.archived) c,
@@ -146,6 +153,8 @@ class CategoryManagerScreen extends ConsumerWidget {
                 for (final c in archived)
                   _ArchivedRow(
                     category: c,
+                    transactions: counts[c.id] ?? 0,
+                    onTap: () => unawaited(context.push(Routes.category(c.id))),
                     onRestore: () =>
                         ref.read(categoryRepositoryProvider).restore(c.id),
                   ),
@@ -170,43 +179,77 @@ class CategoryManagerScreen extends ConsumerWidget {
 
 /// An archived category, muted, with a Restore pill.
 class _ArchivedRow extends StatelessWidget {
-  const new({required this.category, required this.onRestore});
+  const new({
+    required this.category,
+    required this.transactions,
+    required this.onTap,
+    required this.onRestore,
+  });
 
   final Category category;
+  final int transactions;
+
+  /// Opens S23, like every row (PRD §5.9).
+  final VoidCallback onTap;
   final VoidCallback onRestore;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    return ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: 64),
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(18, 10, 12, 10),
-        child: Row(
-          children: [
-            Opacity(
-              opacity: 0.6,
-              child: CategoryTile.forKey(
-                category.iconKey,
-                color: category.colorKey,
+    final count = context.l10n.transactionCount(transactions);
+    return InkWell(
+      onTap: onTap,
+      highlightColor: colors.raised,
+      splashFactory: NoSplash.splashFactory,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: 64),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(18, 10, 12, 10),
+          child: Row(
+            children: [
+              Opacity(
+                opacity: 0.6,
+                child: CategoryTile.forKey(
+                  category.iconKey,
+                  color: category.colorKey,
+                ),
               ),
-            ),
-            const SizedBox(width: 16),
-            Expanded(
-              child: Text(
-                category.name,
-                style: context.text.rowTitle.copyWith(color: colors.muted),
+              const SizedBox(width: 16),
+              Expanded(
+                child: Semantics(
+                  button: true,
+                  label: '${category.name}, $count',
+                  excludeSemantics: true,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        category.name,
+                        style: context.text.rowTitle.copyWith(
+                          color: colors.muted,
+                        ),
+                      ),
+                      Text(
+                        count,
+                        style: context.text.caption.copyWith(
+                          color: colors.muted,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(AppRadius.pill),
-              child: PillButton(
-                label: context.l10n.restore,
-                style: PillButtonStyle.soft,
-                onPressed: onRestore,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(AppRadius.pill),
+                child: PillButton(
+                  label: context.l10n.restore,
+                  style: PillButtonStyle.soft,
+                  onPressed: onRestore,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

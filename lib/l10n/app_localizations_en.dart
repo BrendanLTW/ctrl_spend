@@ -1950,4 +1950,15 @@ class AppLocalizationsEn extends AppLocalizations {
   ) {
     return 'Your limits would add up to $total, which is more than your $budget monthly budget. $category can be up to $max.';
   }
+
+  @override
+  String transactionCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return '$_temp0';
+  }
 }

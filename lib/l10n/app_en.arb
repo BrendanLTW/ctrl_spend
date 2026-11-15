@@ -1773,5 +1773,13 @@
         "type": "String"
       }
     }
+  },
+  "transactionCount": "{count, plural, =1{1 transaction} other{{count} transactions}}",
+  "@transactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

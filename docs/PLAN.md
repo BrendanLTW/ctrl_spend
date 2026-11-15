@@ -189,7 +189,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.3, DESIGN §6
 - [x] **6.13 S17, S06 and S54 over-allocation.** Red outline and the S54 copy on the limit and budget sheets.
   Refs: PRD §5.6
-- [ ] **6.14 Categories.** Every S22 row and every S18 category row opens S23. S24 name at most 20 characters.
+- [x] **6.14 Categories.** Every S22 row and every S18 category row opens S23. S24 name at most 20 characters. *(Archived rows open S23 too, following the PRD, and show their transaction count. The 20-character limit landed in 6.3.)*
   Refs: PRD §5.7, §5.9
 - [ ] **6.15 S21, S21a Settings and S47, S49.** Profile row opens the S47 sheet. Notifications row opens S48. Erase all data uses the S49 dialog. Import opens S51. Footer "ctrlSpend {version} · by BrendanLTW".
   Refs: PRD §5.8

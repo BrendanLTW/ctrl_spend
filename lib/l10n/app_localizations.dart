@@ -2942,6 +2942,12 @@ abstract class AppLocalizations {
     String category,
     String max,
   );
+
+  /// No description provided for @transactionCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 transaction} other{{count} transactions}}'**
+  String transactionCount(int count);
 }
 
 class _AppLocalizationsDelegate

@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/period/period_format.dart';
+import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/chart_palette.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
@@ -18,6 +21,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction_repository.d
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 /// S18's Month view: this period's spending as a ring and ranked category
 /// cards. With no spending yet it shows S40.
@@ -63,6 +67,7 @@ class InsightsMonthView extends ConsumerWidget {
           percent: s.percent,
           amount: formatter.formatCompact(s.spentMinor),
           semanticLabel: shareLabels[i],
+          onTap: () => unawaited(context.push(Routes.category(category.id))),
         ),
     ];
     final caption = l10n.spentInPeriod(formatPeriod(period, locale));
