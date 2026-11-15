@@ -183,7 +183,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
 
 ### B. Screens
 
-- [ ] **6.11 Tokens and shared components.** `buttonDisabled`, `scrim`, the four message boxes, `r18`/`r30`, the `amountEntry`/`stateTitle`/`message` styles. MessageBox, StatusPill, StateScreen, AppSpinner, text input with counter and error outline, sheet button, Pay pill, action sheet, and the dialog at r30 with a 96 px icon.
+- [x] **6.11 Tokens and shared components.** `buttonDisabled`, `scrim`, the four message boxes, `r18`/`r30`, the `amountEntry`/`stateTitle`/`message` styles. MessageBox, StatusPill, StateScreen, AppSpinner, text input with counter and error outline, sheet button, Pay pill, action sheet, and the dialog at r30 with a 96 px icon. *(Also `destructive`/`onDestructive` and `pillLabel` tokens. AppDialog has both layouts: S42 still shows the compact one, S49 the new one.)*
   Refs: DESIGN §3, §4, §7
 - [ ] **6.12 S12, S13, S45 entry screens and S46 category picker.** Pinned keypad, one row of category tiles, Title field, Date and Note chips, Save disabled with its hint. S12 reads "New expense". Edit goes to S45. Update the end-to-end test.
   Refs: PRD §5.3, DESIGN §6

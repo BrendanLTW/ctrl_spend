@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ctrl_spend/core/router/app_router.dart';
+import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
@@ -23,6 +24,7 @@ Future<void> confirmAndDeleteAllData(
 ) async {
   final l10n = context.l10n;
   final choice = await showDialog<Object>(
+    barrierColor: context.colors.scrim,
     context: context,
     builder: (dialogContext) => AppDialog(
       icon: AppIcon.trash,

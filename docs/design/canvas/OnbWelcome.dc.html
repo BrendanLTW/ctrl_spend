@@ -1,0 +1,136 @@
+<script src="./support.js"></script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F7F8FA}
+a{color:#101828;text-decoration:none}a:hover{color:#344054}
+.r{width:390px;height:844px;position:relative;overflow:hidden;background:#F7F8FA;color:#101828;font-family:Poppins,sans-serif;font-feature-settings:"tnum"}
+.sb{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600}
+.lbl{font-size:13px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#5B6B86}
+.mut{color:#5B6B86}
+.card{background:#fff;border-radius:28px}
+.top{display:grid;grid-template-columns:64px 1fr 64px;align-items:center;height:56px;padding:0 8px}
+.top a{display:flex;align-items:center;justify-content:center;height:44px;min-width:44px;font-size:15px;font-weight:600}
+.top .skip{color:#5B6B86}
+.steps{display:flex;gap:6px;justify-content:center}
+.steps i{width:28px;height:6px;border-radius:999px;background:#E4E7EC}.steps i.on{background:#101828}
+.hd{padding:8px 24px 0}
+.hd h1{margin:0;font-size:28px;font-weight:700;letter-spacing:-.4px;line-height:1.2}
+.hd p{margin:10px 0 0;font-size:15px;line-height:1.5;color:#5B6B86}
+.sec{padding:22px 24px 10px}
+.group{background:#fff;border-radius:28px;margin:0 16px;overflow:hidden}
+.gi{display:flex;align-items:center;gap:16px;padding:14px 18px;min-height:64px;box-sizing:border-box;border-bottom:1px solid #EEF1F6}
+.gi:last-child{border-bottom:0}
+.gn{flex:1;min-width:0;font-size:16px;font-weight:600}
+.gs{display:block;font-size:13px;font-weight:400;color:#5B6B86;line-height:1.45;margin-top:2px}
+.chev{width:20px;height:20px;flex:none;fill:none;stroke:#101828;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex:none;background:#E4DBF7}
+.ic svg{width:22px;height:22px;fill:none;stroke:#6D3FD1;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic.food{background:#FFE2B8}.ic.food svg{stroke:#C25E00}
+.ic.car{background:#CDE6FB}.ic.car svg{stroke:#1769C2}
+.ic.bag{background:#FBD3E1}.ic.bag svg{stroke:#C8174F}
+.ic.bolt{background:#FFF0B8}.ic.bolt svg{stroke:#8A6100}
+.ic.wallet{background:#C9F3D5}.ic.wallet svg{stroke:#1E8A43}
+.btn{position:absolute;left:16px;right:16px;bottom:34px;display:flex;align-items:center;justify-content:center;height:58px;border-radius:22px;background:#101828;color:#fff;font-size:17px;font-weight:600}
+.btn:hover{color:#fff;background:#1D2939}
+.btn.up{bottom:96px}
+.link{position:absolute;left:16px;right:16px;bottom:34px;height:52px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:600}
+.bar{height:10px;border-radius:999px;background:#EEF1F6;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:#101828}
+.day{height:56px;border:0;border-radius:18px;background:#fff;font:600 16px Poppins,sans-serif;color:#101828;cursor:pointer}
+.day:hover{background:#EEF1F6}.day.sel{background:#101828;color:#fff}
+.tg{position:relative;width:52px;height:32px;flex:none;border:0;border-radius:999px;background:#D0D5DD;cursor:pointer}
+.tg::after{content:"";position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(16,24,40,.2)}
+.tg.on{background:#101828}.tg.on::after{left:23px}
+.ab{height:40px;padding:0 16px;flex:none;border:0;border-radius:999px;background:#F2F4F7;font:600 14px Poppins,sans-serif;color:#101828;cursor:pointer;display:flex;align-items:center;gap:4px}
+.ab svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.ab.add{color:#5B6B86}
+.panel{background:#101828;color:#fff}
+.fl{background:#fff;color:#101828}
+.appic{background:#101828}
+.kv{display:flex;justify-content:space-between;align-items:center;height:58px;padding:0 20px;border-bottom:1px solid #EEF1F6;font-size:15px}
+.kv:last-child{border-bottom:0}.kv span:last-child{font-weight:600}
+.okc{background:#D1FADF}.okc svg{stroke:#067647}
+.r.dark{background:#0B1018;color:#F2F4F7;color-scheme:dark}
+.r.dark a{color:#F2F4F7}
+.r.dark .lbl,.r.dark .mut,.r.dark .s,.r.dark .cn,.r.dark .gv,.r.dark .day .dt,.r.dark .seg button{color:#98A2B3}
+.r.dark .card,.r.dark .row,.r.dark .stat,.r.dark .empty,.r.dark .group,.r.dark .goal,.r.dark .cc,.r.dark .seg,.r.dark .search,.r.dark .chip,.r.dark .field,.r.dark .key,.r.dark .cat .ct,.r.dark .sheet,.r.dark .nav{background:#161D29;color:#F2F4F7}
+.r.dark .chip{color:#D0D5DD}
+.r.dark .cat,.r.dark .hdr a,.r.dark .hdr button,.r.dark .nav a,.r.dark .field input,.r.dark .search input{color:#F2F4F7}
+.r.dark .search input::placeholder{color:#98A2B3}
+.r.dark .gi{color:#F2F4F7;border-bottom-color:#232C3A}.r.dark .gi:hover{background:#1B2331}
+.r.dark .chev,.r.dark .key svg,.r.dark .cat .ct svg,.r.dark .field svg,.r.dark .iconbtn svg,.r.dark .empty .e svg,.r.dark svg[stroke="#101828"]{stroke:#F2F4F7}
+.r.dark .iconbtn,.r.dark .empty .e,.r.dark .bar{background:#232C3A}
+.r.dark .key:hover,.r.dark .chip:hover,.r.dark .cat:hover .ct,.r.dark .nav a:hover{background:#232C3A}
+.r.dark .nav{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.r.dark .nav a.on{background:#2A3444}
+.r.dark .seg button.sel,.r.dark .chip.sel,.r.dark .cat.sel .ct,.r.dark .btn,.r.dark .pill,.r.dark .avatar,.r.dark .fab,.r.dark .toast{background:#F2F4F7;color:#0B1018}
+.r.dark .btn:hover,.r.dark .pill:hover,.r.dark .avatar:hover,.r.dark .fab:hover{background:#D0D5DD;color:#0B1018}
+.r.dark .cat.sel .ct svg,.r.dark .fab svg{stroke:#0B1018}
+.r.dark .fab{box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.r.dark .toast button{color:#B54708}
+.r.dark .hero{background:#1C2536}.r.dark .hero .bar{background:#344054}
+.r.dark .neg{color:#F97066}.r.dark .pos{color:#47CD89}.r.dark .warn{color:#FDB022}
+.r.dark .ic{background:rgba(124,77,219,.26)}.r.dark .ic svg{stroke:#B69BFF}
+.r.dark .ic.food{background:rgba(251,140,0,.2)}.r.dark .ic.food svg{stroke:#FFB547}
+.r.dark .ic.car{background:rgba(33,150,243,.22)}.r.dark .ic.car svg{stroke:#6CB8FF}
+.r.dark .ic.bag{background:rgba(240,69,122,.22)}.r.dark .ic.bag svg{stroke:#FF7AA2}
+.r.dark .ic.bolt{background:rgba(245,184,0,.2)}.r.dark .ic.bolt svg{stroke:#FFD34D}
+.r.dark .ic.wallet{background:rgba(23,178,106,.22)}.r.dark .ic.wallet svg{stroke:#5BD996}
+.r.dark .ic.health{background:rgba(240,68,56,.22)}.r.dark .ic.health svg{stroke:#FF8A80}
+.r.dark .ic.gift{background:#232C3A}.r.dark .ic.gift svg{stroke:#98A2B3}
+.r.dark .stat .c.out{background:rgba(240,68,56,.2)}.r.dark .stat .c.out svg{stroke:#F97066}
+.r.dark .stat .c.in{background:rgba(23,178,106,.2)}.r.dark .stat .c.in svg{stroke:#47CD89}
+.r.dark [style*="background:#fff"]{background:#161D29 !important}
+.r.dark [style*="background:#F7F8FA"]{background:#0B1018 !important}
+.r.dark [style*="background:#EEF1F6"],.r.dark [style*="background:#EAECF0"]{background:#2A3444 !important}
+.r.dark [style*="background:#101828"]{background:#F2F4F7 !important;color:#0B1018 !important}
+.r.dark [style*="background:#FFE2B8"]{background:rgba(251,140,0,.2) !important}
+.r.dark [style*="background:#CDE6FB"]{background:rgba(33,150,243,.22) !important}
+.r.dark [style*="color:#101828"]{color:#F2F4F7 !important}
+.r.dark [style*="color:#5B6B86"]{color:#98A2B3 !important}
+.r.dark [style*="color:#D92D20"]{color:#F97066 !important}
+.r.dark [style*="background:rgba(16,24,40"]{background:rgba(0,0,0,.6) !important}
+.r.dark .steps i{background:#2A3444}.r.dark .steps i.on{background:#F2F4F7}
+.r.dark .top .skip,.r.dark .hd p,.r.dark .gs{color:#98A2B3}
+.r.dark .day{background:#161D29;color:#F2F4F7}.r.dark .day:hover{background:#232C3A}.r.dark .day.sel{background:#F2F4F7;color:#0B1018}
+.r.dark .tg{background:#344054}.r.dark .tg.on{background:#F2F4F7}.r.dark .tg.on::after{background:#0B1018}
+.r.dark .ab{background:#232C3A;color:#F2F4F7}.r.dark .ab.add{color:#98A2B3}
+.r.dark .panel{background:#1C2536}
+.r.dark .fl{background:#161D29;color:#F2F4F7}
+.r.dark .appic{background:#2A3444}
+.r.dark .kv{border-bottom-color:#232C3A}
+.r.dark .okc{background:rgba(23,178,106,.2)}.r.dark .okc svg{stroke:#47CD89}
+.r.dark .bar i{background:#F2F4F7}
+</style>
+</helmet>
+<div class="r {{mode}}">
+  <div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+  <div class="panel" style="position:relative;margin:8px 16px 0;height:400px;border-radius:36px;overflow:hidden" aria-hidden="true">
+    <div class="fl" style="position:absolute;left:14px;top:24px;display:flex;align-items:center;gap:10px;padding:7px 16px 7px 7px;border-radius:999px;font-size:13px;font-weight:600"><span class="ic food" style="width:32px;height:32px;border-radius:50%"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 3v7a3 3 0 0 0 3 3v8M10 3v7M7 3v4M17 21V3c-2 1-3 4-3 8h3"></path></svg></span>Food · 82%</div>
+    <div class="fl" style="position:absolute;right:14px;top:24px;display:flex;align-items:center;gap:10px;padding:7px 16px 7px 7px;border-radius:999px;font-size:13px;font-weight:600"><span class="ic car" style="width:32px;height:32px;border-radius:50%"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M5 17h14M6 17v2M18 17v2M4 13l2-6h12l2 6v4H4z"></path></svg></span>−RM 18.20</div>
+    <svg width="180" height="180" viewBox="0 0 180 180" style="position:absolute;left:89px;top:64px;transform:rotate(-90deg)">
+      <circle r="70" cx="90" cy="90" fill="none" stroke="#FB8C00" stroke-width="18" stroke-linecap="round" stroke-dasharray="124.6 440" stroke-dashoffset="-15"></circle>
+      <circle r="70" cx="90" cy="90" fill="none" stroke="#F0457A" stroke-width="18" stroke-linecap="round" stroke-dasharray="81.1 440" stroke-dashoffset="-169.6"></circle>
+      <circle r="70" cx="90" cy="90" fill="none" stroke="#2196F3" stroke-width="18" stroke-linecap="round" stroke-dasharray="43.5 440" stroke-dashoffset="-280.7"></circle>
+      <circle r="70" cx="90" cy="90" fill="none" stroke="#F5B800" stroke-width="18" stroke-linecap="round" stroke-dasharray="26.1 440" stroke-dashoffset="-354.2"></circle>
+      <circle r="70" cx="90" cy="90" fill="none" stroke="#7C4DDB" stroke-width="18" stroke-linecap="round" stroke-dasharray="14.5 440" stroke-dashoffset="-410.3"></circle>
+    </svg>
+    <div style="position:absolute;left:89px;top:64px;width:180px;height:180px;display:flex;flex-direction:column;align-items:center;justify-content:center"><span style="font-size:24px;font-weight:700;letter-spacing:-.5px">RM 760</span><span style="font-size:12px;font-weight:500;opacity:.8">spent</span></div>
+    <div class="fl" style="position:absolute;left:14px;right:14px;bottom:14px;border-radius:26px;padding:18px 20px">
+      <div class="lbl">Left to spend</div>
+      <div style="font-size:26px;font-weight:700;letter-spacing:-.6px;line-height:1.3">RM 1,240<span class="mut" style="font-size:16px;letter-spacing:0">.00</span></div>
+      <div class="bar" style="margin-top:10px"><i style="width:38%"></i></div>
+    </div>
+  </div>
+  <div class="hd" style="padding-top:28px">
+    <h1>Know what's left to spend, every day.</h1>
+    <p>Set one monthly budget, log what you spend, and ctrlSpend keeps count.</p>
+  </div>
+  <a class="btn up" href="./OnbHow.dc.html">Get started</a>
+  <a class="link" href="./OnbSetup.dc.html">Skip the tour</a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic { renderVals(){ return { mode: this.props.dark ? "dark" : "" }; } }
+</script>

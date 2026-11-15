@@ -1,0 +1,34 @@
+<script src="./support.js"></script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#101828}
+.r{width:390px;height:844px;position:relative;overflow:hidden;background:#101828;color:#fff;font-family:Poppins,sans-serif}
+.r.dark{background:#0B1018}
+.sb{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600}
+.go{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;text-decoration:none}
+.go:hover{color:#fff}
+.halo{position:absolute;left:50%;top:50%;width:300px;height:300px;margin:-212px 0 0 -150px;border-radius:50%;border:1px solid rgba(255,255,255,.07)}
+.halo.b{width:420px;height:420px;margin:-272px 0 0 -210px;border-color:rgba(255,255,255,.04)}
+.ld{position:absolute;left:50%;bottom:112px;width:120px;height:4px;margin-left:-60px;border-radius:999px;background:rgba(255,255,255,.12);overflow:hidden}
+.ld i{display:block;width:45%;height:100%;border-radius:999px;background:#FDB022}
+.ft{position:absolute;left:0;right:0;bottom:48px;text-align:center;font-size:13px;color:#98A2B3}
+</style>
+</helmet>
+<div class="r {{mode}}">
+  <div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+  <div class="halo b" aria-hidden="true"></div>
+  <div class="halo" aria-hidden="true"></div>
+  <a class="go" href="./OnbWelcome.dc.html" aria-label="ctrlSpend by BrendanLTW, loading. Tap to continue">
+    <span style="margin-top:-60px"><svg width="124" height="124" viewBox="27 28 66 66" aria-hidden="true"><circle cx="60" cy="61" r="33" fill="#FDB022"></circle><path d="M47 69L60 56L73 69" fill="none" stroke="#101828" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+    <span style="margin-top:22px"><span style="font-size:36px;letter-spacing:-.03em;color:#FFFFFF;line-height:1"><b style="font-weight:800">ctrl</b><span style="font-weight:500">Spend</span></span></span>
+    <span style="margin-top:10px;font-size:15px;color:#98A2B3">Know what's left to spend.</span>
+  </a>
+  <div class="ld" role="progressbar" aria-label="Loading"><i></i></div>
+  <div class="ft">by <span style="color:#D0D5DD;font-weight:600">BrendanLTW</span></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic { renderVals(){ return { mode: this.props.dark ? "dark" : "" }; } }
+</script>

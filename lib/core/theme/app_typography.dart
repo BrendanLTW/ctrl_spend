@@ -38,6 +38,32 @@ class AppTypography {
     height: 1.2,
     fontFeatures: _tabular,
   );
+
+  /// The amount on entry screens and money sheets (S12, S57, S60).
+  TextStyle get amountEntry => const TextStyle(
+    fontFamily: _family,
+    fontSize: 40,
+    fontWeight: FontWeight.w800,
+    letterSpacing: -1.4,
+    height: 1.15,
+    fontFeatures: _tabular,
+  );
+
+  /// State screens' titles: "No recurring bills yet" (DESIGN §4).
+  TextStyle get stateTitle => const TextStyle(
+    fontFamily: _family,
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    height: 1.3,
+  );
+
+  /// Message box text.
+  TextStyle get message => const TextStyle(
+    fontFamily: _family,
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    height: 1.45,
+  );
   TextStyle get pageTitle => const TextStyle(
     fontFamily: _family,
     fontSize: 28,
@@ -93,6 +119,15 @@ class AppTypography {
     fontSize: 13,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.7,
+    height: 1.3,
+    fontFeatures: _tabular,
+  );
+
+  /// Status pills and the Pay pill's label size (DESIGN §7).
+  TextStyle get pillLabel => const TextStyle(
+    fontFamily: _family,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
     height: 1.3,
     fontFeatures: _tabular,
   );

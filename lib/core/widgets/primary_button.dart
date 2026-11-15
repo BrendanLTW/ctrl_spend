@@ -2,13 +2,36 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
-/// The full-width primary button (DESIGN §7): 58 high, radius 22, `ink`.
-/// A null [onPressed] disables it.
+/// Where a [PrimaryButton] sits.
+enum PrimaryButtonSize {
+  /// Pinned to the screen: 58 high, radius 22.
+  screen(58, 22),
+
+  /// Inside a sheet: 56 high, radius 20 (DESIGN §7, sheet button).
+  sheet(56, 20);
+
+  new(this.height, this.radius);
+
+  final double height;
+  final double radius;
+}
+
+/// The full-width primary button (DESIGN §7), `ink`. A null [onPressed]
+/// disables it: `buttonDisabled` fill. [destructive] fills it red, as
+/// S49's Erase everything.
 class PrimaryButton extends StatelessWidget {
-  const new({required this.label, required this.onPressed, super.key});
+  const new({
+    required this.label,
+    required this.onPressed,
+    this.size = PrimaryButtonSize.screen,
+    this.destructive = false,
+    super.key,
+  });
 
   final String label;
   final VoidCallback? onPressed;
+  final PrimaryButtonSize size;
+  final bool destructive;
 
   @override
   Widget build(BuildContext context) {
@@ -18,17 +41,22 @@ class PrimaryButton extends StatelessWidget {
       button: true,
       enabled: enabled,
       child: Material(
-        color: enabled ? colors.ink : colors.raised,
-        borderRadius: BorderRadius.circular(22),
+        color: !enabled
+            ? colors.buttonDisabled
+            : destructive
+            ? colors.destructive
+            : colors.ink,
+        borderRadius: BorderRadius.circular(size.radius),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
           onTap: onPressed,
-          highlightColor: colors.inkPressed,
+          // Pressed: `inkPressed`, or the red darkened by the scrim.
+          highlightColor: destructive ? colors.scrim : colors.inkPressed,
           splashFactory: NoSplash.splashFactory,
-          // At least 58 high; taller when large text wraps the label.
+          // At least its height; taller when large text wraps the label.
           child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: 58,
+            constraints: BoxConstraints(
+              minHeight: size.height,
               minWidth: double.infinity,
             ),
             child: Padding(
@@ -40,7 +68,11 @@ class PrimaryButton extends StatelessWidget {
                   label,
                   textAlign: TextAlign.center,
                   style: context.text.button.copyWith(
-                    color: enabled ? colors.onInk : colors.disabled,
+                    color: !enabled
+                        ? colors.onButtonDisabled
+                        : destructive
+                        ? colors.onDestructive
+                        : colors.onInk,
                   ),
                 ),
               ),

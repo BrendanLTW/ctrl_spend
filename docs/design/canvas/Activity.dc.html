@@ -1,0 +1,120 @@
+<script src="./support.js"></script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F7F8FA}
+a{color:#101828;text-decoration:none}a:hover{color:#344054}
+.r{width:390px;height:844px;position:relative;overflow:hidden;background:#F7F8FA;color:#101828;font-family:Poppins,sans-serif;font-feature-settings:"tnum"}
+.sb{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600}
+.t{font-size:26px;font-weight:700;letter-spacing:-.3px;margin:0;padding:6px 20px 12px}
+.lbl{font-size:13px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#5B6B86}
+.search{display:flex;align-items:center;gap:12px;height:52px;margin:0 16px;padding:0 18px;background:#fff;border-radius:999px}
+.search svg{width:20px;height:20px;flex:none;fill:none;stroke:#5B6B86;stroke-width:2;stroke-linecap:round}
+.search input{flex:1;min-width:0;border:0;outline:none;background:none;font:500 15px Poppins,sans-serif;color:#101828}
+.search input::placeholder{color:#5B6B86}
+.chips{display:flex;gap:8px;padding:12px 16px 0;overflow:hidden}
+.chip{flex:none;height:44px;padding:0 18px;border-radius:999px;background:#fff;border:0;font:600 14px Poppins,sans-serif;color:#344054;cursor:pointer}
+.chip:hover{background:#EEF1F6}.chip.sel{background:#101828;color:#fff}
+.day{display:flex;justify-content:space-between;align-items:center;padding:16px 24px 10px}
+.day .dt{font-size:14px;font-weight:600;color:#5B6B86}
+.ic{width:44px;height:44px;border-radius:15px;display:flex;align-items:center;justify-content:center;flex:none;background:#E4DBF7}
+.ic svg{width:21px;height:21px;fill:none;stroke:#6D3FD1;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic.food{background:#FFE2B8}.ic.food svg{stroke:#C25E00}
+.ic.car{background:#CDE6FB}.ic.car svg{stroke:#1769C2}
+.ic.bolt{background:#FFF0B8}.ic.bolt svg{stroke:#8A6100}
+.ic.wallet{background:#C9F3D5}.ic.wallet svg{stroke:#1E8A43}
+.row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:22px;margin:0 16px 10px;padding:10px 18px 10px 12px;min-height:66px;box-sizing:border-box;color:#101828}
+.row:hover{color:#101828}
+.grow{flex:1;min-width:0}
+.n{font-size:15px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s{font-size:13px;color:#5B6B86}
+.amt{font-size:15px;font-weight:700;white-space:nowrap}
+.neg{color:#D92D20}.pos{color:#067647}
+.toast{position:absolute;left:16px;right:16px;bottom:106px;height:54px;border-radius:20px;background:#101828;color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 8px 0 20px;font-size:15px;font-weight:500;box-shadow:0 10px 24px rgba(16,24,40,.25)}
+.toast button{border:0;background:none;color:#FDB022;font:700 15px Poppins,sans-serif;height:44px;padding:0 12px;cursor:pointer}
+.nav{position:absolute;left:16px;bottom:24px;width:278px;height:68px;border-radius:999px;background:#fff;box-shadow:0 8px 28px rgba(16,24,40,.08);display:flex;align-items:center;gap:2px;padding:0 8px;box-sizing:border-box}
+.nav a{flex:1;height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;color:#101828;font-size:0}
+.nav a:hover{background:#F2F4F7}
+.nav a.on{flex:none;padding:0 14px;background:#EEF1F6;font-size:14px;font-weight:600}
+.nav svg{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fab{position:absolute;right:16px;bottom:26px;width:64px;height:64px;border-radius:50%;background:#101828;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(16,24,40,.28)}
+.fab:hover{background:#1D2939}
+.r.dark{background:#0B1018;color:#F2F4F7;color-scheme:dark}
+.r.dark a{color:#F2F4F7}
+.r.dark .lbl,.r.dark .mut,.r.dark .s,.r.dark .cn,.r.dark .gv,.r.dark .day .dt,.r.dark .seg button{color:#98A2B3}
+.r.dark .card,.r.dark .row,.r.dark .stat,.r.dark .empty,.r.dark .group,.r.dark .goal,.r.dark .cc,.r.dark .seg,.r.dark .search,.r.dark .chip,.r.dark .field,.r.dark .key,.r.dark .cat .ct,.r.dark .sheet,.r.dark .nav{background:#161D29;color:#F2F4F7}
+.r.dark .chip{color:#D0D5DD}
+.r.dark .cat,.r.dark .hdr a,.r.dark .hdr button,.r.dark .nav a,.r.dark .field input,.r.dark .search input{color:#F2F4F7}
+.r.dark .search input::placeholder{color:#98A2B3}
+.r.dark .gi{color:#F2F4F7;border-bottom-color:#232C3A}.r.dark .gi:hover{background:#1B2331}
+.r.dark .chev,.r.dark .key svg,.r.dark .cat .ct svg,.r.dark .field svg,.r.dark .iconbtn svg,.r.dark .empty .e svg,.r.dark svg[stroke="#101828"]{stroke:#F2F4F7}
+.r.dark .iconbtn,.r.dark .empty .e,.r.dark .bar{background:#232C3A}
+.r.dark .key:hover,.r.dark .chip:hover,.r.dark .cat:hover .ct,.r.dark .nav a:hover{background:#232C3A}
+.r.dark .nav{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.r.dark .nav a.on{background:#2A3444}
+.r.dark .seg button.sel,.r.dark .chip.sel,.r.dark .cat.sel .ct,.r.dark .btn,.r.dark .pill,.r.dark .avatar,.r.dark .fab,.r.dark .toast{background:#F2F4F7;color:#0B1018}
+.r.dark .btn:hover,.r.dark .pill:hover,.r.dark .avatar:hover,.r.dark .fab:hover{background:#D0D5DD;color:#0B1018}
+.r.dark .cat.sel .ct svg,.r.dark .fab svg{stroke:#0B1018}
+.r.dark .fab{box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.r.dark .toast button{color:#B54708}
+.r.dark .hero{background:#1C2536}.r.dark .hero .bar{background:#344054}
+.r.dark .neg{color:#F97066}.r.dark .pos{color:#47CD89}.r.dark .warn{color:#FDB022}
+.r.dark .ic{background:rgba(124,77,219,.26)}.r.dark .ic svg{stroke:#B69BFF}
+.r.dark .ic.food{background:rgba(251,140,0,.2)}.r.dark .ic.food svg{stroke:#FFB547}
+.r.dark .ic.car{background:rgba(33,150,243,.22)}.r.dark .ic.car svg{stroke:#6CB8FF}
+.r.dark .ic.bag{background:rgba(240,69,122,.22)}.r.dark .ic.bag svg{stroke:#FF7AA2}
+.r.dark .ic.bolt{background:rgba(245,184,0,.2)}.r.dark .ic.bolt svg{stroke:#FFD34D}
+.r.dark .ic.wallet{background:rgba(23,178,106,.22)}.r.dark .ic.wallet svg{stroke:#5BD996}
+.r.dark .ic.health{background:rgba(240,68,56,.22)}.r.dark .ic.health svg{stroke:#FF8A80}
+.r.dark .ic.gift{background:#232C3A}.r.dark .ic.gift svg{stroke:#98A2B3}
+.r.dark .stat .c.out{background:rgba(240,68,56,.2)}.r.dark .stat .c.out svg{stroke:#F97066}
+.r.dark .stat .c.in{background:rgba(23,178,106,.2)}.r.dark .stat .c.in svg{stroke:#47CD89}
+.r.dark [style*="background:#fff"]{background:#161D29 !important}
+.r.dark [style*="background:#F7F8FA"]{background:#0B1018 !important}
+.r.dark [style*="background:#EEF1F6"],.r.dark [style*="background:#EAECF0"]{background:#2A3444 !important}
+.r.dark [style*="background:#101828"]{background:#F2F4F7 !important;color:#0B1018 !important}
+.r.dark [style*="background:#FFE2B8"]{background:rgba(251,140,0,.2) !important}
+.r.dark [style*="background:#CDE6FB"]{background:rgba(33,150,243,.22) !important}
+.r.dark [style*="color:#101828"]{color:#F2F4F7 !important}
+.r.dark [style*="color:#5B6B86"]{color:#98A2B3 !important}
+.r.dark [style*="color:#D92D20"]{color:#F97066 !important}
+.r.dark [style*="background:rgba(16,24,40"]{background:rgba(0,0,0,.6) !important}
+</style>
+</helmet>
+<div class="r {{mode}}">
+  <div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+  <h1 class="t">Activity</h1>
+  <label class="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-4-4"></path></svg><input placeholder="Search notes and categories" aria-label="Search"></label>
+  <div class="chips">
+    <button class="chip sel" aria-pressed="true">All</button><button class="chip" aria-pressed="false">Expense</button><button class="chip" aria-pressed="false">Income</button><button class="chip" aria-pressed="false">Food</button><button class="chip" aria-pressed="false">Transport</button>
+  </div>
+
+  <div class="day"><span class="lbl">Today</span><span class="dt">−RM 30.70</span></div>
+  <a class="row" href="./TxnDetail.dc.html"><div class="ic food"><svg viewBox="0 0 24 24"><path d="M4 3v7a3 3 0 0 0 3 3v8M10 3v7M7 3v4M17 21V3c-2 1-3 4-3 8h3"></path></svg></div><div class="grow"><div class="n">Nasi lemak</div><div class="s">Food</div></div><div class="amt neg">−RM 12.50</div></a>
+  <a class="row" href="./TxnDetail.dc.html"><div class="ic car"><svg viewBox="0 0 24 24"><path d="M5 17h14M6 17v2M18 17v2M4 13l2-6h12l2 6v4H4z"></path></svg></div><div class="grow"><div class="n">Grab to KLCC</div><div class="s">Transport</div></div><div class="amt neg">−RM 18.20</div></a>
+
+  <div class="day"><span class="lbl">Yesterday, 3 Nov</span><span class="dt">+RM 4,800.00</span></div>
+  <a class="row" href="./TxnDetail.dc.html"><div class="ic wallet"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></div><div class="grow"><div class="n">Salary</div><div class="s">Income</div></div><div class="amt pos">+RM 4,800.00</div></a>
+  <div style="position:relative;margin:0 16px 10px;border-radius:22px;overflow:hidden;background:#D92D20">
+    <button style="position:absolute;right:0;top:0;bottom:0;width:96px;border:0;background:none;color:#fff;font:600 15px Poppins,sans-serif;cursor:pointer">Delete</button>
+    <div class="row" style="margin:0;transform:translateX(-96px)"><div class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M7 5v14M17 5v14M3 12h18"></path></svg></div><div class="grow"><div class="n">GSC tickets</div><div class="s">Fun</div></div><div class="amt neg">−RM 36.00</div></div>
+  </div>
+
+  <div class="day"><span class="lbl">Sun, 1 Nov</span><span class="dt">−RM 139.00</span></div>
+  <a class="row" href="./TxnDetail.dc.html"><div class="ic bolt"><svg viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"></path></svg></div><div class="grow"><div class="n">TNB electricity</div><div class="s">Bills</div></div><div class="amt neg">−RM 139.00</div></a>
+
+  <div class="toast" role="status">Transaction deleted<button>Undo</button></div>
+
+  <nav class="nav" aria-label="Main">
+    <a href="./Dashboard.dc.html"><svg viewBox="0 0 24 24"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"></path></svg>Home</a>
+    <a class="on" aria-current="page" href="./Activity.dc.html"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"></path></svg>Activity</a>
+    <a href="./Budgets.dc.html"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9z"></path><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"></path></svg>Budgets</a>
+    <a href="./Insights.dc.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 16v-3M12 16V8M16 16v-5"></path></svg>Insights</a>
+  </nav>
+  <a class="fab" href="./AddTransaction.dc.html" aria-label="Add transaction"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic { renderVals(){ return { mode: this.props.dark ? "dark" : "" }; } }
+</script>

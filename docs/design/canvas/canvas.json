@@ -1,0 +1,1413 @@
+{
+ "v": 3,
+ "attachments": {},
+ "boards": {
+  "Activity.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Activity",
+   "w": 390,
+   "x": 0,
+   "y": 2528
+  },
+  "ActivityDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Activity · Dark",
+   "w": 390,
+   "x": 0,
+   "y": 10112
+  },
+  "AddBill.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add bill",
+   "w": 390,
+   "x": 3760,
+   "y": 3792
+  },
+  "AddBillDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add bill · Dark",
+   "w": 390,
+   "x": 3760,
+   "y": 11376
+  },
+  "AddCategory.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add category",
+   "w": 390,
+   "x": 3760,
+   "y": 2528
+  },
+  "AddCategoryDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add category · Dark",
+   "w": 390,
+   "x": 3760,
+   "y": 10112
+  },
+  "AddGoal.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add goal",
+   "w": 390,
+   "x": 7050,
+   "y": 3792
+  },
+  "AddGoalDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Add goal · Dark",
+   "w": 390,
+   "x": 7050,
+   "y": 11376
+  },
+  "AddTransaction.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "New expense · Save disabled until valid",
+   "w": 390,
+   "x": 1410,
+   "y": 1264
+  },
+  "AddTransactionDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "New expense · Save disabled until valid · Dark",
+   "w": 390,
+   "x": 1410,
+   "y": 8848
+  },
+  "AddTransactionIncome.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "New income",
+   "w": 390,
+   "x": 1880,
+   "y": 1264
+  },
+  "AddTransactionIncomeDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "New income · Dark",
+   "w": 390,
+   "x": 1880,
+   "y": 8848
+  },
+  "Bills.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Recurring bills",
+   "w": 390,
+   "x": 1410,
+   "y": 3792
+  },
+  "BillsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Recurring bills · Dark",
+   "w": 390,
+   "x": 1410,
+   "y": 11376
+  },
+  "BrandFamily2.dc.html": {
+   "h": 2461,
+   "title": "ctrlWorks brand family · v2 product first",
+   "w": 1280,
+   "x": 5865,
+   "y": 0
+  },
+  "Budgets.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Budgets",
+   "w": 390,
+   "x": 470,
+   "y": 2528
+  },
+  "BudgetsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Budgets · Dark",
+   "w": 390,
+   "x": 470,
+   "y": 10112
+  },
+  "Categories.dc.html": {
+   "h": 904,
+   "is_interactive": true,
+   "title": "Category manager",
+   "w": 390,
+   "x": 2820,
+   "y": 2528
+  },
+  "CategoriesDark.dc.html": {
+   "h": 904,
+   "is_interactive": true,
+   "title": "Category manager · Dark",
+   "w": 390,
+   "x": 2820,
+   "y": 10112
+  },
+  "CategoryDetail.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Category detail",
+   "w": 390,
+   "x": 3290,
+   "y": 2528
+  },
+  "CategoryDetailDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Category detail · Dark",
+   "w": 390,
+   "x": 3290,
+   "y": 10112
+  },
+  "Dashboard.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dashboard",
+   "w": 390,
+   "x": 0,
+   "y": 1264
+  },
+  "DashboardDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dashboard · Dark",
+   "w": 390,
+   "x": 0,
+   "y": 8848
+  },
+  "DashboardEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dashboard · First run",
+   "w": 390,
+   "x": 470,
+   "y": 1264
+  },
+  "DashboardEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dashboard · First run · Dark",
+   "w": 390,
+   "x": 470,
+   "y": 8848
+  },
+  "DatePicker.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Picker · Date",
+   "w": 390,
+   "x": 940,
+   "y": 6320
+  },
+  "DatePickerDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Picker · Date · Dark",
+   "w": 390,
+   "x": 940,
+   "y": 13904
+  },
+  "ExportCSV.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Export CSV",
+   "w": 390,
+   "x": 2820,
+   "y": 5056
+  },
+  "ExportCSVDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Export CSV · Dark",
+   "w": 390,
+   "x": 2820,
+   "y": 12640
+  },
+  "GoalDetail.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Goal detail",
+   "w": 390,
+   "x": 5170,
+   "y": 3792
+  },
+  "GoalDetailDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Goal detail · Dark",
+   "w": 390,
+   "x": 5170,
+   "y": 11376
+  },
+  "HeroStates.dc.html": {
+   "h": 844,
+   "title": "Budget hero · 4 states",
+   "w": 390,
+   "x": 940,
+   "y": 1264
+  },
+  "HeroStatesDark.dc.html": {
+   "h": 844,
+   "title": "Budget hero · 4 states · Dark",
+   "w": 390,
+   "x": 940,
+   "y": 8848
+  },
+  "ImportError.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Error · Import failed",
+   "w": 390,
+   "x": 5170,
+   "y": 5056
+  },
+  "ImportErrorDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Error · Import failed · Dark",
+   "w": 390,
+   "x": 5170,
+   "y": 12640
+  },
+  "Insights.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights",
+   "w": 390,
+   "x": 940,
+   "y": 2528
+  },
+  "InsightsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights · Dark",
+   "w": 390,
+   "x": 940,
+   "y": 10112
+  },
+  "InsightsEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Empty · Insights no data",
+   "w": 390,
+   "x": 9870,
+   "y": 5056
+  },
+  "InsightsEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Empty · Insights no data · Dark",
+   "w": 390,
+   "x": 9870,
+   "y": 12640
+  },
+  "InsightsTrend.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights · 6-month trend",
+   "w": 390,
+   "x": 1880,
+   "y": 2528
+  },
+  "InsightsTrendDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights · 6-month trend · Dark",
+   "w": 390,
+   "x": 1880,
+   "y": 10112
+  },
+  "InsightsWeek.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights · Week",
+   "w": 390,
+   "x": 1410,
+   "y": 2528
+  },
+  "InsightsWeekDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Insights · Week · Dark",
+   "w": 390,
+   "x": 1410,
+   "y": 10112
+  },
+  "LockScreen.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Lock screen",
+   "w": 390,
+   "x": 7990,
+   "y": 5056
+  },
+  "LockScreenDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Lock screen · Dark",
+   "w": 390,
+   "x": 7990,
+   "y": 12640
+  },
+  "Main.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 4 · Set budget",
+   "w": 390,
+   "x": 2350,
+   "y": 0
+  },
+  "MainDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 4 · Set budget · Dark",
+   "w": 390,
+   "x": 2350,
+   "y": 7584
+  },
+  "Notifications.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Notifications",
+   "w": 390,
+   "x": 3290,
+   "y": 1264
+  },
+  "NotificationsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Notifications · Dark",
+   "w": 390,
+   "x": 3290,
+   "y": 8848
+  },
+  "NotificationsEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Notifications · Empty",
+   "w": 390,
+   "x": 3760,
+   "y": 1264
+  },
+  "NotificationsEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Notifications · Empty · Dark",
+   "w": 390,
+   "x": 3760,
+   "y": 8848
+  },
+  "OnbCategories.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 5 · Category limits",
+   "w": 390,
+   "x": 2820,
+   "y": 0
+  },
+  "OnbCategoriesDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 5 · Category limits · Dark",
+   "w": 390,
+   "x": 2820,
+   "y": 7584
+  },
+  "OnbDone.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 7 · All set",
+   "w": 390,
+   "x": 3760,
+   "y": 0
+  },
+  "OnbDoneDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 7 · All set · Dark",
+   "w": 390,
+   "x": 3760,
+   "y": 7584
+  },
+  "OnbHow.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 2 · How it works",
+   "w": 390,
+   "x": 940,
+   "y": 0
+  },
+  "OnbHowDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 2 · How it works · Dark",
+   "w": 390,
+   "x": 940,
+   "y": 7584
+  },
+  "OnbReminders.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 6 · Reminders",
+   "w": 390,
+   "x": 3290,
+   "y": 0
+  },
+  "OnbRemindersDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 6 · Reminders · Dark",
+   "w": 390,
+   "x": 3290,
+   "y": 7584
+  },
+  "OnbSetup.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 3 · Currency & period",
+   "w": 390,
+   "x": 1880,
+   "y": 0
+  },
+  "OnbSetupDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 3 · Currency & period · Dark",
+   "w": 390,
+   "x": 1880,
+   "y": 7584
+  },
+  "OnbWelcome.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 1 · Welcome",
+   "w": 390,
+   "x": 470,
+   "y": 0
+  },
+  "OnbWelcomeDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Onboarding 1 · Welcome · Dark",
+   "w": 390,
+   "x": 470,
+   "y": 7584
+  },
+  "PeriodDetail.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Past period detail",
+   "w": 390,
+   "x": 940,
+   "y": 3792
+  },
+  "PeriodDetailDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Past period detail · Dark",
+   "w": 390,
+   "x": 940,
+   "y": 11376
+  },
+  "PeriodList.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Past periods",
+   "w": 390,
+   "x": 0,
+   "y": 3792
+  },
+  "PeriodListDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Past periods · Dark",
+   "w": 390,
+   "x": 0,
+   "y": 11376
+  },
+  "RepeatPicker.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Picker · Repeats",
+   "w": 390,
+   "x": 1410,
+   "y": 6320
+  },
+  "RepeatPickerDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Picker · Repeats · Dark",
+   "w": 390,
+   "x": 1410,
+   "y": 13904
+  },
+  "Savings.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Savings goals",
+   "w": 390,
+   "x": 4230,
+   "y": 3792
+  },
+  "SavingsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Savings goals · Dark",
+   "w": 390,
+   "x": 4230,
+   "y": 11376
+  },
+  "SearchEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Empty · No search results",
+   "w": 390,
+   "x": 9400,
+   "y": 5056
+  },
+  "SearchEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Empty · No search results · Dark",
+   "w": 390,
+   "x": 9400,
+   "y": 12640
+  },
+  "SetAppLock.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · App lock",
+   "w": 390,
+   "x": 6110,
+   "y": 5056
+  },
+  "SetAppLockDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · App lock · Dark",
+   "w": 390,
+   "x": 6110,
+   "y": 12640
+  },
+  "SetCurrency.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Currency",
+   "w": 390,
+   "x": 2350,
+   "y": 5056
+  },
+  "SetCurrencyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Currency · Dark",
+   "w": 390,
+   "x": 2350,
+   "y": 12640
+  },
+  "SetMonthStart.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Month start",
+   "w": 390,
+   "x": 1410,
+   "y": 5056
+  },
+  "SetMonthStartDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Month start · Dark",
+   "w": 390,
+   "x": 1410,
+   "y": 12640
+  },
+  "SetTheme.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Theme",
+   "w": 390,
+   "x": 1880,
+   "y": 5056
+  },
+  "SetThemeDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Settings · Theme · Dark",
+   "w": 390,
+   "x": 1880,
+   "y": 12640
+  },
+  "Settings.dc.html": {
+   "h": 1064,
+   "is_interactive": true,
+   "title": "Settings · v1.1 (full scroll)",
+   "w": 390,
+   "x": 2350,
+   "y": 2528
+  },
+  "SettingsDark.dc.html": {
+   "h": 1064,
+   "is_interactive": true,
+   "title": "Settings · v1.1 (full scroll) · Dark",
+   "w": 390,
+   "x": 2350,
+   "y": 10112
+  },
+  "Splash.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Splash",
+   "w": 390,
+   "x": 0,
+   "y": 0
+  },
+  "SplashDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Splash · Dark",
+   "w": 390,
+   "x": 0,
+   "y": 7584
+  },
+  "StyleGuide.dc.html": {
+   "h": 3084,
+   "title": "Design system",
+   "w": 1280,
+   "x": 4400,
+   "y": 0
+  },
+  "TxnDelete.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dialog · Delete transaction",
+   "w": 390,
+   "x": 470,
+   "y": 6320
+  },
+  "TxnDeleteDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Dialog · Delete transaction · Dark",
+   "w": 390,
+   "x": 470,
+   "y": 13904
+  },
+  "TxnDetail.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Transaction detail",
+   "w": 390,
+   "x": 0,
+   "y": 6320
+  },
+  "TxnDetailDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "title": "Transaction detail · Dark",
+   "w": 390,
+   "x": 0,
+   "y": 13904
+  },
+  "OnbName.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 1410,
+   "y": 0,
+   "title": "Onboarding · Your name (step 1 of 5)"
+  },
+  "OnbNameDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 1410,
+   "y": 7584,
+   "title": "Onboarding · Your name (step 1 of 5) · Dark"
+  },
+  "EditTransaction.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2350,
+   "y": 1264,
+   "title": "Edit transaction"
+  },
+  "EditTransactionDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2350,
+   "y": 8848,
+   "title": "Edit transaction · Dark"
+  },
+  "CategoryPicker.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2820,
+   "y": 1264,
+   "title": "Picker · Category (from More)"
+  },
+  "CategoryPickerDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2820,
+   "y": 8848,
+   "title": "Picker · Category (from More) · Dark"
+  },
+  "PeriodListEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 470,
+   "y": 3792,
+   "title": "Empty · No past periods"
+  },
+  "PeriodListEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 470,
+   "y": 11376,
+   "title": "Empty · No past periods · Dark"
+  },
+  "BillsOverdue.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 1880,
+   "y": 3792,
+   "title": "Recurring bills · Overdue state"
+  },
+  "BillsOverdueDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 1880,
+   "y": 11376,
+   "title": "Recurring bills · Overdue state · Dark"
+  },
+  "BillsEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2350,
+   "y": 3792,
+   "title": "Empty · No recurring bills"
+  },
+  "BillsEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2350,
+   "y": 11376,
+   "title": "Empty · No recurring bills · Dark"
+  },
+  "BillDetail.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2820,
+   "y": 3792,
+   "title": "Bill detail (edit, pause, delete)"
+  },
+  "BillDetailDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 2820,
+   "y": 11376,
+   "title": "Bill detail (edit, pause, delete) · Dark"
+  },
+  "BillPay.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3290,
+   "y": 3792,
+   "title": "Sheet · Mark bill as paid"
+  },
+  "BillPayDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3290,
+   "y": 11376,
+   "title": "Sheet · Mark bill as paid · Dark"
+  },
+  "SavingsEmpty.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4700,
+   "y": 3792,
+   "title": "Empty · No savings goals"
+  },
+  "SavingsEmptyDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4700,
+   "y": 11376,
+   "title": "Empty · No savings goals · Dark"
+  },
+  "GoalContribute.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 5640,
+   "y": 3792,
+   "title": "Sheet · Add money to goal"
+  },
+  "GoalContributeDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 5640,
+   "y": 11376,
+   "title": "Sheet · Add money to goal · Dark"
+  },
+  "GoalWithdraw.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6110,
+   "y": 3792,
+   "title": "Sheet · Withdraw (over saved amount)"
+  },
+  "GoalWithdrawDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6110,
+   "y": 11376,
+   "title": "Sheet · Withdraw (over saved amount) · Dark"
+  },
+  "GoalActions.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6580,
+   "y": 3792,
+   "title": "Sheet · Goal options (edit, complete, delete)"
+  },
+  "GoalActionsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6580,
+   "y": 11376,
+   "title": "Sheet · Goal options (edit, complete, delete) · Dark"
+  },
+  "SettingsV10.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 0,
+   "y": 5056,
+   "title": "Settings · v1.0 (lock, bills & goals hidden)"
+  },
+  "SettingsV10Dark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 0,
+   "y": 12640,
+   "title": "Settings · v1.0 (lock, bills & goals hidden) · Dark"
+  },
+  "EditName.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 470,
+   "y": 5056,
+   "title": "Settings · Edit name"
+  },
+  "EditNameDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 470,
+   "y": 12640,
+   "title": "Settings · Edit name · Dark"
+  },
+  "NotifPrefs.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 940,
+   "y": 5056,
+   "title": "Settings · Notifications (permission denied)"
+  },
+  "NotifPrefsDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 940,
+   "y": 12640,
+   "title": "Settings · Notifications (permission denied) · Dark"
+  },
+  "ExportRange.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3290,
+   "y": 5056,
+   "title": "Settings · Export · Custom range"
+  },
+  "ExportRangeDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3290,
+   "y": 12640,
+   "title": "Settings · Export · Custom range · Dark"
+  },
+  "ImportChecking.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3760,
+   "y": 5056,
+   "title": "Import · Checking file (loading)"
+  },
+  "ImportCheckingDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 3760,
+   "y": 12640,
+   "title": "Import · Checking file (loading) · Dark"
+  },
+  "ImportReview.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4230,
+   "y": 5056,
+   "title": "Import · Review before importing"
+  },
+  "ImportReviewDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4230,
+   "y": 12640,
+   "title": "Import · Review before importing · Dark"
+  },
+  "ImportSuccess.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4700,
+   "y": 5056,
+   "title": "Import · Success"
+  },
+  "ImportSuccessDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 4700,
+   "y": 12640,
+   "title": "Import · Success · Dark"
+  },
+  "EraseData.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 5640,
+   "y": 5056,
+   "title": "Dialog · Erase all data"
+  },
+  "EraseDataDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 5640,
+   "y": 12640,
+   "title": "Dialog · Erase all data · Dark"
+  },
+  "LockAfter.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6580,
+   "y": 5056,
+   "title": "Picker · Lock after"
+  },
+  "LockAfterDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 6580,
+   "y": 12640,
+   "title": "Picker · Lock after · Dark"
+  },
+  "PinCreate.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 7050,
+   "y": 5056,
+   "title": "App lock · Create PIN"
+  },
+  "PinCreateDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 7050,
+   "y": 12640,
+   "title": "App lock · Create PIN · Dark"
+  },
+  "PinConfirm.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 7520,
+   "y": 5056,
+   "title": "App lock · Confirm PIN (mismatch)"
+  },
+  "PinConfirmDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 7520,
+   "y": 12640,
+   "title": "App lock · Confirm PIN (mismatch) · Dark"
+  },
+  "LockWrong.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 8460,
+   "y": 5056,
+   "title": "Lock screen · Too many attempts"
+  },
+  "LockWrongDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 8460,
+   "y": 12640,
+   "title": "Lock screen · Too many attempts · Dark"
+  },
+  "ForgotPin.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 8930,
+   "y": 5056,
+   "title": "App lock · Forgot PIN"
+  },
+  "ForgotPinDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 8930,
+   "y": 12640,
+   "title": "App lock · Forgot PIN · Dark"
+  },
+  "BudgetOverAlloc.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 10340,
+   "y": 5056,
+   "title": "Error · Category limits over budget"
+  },
+  "BudgetOverAllocDark.dc.html": {
+   "h": 844,
+   "is_interactive": true,
+   "w": 390,
+   "x": 10340,
+   "y": 12640,
+   "title": "Error · Category limits over budget · Dark"
+  }
+ },
+ "createdOnFiles": {
+  "at": "2026-11-04T18:30:00Z",
+  "v": 1
+ },
+ "designSystems": [],
+ "launch": {
+  "view": "canvas"
+ },
+ "noteOrder": [
+  "l0",
+  "d0",
+  "l1",
+  "d1",
+  "l2",
+  "d2",
+  "l3",
+  "d3",
+  "l4",
+  "d4",
+  "l5",
+  "d5",
+  "sg"
+ ],
+ "notes": {
+  "d0": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Dark · Splash & onboarding flow",
+   "w": 240,
+   "x": 0,
+   "y": 7284
+  },
+  "d1": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Dark · Home, adding & notifications",
+   "w": 240,
+   "x": 0,
+   "y": 8548
+  },
+  "d2": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Dark · Activity, budgets, insights, settings & categories",
+   "w": 240,
+   "x": 0,
+   "y": 9812
+  },
+  "d3": {
+   "kind": "title1",
+   "maxW": 7440,
+   "text": "Dark · Past periods, recurring bills & savings goals",
+   "w": 240,
+   "x": 0,
+   "y": 11076
+  },
+  "d4": {
+   "kind": "title1",
+   "maxW": 10730,
+   "text": "Dark · Settings screens, data, app lock, empty & error states",
+   "w": 240,
+   "x": 0,
+   "y": 12340
+  },
+  "d5": {
+   "kind": "title1",
+   "maxW": 1800,
+   "text": "Dark · Transaction detail, dialogs & pickers",
+   "w": 240,
+   "x": 0,
+   "y": 13604
+  },
+  "l0": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Splash & onboarding flow",
+   "w": 240,
+   "x": 0,
+   "y": -300
+  },
+  "l1": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Home, adding & notifications",
+   "w": 240,
+   "x": 0,
+   "y": 964
+  },
+  "l2": {
+   "kind": "title1",
+   "maxW": 4150,
+   "text": "Activity, budgets, insights, settings & categories",
+   "w": 240,
+   "x": 0,
+   "y": 2228
+  },
+  "l3": {
+   "kind": "title1",
+   "maxW": 7440,
+   "text": "Past periods, recurring bills & savings goals",
+   "w": 240,
+   "x": 0,
+   "y": 3492
+  },
+  "l4": {
+   "kind": "title1",
+   "maxW": 10730,
+   "text": "Settings screens, data, app lock, empty & error states",
+   "w": 240,
+   "x": 0,
+   "y": 4756
+  },
+  "l5": {
+   "kind": "title1",
+   "maxW": 1800,
+   "text": "Transaction detail, dialogs & pickers",
+   "w": 240,
+   "x": 0,
+   "y": 6020
+  },
+  "sg": {
+   "kind": "title1",
+   "maxW": 1280,
+   "text": "Design system",
+   "w": 240,
+   "x": 4400,
+   "y": -300
+  }
+ },
+ "order": [
+  "StyleGuide.dc.html",
+  "BrandFamily2.dc.html",
+  "Splash.dc.html",
+  "OnbWelcome.dc.html",
+  "OnbHow.dc.html",
+  "OnbSetup.dc.html",
+  "Main.dc.html",
+  "OnbCategories.dc.html",
+  "OnbReminders.dc.html",
+  "OnbDone.dc.html",
+  "Dashboard.dc.html",
+  "DashboardEmpty.dc.html",
+  "HeroStates.dc.html",
+  "AddTransaction.dc.html",
+  "AddTransactionIncome.dc.html",
+  "Notifications.dc.html",
+  "NotificationsEmpty.dc.html",
+  "Activity.dc.html",
+  "Budgets.dc.html",
+  "Insights.dc.html",
+  "InsightsWeek.dc.html",
+  "InsightsTrend.dc.html",
+  "Settings.dc.html",
+  "Categories.dc.html",
+  "CategoryDetail.dc.html",
+  "AddCategory.dc.html",
+  "PeriodList.dc.html",
+  "PeriodDetail.dc.html",
+  "Bills.dc.html",
+  "AddBill.dc.html",
+  "Savings.dc.html",
+  "GoalDetail.dc.html",
+  "AddGoal.dc.html",
+  "SetMonthStart.dc.html",
+  "SetTheme.dc.html",
+  "SetCurrency.dc.html",
+  "ExportCSV.dc.html",
+  "ImportError.dc.html",
+  "SetAppLock.dc.html",
+  "LockScreen.dc.html",
+  "SearchEmpty.dc.html",
+  "InsightsEmpty.dc.html",
+  "TxnDetail.dc.html",
+  "TxnDelete.dc.html",
+  "DatePicker.dc.html",
+  "RepeatPicker.dc.html",
+  "SplashDark.dc.html",
+  "OnbWelcomeDark.dc.html",
+  "OnbHowDark.dc.html",
+  "OnbSetupDark.dc.html",
+  "MainDark.dc.html",
+  "OnbCategoriesDark.dc.html",
+  "OnbRemindersDark.dc.html",
+  "OnbDoneDark.dc.html",
+  "DashboardDark.dc.html",
+  "DashboardEmptyDark.dc.html",
+  "HeroStatesDark.dc.html",
+  "AddTransactionDark.dc.html",
+  "AddTransactionIncomeDark.dc.html",
+  "NotificationsDark.dc.html",
+  "NotificationsEmptyDark.dc.html",
+  "ActivityDark.dc.html",
+  "BudgetsDark.dc.html",
+  "InsightsDark.dc.html",
+  "InsightsWeekDark.dc.html",
+  "InsightsTrendDark.dc.html",
+  "SettingsDark.dc.html",
+  "CategoriesDark.dc.html",
+  "CategoryDetailDark.dc.html",
+  "AddCategoryDark.dc.html",
+  "PeriodListDark.dc.html",
+  "PeriodDetailDark.dc.html",
+  "BillsDark.dc.html",
+  "AddBillDark.dc.html",
+  "SavingsDark.dc.html",
+  "GoalDetailDark.dc.html",
+  "AddGoalDark.dc.html",
+  "SetMonthStartDark.dc.html",
+  "SetThemeDark.dc.html",
+  "SetCurrencyDark.dc.html",
+  "ExportCSVDark.dc.html",
+  "ImportErrorDark.dc.html",
+  "SetAppLockDark.dc.html",
+  "LockScreenDark.dc.html",
+  "SearchEmptyDark.dc.html",
+  "InsightsEmptyDark.dc.html",
+  "TxnDetailDark.dc.html",
+  "TxnDeleteDark.dc.html",
+  "DatePickerDark.dc.html",
+  "RepeatPickerDark.dc.html",
+  "OnbName.dc.html",
+  "OnbNameDark.dc.html",
+  "EditTransaction.dc.html",
+  "EditTransactionDark.dc.html",
+  "CategoryPicker.dc.html",
+  "CategoryPickerDark.dc.html",
+  "PeriodListEmpty.dc.html",
+  "PeriodListEmptyDark.dc.html",
+  "BillsOverdue.dc.html",
+  "BillsOverdueDark.dc.html",
+  "BillsEmpty.dc.html",
+  "BillsEmptyDark.dc.html",
+  "BillDetail.dc.html",
+  "BillDetailDark.dc.html",
+  "BillPay.dc.html",
+  "BillPayDark.dc.html",
+  "SavingsEmpty.dc.html",
+  "SavingsEmptyDark.dc.html",
+  "GoalContribute.dc.html",
+  "GoalContributeDark.dc.html",
+  "GoalWithdraw.dc.html",
+  "GoalWithdrawDark.dc.html",
+  "GoalActions.dc.html",
+  "GoalActionsDark.dc.html",
+  "SettingsV10.dc.html",
+  "SettingsV10Dark.dc.html",
+  "EditName.dc.html",
+  "EditNameDark.dc.html",
+  "NotifPrefs.dc.html",
+  "NotifPrefsDark.dc.html",
+  "ExportRange.dc.html",
+  "ExportRangeDark.dc.html",
+  "ImportChecking.dc.html",
+  "ImportCheckingDark.dc.html",
+  "ImportReview.dc.html",
+  "ImportReviewDark.dc.html",
+  "ImportSuccess.dc.html",
+  "ImportSuccessDark.dc.html",
+  "EraseData.dc.html",
+  "EraseDataDark.dc.html",
+  "LockAfter.dc.html",
+  "LockAfterDark.dc.html",
+  "PinCreate.dc.html",
+  "PinCreateDark.dc.html",
+  "PinConfirm.dc.html",
+  "PinConfirmDark.dc.html",
+  "LockWrong.dc.html",
+  "LockWrongDark.dc.html",
+  "ForgotPin.dc.html",
+  "ForgotPinDark.dc.html",
+  "BudgetOverAlloc.dc.html",
+  "BudgetOverAllocDark.dc.html"
+ ],
+ "pages": [],
+ "title": "CtrlSpend UI"
+}

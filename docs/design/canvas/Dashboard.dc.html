@@ -1,0 +1,151 @@
+<script src="./support.js"></script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F7F8FA}
+a{color:#101828;text-decoration:none}a:hover{color:#344054}
+.r{width:390px;height:844px;position:relative;overflow:hidden;background:#F7F8FA;color:#101828;font-family:Poppins,sans-serif;font-feature-settings:"tnum"}
+.sb{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600}
+.lbl{font-size:13px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#5B6B86}
+.mut{color:#5B6B86}
+.sec{display:flex;justify-content:space-between;align-items:center;padding:22px 24px 12px}
+.sec a{display:flex;align-items:center;gap:2px;font-size:14px;font-weight:600;min-height:32px}
+.sec a svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:48px;height:48px;border-radius:16px;display:flex;align-items:center;justify-content:center;flex:none;background:#E4DBF7}
+.ic svg{width:22px;height:22px;fill:none;stroke:#6D3FD1;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic.food{background:#FFE2B8}.ic.food svg{stroke:#C25E00}
+.ic.car{background:#CDE6FB}.ic.car svg{stroke:#1769C2}
+.ic.bag{background:#FBD3E1}.ic.bag svg{stroke:#C8174F}
+.ic.bolt{background:#FFF0B8}.ic.bolt svg{stroke:#8A6100}
+.ic.wallet{background:#C9F3D5}.ic.wallet svg{stroke:#1E8A43}
+.row{display:flex;align-items:center;gap:14px;background:#fff;border-radius:24px;margin:0 16px 10px;padding:12px 18px 12px 12px;min-height:72px;box-sizing:border-box;color:#101828}
+.row:hover{color:#101828}
+.grow{flex:1;min-width:0}
+.n{font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.s{font-size:13px;color:#5B6B86;margin-top:1px}
+.amt{font-size:16px;font-weight:700;white-space:nowrap}
+.neg{color:#D92D20}.pos{color:#067647}
+.top{display:flex;align-items:center;gap:12px;height:64px;padding:0 16px 0 24px}
+.iconbtn{width:48px;height:48px;border-radius:50%;background:#EEF1F6;border:0;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.iconbtn svg{width:22px;height:22px;fill:none;stroke:#101828;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.avatar{width:48px;height:48px;border-radius:50%;background:#101828;color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700}
+.avatar:hover{color:#fff;background:#1D2939}
+.hero{display:block;background:#101828;color:#fff;border-radius:32px;margin:8px 16px 0;padding:22px 22px 20px}
+.hero:hover{color:#fff}
+.hero .hd{display:flex;align-items:center;gap:16px}
+.hero .w{width:56px;height:56px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;flex:none}
+.hero .w svg{width:26px;height:26px;fill:none;stroke:#101828;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero .hl{font-size:13px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#D0D5DD}
+.hero .v{font-size:32px;font-weight:700;letter-spacing:-.8px;line-height:1.2}.hero .v small{font-size:18px;color:#98A2B3;letter-spacing:0}
+.hero .go{margin-left:auto;align-self:flex-start;width:26px;height:26px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.hero .bar{height:10px;border-radius:999px;background:#475467;overflow:hidden;margin-top:22px}.hero .bar i{display:block;height:100%;border-radius:999px;background:#fff}
+.hero .ft{display:flex;justify-content:space-between;margin-top:12px;font-size:14px;font-weight:500;color:#EAECF0}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 16px 0}
+.stat{background:#fff;border-radius:26px;padding:16px 14px;display:flex;align-items:center;gap:12px}
+.stat .c{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.stat .c svg{width:24px;height:24px;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.stat .c.out{background:#FEE4E2}.stat .c.out svg{stroke:#D92D20}
+.stat .c.in{background:#D1FADF}.stat .c.in svg{stroke:#067647}
+.stat .lbl{font-size:11px}
+.stat .v{font-size:21px;font-weight:700;line-height:1.3}.stat .v small{font-size:12px;font-weight:600;margin-right:4px}
+.nav{position:absolute;left:16px;bottom:24px;width:278px;height:68px;border-radius:999px;background:#fff;box-shadow:0 8px 28px rgba(16,24,40,.08);display:flex;align-items:center;gap:2px;padding:0 8px;box-sizing:border-box}
+.nav a{flex:1;height:52px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;color:#101828;font-size:0}
+.nav a:hover{background:#F2F4F7}
+.nav a.on{flex:none;padding:0 14px;background:#EEF1F6;font-size:14px;font-weight:600}
+.nav svg{width:24px;height:24px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fab{position:absolute;right:16px;bottom:26px;width:64px;height:64px;border-radius:50%;background:#101828;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(16,24,40,.28)}
+.fab:hover{background:#1D2939}
+.r.dark{background:#0B1018;color:#F2F4F7;color-scheme:dark}
+.r.dark a{color:#F2F4F7}
+.r.dark .lbl,.r.dark .mut,.r.dark .s,.r.dark .cn,.r.dark .gv,.r.dark .day .dt,.r.dark .seg button{color:#98A2B3}
+.r.dark .card,.r.dark .row,.r.dark .stat,.r.dark .empty,.r.dark .group,.r.dark .goal,.r.dark .cc,.r.dark .seg,.r.dark .search,.r.dark .chip,.r.dark .field,.r.dark .key,.r.dark .cat .ct,.r.dark .sheet,.r.dark .nav{background:#161D29;color:#F2F4F7}
+.r.dark .chip{color:#D0D5DD}
+.r.dark .cat,.r.dark .hdr a,.r.dark .hdr button,.r.dark .nav a,.r.dark .field input,.r.dark .search input{color:#F2F4F7}
+.r.dark .search input::placeholder{color:#98A2B3}
+.r.dark .gi{color:#F2F4F7;border-bottom-color:#232C3A}.r.dark .gi:hover{background:#1B2331}
+.r.dark .chev,.r.dark .key svg,.r.dark .cat .ct svg,.r.dark .field svg,.r.dark .iconbtn svg,.r.dark .empty .e svg,.r.dark svg[stroke="#101828"]{stroke:#F2F4F7}
+.r.dark .iconbtn,.r.dark .empty .e,.r.dark .bar{background:#232C3A}
+.r.dark .key:hover,.r.dark .chip:hover,.r.dark .cat:hover .ct,.r.dark .nav a:hover{background:#232C3A}
+.r.dark .nav{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.r.dark .nav a.on{background:#2A3444}
+.r.dark .seg button.sel,.r.dark .chip.sel,.r.dark .cat.sel .ct,.r.dark .btn,.r.dark .pill,.r.dark .avatar,.r.dark .fab,.r.dark .toast{background:#F2F4F7;color:#0B1018}
+.r.dark .btn:hover,.r.dark .pill:hover,.r.dark .avatar:hover,.r.dark .fab:hover{background:#D0D5DD;color:#0B1018}
+.r.dark .cat.sel .ct svg,.r.dark .fab svg{stroke:#0B1018}
+.r.dark .fab{box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.r.dark .toast button{color:#B54708}
+.r.dark .hero{background:#1C2536}.r.dark .hero .bar{background:#344054}
+.r.dark .neg{color:#F97066}.r.dark .pos{color:#47CD89}.r.dark .warn{color:#FDB022}
+.r.dark .ic{background:rgba(124,77,219,.26)}.r.dark .ic svg{stroke:#B69BFF}
+.r.dark .ic.food{background:rgba(251,140,0,.2)}.r.dark .ic.food svg{stroke:#FFB547}
+.r.dark .ic.car{background:rgba(33,150,243,.22)}.r.dark .ic.car svg{stroke:#6CB8FF}
+.r.dark .ic.bag{background:rgba(240,69,122,.22)}.r.dark .ic.bag svg{stroke:#FF7AA2}
+.r.dark .ic.bolt{background:rgba(245,184,0,.2)}.r.dark .ic.bolt svg{stroke:#FFD34D}
+.r.dark .ic.wallet{background:rgba(23,178,106,.22)}.r.dark .ic.wallet svg{stroke:#5BD996}
+.r.dark .ic.health{background:rgba(240,68,56,.22)}.r.dark .ic.health svg{stroke:#FF8A80}
+.r.dark .ic.gift{background:#232C3A}.r.dark .ic.gift svg{stroke:#98A2B3}
+.r.dark .stat .c.out{background:rgba(240,68,56,.2)}.r.dark .stat .c.out svg{stroke:#F97066}
+.r.dark .stat .c.in{background:rgba(23,178,106,.2)}.r.dark .stat .c.in svg{stroke:#47CD89}
+.r.dark [style*="background:#fff"]{background:#161D29 !important}
+.r.dark [style*="background:#F7F8FA"]{background:#0B1018 !important}
+.r.dark [style*="background:#EEF1F6"],.r.dark [style*="background:#EAECF0"]{background:#2A3444 !important}
+.r.dark [style*="background:#101828"]{background:#F2F4F7 !important;color:#0B1018 !important}
+.r.dark [style*="background:#FFE2B8"]{background:rgba(251,140,0,.2) !important}
+.r.dark [style*="background:#CDE6FB"]{background:rgba(33,150,243,.22) !important}
+.r.dark [style*="color:#101828"]{color:#F2F4F7 !important}
+.r.dark [style*="color:#5B6B86"]{color:#98A2B3 !important}
+.r.dark [style*="color:#D92D20"]{color:#F97066 !important}
+.r.dark [style*="background:rgba(16,24,40"]{background:rgba(0,0,0,.6) !important}
+.iconbtn{position:relative}.iconbtn .dot{position:absolute;top:11px;right:12px;width:10px;height:10px;border-radius:50%;background:#D92D20;border:2px solid #EEF1F6;box-sizing:border-box}
+.r.dark .iconbtn .dot{background:#F97066;border-color:#232C3A}
+</style>
+</helmet>
+<div class="r {{mode}}">
+  <div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+  <div class="top">
+    <div class="grow"><div class="lbl">15 Oct – 14 Nov</div><div style="font-size:20px;font-weight:700">Hi, Alex</div></div>
+    <a class="iconbtn" href="./Notifications.dc.html" aria-label="Notifications, 2 unread"><svg viewBox="0 0 24 24"><path d="M6 9a6 6 0 0 1 12 0c0 6 2.5 8 2.5 8h-17S6 15 6 9M10.3 20.5a2 2 0 0 0 3.4 0"></path></svg><i class="dot"></i></a>
+    <a class="avatar" href="./Settings.dc.html" aria-label="Settings">A</a>
+  </div>
+
+  <a class="hero" href="./Budgets.dc.html">
+    <div class="hd">
+      <div class="w"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="3"></rect><path d="M3 10h18M16 15h2"></path></svg></div>
+      <div><div class="hl">Left to spend</div><div class="v">RM 1,240<small>.00</small></div></div>
+      <svg class="go" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"></path></svg>
+    </div>
+    <div class="bar" role="progressbar" aria-valuenow="38" aria-valuemin="0" aria-valuemax="100" aria-label="38% of monthly budget spent"><i style="width:38%"></i></div>
+    <div class="ft"><span>RM 760 spent</span><span>of RM 2,000</span></div>
+  </a>
+
+  <div class="stats">
+    <div class="stat"><div class="c out"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 16V8M8.5 11.5L12 8l3.5 3.5"></path></svg></div><div><div class="lbl">Spent</div><div class="v"><small>RM</small>760</div></div></div>
+    <div class="stat"><div class="c in"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v8M8.5 12.5L12 16l3.5-3.5"></path></svg></div><div><div class="lbl">Income</div><div class="v"><small>RM</small>4,800</div></div></div>
+  </div>
+
+  <div class="sec"><span class="lbl">Recent activities</span><a href="./Activity.dc.html">View all<svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></a></div>
+  <a class="row" href="./TxnDetail.dc.html">
+    <div class="ic food"><svg viewBox="0 0 24 24"><path d="M4 3v7a3 3 0 0 0 3 3v8M10 3v7M7 3v4M17 21V3c-2 1-3 4-3 8h3"></path></svg></div>
+    <div class="grow"><div class="n">Nasi lemak</div><div class="s">Today · Food</div></div><div class="amt neg">−RM 12.50</div>
+  </a>
+  <a class="row" href="./TxnDetail.dc.html">
+    <div class="ic car"><svg viewBox="0 0 24 24"><path d="M5 17h14M6 17v2M18 17v2M4 13l2-6h12l2 6v4H4z"></path></svg></div>
+    <div class="grow"><div class="n">Grab to KLCC</div><div class="s">Today · Transport</div></div><div class="amt neg">−RM 18.20</div>
+  </a>
+  <a class="row" href="./TxnDetail.dc.html">
+    <div class="ic wallet"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2"></rect><path d="M3 10h18M16 15h2"></path></svg></div>
+    <div class="grow"><div class="n">Salary</div><div class="s">Yesterday · Income</div></div><div class="amt pos">+RM 4,800.00</div>
+  </a>
+
+  <nav class="nav" aria-label="Main">
+    <a class="on" aria-current="page" href="./Dashboard.dc.html"><svg viewBox="0 0 24 24"><path d="M4 10.5L12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"></path></svg>Home</a>
+    <a href="./Activity.dc.html"><svg viewBox="0 0 24 24"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2zM9 8h6M9 12h6"></path></svg>Activity</a>
+    <a href="./Budgets.dc.html"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9h-9z"></path><path d="M15 3.5A9 9 0 0 1 20.5 9H15z"></path></svg>Budgets</a>
+    <a href="./Insights.dc.html"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"></rect><path d="M8 16v-3M12 16V8M16 16v-5"></path></svg>Insights</a>
+  </nav>
+  <a class="fab" href="./AddTransaction.dc.html" aria-label="Add transaction"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"></path></svg></a>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic { renderVals(){ return { mode: this.props.dark ? "dark" : "" }; } }
+</script>

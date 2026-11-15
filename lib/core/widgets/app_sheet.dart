@@ -22,6 +22,7 @@ Future<T?> showAppSheet<T>(
   isScrollControlled: true,
   useSafeArea: true,
   backgroundColor: context.colors.surface,
+  barrierColor: context.colors.scrim,
   shape: const RoundedRectangleBorder(
     borderRadius: BorderRadius.vertical(top: Radius.circular(AppRadius.r32)),
   ),
