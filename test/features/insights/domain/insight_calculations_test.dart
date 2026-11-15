@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -167,13 +168,70 @@ void main() {
       tx(50000, d(10, 20)),
     ];
 
-    test('lists 6 periods oldest first, the current one so far', () {
+    /// The trend with each ended period saved, as the app does on launch.
+    TrendSummary trendOf(List<Transaction> transactions, {int? budget}) =>
+        recentPeriods(
+          transactions,
+          today: today,
+          startDay: startDay,
+          snapshots: snapshotsToWrite(
+            existing: const [],
+            transactions: transactions,
+            categories: const [],
+            today: today,
+            startDay: startDay,
+            budgetMinor: budget,
+          ),
+          budgetMinor: budget,
+        );
+
+    test('each full period is judged by the budget it saved', () {
+      final saved = snapshotsToWrite(
+        existing: const [],
+        transactions: history,
+        categories: const [],
+        today: today,
+        startDay: startDay,
+        budgetMinor: 200000,
+      );
+      // 15 Aug – 14 Sep had a bigger budget when it ended.
+      final snapshots = [
+        for (final s in saved)
+          if (s.period.start.month == 8)
+            (
+              period: s.period,
+              budgetMinor: 300000,
+              limits: s.limits,
+              spentMinor: s.spentMinor,
+              incomeMinor: s.incomeMinor,
+            )
+          else
+            s,
+      ];
+      final trend = recentPeriods(
+        history,
+        today: today,
+        startDay: startDay,
+        snapshots: snapshots,
+        budgetMinor: 200000,
+      );
+      expect([for (final p in trend.full) p.overBudget], [false, false, true]);
+      expect(trend.underBudgetCount, 2);
+    });
+
+    test('without snapshots there are no full periods', () {
       final trend = recentPeriods(
         history,
         today: today,
         startDay: startDay,
         budgetMinor: 200000,
       );
+      expect(trend.full, isEmpty);
+      expect(trend.periods, hasLength(6));
+    });
+
+    test('lists 6 periods oldest first, the current one so far', () {
+      final trend = trendOf(history, budget: 200000);
       expect(trend.periods.first.period.start, DateTime(2026, 5, 15));
       expect(trend.periods.last.period, octToNov);
       expect(
@@ -184,44 +242,25 @@ void main() {
     });
 
     test('full periods start at the first transaction', () {
-      final trend = recentPeriods(
-        history,
-        today: today,
-        startDay: startDay,
-        budgetMinor: 200000,
-      );
+      final trend = trendOf(history, budget: 200000);
       expect([for (final p in trend.full) p.period.start.month], [7, 8, 9]);
       expect(trend.averageMinor, 183333, reason: '550,000 / 3');
       expect(trend.highest!.period.start.month, 8);
     });
 
     test('under budget means strictly below; exactly at it is over', () {
-      final trend = recentPeriods(
-        history,
-        today: today,
-        startDay: startDay,
-        budgetMinor: 200000,
-      );
+      final trend = trendOf(history, budget: 200000);
       expect([for (final p in trend.full) p.overBudget], [false, true, true]);
       expect(trend.underBudgetCount, 1);
     });
 
     test('a tie for highest goes to the more recent period', () {
-      final trend = recentPeriods(
-        [tx(100, d(8, 20)), tx(100, d(9, 20))],
-        today: today,
-        startDay: startDay,
-      );
+      final trend = trendOf([tx(100, d(8, 20)), tx(100, d(9, 20))]);
       expect(trend.highest!.period.start.month, 9);
     });
 
     test('no transactions means no full periods', () {
-      final trend = recentPeriods(
-        [],
-        today: today,
-        startDay: startDay,
-        budgetMinor: 200000,
-      );
+      final trend = trendOf([], budget: 200000);
       expect(trend.full, isEmpty);
       expect(trend.averageMinor, isNull);
       expect(trend.underBudgetCount, isNull);
@@ -229,18 +268,13 @@ void main() {
     });
 
     test('a first period still in progress has no full periods', () {
-      final trend = recentPeriods(
-        [tx(500, d(10, 20))],
-        today: today,
-        startDay: startDay,
-        budgetMinor: 200000,
-      );
+      final trend = trendOf([tx(500, d(10, 20))], budget: 200000);
       expect(trend.full, isEmpty);
       expect(trend.averageMinor, isNull);
     });
 
     test('without a budget there are no over/under results', () {
-      final trend = recentPeriods(history, today: today, startDay: startDay);
+      final trend = trendOf(history);
       expect(trend.periods.every((p) => p.overBudget == null), isTrue);
       expect(trend.underBudgetCount, isNull);
       expect(trend.averageMinor, 183333);

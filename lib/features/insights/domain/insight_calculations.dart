@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 
 /// Insights calculations (PRD §5.7). Pure functions over minor units.
@@ -147,17 +150,26 @@ typedef TrendSummary = ({
 });
 
 /// The last [count] periods up to the one containing [today], oldest
-/// first (S20). The current one is "so far". Averages, the under-budget
-/// count and the highest period use full periods only: finished, and not
-/// before the period of the first transaction.
+/// first (S20). The current one is "so far", against [budgetMinor]. The
+/// full periods before it are the latest [snapshots], each against the
+/// budget it saved (PRD §5.10); earlier slots with no snapshot are empty
+/// periods, not full. Averages, the under-budget count and the highest
+/// period use full periods only.
 TrendSummary recentPeriods(
   Iterable<Transaction> transactions, {
   required DateTime today,
   required MonthStartDay startDay,
+  Iterable<PeriodSnapshot> snapshots = const [],
   int? budgetMinor,
   int count = 6,
 }) {
-  final periods = <Period>[periodFor(today, startDay)];
+  final current = periodFor(today, startDay);
+  final saved = [
+    for (final s in snapshots)
+      if (s.period.start.isBefore(current.start)) s,
+  ]..sort((a, b) => a.period.start.compareTo(b.period.start));
+  final shown = saved.skip(max(0, saved.length - (count - 1))).toList();
+  final periods = <Period>[for (final s in shown) s.period, current];
   while (periods.length < count) {
     final start = periods.first.start;
     periods.insert(
@@ -165,33 +177,25 @@ TrendSummary recentPeriods(
       periodFor(DateTime(start.year, start.month, start.day - 1), startDay),
     );
   }
+  final budgets = {for (final s in shown) s.period.start: s.budgetMinor};
 
-  DateTime? first;
-  for (final t in transactions) {
-    if (first == null || t.occurredAt.isBefore(first)) first = t.occurredAt;
-  }
-  final firstStart = first == null ? null : periodFor(first, startDay).start;
-
-  final byPeriod = transactionsByPeriod(transactions, startDay);
   final spends = <PeriodSpend>[];
   for (final (i, p) in periods.indexed) {
-    final spent = periodTotals(byPeriod[p.start] ?? const [], p).spentMinor;
+    final spent = periodTotals(transactions, p).spentMinor;
+    final budget = i == periods.length - 1 ? budgetMinor : budgets[p.start];
     spends.add((
       period: p,
       spentMinor: spent,
       soFar: i == periods.length - 1,
-      overBudget: budgetMinor == null
+      overBudget: budget == null
           ? null
-          : budgetStatus(spentMinor: spent, limitMinor: budgetMinor) ==
+          : budgetStatus(spentMinor: spent, limitMinor: budget) ==
                 BudgetStatus.negative,
     ));
   }
   final full = [
     for (final s in spends)
-      if (!s.soFar &&
-          firstStart != null &&
-          !s.period.start.isBefore(firstStart))
-        s,
+      if (!s.soFar && budgets.containsKey(s.period.start)) s,
   ];
   PeriodSpend? highest;
   for (final s in full) {
@@ -204,9 +208,9 @@ TrendSummary recentPeriods(
     averageMinor: full.isEmpty
         ? null
         : (fullTotal + full.length ~/ 2) ~/ full.length,
-    underBudgetCount: budgetMinor == null || full.isEmpty
+    underBudgetCount: full.every((s) => s.overBudget == null)
         ? null
-        : full.where((s) => !s.overBudget!).length,
+        : full.where((s) => s.overBudget == false).length,
     highest: highest,
   );
 }

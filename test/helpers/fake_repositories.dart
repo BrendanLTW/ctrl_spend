@@ -6,6 +6,7 @@ import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
 import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
 import 'package:flutter_riverpod/misc.dart';
@@ -18,6 +19,7 @@ import 'fake_file_sharer.dart';
 import 'fake_goal_repository.dart';
 import 'fake_notification_repository.dart';
 import 'fake_notification_scheduler.dart';
+import 'fake_period_snapshot_repository.dart';
 import 'fake_preferences_repository.dart';
 import 'fake_transaction_repository.dart';
 
@@ -29,6 +31,7 @@ List<Override> fakeRepositories({
   TransactionRepository? transactions,
   BillRepository? bills,
   GoalRepository? goals,
+  PeriodSnapshotRepository? snapshots,
   NotificationRepository? notifications,
   NotificationScheduler? scheduler,
   FileSharer? sharer,
@@ -46,6 +49,9 @@ List<Override> fakeRepositories({
   ),
   billRepositoryProvider.overrideWithValue(bills ?? FakeBillRepository()),
   goalRepositoryProvider.overrideWithValue(goals ?? FakeGoalRepository()),
+  periodSnapshotRepositoryProvider.overrideWithValue(
+    snapshots ?? FakePeriodSnapshotRepository(),
+  ),
   notificationRepositoryProvider.overrideWithValue(
     notifications ?? FakeNotificationRepository(),
   ),

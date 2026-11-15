@@ -20,6 +20,9 @@ import 'package:ctrl_spend/features/notifications/data/local_notification_schedu
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
+import 'package:ctrl_spend/features/periods/data/drift_period_snapshot_repository.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
+import 'package:ctrl_spend/features/periods/presentation/snapshot_service.dart';
 import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
@@ -63,6 +66,9 @@ List<Override> appOverrides({NotificationScheduler? scheduler}) => [
   goalRepositoryProvider.overrideWith(
     (ref) => DriftGoalRepository(ref.watch(appDatabaseProvider)),
   ),
+  periodSnapshotRepositoryProvider.overrideWith(
+    (ref) => DriftPeriodSnapshotRepository(ref.watch(appDatabaseProvider)),
+  ),
   preferencesRepositoryProvider.overrideWith(
     (ref) => DriftPreferencesRepository(ref.watch(appDatabaseProvider)),
   ),
@@ -84,8 +90,11 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Starts scheduling and inbox upkeep for the app's lifetime.
-    ref.watch(notificationServiceProvider);
+    // Starts scheduling, inbox upkeep and period snapshots for the app's
+    // lifetime.
+    ref
+      ..watch(notificationServiceProvider)
+      ..watch(snapshotServiceProvider);
     return MaterialApp.router(
       theme: buildLightTheme(),
       darkTheme: buildDarkTheme(),

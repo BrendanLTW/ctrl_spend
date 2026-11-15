@@ -11,6 +11,8 @@ import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
 import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
 import 'package:ctrl_spend/features/periods/presentation/period_spent_card.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -38,15 +40,27 @@ class PeriodDetailScreen extends ConsumerWidget {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final prefs = ref.watch(preferencesProvider).value ?? const Preferences();
     final currency = Currency.fromCode(prefs.currencyCode);
-    final period = periodFor(date, prefs.monthStartDay);
-    final categories =
+    // A saved period takes its own dates, budget and limits (PRD §5.10);
+    // otherwise, today's.
+    final snapshot = ref
+        .watch(periodSnapshotsProvider)
+        .value
+        ?.where((s) => s.period.start == date)
+        .firstOrNull;
+    final period = snapshot?.period ?? periodFor(date, prefs.monthStartDay);
+    final allCategories =
         ref.watch(categoriesProvider()).value ?? const <Category>[];
+    final categories = snapshot == null
+        ? allCategories
+        : withSnapshotLimits(allCategories, snapshot);
     final byId = {for (final c in categories) c.id: c};
     final summary = periodSummary(
       ref.watch(transactionsProvider(period: period)).value ?? const [],
       period: period,
       categories: categories,
-      budgetMinor: prefs.monthlyBudgetMinor,
+      budgetMinor: snapshot == null
+          ? prefs.monthlyBudgetMinor
+          : snapshot.budgetMinor,
     );
 
     return Scaffold(

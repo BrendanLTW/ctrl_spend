@@ -15,6 +15,8 @@ import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
 import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -26,8 +28,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// S25 Past periods: the current period with days left and progress, then
-/// every previous period back to the first transaction, newest first,
-/// with its result against the budget. A row opens S26.
+/// every saved period (its snapshot), newest first, with its result
+/// against the budget it saved. A row opens S26.
 class PastPeriodsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -45,10 +47,6 @@ class PastPeriodsScreen extends ConsumerWidget {
     final transactions =
         ref.watch(transactionsProvider()).value ?? const <Transaction>[];
 
-    DateTime? first;
-    for (final t in transactions) {
-      if (first == null || t.occurredAt.isBefore(first)) first = t.occurredAt;
-    }
     final current = periodFor(today, prefs.monthStartDay);
     // One pass over the transactions, not one per period.
     final byPeriod = transactionsByPeriod(transactions, prefs.monthStartDay);
@@ -56,18 +54,22 @@ class PastPeriodsScreen extends ConsumerWidget {
       byPeriod[current.start] ?? const [],
       current,
     ).spentMinor;
+    // Past periods are their snapshots, each against the budget it saved
+    // (PRD §5.10); spent is read live from the transactions.
     final previous = [
-      for (final p in previousPeriods(
-        today: today,
-        startDay: prefs.monthStartDay,
-        since: first,
-      ))
-        periodSummary(
-          byPeriod[p.start] ?? const [],
-          period: p,
-          categories: const [],
-          budgetMinor: budget,
-        ),
+      for (final s
+          in ref.watch(periodSnapshotsProvider).value ??
+              const <PeriodSnapshot>[])
+        if (s.period.start.isBefore(current.start))
+          (
+            budget: s.budgetMinor,
+            summary: periodSummary(
+              transactions,
+              period: s.period,
+              categories: const [],
+              budgetMinor: s.budgetMinor,
+            ),
+          ),
     ];
 
     return Scaffold(
@@ -111,7 +113,7 @@ class PastPeriodsScreen extends ConsumerWidget {
             SectionLabel(l10n.previousPeriods),
             ListGroup(
               children: [
-                for (final s in previous)
+                for (final (:budget, summary: s) in previous)
                   ListGroupRow(
                     title: formatPeriod(s.period, locale),
                     subtitle: budget == null
