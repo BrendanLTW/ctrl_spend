@@ -2859,6 +2859,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Note'**
   String get columnNote;
+
+  /// No description provided for @problemTooManyRows.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} rows; an import takes at most {max}'**
+  String problemTooManyRows(int count, int max);
+
+  /// No description provided for @importSkippedDuplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 duplicate skipped} other{{count} duplicates skipped}}'**
+  String importSkippedDuplicates(int count);
 }
 
 class _AppLocalizationsDelegate

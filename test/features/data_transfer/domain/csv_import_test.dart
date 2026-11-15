@@ -1,3 +1,5 @@
+import 'package:ctrl_spend/features/categories/domain/category.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_import.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -94,7 +96,7 @@ void main() {
             NotAnAmount(:final value) => '${p.row} amount $value',
             TooLong(:final column) => '${p.row} long $column',
             FutureDate(:final value) => '${p.row} future $value',
-            MissingColumns() || NotText() => 'file',
+            MissingColumns() || NotText() || TooManyRows() => 'file',
           },
       ],
       [
@@ -154,6 +156,92 @@ void main() {
       now: DateTime(2026, 11, 4, 8),
     );
     expect(result.problems, isEmpty);
+  });
+
+  group('the 20,000-row limit', () {
+    String rows(int n) => [
+      header,
+      for (var i = 0; i < n; i++) '2026-11-04,,expense,Food,x,1,',
+    ].join('\r\n');
+
+    test('20,000 rows are fine', () {
+      final result = parseTransactionsCsv(rows(20000), now: now);
+      expect(result.problems, isEmpty);
+      expect(result.rows, hasLength(20000));
+    });
+
+    test('20,001 rows are one problem, and nothing is kept', () {
+      final result = parseTransactionsCsv(rows(20001), now: now);
+      expect(result.rows, isEmpty);
+      expect(
+        result.problems.single,
+        isA<TooManyRows>().having((p) => p.count, 'count', 20001),
+      );
+    });
+  });
+
+  group('duplicateRows', () {
+    final categories = [
+      for (final (id, name, type) in [
+        (1, 'Food', TransactionType.expense),
+        (7, 'Salary', TransactionType.income),
+      ])
+        Category(
+          id: id,
+          name: name,
+          type: type,
+          iconKey: CategoryIconKey.food,
+          colorKey: CategoryColorKey.orange,
+          sortOrder: id,
+        ),
+    ];
+    final existing = [
+      Transaction(
+        id: 1,
+        amountMinor: 1250,
+        type: TransactionType.expense,
+        categoryId: 1,
+        occurredAt: DateTime(2026, 11, 4, 8, 5).toUtc(),
+        title: 'Nasi lemak',
+      ),
+    ];
+    ImportRow row({
+      DateTime? at,
+      TransactionType type = TransactionType.expense,
+      int amount = 1250,
+      String category = 'food',
+    }) => (
+      occurredAt: at ?? DateTime(2026, 11, 4, 12),
+      type: type,
+      category: category,
+      title: 'anything',
+      amountMinor: amount,
+      note: null,
+    );
+
+    test('same day, type, amount and category, any time or title', () {
+      expect(
+        duplicateRows(
+          [
+            row(),
+            row(at: DateTime(2026, 11, 5)),
+            row(amount: 1251),
+            row(type: TransactionType.income, category: 'Salary'),
+            row(category: 'Transport'),
+          ],
+          existing: existing,
+          categories: categories,
+        ),
+        {0},
+      );
+    });
+
+    test('nothing is a duplicate of an empty history', () {
+      expect(
+        duplicateRows([row()], existing: const [], categories: categories),
+        isEmpty,
+      );
+    });
   });
 
   test('the sample parses cleanly', () {

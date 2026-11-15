@@ -35,7 +35,11 @@ class FakeGoalRepository implements GoalRepository {
         out.add(current());
         changes = _changes.stream.listen((_) => out.add(current()));
       },
-      onCancel: () => changes?.cancel(),
+      // Not returning the cancel future: under the widget test clock it
+      // never completes, so `.first` would never return.
+      onCancel: () {
+        unawaited(changes?.cancel());
+      },
     );
     return out.stream;
   }

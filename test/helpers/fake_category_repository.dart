@@ -81,7 +81,11 @@ class FakeCategoryRepository implements CategoryRepository {
           (_) => out.add(_matching(type: type, archived: archived)),
         );
       },
-      onCancel: () => changes?.cancel(),
+      // Not returning the cancel future: under the widget test clock it
+      // never completes, so `.first` would never return.
+      onCancel: () {
+        unawaited(changes?.cancel());
+      },
     );
     return out.stream;
   }

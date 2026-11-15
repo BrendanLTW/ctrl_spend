@@ -21,7 +21,11 @@ class FakePreferencesRepository implements PreferencesRepository {
         out.add(_current);
         changes = _changes.stream.listen(out.add);
       },
-      onCancel: () => changes?.cancel(),
+      // Not returning the cancel future: under the widget test clock it
+      // never completes, so `.first` would never return.
+      onCancel: () {
+        unawaited(changes?.cancel());
+      },
     );
     return out.stream;
   }

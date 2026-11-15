@@ -36,7 +36,11 @@ class FakeBillRepository implements BillRepository {
         out.add(all);
         changes = _changes.stream.listen((_) => out.add(all));
       },
-      onCancel: () => changes?.cancel(),
+      // Not returning the cancel future: under the widget test clock it
+      // never completes, so `.first` would never return.
+      onCancel: () {
+        unawaited(changes?.cancel());
+      },
     );
     return out.stream;
   }

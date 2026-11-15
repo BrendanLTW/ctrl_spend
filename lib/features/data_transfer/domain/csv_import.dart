@@ -67,12 +67,22 @@ final class TooLong extends ImportProblem {
   final int max;
 }
 
+/// More rows than an import takes ([maxImportRows], PRD §6.4).
+final class TooManyRows extends ImportProblem {
+  const new(this.count) : super(1);
+
+  final int count;
+}
+
 /// A date after today: no future dates (PRD §5.3).
 final class FutureDate extends ImportProblem {
   const new(super.row, this.value);
 
   final String value;
 }
+
+/// The most rows one file may have (PRD §6.4).
+const maxImportRows = 20000;
 
 /// The rows to import, or every problem found. Never both: import is all
 /// or nothing (PRD §5.8).
@@ -96,6 +106,11 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
   ];
   if (table.isEmpty) {
     return (rows: const [], problems: const [MissingColumns(_required)]);
+  }
+
+  final count = table.skip(1).where((r) => r.any((c) => c.isNotEmpty)).length;
+  if (count > maxImportRows) {
+    return (rows: const [], problems: [TooManyRows(count)]);
   }
 
   final header = [for (final h in table.first) h.toLowerCase()];
@@ -226,7 +241,39 @@ DateTime? _parseDate(String text) {
 /// "ctrlspend-sample.csv": three rows showing the format (S36).
 const sampleCsvName = 'ctrlspend-sample.csv';
 const sampleCsv =
-    'date,time,type,category,title,amount,note\r\n'
-    '2026-11-04,08:05,expense,Food,Nasi lemak,12.50,with egg\r\n'
-    '2026-11-03,18:20,expense,Transport,Grab to KLCC,18.20,\r\n'
-    '2026-11-01,09:00,income,Salary,November pay,4800.00,\r\n';
+    'date,time,type,amount,category,title,note\r\n'
+    '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,with egg\r\n'
+    '2026-11-03,18:20,expense,18.20,Transport,Grab to KLCC,\r\n'
+    '2026-11-01,09:00,income,4800.00,Salary,November pay,\r\n';
+
+/// Which of [rows] (by index) match an existing transaction: the same
+/// local date, type, amount and category, the category matched by name
+/// and type, ignoring case (PRD §6.4). Skipped by default (S52).
+Set<int> duplicateRows(
+  List<ImportRow> rows, {
+  required Iterable<Transaction> existing,
+  required Iterable<Category> categories,
+}) {
+  final names = {for (final c in categories) c.id: c.name.toLowerCase()};
+  (int, int, int, TransactionType, int, String) key(
+    DateTime at,
+    TransactionType type,
+    int amountMinor,
+    String category,
+  ) {
+    final day = at.toLocal();
+    return (day.year, day.month, day.day, type, amountMinor, category);
+  }
+
+  final saved = {
+    for (final t in existing)
+      key(t.occurredAt, t.type, t.amountMinor, names[t.categoryId] ?? ''),
+  };
+  return {
+    for (final (i, r) in rows.indexed)
+      if (saved.contains(
+        key(r.occurredAt, r.type, r.amountMinor, r.category.toLowerCase()),
+      ))
+        i,
+  };
+}

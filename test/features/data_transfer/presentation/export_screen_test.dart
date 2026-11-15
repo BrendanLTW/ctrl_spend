@@ -138,10 +138,10 @@ void main() {
       expect(file.fileName, 'ctrlspend-2026-11-04.csv');
       expect(file.mimeType, 'text/csv');
       expect(lines(), [
-        'date,time,type,category,title,amount,note',
-        '2026-11-04,08:05,expense,Food,Nasi lemak,12.50,egg',
-        '2026-11-01,09:00,income,Salary,November pay,4800.00,',
-        '2026-10-10,18:00,expense,Shopping,Shoes,99.00,',
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,egg',
+        '2026-11-01,09:00,income,4800.00,Salary,November pay,',
+        '2026-10-10,18:00,expense,99.00,Shopping,Shoes,',
       ]);
       expect(find.text('Saved 3 transactions to Files'), findsOneWidget);
       expect(find.text('ctrlspend-2026-11-04.csv'), findsOneWidget);
@@ -155,8 +155,8 @@ void main() {
       await tap(tester, 'Notes');
       await export(tester);
       expect(lines(), [
-        'date,time,type,category,title,amount',
-        '2026-11-04,08:05,expense,Food,Nasi lemak,12.50',
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,',
       ]);
       expect(find.text('Saved 1 transaction to Files'), findsOneWidget);
       hideAppToast();
@@ -181,7 +181,7 @@ void main() {
       expect(find.text('1 Nov 2026'), findsOneWidget);
       await export(tester);
       expect(lines().skip(1), [
-        '2026-11-01,09:00,income,Salary,November pay,4800.00,',
+        '2026-11-01,09:00,income,4800.00,Salary,November pay,',
       ]);
       hideAppToast();
     });

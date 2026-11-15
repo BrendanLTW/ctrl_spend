@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
+import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_import.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -50,13 +51,27 @@ Future<void> importCsv(
     showAppToast(context, message: l10n.importEmpty);
     return;
   }
-  await ref.read(transactionRepositoryProvider).importAll(result.rows);
+  // Rows already here are skipped (PRD §6.4; S52 will offer a choice).
+  final transactions = ref.read(transactionRepositoryProvider);
+  final duplicates = duplicateRows(
+    result.rows,
+    existing: await transactions.watch().first,
+    categories: await ref.read(categoryRepositoryProvider).watch().first,
+  );
+  final rows = [
+    for (final (i, r) in result.rows.indexed)
+      if (!duplicates.contains(i)) r,
+  ];
+  if (rows.isNotEmpty) await transactions.importAll(rows);
   if (!context.mounted) return;
   // The toast lives in the root overlay, so it outlasts S36 closing.
   showAppToast(
     context,
-    message: l10n.importedTransactions(result.rows.length),
-    success: true,
+    message: l10n.importedTransactions(rows.length),
+    detail: duplicates.isEmpty
+        ? null
+        : l10n.importSkippedDuplicates(duplicates.length),
+    success: rows.isNotEmpty,
   );
   if (fromFailure) context.pop();
 }

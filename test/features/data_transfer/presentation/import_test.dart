@@ -102,6 +102,19 @@ void main() {
     hideAppToast();
   });
 
+  testWidgets('rows already here are skipped, and the toast says so', (
+    tester,
+  ) async {
+    await pumpSettings(tester);
+    await importFile(tester, 'ctrlspend-2026-11-04.csv', good);
+    hideAppToast();
+    await importFile(tester, 'ctrlspend-2026-11-04.csv', good);
+    expect(transactions.all, hasLength(2));
+    expect(find.text('Imported 0 transactions'), findsOneWidget);
+    expect(find.text('2 duplicates skipped'), findsOneWidget);
+    hideAppToast();
+  });
+
   testWidgets('cancelling the picker does nothing', (tester) async {
     await pumpSettings(tester);
     await tester.scrollUntilVisible(find.text('Import from CSV'), 200);

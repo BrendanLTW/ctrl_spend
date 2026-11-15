@@ -1705,5 +1705,26 @@
     }
   },
   "columnTitle": "Title",
-  "columnNote": "Note"
+  "columnNote": "Note",
+  "problemTooManyRows": "{count} rows; an import takes at most {max}",
+  "@problemTooManyRows": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      },
+      "max": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "importSkippedDuplicates": "{count, plural, =1{1 duplicate skipped} other{{count} duplicates skipped}}",
+  "@importSkippedDuplicates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

@@ -158,29 +158,29 @@ class ImportFailedScreen extends ConsumerWidget {
   }
 }
 
-String _describe(AppLocalizations l10n, ImportProblem problem) =>
-    switch (problem) {
-      NotText() => l10n.problemNotText,
-      MissingColumns(:final columns) => l10n.problemMissingColumns(
-        columns.join(', '),
-      ),
-      NotADate(:final value) => l10n.problemNotADate(value),
-      NotATime(:final value) => l10n.problemNotATime(value),
-      NotAType(:final value) => l10n.problemNotAType(value),
-      NotAnAmount(:final value) => l10n.problemNotAnAmount(value),
-      TooLong(:final column, :final max) => l10n.problemTooLong(
-        switch (column) {
-          CsvColumns.title => l10n.columnTitle,
-          CsvColumns.note => l10n.columnNote,
-          _ => l10n.columnCategory,
-        },
-        max,
-      ),
-      FutureDate(:final value) => l10n.problemFutureDate(value),
-      EmptyField(:final column) => l10n.problemEmpty(switch (column) {
-        CsvColumns.date => l10n.columnDate,
-        CsvColumns.type => l10n.columnType,
-        CsvColumns.category => l10n.columnCategory,
-        _ => l10n.columnAmount,
-      }),
-    };
+String _describe(
+  AppLocalizations l10n,
+  ImportProblem problem,
+) => switch (problem) {
+  NotText() => l10n.problemNotText,
+  MissingColumns(:final columns) => l10n.problemMissingColumns(
+    columns.join(', '),
+  ),
+  NotADate(:final value) => l10n.problemNotADate(value),
+  NotATime(:final value) => l10n.problemNotATime(value),
+  NotAType(:final value) => l10n.problemNotAType(value),
+  NotAnAmount(:final value) => l10n.problemNotAnAmount(value),
+  TooLong(:final column, :final max) => l10n.problemTooLong(switch (column) {
+    CsvColumns.title => l10n.columnTitle,
+    CsvColumns.note => l10n.columnNote,
+    _ => l10n.columnCategory,
+  }, max),
+  FutureDate(:final value) => l10n.problemFutureDate(value),
+  TooManyRows(:final count) => l10n.problemTooManyRows(count, maxImportRows),
+  EmptyField(:final column) => l10n.problemEmpty(switch (column) {
+    CsvColumns.date => l10n.columnDate,
+    CsvColumns.type => l10n.columnType,
+    CsvColumns.category => l10n.columnCategory,
+    _ => l10n.columnAmount,
+  }),
+};
