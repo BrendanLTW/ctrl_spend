@@ -4,8 +4,9 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 
-/// A choosable category (DESIGN §7): a 60 × 60 tile with the label below
-/// in uppercase; `ink` fill with an `onInk` icon when selected.
+/// A choosable category (DESIGN §7): a 56 × 56 tile, radius 18, with the
+/// label below in uppercase 12/600; `ink` fill with an `onInk` icon when
+/// selected. 66 wide, for the entry screens' row.
 class CategoryPickerTile extends StatelessWidget {
   const new({
     required this.icon,
@@ -37,11 +38,11 @@ class CategoryPickerTile extends StatelessWidget {
           children: [
             AnimatedContainer(
               duration: const Duration(milliseconds: 150),
-              width: 60,
-              height: 60,
+              width: 56,
+              height: 56,
               decoration: BoxDecoration(
                 color: selected ? colors.ink : colors.surface,
-                borderRadius: BorderRadius.circular(AppRadius.r20),
+                borderRadius: BorderRadius.circular(AppRadius.r18),
               ),
               child: AppIconView(
                 icon,
@@ -60,7 +61,10 @@ class CategoryPickerTile extends StatelessWidget {
                 child: Text(
                   label.toUpperCase(),
                   maxLines: 1,
-                  style: context.text.label.copyWith(color: colors.ink),
+                  style: context.text.pillLabel.copyWith(
+                    color: colors.ink,
+                    letterSpacing: 0.3,
+                  ),
                 ),
               ),
             ),

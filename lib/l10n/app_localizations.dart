@@ -2883,6 +2883,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add {amount} to reach it.'**
   String goalPastTargetBody(String amount);
+
+  /// No description provided for @entryTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What was it? (optional)'**
+  String get entryTitleHint;
+
+  /// No description provided for @entryNoteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a note'**
+  String get entryNoteHint;
+
+  /// No description provided for @entrySaveHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter an amount and pick a category to save'**
+  String get entrySaveHint;
+
+  /// No description provided for @entryDateTime.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}, {time}'**
+  String entryDateTime(String date, String time);
+
+  /// No description provided for @chooseCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose category'**
+  String get chooseCategory;
+
+  /// No description provided for @searchCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Search categories'**
+  String get searchCategories;
+
+  /// No description provided for @addedByYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Added by you'**
+  String get addedByYou;
+
+  /// No description provided for @pickerArchivedNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Archived categories don\'t appear here. Restore them in Settings → Categories.'**
+  String get pickerArchivedNote;
+
+  /// No description provided for @noCategoryMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No categories match “{query}”'**
+  String noCategoryMatch(String query);
 }
 
 class _AppLocalizationsDelegate

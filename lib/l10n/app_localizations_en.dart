@@ -1913,4 +1913,36 @@ class AppLocalizationsEn extends AppLocalizations {
   String goalPastTargetBody(String amount) {
     return 'Add $amount to reach it.';
   }
+
+  @override
+  String get entryTitleHint => 'What was it? (optional)';
+
+  @override
+  String get entryNoteHint => 'Add a note';
+
+  @override
+  String get entrySaveHint => 'Enter an amount and pick a category to save';
+
+  @override
+  String entryDateTime(String date, String time) {
+    return '$date, $time';
+  }
+
+  @override
+  String get chooseCategory => 'Choose category';
+
+  @override
+  String get searchCategories => 'Search categories';
+
+  @override
+  String get addedByYou => 'Added by you';
+
+  @override
+  String get pickerArchivedNote =>
+      'Archived categories don\'t appear here. Restore them in Settings → Categories.';
+
+  @override
+  String noCategoryMatch(String query) {
+    return 'No categories match “$query”';
+  }
 }

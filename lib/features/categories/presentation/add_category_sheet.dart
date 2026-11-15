@@ -21,23 +21,29 @@ import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Opens S24 New category: type, name with a live preview, icon, colour
-/// and (for expenses) an optional monthly limit.
-Future<void> showAddCategorySheet(BuildContext context) => showAppSheet<void>(
+/// Opens S24 New category: type ([type] to start with), name with a live
+/// preview, icon, colour and (for expenses) an optional monthly limit.
+/// Resolves to the new category, or null if dismissed.
+Future<Category?> showAddCategorySheet(
+  BuildContext context, {
+  TransactionType type = TransactionType.expense,
+}) => showAppSheet<Category>(
   context,
   title: context.l10n.newCategory,
-  builder: (_) => const _AddCategoryBody(),
+  builder: (_) => _AddCategoryBody(type: type),
 );
 
 class _AddCategoryBody extends ConsumerStatefulWidget {
-  const new();
+  const new({required this.type});
+
+  final TransactionType type;
 
   @override
   ConsumerState<_AddCategoryBody> createState() => _AddCategoryBodyState();
 }
 
 class _AddCategoryBodyState extends ConsumerState<_AddCategoryBody> {
-  TransactionType _type = TransactionType.expense;
+  late TransactionType _type = widget.type;
   CategoryIconKey _icon = CategoryIconKey.food;
   CategoryColorKey _colour = CategoryColorKey.orange;
   int? _limit;
@@ -82,7 +88,7 @@ class _AddCategoryBodyState extends ConsumerState<_AddCategoryBody> {
     final name = _name.text.trim();
     if (name.isEmpty) return;
     try {
-      await ref
+      final created = await ref
           .read(categoryRepositoryProvider)
           .add(
             name: name,
@@ -91,7 +97,7 @@ class _AddCategoryBodyState extends ConsumerState<_AddCategoryBody> {
             colorKey: _colour,
             limitMinor: _type == TransactionType.expense ? _limit : null,
           );
-      if (mounted) Navigator.of(context).pop();
+      if (mounted) Navigator.of(context).pop(created);
     } on DuplicateCategoryNameException {
       setState(() => _error = context.l10n.duplicateCategory(_type.name, name));
     }

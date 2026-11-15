@@ -1,12 +1,12 @@
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_text_field.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
+import 'package:ctrl_spend/core/widgets/large_text.dart';
+import 'package:ctrl_spend/core/widgets/money_keypad.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
@@ -14,18 +14,21 @@ import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
-import 'package:ctrl_spend/features/transactions/presentation/category_choice.dart';
+import 'package:ctrl_spend/features/transactions/presentation/category_picker_sheet.dart';
 import 'package:ctrl_spend/features/transactions/presentation/delete_transaction.dart';
-import 'package:ctrl_spend/features/transactions/presentation/transaction_amount_card.dart';
+import 'package:ctrl_spend/features/transactions/presentation/entry_amount_card.dart';
+import 'package:ctrl_spend/features/transactions/presentation/entry_fields.dart';
 import 'package:ctrl_spend/l10n/date_labels.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
-/// S12 New expense / New income and S13 Edit transaction. The note
-/// becomes the title (or the category name if blank). New entries open
-/// the keypad straight away.
+/// S12 New expense, S13 New income and S45 Edit transaction (PRD §5.3):
+/// the type, the amount typed on the keypad pinned below, a row of
+/// category tiles with More (S46), an optional title, and Date and Note.
+/// Save stays off, with a hint, until there's an amount and a category.
 class AddTransactionScreen extends ConsumerStatefulWidget {
   const new({
     this.transactionId,
@@ -33,7 +36,7 @@ class AddTransactionScreen extends ConsumerStatefulWidget {
     super.key,
   });
 
-  /// Set to edit that transaction (S13).
+  /// Set to edit that transaction (S45).
   final int? transactionId;
   final TransactionType initialType;
 
@@ -47,21 +50,15 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
   int _amount = 0;
   int? _categoryId;
   late DateTime _occurredAt = ref.read(clockProvider)();
+  final _title = TextEditingController();
   final _note = TextEditingController();
   Transaction? _editing;
 
   bool get _isEdit => widget.transactionId != null;
 
   @override
-  void initState() {
-    super.initState();
-    if (!_isEdit) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => _openKeypad());
-    }
-  }
-
-  @override
   void dispose() {
+    _title.dispose();
     _note.dispose();
     super.dispose();
   }
@@ -76,15 +73,10 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     _amount = found.amountMinor;
     _categoryId = found.categoryId;
     _occurredAt = found.occurredAt.toLocal();
-    // A title equal to the category name was a blank note.
-    _note.text = found.title == category?.name ? '' : found.title;
+    // A title equal to the category name was left blank.
+    _title.text = found.title == category?.name ? '' : found.title;
+    _note.text = found.note ?? '';
   }
-
-  Future<void> _openKeypad() => showKeypadSheet(
-    context,
-    initialMinor: _amount,
-    onChanged: (minor) => setState(() => _amount = minor),
-  );
 
   Future<void> _pickDate() async {
     final today = ref.read(clockProvider)();
@@ -109,10 +101,19 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     );
   }
 
+  Future<void> _more() async {
+    final picked = await showCategoryPickerSheet(
+      context,
+      type: _type,
+      selectedId: _categoryId,
+    );
+    if (picked != null) setState(() => _categoryId = picked.id);
+  }
+
   Future<void> _save(Category category) async {
-    final note = _note.text.trim();
-    final title = note.isEmpty ? category.name : note;
     final repository = ref.read(transactionRepositoryProvider);
+    final title = _title.text.trim();
+    final note = _note.text.trim();
     final editing = _editing;
     if (editing == null) {
       await repository.add(
@@ -121,6 +122,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
         categoryId: category.id,
         occurredAt: _occurredAt,
         title: title,
+        note: note.isEmpty ? null : note,
       );
     } else {
       await repository.update(
@@ -129,7 +131,8 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
           type: _type,
           categoryId: category.id,
           occurredAt: _occurredAt.toUtc(),
-          title: title,
+          title: title.isEmpty ? category.name : title,
+          note: note.isEmpty ? null : note,
         ),
       );
     }
@@ -167,8 +170,8 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
     final ofType =
         ref.watch(categoriesProvider(type: _type)).value ?? const <Category>[];
     final selected = ofType.where((c) => c.id == _categoryId).firstOrNull;
-    // Archived categories stay out of the choices, unless it's the one
-    // this transaction already uses.
+    // Archived categories stay out of the row, unless it's the one this
+    // transaction already uses.
     final choices = [
       for (final c in ofType)
         if (!c.archived || c.id == selected?.id) c,
@@ -178,6 +181,13 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
         : _type == TransactionType.expense
         ? l10n.newExpense
         : l10n.newIncome;
+    final canSave = _amount > 0 && selected != null;
+    final dateLabel = _isEdit
+        ? l10n.entryDateTime(
+            DateFormat('d MMM', locale).format(_occurredAt),
+            DateFormat('HH:mm', locale).format(_occurredAt),
+          )
+        : l10n.dateRowLabel(_occurredAt, ref.watch(clockProvider)(), locale);
 
     return Scaffold(
       backgroundColor: colors.ground,
@@ -199,7 +209,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
               style: TextButton.styleFrom(foregroundColor: colors.negative),
               child: Text(
                 l10n.delete,
-                style: text.rowTitle.copyWith(color: colors.negative),
+                style: text.rowTitleSm.copyWith(color: colors.negative),
               ),
             ),
         ],
@@ -211,133 +221,126 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
           children: [
             Expanded(
               child: ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  AppSpacing.screenX,
-                  8,
-                  AppSpacing.screenX,
-                  16,
-                ),
+                padding: const EdgeInsets.only(top: 2, bottom: 12),
                 children: [
-                  SegmentedControl<TransactionType>(
-                    segments: [
-                      (
-                        value: TransactionType.expense,
-                        label: l10n.expenseLabel,
-                      ),
-                      (value: TransactionType.income, label: l10n.incomeLabel),
-                    ],
-                    selected: _type,
-                    onChanged: (type) => setState(() {
-                      if (type == _type) return;
-                      _type = type;
-                      // Categories belong to one type, so clear the choice.
-                      _categoryId = null;
-                    }),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.screenX,
+                    ),
+                    child: SegmentedControl<TransactionType>(
+                      segments: [
+                        (
+                          value: TransactionType.expense,
+                          label: l10n.expenseLabel,
+                        ),
+                        (
+                          value: TransactionType.income,
+                          label: l10n.incomeLabel,
+                        ),
+                      ],
+                      selected: _type,
+                      onChanged: (type) => setState(() {
+                        if (type == _type) return;
+                        _type = type;
+                        // Categories belong to one type, so clear it.
+                        _categoryId = null;
+                      }),
+                    ),
                   ),
-                  const SizedBox(height: 16),
-                  TransactionAmountCard(
-                    minor: _amount,
-                    currency: currency,
-                    income: _type == TransactionType.income,
-                    onTap: _openKeypad,
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.screenX,
+                    ),
+                    child: EntryAmountCard(
+                      minor: _amount,
+                      currency: currency,
+                      income: _type == TransactionType.income,
+                    ),
                   ),
-                  const SizedBox(height: 24),
-                  CategoryChoice(
+                  CategoryTileRow(
                     choices: choices,
                     selected: selected,
                     onSelected: (c) => setState(() => _categoryId = c.id),
+                    onMore: _more,
                   ),
-                  const SizedBox(height: 24),
-                  _DateRow(
-                    label: l10n.dateRowLabel(
-                      _occurredAt,
-                      ref.watch(clockProvider)(),
-                      locale,
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      AppSpacing.screenX,
+                      12,
+                      AppSpacing.screenX,
+                      0,
                     ),
-                    onTap: _pickDate,
-                  ),
-                  const SizedBox(height: AppSpacing.cardGap),
-                  AppTextField(
-                    controller: _note,
-                    hint: l10n.addNote,
-                    icon: AppIcon.note,
-                    // The field becomes the title until S12 is rebuilt
-                    // (task 6.12), so it takes the title's limit.
-                    maxLength: maxTitleLength,
-                    textCapitalization: TextCapitalization.sentences,
-                    textInputAction: TextInputAction.done,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        EntryField(
+                          icon: AppIcon.tag,
+                          label: l10n.entryTitleHint,
+                          controller: _title,
+                          maxLength: maxTitleLength,
+                        ),
+                        const SizedBox(height: 8),
+                        PairOrStack(
+                          gap: 8,
+                          children: [
+                            EntryField(
+                              icon: AppIcon.calendar,
+                              label: dateLabel,
+                              onTap: _pickDate,
+                              compact: true,
+                            ),
+                            EntryField(
+                              icon: AppIcon.note,
+                              label: l10n.entryNoteHint,
+                              controller: _note,
+                              maxLength: maxNoteLength,
+                              compact: true,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.screenX,
+              ),
+              child: MoneyKeypad(
+                value: _amount,
+                size: MoneyKeypadSize.entry,
+                onChanged: (minor) => setState(() => _amount = minor),
+              ),
+            ),
+            SizedBox(
+              height: 20,
+              child: canSave
+                  ? null
+                  : Center(
+                      child: Text(
+                        l10n.entrySaveHint,
+                        textAlign: TextAlign.center,
+                        style: text.hint.copyWith(color: colors.muted),
+                      ),
+                    ),
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.screenX,
                 0,
                 AppSpacing.screenX,
-                12,
+                24,
               ),
               child: PrimaryButton(
                 label: l10n.save,
-                onPressed: _amount > 0 && selected != null
-                    ? () => _save(selected)
-                    : null,
+                size: PrimaryButtonSize.entry,
+                onPressed: canSave ? () => _save(selected) : null,
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _DateRow extends StatelessWidget {
-  const new({required this.label, required this.onTap});
-
-  final String label;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Semantics(
-      button: true,
-      label: label,
-      excludeSemantics: true,
-      child: Material(
-        color: colors.surface,
-        borderRadius: BorderRadius.circular(AppRadius.r20),
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          highlightColor: colors.raised,
-          splashFactory: NoSplash.splashFactory,
-          child: SizedBox(
-            height: 56,
-            child: Row(
-              children: [
-                const SizedBox(width: 20),
-                AppIconView(AppIcon.calendar, size: 22, color: colors.muted),
-                const SizedBox(width: 14),
-                Expanded(
-                  child: Text(
-                    label,
-                    style: context.text.body.copyWith(
-                      color: colors.ink,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                AppIconView(
-                  AppIcon.chevronRight,
-                  stroke: AppIconStroke.chevron,
-                  size: 20,
-                  color: colors.ink,
-                ),
-                const SizedBox(width: 16),
-              ],
-            ),
-          ),
         ),
       ),
     );

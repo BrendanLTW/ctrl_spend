@@ -50,6 +50,7 @@ enum AppIcon {
   searchOff('search-x'),
   shield('shield-check'),
   sliders('sliders-horizontal'),
+  tag('tag'),
   target('target'),
   trash('trash-2'),
   trendUp('trending-up'),

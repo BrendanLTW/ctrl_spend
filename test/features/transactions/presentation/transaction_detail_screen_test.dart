@@ -226,7 +226,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(AddTransactionScreen), findsOneWidget);
 
-    await tester.enterText(find.byType(TextField), 'Roti canai');
+    await tester.enterText(find.byType(TextField).first, 'Roti canai');
     await tester.tap(find.text('Save'));
     await tester.pump(const Duration(milliseconds: 100));
     await tester.pumpAndSettle();
@@ -242,13 +242,9 @@ void main() {
     await openDetail(tester);
     await tester.tap(find.text('Edit'));
     await tester.pumpAndSettle();
-    await tester.tap(find.text('760.00'));
-    await tester.pumpAndSettle();
     // RM 760.00 → RM 76.00
     await tester.tap(find.bySemanticsLabel('Backspace').last);
     await tester.pump();
-    await tester.tap(find.text('Done'));
-    await tester.pumpAndSettle();
     await tester.tap(find.text('Save'));
     await tester.pump(const Duration(milliseconds: 100));
     await tester.pumpAndSettle();

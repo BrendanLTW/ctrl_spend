@@ -57,6 +57,14 @@ class AppTypography {
     height: 1.3,
   );
 
+  /// The hint under a disabled Save (S12): 12/400.
+  TextStyle get hint => const TextStyle(
+    fontFamily: _family,
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    height: 1.4,
+  );
+
   /// Message box text.
   TextStyle get message => const TextStyle(
     fontFamily: _family,

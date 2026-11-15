@@ -4,7 +4,6 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
-import 'package:ctrl_spend/core/widgets/category_picker_tile.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -13,6 +12,7 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrl_spend/features/transactions/presentation/entry_fields.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -305,13 +305,12 @@ void main() {
       await categories.archive(categories.byName('Fun').id);
       unawaited(container.read(appRouterProvider).push(Routes.add));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Done'));
-      await tester.pumpAndSettle();
       final labels = [
-        for (final t in tester.widgetList<CategoryPickerTile>(
-          find.byType(CategoryPickerTile),
-        ))
-          t.label,
+        for (final c
+            in tester
+                .widget<CategoryTileRow>(find.byType(CategoryTileRow))
+                .choices)
+          c.name,
       ];
       expect(labels, contains('Coffee'));
       expect(labels, isNot(contains('Fun')));

@@ -10,6 +10,10 @@ enum MoneyKeypadSize {
 
   /// Inside bottom sheets: 48 high, `fillSoft` keys.
   sheet,
+
+  /// Entry screens (S12, S13, S45): 44 high `fillSoft` keys, 6 apart,
+  /// pinned under the form. Each takes taps across 48 px.
+  entry,
 }
 
 /// The 3x4 money keypad (PRD §6.1, DESIGN §7). Controlled: it reports the
@@ -27,6 +31,9 @@ class MoneyKeypad extends StatelessWidget {
   final MoneyKeypadSize size;
 
   static const double _gap = 8;
+
+  /// Between entry keys: 6 px drawn, less the 2 px of tap area each side.
+  static const double _entryGap = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +74,16 @@ class MoneyKeypad extends StatelessWidget {
       [DigitKey(7), DigitKey(8), DigitKey(9)],
       [DoubleZeroKey(), DigitKey(0), BackspaceKey()],
     ];
+    final entry = size == MoneyKeypadSize.entry;
     return Column(
       mainAxisSize: MainAxisSize.min,
-      spacing: _gap,
+      spacing: entry ? _entryGap : _gap,
       children: [
         for (final row in rows)
-          Row(spacing: _gap, children: [for (final k in row) key(k)]),
+          Row(
+            spacing: entry ? 6 : _gap,
+            children: [for (final k in row) key(k)],
+          ),
       ],
     );
   }

@@ -8,7 +8,10 @@ enum PrimaryButtonSize {
   screen(58, 22),
 
   /// Inside a sheet: 56 high, radius 20 (DESIGN §7, sheet button).
-  sheet(56, 20);
+  sheet(56, 20),
+
+  /// Under the entry screens' keypad (S12, S45): 54 high, radius 22.
+  entry(54, 22);
 
   new(this.height, this.radius);
 

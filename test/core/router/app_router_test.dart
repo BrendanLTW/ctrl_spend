@@ -118,9 +118,6 @@ void main() {
     expect(title('New expense'), findsOneWidget);
     expect(find.byType(AppShell), findsNothing);
 
-    // New entries open the keypad first; Done closes it.
-    await tester.tap(find.text('Done'));
-    await tester.pumpAndSettle();
     await tester.tap(find.byTooltip('Close'));
     await tester.pumpAndSettle();
     expect(find.byType(BudgetsScreen), findsOneWidget);

@@ -79,9 +79,14 @@ final screens = <String, Drive>{
       dash.pumpHome(t, prefs: p(th), seed: dash.seedDesign),
   'S10 first run': (t, th) => dash.pumpHome(t, prefs: p(th)),
   'S12 add': (t, th) => add.pumpAt(t, Routes.add, theme: th),
-  'S12 add (keypad closed)': (t, th) async {
+  'S13 new income': (t, th) =>
+      add.pumpAt(t, '${Routes.add}?type=income', theme: th),
+  'S45 edit': (t, th) =>
+      add.pumpAt(t, Routes.editTransaction(1), theme: th, seed: add.seedLunch),
+  'S46 category picker': (t, th) async {
     await add.pumpAt(t, Routes.add, theme: th);
-    await add.done(t);
+    await t.tap(find.text('More'));
+    await t.pumpAndSettle();
   },
   'S41 detail': (t, th) async {
     await det.pumpApp(
