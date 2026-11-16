@@ -21,6 +21,7 @@ class GoalCard extends StatelessWidget {
     required this.savedMinor,
     required this.currency,
     required this.onTap,
+    this.completedOn,
     super.key,
   });
 
@@ -28,6 +29,10 @@ class GoalCard extends StatelessWidget {
   final int savedMinor;
   final Currency currency;
   final VoidCallback onTap;
+
+  /// "Completed 3 Oct" in place of the type and date, for S29's
+  /// completed group.
+  final DateTime? completedOn;
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +45,15 @@ class GoalCard extends StatelessWidget {
     final tint = context.categoryColors.of(colour);
     final progress = goalProgress(goal, savedMinor);
     final percent = (progress * 100).floor();
-    final chip = l10n.goalChip(
-      l10n.goalTypeOf(goal.iconKey),
-      DateFormat('MMM y', locale).format(goal.targetMonth),
-    );
+    final chip = switch (completedOn) {
+      final day? => l10n.goalCompletedOn(
+        DateFormat('d MMM', locale).format(day),
+      ),
+      null => l10n.goalChip(
+        l10n.goalTypeOf(goal.iconKey),
+        DateFormat('MMM y', locale).format(goal.targetMonth),
+      ),
+    };
     final saved = formatter.formatCompact(savedMinor);
     final toGo = formatter.formatCompact(toGoMinor(goal, savedMinor));
 

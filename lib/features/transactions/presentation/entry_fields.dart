@@ -161,6 +161,7 @@ class EntryField extends StatelessWidget {
     this.maxLength,
     this.onTap,
     this.compact = false,
+    this.background,
     super.key,
   });
 
@@ -174,6 +175,9 @@ class EntryField extends StatelessWidget {
 
   /// 14 px side padding, for the half-width chips.
   final bool compact;
+
+  /// Replaces `surface`, e.g. `ground` inside a sheet (S60).
+  final Color? background;
 
   @override
   Widget build(BuildContext context) {
@@ -211,7 +215,7 @@ class EntryField extends StatelessWidget {
       ],
     );
     final box = Material(
-      color: colors.surface,
+      color: background ?? colors.surface,
       borderRadius: BorderRadius.circular(AppRadius.r18),
       clipBehavior: Clip.antiAlias,
       child: InkWell(

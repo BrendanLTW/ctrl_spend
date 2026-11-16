@@ -1536,9 +1536,9 @@
       }
     }
   },
-  "noGoalsTitle": "No goals yet",
-  "noGoalsBody": "Set a target and a date, and see what to put aside each month.",
-  "addGoal": "Add goal",
+  "noGoalsTitle": "Start your first goal",
+  "noGoalsBody": "Pick a target and a date, and ctrlSpend shows how much to put aside each month. Savings don't count as spending.",
+  "addGoal": "Create a goal",
   "goalOfTarget": "of {amount}",
   "@goalOfTarget": {
     "placeholders": {
@@ -1618,15 +1618,6 @@
     }
   },
   "deleteGoal": "Delete goal",
-  "deleteGoalTitle": "Delete {name}?",
-  "@deleteGoalTitle": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "deleteGoalBody": "Its contributions go too. Your spending isn't affected.",
   "newGoal": "New goal",
   "editGoal": "Edit goal",
   "targetAmount": "Target amount",
@@ -2041,6 +2032,46 @@
   "@repeatMonthlyOnDay": {
     "placeholders": {
       "day": {
+        "type": "String"
+      }
+    }
+  },
+  "contributionAmount": "Amount",
+  "contributionLabelHint": "Label",
+  "contributionDefaultLabel": "From salary",
+  "contributionAddButton": "Add {amount}",
+  "@contributionAddButton": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "savingNotSpending": "Money you save doesn't count as spending, so \"Left to spend\" stays the same.",
+  "withdrawUpTo": "You can withdraw up to {amount}, the amount saved so far.",
+  "@withdrawUpTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalOptions": "More options",
+  "editGoalDetail": "Name, target, date and icon",
+  "markGoalCompleted": "Mark as completed",
+  "markGoalCompletedDetail": "Moves it to completed goals",
+  "deleteGoalDetail": "{count, plural, =0{Removes the goal. Your spending isn't affected.} =1{Removes the goal and its 1 contribution. Your spending isn't affected.} other{Removes the goal and its {count} contributions. Your spending isn't affected.}}",
+  "@deleteGoalDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalCompletedOn": "Completed {date}",
+  "@goalCompletedOn": {
+    "placeholders": {
+      "date": {
         "type": "String"
       }
     }

@@ -58,3 +58,12 @@ DESIGN §8 asks for line icons on a 24 grid, round caps and joins, stored as SVG
 | Delete all data | Not on the canvas | S42-style dialog | Added in 3.13 |
 
 Copy that follows the screens over the PRD, and other per-task decisions, are recorded in the commit messages and `docs/PLAN.md`.
+
+## 15 Nov 2026 spec: decisions where the designs are silent
+
+- **S26 By category order.** The PeriodDetail artboard lists Food (RM 512) above Bills (RM 612). The app sorts by amount spent, largest first, as S18 does, so the biggest categories are easiest to find.
+- **S62 Delete goal.** The sheet row already says what goes ("Removes the goal and its 4 contributions…"), so it deletes without a second dialog. Delete left S31, which the AddGoal artboard shows without it.
+- **S62 Mark as completed** is left out once a goal is completed.
+- **S61 Withdraw label.** "From salary" is only the Add money default; a withdrawal starts blank and saves as "Withdrawn" if left blank.
+- **S30 status tiles:** On track green wallet (as designed), Behind amber warning, Past target date red alert, Goal reached green check.
+- **S29 completed goals** expand into the same cards as active goals, with "Completed {date}" in place of the type chip.

@@ -4,7 +4,6 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/detail_rows.dart';
@@ -26,9 +25,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-/// S31 New goal, and Edit goal from S30 (with Delete). New goals open the
-/// keypad straight away. Edit pops with true when the goal was deleted,
-/// so S30 can close too.
+/// S31 New goal, and Edit goal from S62. New goals open the keypad
+/// straight away. Deleting is on S62.
 class AddGoalScreen extends ConsumerStatefulWidget {
   const new({this.goalId, super.key});
 
@@ -117,21 +115,6 @@ class _AddGoalScreenState extends ConsumerState<AddGoalScreen> {
     if (mounted) context.pop();
   }
 
-  Future<void> _delete(Goal goal) async {
-    final l10n = context.l10n;
-    final confirmed = await showAppDialog(
-      context,
-      icon: AppIcon.trash,
-      title: l10n.deleteGoalTitle(goal.name),
-      body: l10n.deleteGoalBody,
-      confirmLabel: l10n.delete,
-      destructive: true,
-    );
-    if (!confirmed) return;
-    await ref.read(goalRepositoryProvider).delete(goal.id);
-    if (mounted) context.pop(true);
-  }
-
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
@@ -177,17 +160,6 @@ class _AddGoalScreenState extends ConsumerState<AddGoalScreen> {
           _isEdit ? l10n.editGoal : l10n.newGoal,
           style: text.header.copyWith(color: colors.ink),
         ),
-        actions: [
-          if (editing != null)
-            TextButton(
-              onPressed: () => _delete(editing),
-              style: TextButton.styleFrom(foregroundColor: colors.negative),
-              child: Text(
-                l10n.delete,
-                style: text.rowTitle.copyWith(color: colors.negative),
-              ),
-            ),
-        ],
       ),
       body: SafeArea(
         top: false,

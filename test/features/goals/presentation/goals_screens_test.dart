@@ -5,7 +5,6 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/detail_rows.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -137,6 +136,30 @@ Future<void> tapText(WidgetTester tester, String text) async {
   await tester.pumpAndSettle();
 }
 
+/// Taps S60/S61's confirm button ("Add RM 400" or "Withdraw").
+Future<void> confirmSheet(WidgetTester tester) async {
+  await tester.tap(
+    find.descendant(
+      of: find.byType(BottomSheet),
+      matching: find.byType(PrimaryButton),
+    ),
+  );
+  await tester.pumpAndSettle();
+}
+
+PrimaryButton sheetButton(WidgetTester tester) => tester.widget(
+  find.descendant(
+    of: find.byType(BottomSheet),
+    matching: find.byType(PrimaryButton),
+  ),
+);
+
+/// Opens S62 from S30's •••.
+Future<void> openOptions(WidgetTester tester) async {
+  await tester.tap(find.bySemanticsLabel('More options'));
+  await tester.pumpAndSettle();
+}
+
 ListGroupRow contribution(WidgetTester tester, int i) => tester
     .widgetList<ListGroupRow>(
       find.descendant(
@@ -198,7 +221,14 @@ void main() {
       expect(find.text('Raya clothes · RM 800'), findsOneWidget);
       expect(find.text('Raya clothes'), findsNothing);
       await tapText(tester, '1 completed goal');
-      await tester.scrollUntilVisible(find.text('Raya clothes'), 200);
+      await tester.scrollUntilVisible(find.text('Completed 20 Feb'), 200);
+      expect(
+        find.byWidgetPredicate(
+          (w) => w is GoalCard && w.goal.name == 'Raya clothes',
+        ),
+        findsOneWidget,
+        reason: 'the same card as an active goal',
+      );
       await tester.ensureVisible(find.text('Raya clothes'));
       await tester.pumpAndSettle();
       await tapText(tester, 'Raya clothes');
@@ -211,8 +241,15 @@ void main() {
       tester,
     ) async {
       await pumpApp(tester, seed: null);
-      expect(find.text('No goals yet'), findsOneWidget);
-      await tapText(tester, 'Add goal');
+      expect(find.text('Start your first goal'), findsOneWidget);
+      expect(
+        find.text(
+          'Pick a target and a date, and ctrlSpend shows how much to put '
+          "aside each month. Savings don't count as spending.",
+        ),
+        findsOneWidget,
+      );
+      await tapText(tester, 'Create a goal');
       expect(find.byType(AddGoalScreen), findsOneWidget);
     });
   });
@@ -245,33 +282,83 @@ void main() {
       await pumpApp(tester);
       await openGoal(tester, 'Bali trip');
       await tapText(tester, 'Add money');
+      expect(find.text('From salary'), findsWidgets, reason: 'the default');
+      expect(
+        find.text(
+          'Money you save doesn\'t count as spending, so "Left to spend" '
+          'stays the same.',
+        ),
+        findsOneWidget,
+      );
       await type(tester, '10000');
+      expect(find.text('Add RM 100'), findsOneWidget);
       await tester.enterText(find.byType(TextField), 'Birthday money');
-      await tester.tap(find.widgetWithText(PrimaryButton, 'Save'));
-      await tester.pumpAndSettle();
+      await confirmSheet(tester);
       final added = goals.contributions.first;
       expect((added.amountMinor, added.label), (10000, 'Birthday money'));
       expect(added.date, DateTime(2026, 11, 4));
       expect(find.text('RM 3,300'), findsOneWidget);
     });
 
+    testWidgets('the sheet can switch to Withdraw and pick an earlier day', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      await openGoal(tester, 'Bali trip');
+      await tapText(tester, 'Add money');
+      await tester.tap(
+        find.descendant(
+          of: find.byType(BottomSheet),
+          matching: find.text('Withdraw'),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.descendant(
+          of: find.byType(BottomSheet),
+          matching: find.text('From salary'),
+        ),
+        findsNothing,
+        reason: 'cleared',
+      );
+      await type(tester, '5000');
+      await tester.tap(find.bySemanticsLabel('Today, 4 Nov'));
+      await tester.pumpAndSettle();
+      await tester.tap(
+        find.descendant(
+          of: find.byType(BottomSheet).last,
+          matching: find.text('2'),
+        ),
+      );
+      await tester.tap(
+        find.descendant(
+          of: find.byType(BottomSheet).last,
+          matching: find.byType(PrimaryButton),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await confirmSheet(tester);
+      final taken = goals.contributions.firstWhere((c) => c.amountMinor < 0);
+      expect((taken.amountMinor, taken.label), (-5000, 'Withdrawn'));
+      expect(taken.date, DateTime(2026, 11, 2));
+    });
+
     testWidgets('Withdraw is capped at what is saved', (tester) async {
       await pumpApp(tester);
       await openGoal(tester, 'Bali trip');
       await tapText(tester, 'Withdraw');
-      expect(find.text('RM 3,200 saved'), findsOneWidget);
       await type(tester, '320001');
-      final save = tester.widget<PrimaryButton>(
-        find.widgetWithText(PrimaryButton, 'Save'),
+      expect(
+        find.text('You can withdraw up to RM 3,200, the amount saved so far.'),
+        findsOneWidget,
       );
-      expect(save.onPressed, isNull);
+      expect(sheetButton(tester).onPressed, isNull);
       for (var i = 0; i < 6; i++) {
         await tester.tap(find.bySemanticsLabel('Backspace'));
         await tester.pump();
       }
       await type(tester, '20000');
-      await tester.tap(find.widgetWithText(PrimaryButton, 'Save'));
-      await tester.pumpAndSettle();
+      await confirmSheet(tester);
       final row = contribution(tester, 0);
       expect((row.title, row.value), ('Withdrawn', '−RM 200'));
       expect(row.valueColor, AppColors.light.ink);
@@ -282,8 +369,7 @@ void main() {
       await openGoal(tester, 'Bali trip');
       await tapText(tester, 'Add money');
       await type(tester, '180000');
-      await tester.tap(find.widgetWithText(PrimaryButton, 'Save'));
-      await tester.pumpAndSettle();
+      await confirmSheet(tester);
       expect(find.text('Goal reached'), findsOneWidget);
       expect(goalNamed('Bali trip').completedAt, DateTime(2026, 11, 4));
       await tester.pageBack();
@@ -348,18 +434,61 @@ void main() {
       );
     });
 
-    testWidgets('Edit opens S31; Delete asks, then closes both', (
+    testWidgets('••• offers Edit, Mark as completed and Delete', (
       tester,
     ) async {
       await pumpApp(tester);
       await openGoal(tester, 'Bali trip');
-      await tapText(tester, 'Edit');
+      await openOptions(tester);
       expect(find.text('Edit goal'), findsOneWidget);
-      expect(find.text('Bali trip'), findsOneWidget);
-      await tapText(tester, 'Delete');
-      expect(find.byType(AppDialog), findsOneWidget);
-      expect(find.text('Delete Bali trip?'), findsOneWidget);
-      await tapText(tester, 'Delete');
+      expect(find.text('Name, target, date and icon'), findsOneWidget);
+      expect(find.text('Mark as completed'), findsOneWidget);
+      expect(
+        find.text(
+          "Removes the goal and its 4 contributions. Your spending isn't "
+          'affected.',
+        ),
+        findsOneWidget,
+      );
+      await tapText(tester, 'Cancel');
+      expect(find.byType(GoalDetailScreen), findsOneWidget);
+    });
+
+    testWidgets('Edit goal opens S31, which no longer deletes', (tester) async {
+      await pumpApp(tester);
+      await openGoal(tester, 'Bali trip');
+      await openOptions(tester);
+      await tapText(tester, 'Edit goal');
+      expect(find.byType(AddGoalScreen), findsOneWidget);
+      expect(find.text('Delete'), findsNothing);
+    });
+
+    testWidgets('Mark as completed moves it to completed goals', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      await openGoal(tester, 'Bali trip');
+      await openOptions(tester);
+      await tapText(tester, 'Mark as completed');
+      expect(find.byType(SavingsGoalsScreen), findsOneWidget);
+      expect(goalNamed('Bali trip').completedAt, isNotNull);
+      await tester.scrollUntilVisible(find.text('2 completed goals'), 200);
+      expect(find.text('2 completed goals'), findsOneWidget);
+      // Completed already: the option isn't offered again.
+      await tapText(tester, '2 completed goals');
+      await tester.scrollUntilVisible(find.text('Bali trip'), 200);
+      await tester.ensureVisible(find.text('Bali trip'));
+      await tester.pumpAndSettle();
+      await tapText(tester, 'Bali trip');
+      await openOptions(tester);
+      expect(find.text('Mark as completed'), findsNothing);
+    });
+
+    testWidgets('Delete goal removes it and its contributions', (tester) async {
+      await pumpApp(tester);
+      await openGoal(tester, 'Bali trip');
+      await openOptions(tester);
+      await tapText(tester, 'Delete goal');
       expect(find.byType(SavingsGoalsScreen), findsOneWidget);
       expect(goals.all.map((g) => g.name), isNot(contains('Bali trip')));
       expect(
@@ -372,7 +501,8 @@ void main() {
   group('S31 New goal', () {
     Future<void> openNew(WidgetTester tester) async {
       await pumpApp(tester, seed: null);
-      await tapText(tester, 'Add goal');
+      // The header's Add: at 200% text S63's button is below the fold.
+      await tapText(tester, 'Add');
     }
 
     Future<void> pickMonth(WidgetTester tester, String label) async {

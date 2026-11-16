@@ -199,19 +199,31 @@ final screens = <String, Drive>{
   'S29 goals empty': (t, th) => goal.pumpApp(t, theme: th, seed: null),
   'S30 goal detail': (t, th) =>
       goal.pumpApp(t, theme: th).then((_) => goal.openGoal(t, 'Bali trip')),
-  'S30 add money': (t, th) async {
+  'S60 add money': (t, th) async {
     await goal.pumpApp(t, theme: th);
     await goal.openGoal(t, 'Bali trip');
     await goal.tapText(t, 'Add money');
   },
+  'S61 withdraw over': (t, th) async {
+    await goal.pumpApp(t, theme: th);
+    await goal.openGoal(t, 'Bali trip');
+    await goal.tapText(t, 'Withdraw');
+    await add.type(t, '350000');
+  },
+  'S62 goal options': (t, th) async {
+    await goal.pumpApp(t, theme: th);
+    await goal.openGoal(t, 'Bali trip');
+    await goal.openOptions(t);
+  },
+  'S63 goals empty': (t, th) => goal.pumpApp(t, theme: th, seed: null),
   'S31 new goal': (t, th) async {
     await goal.pumpApp(t, theme: th, seed: null);
-    await goal.tapText(t, 'Add goal');
+    await goal.tapText(t, 'Add');
     await add.done(t);
   },
   'S31 month picker': (t, th) async {
     await goal.pumpApp(t, theme: th, seed: null);
-    await goal.tapText(t, 'Add goal');
+    await goal.tapText(t, 'Add');
     await add.done(t);
     await goal.tapText(t, 'Target date');
   },

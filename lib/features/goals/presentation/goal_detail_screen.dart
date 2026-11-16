@@ -8,6 +8,7 @@ import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrl_spend/core/widgets/action_sheet.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
@@ -29,9 +30,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
+enum _GoalOption { edit, complete, delete }
+
 /// S30 Goal detail: saved of the target, where it stands and what to save
-/// each month, the contributions, and Add money and Withdraw. Edit opens
-/// S31.
+/// each month, the contributions, and Add money and Withdraw (S60/S61).
+/// ••• opens S62.
 class GoalDetailScreen extends ConsumerWidget {
   const new({required this.goalId, super.key});
 
@@ -46,36 +49,93 @@ class GoalDetailScreen extends ConsumerWidget {
     required bool withdraw,
   }) async {
     final l10n = context.l10n;
+    final now = ref.read(clockProvider)();
     final result = await showContributionSheet(
       context,
-      title: withdraw ? l10n.withdraw : l10n.addMoney,
+      goalName: goal.name,
       currency: currency,
-      maxMinor: withdraw ? savedMinor : null,
+      savedMinor: savedMinor,
+      today: DateTime(now.year, now.month, now.day),
+      withdraw: withdraw,
     );
     if (result == null) return;
-    final now = ref.read(clockProvider)();
-    final today = DateTime(now.year, now.month, now.day);
     final repository = ref.read(goalRepositoryProvider);
-    if (withdraw) {
+    if (result.withdraw) {
       await repository.withdraw(
         goal.id,
         amountMinor: result.amountMinor,
-        label: result.note.isEmpty ? l10n.contributionWithdrawn : result.note,
-        date: today,
+        label: result.label.isEmpty ? l10n.contributionWithdrawn : result.label,
+        date: result.date,
       );
     } else {
       await repository.addMoney(
         goal.id,
         amountMinor: result.amountMinor,
-        label: result.note.isEmpty ? l10n.contributionAdded : result.note,
-        date: today,
+        label: result.label.isEmpty ? l10n.contributionAdded : result.label,
+        date: result.date,
       );
     }
   }
 
-  Future<void> _edit(BuildContext context) async {
-    final deleted = await context.push<bool>(Routes.editGoal(goalId));
-    if ((deleted ?? false) && context.mounted) context.pop();
+  /// S62: Edit goal, Mark as completed (until it is), Delete goal.
+  Future<void> _options(
+    BuildContext context,
+    WidgetRef ref, {
+    required Goal goal,
+    required bool completed,
+    required int contributions,
+  }) async {
+    final l10n = context.l10n;
+    final choice = await showActionSheet<_GoalOption>(
+      context,
+      title: goal.name,
+      items: [
+        (
+          value: _GoalOption.edit,
+          tile: const CategoryTile(
+            icon: AppIcon.note,
+            color: CategoryColorKey.blue,
+          ),
+          title: l10n.editGoal,
+          subtitle: l10n.editGoalDetail,
+          destructive: false,
+        ),
+        if (!completed)
+          (
+            value: _GoalOption.complete,
+            tile: const CategoryTile(
+              icon: AppIcon.check,
+              color: CategoryColorKey.green,
+            ),
+            title: l10n.markGoalCompleted,
+            subtitle: l10n.markGoalCompletedDetail,
+            destructive: false,
+          ),
+        (
+          value: _GoalOption.delete,
+          tile: const CategoryTile(
+            icon: AppIcon.trash,
+            color: CategoryColorKey.red,
+          ),
+          title: l10n.deleteGoal,
+          subtitle: l10n.deleteGoalDetail(contributions),
+          destructive: true,
+        ),
+      ],
+    );
+    if (choice == null || !context.mounted) return;
+    final repository = ref.read(goalRepositoryProvider);
+    switch (choice) {
+      case _GoalOption.edit:
+        unawaited(context.push(Routes.editGoal(goal.id)));
+      case _GoalOption.complete:
+        await repository.markCompleted(goal.id, at: ref.read(clockProvider)());
+        if (context.mounted) context.pop();
+      // The sheet already says what goes, so there's no second dialog.
+      case _GoalOption.delete:
+        context.pop();
+        await repository.delete(goal.id);
+    }
   }
 
   @override
@@ -126,15 +186,29 @@ class GoalDetailScreen extends ConsumerWidget {
         actions: [
           if (goal != null)
             TextButton(
-              onPressed: () => _edit(context),
+              onPressed: () => _options(
+                context,
+                ref,
+                goal: goal,
+                completed:
+                    goalStatus(goal, saved, today) == GoalStatus.completed,
+                contributions: contributions.length,
+              ),
               style: TextButton.styleFrom(
-                minimumSize: const Size(44, 44),
+                minimumSize: const Size(48, 48),
                 foregroundColor: colors.ink,
                 overlayColor: colors.raised,
               ),
-              child: Text(
-                l10n.editAction,
-                style: text.rowTitle.copyWith(color: colors.ink),
+              child: Semantics(
+                label: l10n.goalOptions,
+                excludeSemantics: true,
+                child: Text(
+                  '•••',
+                  style: text.header.copyWith(
+                    color: colors.ink,
+                    letterSpacing: 1,
+                  ),
+                ),
               ),
             ),
           const SizedBox(width: 8),
@@ -401,7 +475,7 @@ class _StatusCard extends StatelessWidget {
       today,
     )) {
       GoalStatus.onTrack => (
-        AppIcon.trendUp,
+        AppIcon.wallet,
         CategoryColorKey.green,
         l10n.goalOnTrack,
         l10n.goalOnTrackBody(
@@ -419,7 +493,7 @@ class _StatusCard extends StatelessWidget {
         ),
       ),
       GoalStatus.pastTarget => (
-        AppIcon.warning,
+        AppIcon.circleAlert,
         CategoryColorKey.red,
         l10n.goalPastTarget,
         l10n.goalPastTargetBody(

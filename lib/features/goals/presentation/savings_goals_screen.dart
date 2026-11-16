@@ -20,7 +20,6 @@ import 'package:ctrl_spend/features/goals/domain/goal.dart';
 import 'package:ctrl_spend/features/goals/domain/goal_calculations.dart';
 import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/goals/presentation/goal_card.dart';
-import 'package:ctrl_spend/features/goals/presentation/goal_style.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -63,20 +62,19 @@ class _SavingsGoalsScreenState extends ConsumerState<SavingsGoalsScreen> {
     if (goals == null) {
       body = const SizedBox.shrink();
     } else if (goals.isEmpty) {
-      body = Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.screenX,
-          8,
-          AppSpacing.screenX,
-          32,
-        ),
-        child: EmptyState(
-          icon: AppIcon.target,
-          title: l10n.noGoalsTitle,
-          body: l10n.noGoalsBody,
-          actionLabel: l10n.addGoal,
-          onAction: addGoal,
-        ),
+      // S63.
+      body = ListView(
+        padding: const EdgeInsets.only(top: 170, bottom: 32),
+        children: [
+          EmptyState(
+            card: false,
+            icon: AppIcon.target,
+            title: l10n.noGoalsTitle,
+            body: l10n.noGoalsBody,
+            actionLabel: l10n.addGoal,
+            onAction: addGoal,
+          ),
+        ],
       );
     } else {
       final savedById = <int, int>{};
@@ -144,19 +142,20 @@ class _SavingsGoalsScreenState extends ConsumerState<SavingsGoalsScreen> {
                   ),
                   onTap: () => setState(() => _showCompleted = !_showCompleted),
                 ),
-                if (_showCompleted)
-                  for (final g in completed)
-                    ListGroupRow(
-                      leading: CategoryTile.forKey(
-                        g.iconKey,
-                        color: goalColour(g.iconKey),
-                      ),
-                      title: g.name,
-                      value: formatter.formatCompact(g.targetMinor),
-                      onTap: () => open(g),
-                    ),
               ],
             ),
+            // The same cards as active goals, saying when each was done.
+            if (_showCompleted)
+              for (final g in completed) ...[
+                const SizedBox(height: AppSpacing.cardGap),
+                GoalCard(
+                  goal: g,
+                  savedMinor: saved(g),
+                  currency: currency,
+                  completedOn: g.completedAt?.toLocal() ?? g.targetMonth,
+                  onTap: () => open(g),
+                ),
+              ],
           ],
         ],
       );

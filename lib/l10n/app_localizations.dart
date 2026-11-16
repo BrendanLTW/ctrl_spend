@@ -2587,19 +2587,19 @@ abstract class AppLocalizations {
   /// No description provided for @noGoalsTitle.
   ///
   /// In en, this message translates to:
-  /// **'No goals yet'**
+  /// **'Start your first goal'**
   String get noGoalsTitle;
 
   /// No description provided for @noGoalsBody.
   ///
   /// In en, this message translates to:
-  /// **'Set a target and a date, and see what to put aside each month.'**
+  /// **'Pick a target and a date, and ctrlSpend shows how much to put aside each month. Savings don\'t count as spending.'**
   String get noGoalsBody;
 
   /// No description provided for @addGoal.
   ///
   /// In en, this message translates to:
-  /// **'Add goal'**
+  /// **'Create a goal'**
   String get addGoal;
 
   /// No description provided for @goalOfTarget.
@@ -2703,18 +2703,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Delete goal'**
   String get deleteGoal;
-
-  /// No description provided for @deleteGoalTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete {name}?'**
-  String deleteGoalTitle(String name);
-
-  /// No description provided for @deleteGoalBody.
-  ///
-  /// In en, this message translates to:
-  /// **'Its contributions go too. Your spending isn\'t affected.'**
-  String get deleteGoalBody;
 
   /// No description provided for @newGoal.
   ///
@@ -3314,6 +3302,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Every month on the {day}'**
   String repeatMonthlyOnDay(String day);
+
+  /// No description provided for @contributionAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get contributionAmount;
+
+  /// No description provided for @contributionLabelHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get contributionLabelHint;
+
+  /// No description provided for @contributionDefaultLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'From salary'**
+  String get contributionDefaultLabel;
+
+  /// No description provided for @contributionAddButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {amount}'**
+  String contributionAddButton(String amount);
+
+  /// No description provided for @savingNotSpending.
+  ///
+  /// In en, this message translates to:
+  /// **'Money you save doesn\'t count as spending, so \"Left to spend\" stays the same.'**
+  String get savingNotSpending;
+
+  /// No description provided for @withdrawUpTo.
+  ///
+  /// In en, this message translates to:
+  /// **'You can withdraw up to {amount}, the amount saved so far.'**
+  String withdrawUpTo(String amount);
+
+  /// No description provided for @goalOptions.
+  ///
+  /// In en, this message translates to:
+  /// **'More options'**
+  String get goalOptions;
+
+  /// No description provided for @editGoalDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Name, target, date and icon'**
+  String get editGoalDetail;
+
+  /// No description provided for @markGoalCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark as completed'**
+  String get markGoalCompleted;
+
+  /// No description provided for @markGoalCompletedDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Moves it to completed goals'**
+  String get markGoalCompletedDetail;
+
+  /// No description provided for @deleteGoalDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Removes the goal. Your spending isn\'t affected.} =1{Removes the goal and its 1 contribution. Your spending isn\'t affected.} other{Removes the goal and its {count} contributions. Your spending isn\'t affected.}}'**
+  String deleteGoalDetail(int count);
+
+  /// No description provided for @goalCompletedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed {date}'**
+  String goalCompletedOn(String date);
 }
 
 class _AppLocalizationsDelegate

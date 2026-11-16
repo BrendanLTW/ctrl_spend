@@ -1710,14 +1710,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noGoalsTitle => 'No goals yet';
+  String get noGoalsTitle => 'Start your first goal';
 
   @override
   String get noGoalsBody =>
-      'Set a target and a date, and see what to put aside each month.';
+      'Pick a target and a date, and ctrlSpend shows how much to put aside each month. Savings don\'t count as spending.';
 
   @override
-  String get addGoal => 'Add goal';
+  String get addGoal => 'Create a goal';
 
   @override
   String goalOfTarget(String amount) {
@@ -1785,15 +1785,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get deleteGoal => 'Delete goal';
-
-  @override
-  String deleteGoalTitle(String name) {
-    return 'Delete $name?';
-  }
-
-  @override
-  String get deleteGoalBody =>
-      'Its contributions go too. Your spending isn\'t affected.';
 
   @override
   String get newGoal => 'New goal';
@@ -2258,5 +2249,58 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String repeatMonthlyOnDay(String day) {
     return 'Every month on the $day';
+  }
+
+  @override
+  String get contributionAmount => 'Amount';
+
+  @override
+  String get contributionLabelHint => 'Label';
+
+  @override
+  String get contributionDefaultLabel => 'From salary';
+
+  @override
+  String contributionAddButton(String amount) {
+    return 'Add $amount';
+  }
+
+  @override
+  String get savingNotSpending =>
+      'Money you save doesn\'t count as spending, so \"Left to spend\" stays the same.';
+
+  @override
+  String withdrawUpTo(String amount) {
+    return 'You can withdraw up to $amount, the amount saved so far.';
+  }
+
+  @override
+  String get goalOptions => 'More options';
+
+  @override
+  String get editGoalDetail => 'Name, target, date and icon';
+
+  @override
+  String get markGoalCompleted => 'Mark as completed';
+
+  @override
+  String get markGoalCompletedDetail => 'Moves it to completed goals';
+
+  @override
+  String deleteGoalDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Removes the goal and its $count contributions. Your spending isn\'t affected.',
+      one: 'Removes the goal and its 1 contribution. Your spending isn\'t affected.',
+      zero: 'Removes the goal. Your spending isn\'t affected.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String goalCompletedOn(String date) {
+    return 'Completed $date';
   }
 }
