@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../features/activity/presentation/activity_screen_test.dart' as act;
 import '../features/app_lock/presentation/app_lock_screen_test.dart' as lock;
+import '../features/app_lock/presentation/lock_screen_test.dart' as ls;
 import '../features/bills/presentation/add_bill_screen_test.dart' as nb;
 import '../features/bills/presentation/bill_detail_screen_test.dart' as bd;
 import '../features/bills/presentation/recurring_bills_screen_test.dart' as rb;
@@ -140,6 +141,17 @@ final screens = <String, Drive>{
     await lock.tapToggle(t, 'App lock');
     await lock.enterPin(t, '2580');
     await lock.enterPin(t, '2581');
+  },
+  'S38 lock screen': (t, th) => ls.pumpLocked(t, theme: th, biometricsOn: true),
+  'S66 too many attempts': (t, th) => ls.pumpLocked(
+    t,
+    theme: th,
+    biometricsOn: true,
+    lockoutUntil: DateTime(2026, 11, 4, 9, 0, 28),
+  ),
+  'S67 forgot PIN': (t, th) async {
+    await ls.pumpLocked(t, theme: th);
+    await ls.tapText(t, 'Forgot PIN?');
   },
   'S48 notification settings': (t, th) => s48.pumpS48(t, theme: th),
   'S48 notifications off': (t, th) =>

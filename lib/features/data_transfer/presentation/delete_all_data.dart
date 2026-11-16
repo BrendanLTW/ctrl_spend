@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/text_link.dart';
+import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -16,13 +17,15 @@ import 'package:go_router/go_router.dart';
 
 const _exportFirst = #exportFirst;
 
-/// S49 Erase all data: asks first, offering "Export a CSV first", then
-/// erases everything, cancels scheduled notifications and restarts at the
-/// splash screen (S01), which moves on to onboarding.
+/// S49 Erase all data: asks first, offering "Export a CSV first" unless
+/// [offerExport] is false (from the lock screen's S67), then erases
+/// everything, the app lock PIN too, cancels scheduled notifications and
+/// restarts at the splash screen (S01), which moves on to onboarding.
 Future<void> confirmAndDeleteAllData(
   BuildContext context,
-  WidgetRef ref,
-) async {
+  WidgetRef ref, {
+  bool offerExport = true,
+}) async {
   final l10n = context.l10n;
   final count = (await ref.read(transactionsProvider().future)).length;
   if (!context.mounted) return;
@@ -36,11 +39,13 @@ Future<void> confirmAndDeleteAllData(
       body: l10n.eraseAllDataBody(count),
       confirmLabel: l10n.eraseEverything,
       destructive: true,
-      link: TextLink(
-        label: l10n.exportCsvFirst,
-        underline: true,
-        onPressed: () => Navigator.of(dialogContext).pop(_exportFirst),
-      ),
+      link: offerExport
+          ? TextLink(
+              label: l10n.exportCsvFirst,
+              underline: true,
+              onPressed: () => Navigator.of(dialogContext).pop(_exportFirst),
+            )
+          : null,
     ),
   );
   if (!context.mounted) return;
@@ -54,5 +59,6 @@ Future<void> confirmAndDeleteAllData(
   // Reset first, so nothing reschedules or catches up mid-erase.
   await ref.read(notificationServiceProvider).reset();
   await ref.read(dataEraserProvider).eraseAll();
+  await ref.read(pinStoreProvider).clear();
   router.go(Routes.splash);
 }

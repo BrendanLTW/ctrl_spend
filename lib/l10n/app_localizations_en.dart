@@ -2391,4 +2391,63 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biometricsReason => 'Confirm to unlock ctrlSpend with biometrics';
+
+  @override
+  String welcomeBackName(String name) {
+    return 'Welcome back, $name';
+  }
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get enterYourPin => 'Enter your PIN';
+
+  @override
+  String get forgotPin => 'Forgot PIN?';
+
+  @override
+  String get tooManyWrongPins => 'Too many wrong PINs';
+
+  @override
+  String tryAgainInOrBiometrics(String time) {
+    return 'Try again in $time, or use biometrics';
+  }
+
+  @override
+  String tryAgainIn(String time) {
+    return 'Try again in $time';
+  }
+
+  @override
+  String get pinEntryPaused => 'PIN entry paused';
+
+  @override
+  String get unlockReason => 'Unlock ctrlSpend';
+
+  @override
+  String get resetPin => 'Reset PIN';
+
+  @override
+  String get forgotPinTitle => 'Forgot your PIN?';
+
+  @override
+  String get forgotPinBody =>
+      'Confirm it\'s you with biometrics or your phone\'s passcode, then choose a new PIN. Your data stays as it is.';
+
+  @override
+  String get forgotPinNote =>
+      'If neither is set up on this phone, the only way back in is to erase ctrlSpend\'s data on the next screen.';
+
+  @override
+  String get continueWithBiometrics => 'Continue with biometrics';
+
+  @override
+  String get usePhonePasscode => 'Use phone passcode';
+
+  @override
+  String get resetPinReason => 'Confirm it\'s you to reset your ctrlSpend PIN';
+
+  @override
+  String get previewLockScreen => 'Preview lock screen';
 }

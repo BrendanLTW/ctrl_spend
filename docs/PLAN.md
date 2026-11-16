@@ -207,6 +207,6 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.12
 - [x] **6.22 App lock settings S37, S68, S64, S65.** Add flutter_secure_storage and local_auth, with iOS and Android setup. PIN stored hashed in secure storage. Biometrics wording. Lock after options. Create, confirm and change PIN. Hide amounts in app switcher.
   Refs: PRD §5.8, FR-18
-- [ ] **6.23 Lock screen S38, S66, S67.** Shown on launch and after the lock-after delay. PIN pad, biometric key, lockout countdown, Forgot PIN through biometrics or the phone passcode. Erase all data also removes the PIN.
+- [x] **6.23 Lock screen S38, S66, S67.** Shown on launch and after the lock-after delay. PIN pad, biometric key, lockout countdown, Forgot PIN through biometrics or the phone passcode. Erase all data also removes the PIN.
   Refs: PRD §5.8, FR-18
 

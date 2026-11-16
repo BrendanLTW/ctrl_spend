@@ -5,6 +5,10 @@ part 'device_auth.g.dart';
 /// The phone's own ways to confirm it's you: biometrics, or its passcode
 /// (S37, S38, S67).
 abstract interface class DeviceAuth {
+  /// Whether the phone has any lock at all: biometrics or a passcode.
+  /// Without one, S67 can only erase the app's data.
+  Future<bool> isDeviceSecure();
+
   /// Whether Face ID or a fingerprint is set up and can be used.
   Future<bool> canUseBiometrics();
 

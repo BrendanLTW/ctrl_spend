@@ -7,13 +7,13 @@ import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/message_box.dart';
 import 'package:ctrl_spend/features/app_lock/domain/pin_lockout.dart';
 import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/pin_attempts.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/pin_pad.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 /// What the PIN screen is for.
 enum PinFlow {
@@ -91,31 +91,20 @@ class _PinFlowScreenState extends ConsumerState<PinFlowScreen> {
   Future<void> _complete() async {
     final l10n = context.l10n;
     final pins = ref.read(pinStoreProvider);
-    final repository = ref.read(preferencesRepositoryProvider);
     switch (_step) {
       case _Step.current:
         _busy = true;
         final ok = await pins.check(_entered);
         if (ok) {
-          await repository.update(
-            (p) => p.copyWith(failedPinCount: 0, lockoutUntil: null),
-          );
+          await clearWrongPins(ref);
           if (!mounted) return;
           if (widget.flow == PinFlow.verify) {
-            context.pop(true);
+            Navigator.of(context).pop(true);
             return;
           }
           setState(() => _step = _Step.create);
         } else {
-          final failed = _prefs.failedPinCount + 1;
-          final pause = lockoutAfter(failed);
-          final now = ref.read(clockProvider)();
-          await repository.update(
-            (p) => p.copyWith(
-              failedPinCount: failed,
-              lockoutUntil: pause == null ? p.lockoutUntil : now.add(pause),
-            ),
-          );
+          await recordWrongPin(ref);
           if (!mounted) return;
           setState(() => _error = l10n.pinWrong);
         }
@@ -131,7 +120,9 @@ class _PinFlowScreenState extends ConsumerState<PinFlowScreen> {
         if (_entered == _first) {
           _busy = true;
           await pins.save(_entered);
-          if (mounted) context.pop(true);
+          // The plain navigator, so this also works above the router on
+          // the lock screen (S67).
+          if (mounted) Navigator.of(context).pop(true);
           return;
         }
         // Mismatch: back to step 1, with the dots red (S65).
@@ -176,7 +167,7 @@ class _PinFlowScreenState extends ConsumerState<PinFlowScreen> {
           tooltip: l10n.close,
           icon: const AppIconView(AppIcon.close),
           color: colors.ink,
-          onPressed: () => context.pop(),
+          onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           l10n.appLock,

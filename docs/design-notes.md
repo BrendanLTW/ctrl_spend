@@ -67,6 +67,9 @@ Copy that follows the screens over the PRD, and other per-task decisions, are re
 - **S61 Withdraw label.** "From salary" is only the Add money default; a withdrawal starts blank and saves as "Withdrawn" if left blank.
 - **S30 status tiles:** On track green wallet (as designed), Behind amber warning, Past target date red alert, Goal reached green check.
 - **S29 completed goals** expand into the same cards as active goals, with "Completed {date}" in place of the type chip.
-- **S37 Preview lock screen** arrives with the lock screen in 6.23.
 - **Current PIN check** (Change PIN, turning app lock off) reuses the S64 layout as "Enter your current PIN"; wrong tries say "That's not your PIN. Try again." and count toward the S66 lockout.
 - **Hide amounts in app switcher** covers the app with the ground colour on iOS while it isn't active, and sets FLAG_SECURE on Android, which also blocks screenshots while the option is on.
+- **S38 lock screen** sits above the whole app, so the screen underneath is kept; it uses the splash logo at 76 px. Biometrics, when on, prompt over it as it opens. Only going to the background (hidden or paused) starts the Lock after clock; a prompt or banner (inactive) doesn't.
+- **S37 Preview lock screen** checks the real PIN but doesn't count wrong ones, has a ✕, and no Forgot PIN?.
+- **S67 on a phone with no lock** goes to Erase all data without the "Export a CSV first" link, which would get past the lock.
+

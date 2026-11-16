@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
+import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
@@ -159,6 +160,8 @@ void main() {
   ) async {
     await pumpSettings(tester);
     expect(scheduler.pending, isNotEmpty);
+    final pins = container.read(pinStoreProvider);
+    await pins.save('2580');
     await openDialog(tester);
     await tap(tester, 'Erase everything');
     expect(eraser.erased, 1);
@@ -167,6 +170,7 @@ void main() {
     expect(categories.byName('Food').limitMinor, isNull);
     expect(await prefs.read(), const Preferences());
     expect(scheduler.pending, isEmpty);
+    expect(await pins.hasPin(), isFalse, reason: 'the app lock PIN too');
     expect(find.byType(WelcomeScreen), findsOneWidget);
   });
 

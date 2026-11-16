@@ -7,6 +7,7 @@ import 'package:ctrl_spend/core/widgets/app_toggle.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/app_lock_screen.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/app_switcher_guard.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/lock_screen.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/pin_flow_screen.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/pin_pad.dart';
 import 'package:ctrl_spend/features/notifications/presentation/reminder_toggles.dart';
@@ -64,7 +65,21 @@ Future<void> pumpAppLock(
     UncontrolledProviderScope(container: container, child: const MainApp()),
   );
   await tester.pumpAndSettle();
+  // On launch app lock covers the app: get past it first.
+  if (on) await unlock(tester);
   unawaited(container.read(appRouterProvider).push(Routes.appLock));
+  await tester.pumpAndSettle();
+}
+
+/// Types [pin] on the lock screen (S38).
+Future<void> unlock(WidgetTester tester, [String pin = '2580']) async {
+  if (find.byType(LockScreen).evaluate().isEmpty) return;
+  for (final d in pin.split('')) {
+    await tester.tap(
+      find.descendant(of: find.byType(LockScreen), matching: find.text(d)),
+    );
+    await tester.pump();
+  }
   await tester.pumpAndSettle();
 }
 

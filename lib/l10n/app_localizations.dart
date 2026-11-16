@@ -3512,6 +3512,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm to unlock ctrlSpend with biometrics'**
   String get biometricsReason;
+
+  /// No description provided for @welcomeBackName.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {name}'**
+  String welcomeBackName(String name);
+
+  /// No description provided for @welcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back'**
+  String get welcomeBack;
+
+  /// No description provided for @enterYourPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your PIN'**
+  String get enterYourPin;
+
+  /// No description provided for @forgotPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot PIN?'**
+  String get forgotPin;
+
+  /// No description provided for @tooManyWrongPins.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong PINs'**
+  String get tooManyWrongPins;
+
+  /// No description provided for @tryAgainInOrBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again in {time}, or use biometrics'**
+  String tryAgainInOrBiometrics(String time);
+
+  /// No description provided for @tryAgainIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again in {time}'**
+  String tryAgainIn(String time);
+
+  /// No description provided for @pinEntryPaused.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN entry paused'**
+  String get pinEntryPaused;
+
+  /// No description provided for @unlockReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock ctrlSpend'**
+  String get unlockReason;
+
+  /// No description provided for @resetPin.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset PIN'**
+  String get resetPin;
+
+  /// No description provided for @forgotPinTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your PIN?'**
+  String get forgotPinTitle;
+
+  /// No description provided for @forgotPinBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it\'s you with biometrics or your phone\'s passcode, then choose a new PIN. Your data stays as it is.'**
+  String get forgotPinBody;
+
+  /// No description provided for @forgotPinNote.
+  ///
+  /// In en, this message translates to:
+  /// **'If neither is set up on this phone, the only way back in is to erase ctrlSpend\'s data on the next screen.'**
+  String get forgotPinNote;
+
+  /// No description provided for @continueWithBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with biometrics'**
+  String get continueWithBiometrics;
+
+  /// No description provided for @usePhonePasscode.
+  ///
+  /// In en, this message translates to:
+  /// **'Use phone passcode'**
+  String get usePhonePasscode;
+
+  /// No description provided for @resetPinReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm it\'s you to reset your ctrlSpend PIN'**
+  String get resetPinReason;
+
+  /// No description provided for @previewLockScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview lock screen'**
+  String get previewLockScreen;
 }
 
 class _AppLocalizationsDelegate

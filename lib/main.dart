@@ -9,6 +9,7 @@ import 'package:ctrl_spend/features/app_lock/data/secure_pin_store.dart';
 import 'package:ctrl_spend/features/app_lock/domain/device_auth.dart';
 import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
 import 'package:ctrl_spend/features/app_lock/domain/secure_window.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/app_lock_gate.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/app_switcher_guard.dart';
 import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
@@ -112,8 +113,9 @@ class MainApp extends ConsumerWidget {
       routerConfig: ref.watch(appRouterProvider),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      builder: (context, child) =>
-          AppSwitcherGuard(child: child ?? const SizedBox.shrink()),
+      builder: (context, child) => AppSwitcherGuard(
+        child: AppLockGate(child: child ?? const SizedBox.shrink()),
+      ),
     );
   }
 }

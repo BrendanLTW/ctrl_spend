@@ -32,7 +32,8 @@ final FutureProvider<bool> _biometricsAvailableProvider =
 
 /// S37 App lock: the lock itself (creating a PIN to turn it on, the
 /// current PIN to turn it off), biometrics, and while it's on: Lock after
-/// (S68), Change PIN, and hiding amounts in the app switcher.
+/// (S68), Change PIN, hiding amounts in the app switcher, and a preview
+/// of the lock screen.
 class AppLockScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -144,6 +145,10 @@ class AppLockScreen extends ConsumerWidget {
                   value: prefs.hideInSwitcher,
                   onChanged: (on) =>
                       repository.update((p) => p.copyWith(hideInSwitcher: on)),
+                ),
+                ListGroupRow(
+                  title: l10n.previewLockScreen,
+                  onTap: () => unawaited(context.push(Routes.lockPreview)),
                 ),
               ],
             ),

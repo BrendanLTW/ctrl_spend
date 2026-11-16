@@ -9,6 +9,15 @@ class LocalDeviceAuth implements DeviceAuth {
   final _auth = LocalAuthentication();
 
   @override
+  Future<bool> isDeviceSecure() async {
+    try {
+      return await _auth.isDeviceSupported();
+    } on PlatformException {
+      return false;
+    }
+  }
+
+  @override
   Future<bool> canUseBiometrics() async {
     try {
       return (await _auth.getAvailableBiometrics()).isNotEmpty;

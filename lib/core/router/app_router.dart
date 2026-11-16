@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/app_lock_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/lock_screen.dart';
 import 'package:ctrl_spend/features/app_lock/presentation/pin_flow_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_detail_screen.dart';
@@ -70,6 +71,9 @@ abstract final class Routes {
 
   /// S37 App lock (v1.1).
   static const appLock = '/settings/app-lock';
+
+  /// S38 as a preview, from S37.
+  static const lockPreview = '/settings/app-lock/preview';
 
   /// S64/S65 and the current-PIN check; pass a `PinFlow` as `extra`.
   static const pin = '/settings/app-lock/pin';
@@ -224,6 +228,13 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.appLock,
         builder: (context, state) => const AppLockScreen(),
+      ),
+      GoRoute(
+        path: Routes.lockPreview,
+        builder: (context, state) => LockScreen(
+          preview: true,
+          onUnlocked: () => Navigator.of(context).pop(),
+        ),
       ),
       GoRoute(
         path: Routes.pin,

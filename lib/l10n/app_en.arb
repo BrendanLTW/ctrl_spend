@@ -2126,5 +2126,43 @@
       }
     }
   },
-  "biometricsReason": "Confirm to unlock ctrlSpend with biometrics"
+  "biometricsReason": "Confirm to unlock ctrlSpend with biometrics",
+  "welcomeBackName": "Welcome back, {name}",
+  "@welcomeBackName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "welcomeBack": "Welcome back",
+  "enterYourPin": "Enter your PIN",
+  "forgotPin": "Forgot PIN?",
+  "tooManyWrongPins": "Too many wrong PINs",
+  "tryAgainInOrBiometrics": "Try again in {time}, or use biometrics",
+  "@tryAgainInOrBiometrics": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgainIn": "Try again in {time}",
+  "@tryAgainIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pinEntryPaused": "PIN entry paused",
+  "unlockReason": "Unlock ctrlSpend",
+  "resetPin": "Reset PIN",
+  "forgotPinTitle": "Forgot your PIN?",
+  "forgotPinBody": "Confirm it's you with biometrics or your phone's passcode, then choose a new PIN. Your data stays as it is.",
+  "forgotPinNote": "If neither is set up on this phone, the only way back in is to erase ctrlSpend's data on the next screen.",
+  "continueWithBiometrics": "Continue with biometrics",
+  "usePhonePasscode": "Use phone passcode",
+  "resetPinReason": "Confirm it's you to reset your ctrlSpend PIN",
+  "previewLockScreen": "Preview lock screen"
 }
