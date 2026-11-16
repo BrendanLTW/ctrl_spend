@@ -249,4 +249,44 @@ void main() {
     expect(result.problems, isEmpty);
     expect(result.rows, hasLength(3));
   });
+
+  group('checkTransactionsCsv', () {
+    final now = DateTime(2026, 11, 4, 9);
+    String rows(int n) => [
+      'date,type,category,amount',
+      for (var i = 0; i < n; i++) '2026-11-04,expense,Food,1.00',
+    ].join('\r\n');
+
+    test(
+      'reports progress batch by batch and matches the sync check',
+      () async {
+        final progress = <(int, int)>[];
+        final result = await checkTransactionsCsv(
+          rows(1200),
+          now: now,
+          onProgress: (checked, total) => progress.add((checked, total)),
+        );
+        expect(progress, [(0, 1200), (500, 1200), (1000, 1200), (1200, 1200)]);
+        expect(result!.rows, hasLength(1200));
+        expect(result.rows, parseTransactionsCsv(rows(1200), now: now).rows);
+      },
+    );
+
+    test('stops with null once cancelled', () async {
+      var batches = 0;
+      final result = await checkTransactionsCsv(
+        rows(1200),
+        now: now,
+        onProgress: (_, _) => batches++,
+        cancelled: () => batches >= 2,
+      );
+      expect(result, isNull);
+      expect(batches, 2);
+    });
+
+    test('problems found before the rows come back at once', () async {
+      final result = await checkTransactionsCsv('date,title\r\n', now: now);
+      expect(result!.problems.single, isA<MissingColumns>());
+    });
+  });
 }

@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:flutter/material.dart' show DateUtils;
 import 'package:intl/intl.dart';
 
 extension DateLabels on AppLocalizations {
@@ -43,4 +44,27 @@ extension DayHeaderLabels on AppLocalizations {
       _ => DateFormat('EEE, d MMM', locale).format(day),
     };
   }
+}
+
+/// S52's "1 Jan – 4 Nov 2026": the year once when both days share it,
+/// one day when they're the same.
+String dayRangeLabel(DateTime first, DateTime last, String locale) {
+  final full = DateFormat('d MMM yyyy', locale);
+  if (DateUtils.isSameDay(first, last)) return full.format(first);
+  final start = first.year == last.year
+      ? DateFormat('d MMM', locale).format(first)
+      : full.format(first);
+  return '$start – ${full.format(last)}';
+}
+
+/// S53's "Jan – Nov 2026", from [start]'s month to [end]'s.
+String monthRangeLabel(DateTime start, DateTime end, String locale) {
+  final full = DateFormat('MMM yyyy', locale);
+  if (start.year == end.year && start.month == end.month) {
+    return full.format(end);
+  }
+  final from = start.year == end.year
+      ? DateFormat('MMM', locale).format(start)
+      : full.format(start);
+  return '$from – ${full.format(end)}';
 }

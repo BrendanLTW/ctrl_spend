@@ -191,13 +191,13 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.6
 - [x] **6.14 Categories.** Every S22 row and every S18 category row opens S23. S24 name at most 20 characters. *(Archived rows open S23 too, following the PRD, and show their transaction count. The 20-character limit landed in 6.3.)*
   Refs: PRD §5.7, §5.9
-- [x] **6.15 S21, S21a Settings and S47, S49.** Profile row opens the S47 sheet. Notifications row opens S48. Erase all data uses the S49 dialog. Import opens S51. Footer "ctrlSpend {version} · by BrendanLTW". (Import keeps its flow until 6.18.)
+- [x] **6.15 S21, S21a Settings and S47, S49.** Profile row opens the S47 sheet. Notifications row opens S48. Erase all data uses the S49 dialog. Import opens S51. Footer "ctrlSpend {version} · by BrendanLTW".
   Refs: PRD §5.8
 - [x] **6.16 S48 Notification settings.** Remind me at (time picker), Bill reminders, and the permission-denied banner with Open phone settings. The settings icon on S14 opens it.
   Refs: PRD §5.4
 - [x] **6.17 S35 and S50 export range.** Custom opens S50: From and To, a live count, and "Export {n} transactions".
   Refs: PRD §5.8
-- [ ] **6.18 Import flow S51–S53 and S36.** Checking with progress and Cancel, Review with the duplicate choice and new categories, Success.
+- [x] **6.18 Import flow S51–S53 and S36.** Checking with progress and Cancel, Review with the duplicate choice and new categories, Success.
   Refs: PRD §5.8, §6.4
 - [ ] **6.19 Past periods S25, S26, S55, S20 and S40.** Read from snapshots. Add S55 empty. S40 shows until there's spending on 3 different days.
   Refs: PRD §5.7, §5.10

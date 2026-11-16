@@ -1834,5 +1834,140 @@
         "type": "int"
       }
     }
-  }
+  },
+  "importChecking": "Checking your file",
+  "importCheckingRow": "Row {row} of {total} · {file}",
+  "@importCheckingRow": {
+    "placeholders": {
+      "row": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "importCheckingLabel": "Checking file, {percent}%",
+  "@importCheckingLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckingNote": "Every row is checked before anything is imported. If any row has a problem, nothing changes.",
+  "importFileDetail": "{rows, plural, =1{1 row} other{{rows} rows}} · {size}",
+  "@importFileDetail": {
+    "placeholders": {
+      "rows": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSizeBytes": "{size} B",
+  "@fileSizeBytes": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "fileSizeKb": "{size} KB",
+  "@fileSizeKb": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "fileSizeMb": "{size} MB",
+  "@fileSizeMb": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "changeFile": "Change",
+  "importAllGood": "{count, plural, =1{The row looks good.} other{All {count} rows look good.}}",
+  "@importAllGood": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewDates": "Dates",
+  "reviewTypes": "Expenses · Income",
+  "reviewTypesValue": "{expenses} · {income}",
+  "@reviewTypesValue": {
+    "placeholders": {
+      "expenses": {
+        "type": "int"
+      },
+      "income": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewNewCategories": "New categories",
+  "duplicatesHeader": "{count, plural, =1{1 row matches a transaction you already have} other{{count} rows match transactions you already have}}",
+  "@duplicatesHeader": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "skipDuplicates": "Skip duplicates",
+  "skipDuplicatesDetail": "Same date, amount and category",
+  "importAnyway": "Import them anyway",
+  "importNote": "Imports add to your data and can't be undone. Export a CSV first if you want a backup.",
+  "importCount": "{count, plural, =1{Import 1 transaction} other{Import {count} transactions}}",
+  "@importCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importDuplicatesSkipped": "{count, plural, =1{1 duplicate was skipped.} other{{count} duplicates were skipped.}}",
+  "@importDuplicatesSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCategoriesAdded": "{count, plural, =1{One new category was added: {names}.} =2{Two new categories were added: {names}.} other{{count} new categories were added: {names}.}}",
+  "@importCategoriesAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "listAnd": "{rest} and {last}",
+  "@listAnd": {
+    "placeholders": {
+      "rest": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "periodsUpdated": "Periods updated",
+  "seeInActivity": "See in Activity",
+  "backToSettings": "Back to Settings"
 }

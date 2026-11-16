@@ -10,7 +10,8 @@ enum StateTone { neutral, error, success }
 
 /// A centred state (DESIGN §7, State screens): a 96 px circle with a 40 px
 /// icon (or [graphic], e.g. a spinner), a `stateTitle`, `body` `muted`
-/// copy, and an optional pill action. S51, S53, S55, S59, S63, S67.
+/// copy (left out when empty), and an optional pill action. S51, S53,
+/// S55, S59, S63, S67.
 class StateView extends StatelessWidget {
   const new({
     required this.title,
@@ -74,12 +75,14 @@ class StateView extends StatelessWidget {
               style: text.stateTitle.copyWith(color: colors.ink),
             ),
           ),
-          const SizedBox(height: 8),
-          Text(
-            body,
-            textAlign: TextAlign.center,
-            style: text.body.copyWith(color: colors.muted),
-          ),
+          if (body.isNotEmpty) ...[
+            const SizedBox(height: 8),
+            Text(
+              body,
+              textAlign: TextAlign.center,
+              style: text.body.copyWith(color: colors.muted),
+            ),
+          ],
           if ((actionLabel, onAction) case (final label?, final action?)) ...[
             const SizedBox(height: 22),
             PillButton(label: label, onPressed: action),

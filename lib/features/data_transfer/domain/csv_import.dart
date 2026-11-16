@@ -99,41 +99,105 @@ const List<String> _required = [
 /// found by their header names; `time`, `title` and `note` are optional.
 /// Blank lines are skipped. Rows dated after [now] are refused.
 ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
-  final body = text.startsWith('﻿') ? text.substring(1) : text;
-  final table = [
-    for (final row in csv.decode(body))
-      [for (final cell in row) '$cell'.trim()],
-  ];
-  if (table.isEmpty) {
-    return (rows: const [], problems: const [MissingColumns(_required)]);
+  final checker = _Checker(text, now);
+  if (checker.early case final result?) return result;
+  checker.checkAll();
+  return checker.result;
+}
+
+/// Row [checked] of [total] (S51's "Row 128 of 214").
+typedef ImportProgress = void Function(int checked, int total);
+
+/// [parseTransactionsCsv] in batches of [batch] rows, yielding between
+/// them so S51 can draw [onProgress]. Null once [cancelled] says so.
+Future<ImportResult?> checkTransactionsCsv(
+  String text, {
+  required DateTime now,
+  ImportProgress? onProgress,
+  bool Function()? cancelled,
+  int batch = 500,
+}) async {
+  final checker = _Checker(text, now);
+  if (checker.early case final result?) return result;
+  onProgress?.call(0, checker.total);
+  while (!checker.done) {
+    await Future<void>.delayed(Duration.zero);
+    if (cancelled?.call() ?? false) return null;
+    checker.checkNext(batch);
+    onProgress?.call(checker.checked, checker.total);
+  }
+  return checker.result;
+}
+
+/// Walks the rows of one file, collecting rows or problems.
+class _Checker {
+  new(String text, this.now) {
+    final body = text.startsWith('\uFEFF') ? text.substring(1) : text;
+    final table = [
+      for (final row in csv.decode(body))
+        [for (final cell in row) '$cell'.trim()],
+    ];
+    if (table.isEmpty) {
+      early = (rows: const [], problems: const [MissingColumns(_required)]);
+      return;
+    }
+    // Blank lines are skipped but keep their row numbers.
+    _lines = [
+      for (final (i, row) in table.indexed.skip(1))
+        if (row.any((c) => c.isNotEmpty)) (i + 1, row),
+    ];
+    if (_lines.length > maxImportRows) {
+      early = (rows: const [], problems: [TooManyRows(_lines.length)]);
+      return;
+    }
+    _header = [for (final h in table.first) h.toLowerCase()];
+    final missing = [
+      for (final c in _required)
+        if (!_header.contains(c)) c,
+    ];
+    if (missing.isNotEmpty) {
+      early = (rows: const [], problems: [MissingColumns(missing)]);
+    }
   }
 
-  final count = table.skip(1).where((r) => r.any((c) => c.isNotEmpty)).length;
-  if (count > maxImportRows) {
-    return (rows: const [], problems: [TooManyRows(count)]);
+  final DateTime now;
+
+  /// The whole answer when the file fails before its rows are read.
+  ImportResult? early;
+
+  late final List<(int, List<String>)> _lines;
+  late final List<String> _header;
+  final _rows = <ImportRow>[];
+  final _problems = <ImportProblem>[];
+  int checked = 0;
+
+  int get total => _lines.length;
+  bool get done => checked >= total;
+
+  ImportResult get result => _problems.isEmpty
+      ? (rows: _rows, problems: const [])
+      : (rows: const [], problems: _problems);
+
+  void checkAll() => checkNext(total);
+
+  void checkNext(int count) {
+    final end = (checked + count).clamp(0, total);
+    for (; checked < end; checked++) {
+      final (number, row) = _lines[checked];
+      _check(number, row);
+    }
   }
 
-  final header = [for (final h in table.first) h.toLowerCase()];
-  final missing = [
-    for (final c in _required)
-      if (!header.contains(c)) c,
-  ];
-  if (missing.isNotEmpty) {
-    return (rows: const [], problems: [MissingColumns(missing)]);
-  }
-  String cell(List<String> row, String column) {
-    final i = header.indexOf(column);
+  String _cell(List<String> row, String column) {
+    final i = _header.indexOf(column);
     return i < 0 || i >= row.length ? '' : row[i];
   }
 
-  final rows = <ImportRow>[];
-  final problems = <ImportProblem>[];
-  for (final (i, row) in table.indexed.skip(1)) {
-    final number = i + 1;
-    if (row.every((c) => c.isEmpty)) continue;
+  void _check(int number, List<String> row) {
+    final problems = _problems;
     final before = problems.length;
 
-    final dateText = cell(row, CsvColumns.date);
+    final dateText = _cell(row, CsvColumns.date);
     final date = dateText.isEmpty ? null : _parseDate(dateText);
     if (dateText.isEmpty) {
       problems.add(EmptyField(number, CsvColumns.date));
@@ -141,11 +205,11 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
       problems.add(NotADate(number, dateText));
     }
 
-    final timeText = cell(row, CsvColumns.time);
+    final timeText = _cell(row, CsvColumns.time);
     final time = timeText.isEmpty ? (12, 0) : _parseTime(timeText);
     if (time == null) problems.add(NotATime(number, timeText));
 
-    final typeText = cell(row, CsvColumns.type);
+    final typeText = _cell(row, CsvColumns.type);
     final type = TransactionType.values
         .where((t) => t.name == typeText.toLowerCase())
         .firstOrNull;
@@ -155,14 +219,14 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
       problems.add(NotAType(number, typeText));
     }
 
-    final category = cell(row, CsvColumns.category);
+    final category = _cell(row, CsvColumns.category);
     if (category.isEmpty) {
       problems.add(EmptyField(number, CsvColumns.category));
     } else if (category.length > maxCategoryNameLength) {
       problems.add(TooLong(number, CsvColumns.category, maxCategoryNameLength));
     }
 
-    final amountText = cell(row, CsvColumns.amount);
+    final amountText = _cell(row, CsvColumns.amount);
     final amount = amountText.isEmpty ? null : parseCsvAmount(amountText);
     if (amountText.isEmpty) {
       problems.add(EmptyField(number, CsvColumns.amount));
@@ -170,11 +234,11 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
       problems.add(NotAnAmount(number, amountText));
     }
 
-    final title = cell(row, CsvColumns.title);
+    final title = _cell(row, CsvColumns.title);
     if (title.length > maxTitleLength) {
       problems.add(TooLong(number, CsvColumns.title, maxTitleLength));
     }
-    final note = cell(row, CsvColumns.note);
+    final note = _cell(row, CsvColumns.note);
     if (note.length > maxNoteLength) {
       problems.add(TooLong(number, CsvColumns.note, maxNoteLength));
     }
@@ -185,8 +249,8 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
       problems.add(FutureDate(number, dateText));
     }
 
-    if (problems.length > before) continue;
-    rows.add((
+    if (problems.length > before) return;
+    _rows.add((
       occurredAt: occurredAt!,
       type: type!,
       category: category,
@@ -195,9 +259,6 @@ ImportResult parseTransactionsCsv(String text, {required DateTime now}) {
       note: note.isEmpty ? null : note,
     ));
   }
-  return problems.isEmpty
-      ? (rows: rows, problems: const [])
-      : (rows: const [], problems: problems);
 }
 
 /// 1250 for "12.50", "12.5" or "12"; "1,234.50" too. Null unless above 0

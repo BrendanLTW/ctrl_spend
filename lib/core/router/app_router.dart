@@ -6,9 +6,9 @@ import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
-import 'package:ctrl_spend/features/data_transfer/presentation/import_failed_screen.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/import_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/add_goal_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/goal_detail_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
@@ -71,8 +71,8 @@ abstract final class Routes {
   /// S35 Export data.
   static const export = '/settings/export';
 
-  /// S36 Import failed; pass the `ImportFailure` as `extra`.
-  static const importFailed = '/settings/import';
+  /// Import data (S51–S53, S36); pass the picked file as `extra`.
+  static const importData = '/settings/import';
 
   /// S22 Category manager.
   static const categories = '/settings/categories';
@@ -194,10 +194,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const ExportScreen(),
       ),
       GoRoute(
-        path: Routes.importFailed,
+        path: Routes.importData,
         builder: (context, state) => switch (state.extra) {
-          final ImportFailure failure => ImportFailedScreen(failure: failure),
-          // Only reachable with its problems; anything else goes back.
+          final PickedFile file => ImportScreen(file: file),
+          // Only reachable with a picked file; anything else goes back.
           _ => const SettingsScreen(),
         },
       ),

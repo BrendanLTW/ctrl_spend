@@ -3056,6 +3056,162 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{Export 1 transaction} other{Export {count} transactions}}'**
   String exportCount(int count);
+
+  /// No description provided for @importChecking.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking your file'**
+  String get importChecking;
+
+  /// No description provided for @importCheckingRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Row {row} of {total} · {file}'**
+  String importCheckingRow(int row, int total, String file);
+
+  /// No description provided for @importCheckingLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking file, {percent}%'**
+  String importCheckingLabel(int percent);
+
+  /// No description provided for @importCheckingNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Every row is checked before anything is imported. If any row has a problem, nothing changes.'**
+  String get importCheckingNote;
+
+  /// No description provided for @importFileDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{rows, plural, =1{1 row} other{{rows} rows}} · {size}'**
+  String importFileDetail(int rows, String size);
+
+  /// No description provided for @fileSizeBytes.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} B'**
+  String fileSizeBytes(int size);
+
+  /// No description provided for @fileSizeKb.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} KB'**
+  String fileSizeKb(int size);
+
+  /// No description provided for @fileSizeMb.
+  ///
+  /// In en, this message translates to:
+  /// **'{size} MB'**
+  String fileSizeMb(String size);
+
+  /// No description provided for @changeFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get changeFile;
+
+  /// No description provided for @importAllGood.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{The row looks good.} other{All {count} rows look good.}}'**
+  String importAllGood(int count);
+
+  /// No description provided for @reviewDates.
+  ///
+  /// In en, this message translates to:
+  /// **'Dates'**
+  String get reviewDates;
+
+  /// No description provided for @reviewTypes.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses · Income'**
+  String get reviewTypes;
+
+  /// No description provided for @reviewTypesValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{expenses} · {income}'**
+  String reviewTypesValue(int expenses, int income);
+
+  /// No description provided for @reviewNewCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'New categories'**
+  String get reviewNewCategories;
+
+  /// No description provided for @duplicatesHeader.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 row matches a transaction you already have} other{{count} rows match transactions you already have}}'**
+  String duplicatesHeader(int count);
+
+  /// No description provided for @skipDuplicates.
+  ///
+  /// In en, this message translates to:
+  /// **'Skip duplicates'**
+  String get skipDuplicates;
+
+  /// No description provided for @skipDuplicatesDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Same date, amount and category'**
+  String get skipDuplicatesDetail;
+
+  /// No description provided for @importAnyway.
+  ///
+  /// In en, this message translates to:
+  /// **'Import them anyway'**
+  String get importAnyway;
+
+  /// No description provided for @importNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Imports add to your data and can\'t be undone. Export a CSV first if you want a backup.'**
+  String get importNote;
+
+  /// No description provided for @importCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Import 1 transaction} other{Import {count} transactions}}'**
+  String importCount(int count);
+
+  /// No description provided for @importDuplicatesSkipped.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 duplicate was skipped.} other{{count} duplicates were skipped.}}'**
+  String importDuplicatesSkipped(int count);
+
+  /// No description provided for @importCategoriesAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{One new category was added: {names}.} =2{Two new categories were added: {names}.} other{{count} new categories were added: {names}.}}'**
+  String importCategoriesAdded(int count, String names);
+
+  /// No description provided for @listAnd.
+  ///
+  /// In en, this message translates to:
+  /// **'{rest} and {last}'**
+  String listAnd(String rest, String last);
+
+  /// No description provided for @periodsUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Periods updated'**
+  String get periodsUpdated;
+
+  /// No description provided for @seeInActivity.
+  ///
+  /// In en, this message translates to:
+  /// **'See in Activity'**
+  String get seeInActivity;
+
+  /// No description provided for @backToSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Settings'**
+  String get backToSettings;
 }
 
 class _AppLocalizationsDelegate

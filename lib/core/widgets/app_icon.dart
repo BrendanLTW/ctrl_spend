@@ -30,6 +30,7 @@ enum AppIcon {
   coffee('coffee'),
   currency('circle-dollar-sign'),
   download('download'),
+  document('file-text'),
   film('film'),
   food('utensils'),
   gift('gift'),

@@ -2044,4 +2044,147 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get importChecking => 'Checking your file';
+
+  @override
+  String importCheckingRow(int row, int total, String file) {
+    return 'Row $row of $total · $file';
+  }
+
+  @override
+  String importCheckingLabel(int percent) {
+    return 'Checking file, $percent%';
+  }
+
+  @override
+  String get importCheckingNote =>
+      'Every row is checked before anything is imported. If any row has a problem, nothing changes.';
+
+  @override
+  String importFileDetail(int rows, String size) {
+    String _temp0 = intl.Intl.pluralLogic(
+      rows,
+      locale: localeName,
+      other: '$rows rows',
+      one: '1 row',
+    );
+    return '$_temp0 · $size';
+  }
+
+  @override
+  String fileSizeBytes(int size) {
+    return '$size B';
+  }
+
+  @override
+  String fileSizeKb(int size) {
+    return '$size KB';
+  }
+
+  @override
+  String fileSizeMb(String size) {
+    return '$size MB';
+  }
+
+  @override
+  String get changeFile => 'Change';
+
+  @override
+  String importAllGood(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'All $count rows look good.',
+      one: 'The row looks good.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reviewDates => 'Dates';
+
+  @override
+  String get reviewTypes => 'Expenses · Income';
+
+  @override
+  String reviewTypesValue(int expenses, int income) {
+    return '$expenses · $income';
+  }
+
+  @override
+  String get reviewNewCategories => 'New categories';
+
+  @override
+  String duplicatesHeader(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rows match transactions you already have',
+      one: '1 row matches a transaction you already have',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get skipDuplicates => 'Skip duplicates';
+
+  @override
+  String get skipDuplicatesDetail => 'Same date, amount and category';
+
+  @override
+  String get importAnyway => 'Import them anyway';
+
+  @override
+  String get importNote =>
+      'Imports add to your data and can\'t be undone. Export a CSV first if you want a backup.';
+
+  @override
+  String importCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Import $count transactions',
+      one: 'Import 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String importDuplicatesSkipped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count duplicates were skipped.',
+      one: '1 duplicate was skipped.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String importCategoriesAdded(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new categories were added: $names.',
+      two: 'Two new categories were added: $names.',
+      one: 'One new category was added: $names.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listAnd(String rest, String last) {
+    return '$rest and $last';
+  }
+
+  @override
+  String get periodsUpdated => 'Periods updated';
+
+  @override
+  String get seeInActivity => 'See in Activity';
+
+  @override
+  String get backToSettings => 'Back to Settings';
 }

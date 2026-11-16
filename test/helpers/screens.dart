@@ -145,6 +145,16 @@ final screens = <String, Drive>{
     await imp.pumpSettings(t, theme: th);
     await imp.importFile(t, 'bank-export.csv', imp.bad);
   },
+  'S52 import review': (t, th) async {
+    await imp.pumpSettings(t, theme: th);
+    await imp.importAndConfirm(t, 'a.csv', imp.good);
+    await imp.tap(t, 'Back to Settings');
+    await imp.importFile(t, 'a.csv', imp.good);
+  },
+  'S53 import done': (t, th) async {
+    await imp.pumpSettings(t, theme: th);
+    await imp.importAndConfirm(t, 'a.csv', imp.good);
+  },
   'S27 recurring bills': (t, th) => rb.pumpApp(t, theme: th),
   'S27 bills empty': (t, th) => rb.pumpApp(t, theme: th, seed: null),
   'S27 bill actions': (t, th) => rb
