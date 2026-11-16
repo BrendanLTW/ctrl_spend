@@ -1818,5 +1818,21 @@
   "notificationsOffTitle": "Notifications are off for ctrlSpend",
   "notificationsOffBody": "You said no when we asked. Turn them on in your phone's Settings to get these reminders.",
   "openPhoneSettings": "Open phone settings",
-  "notificationsFootnote": "Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server."
+  "notificationsFootnote": "Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.",
+  "transactionsInRange": "{count, plural, =1{1 transaction in this range.} other{{count} transactions in this range.}}",
+  "@transactionsInRange": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportCount": "{count, plural, =1{Export 1 transaction} other{Export {count} transactions}}",
+  "@exportCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

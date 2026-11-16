@@ -4,7 +4,10 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
+import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -101,7 +104,8 @@ Future<void> tap(WidgetTester tester, String text) async {
 }
 
 Future<void> export(WidgetTester tester) async {
-  await tester.tap(find.widgetWithText(PrimaryButton, 'Export CSV'));
+  // "Export CSV", or "Export {n} transactions" for a custom range.
+  await tester.tap(find.byType(PrimaryButton));
   await tester.pumpAndSettle();
 }
 
@@ -169,6 +173,8 @@ void main() {
       await tap(tester, 'Custom');
       expect(find.text('15 Oct 2026'), findsOneWidget);
       expect(find.text('14 Nov 2026'), findsOneWidget);
+      expect(find.text('2 transactions in this range.'), findsOneWidget);
+      expect(find.text('Export 2 transactions'), findsOneWidget);
       await tap(tester, 'To');
       await tap(tester, '1');
       await tester.tap(
@@ -179,11 +185,32 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('1 Nov 2026'), findsOneWidget);
+      expect(find.text('1 transaction in this range.'), findsOneWidget);
+      expect(find.text('Export 1 transaction'), findsOneWidget);
       await export(tester);
       expect(lines().skip(1), [
         '2026-11-01,09:00,income,4800.00,Salary,November pay,',
       ]);
       hideAppToast();
+    });
+
+    testWidgets('the custom count follows the include toggles', (tester) async {
+      await pumpExport(tester);
+      await tap(tester, 'Custom');
+      final tiles = tester.widgetList<ListGroupRow>(
+        find.byWidgetPredicate(
+          (w) => w is ListGroupRow && (w.title == 'From' || w.title == 'To'),
+        ),
+      );
+      expect(tiles.map((r) => (r.leading! as CategoryTile).icon), [
+        AppIcon.calendar,
+        AppIcon.calendar,
+      ]);
+      await tap(tester, 'Income');
+      expect(find.text('1 transaction in this range.'), findsOneWidget);
+      await tap(tester, 'All time');
+      expect(find.text('Export CSV'), findsOneWidget);
+      expect(find.textContaining('in this range'), findsNothing);
     });
 
     testWidgets('nothing in range says so and shares nothing', (tester) async {

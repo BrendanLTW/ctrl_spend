@@ -2022,4 +2022,26 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get notificationsFootnote =>
       'Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.';
+
+  @override
+  String transactionsInRange(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions in this range.',
+      one: '1 transaction in this range.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String exportCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Export $count transactions',
+      one: 'Export 1 transaction',
+    );
+    return '$_temp0';
+  }
 }

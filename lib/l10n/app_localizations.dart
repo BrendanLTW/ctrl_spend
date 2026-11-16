@@ -3044,6 +3044,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.'**
   String get notificationsFootnote;
+
+  /// No description provided for @transactionsInRange.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 transaction in this range.} other{{count} transactions in this range.}}'**
+  String transactionsInRange(int count);
+
+  /// No description provided for @exportCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{Export 1 transaction} other{Export {count} transactions}}'**
+  String exportCount(int count);
 }
 
 class _AppLocalizationsDelegate

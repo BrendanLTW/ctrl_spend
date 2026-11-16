@@ -139,6 +139,8 @@ final screens = <String, Drive>{
   'S26 period detail': (t, th) =>
       per.pumpApp(t, location: Routes.period(DateTime(2026, 9, 15)), theme: th),
   'S35 export': (t, th) => exp.pumpExport(t, theme: th),
+  'S50 export range': (t, th) =>
+      exp.pumpExport(t, theme: th).then((_) => exp.tap(t, 'Custom')),
   'S36 import failed': (t, th) async {
     await imp.pumpSettings(t, theme: th);
     await imp.importFile(t, 'bank-export.csv', imp.bad);

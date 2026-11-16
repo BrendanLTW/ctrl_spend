@@ -195,7 +195,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.8
 - [x] **6.16 S48 Notification settings.** Remind me at (time picker), Bill reminders, and the permission-denied banner with Open phone settings. The settings icon on S14 opens it.
   Refs: PRD §5.4
-- [ ] **6.17 S35 and S50 export range.** Custom opens S50: From and To, a live count, and "Export {n} transactions".
+- [x] **6.17 S35 and S50 export range.** Custom opens S50: From and To, a live count, and "Export {n} transactions".
   Refs: PRD §5.8
 - [ ] **6.18 Import flow S51–S53 and S36.** Checking with progress and Cancel, Review with the duplicate choice and new categories, Success.
   Refs: PRD §5.8, §6.4
