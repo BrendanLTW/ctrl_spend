@@ -22,6 +22,8 @@ import '../features/insights/presentation/insights_trend_test.dart' as trend;
 import '../features/insights/presentation/insights_week_test.dart' as week;
 import '../features/notifications/presentation/notification_service_test.dart'
     as nsvc;
+import '../features/notifications/presentation/notification_settings_screen_test.dart'
+    as s48;
 import '../features/notifications/presentation/notifications_screen_test.dart'
     as inbox;
 import '../features/onboarding/presentation/budget_and_limits_test.dart' as bl;
@@ -121,6 +123,9 @@ final screens = <String, Drive>{
       .pumpApp(t, initial: nsvc.onboarded.copyWith(theme: th))
       .then((_) => inbox.openInbox(t)),
   'S21 settings': (t, th) => stg.pumpAt(t, Routes.settings, initial: p(th)),
+  'S48 notification settings': (t, th) => s48.pumpS48(t, theme: th),
+  'S48 notifications off': (t, th) =>
+      s48.pumpS48(t, theme: th, permitted: false),
   'S32 month start': (t, th) =>
       stg.pumpAt(t, Routes.monthStart, initial: p(th)),
   'S33 theme': (t, th) => stg.pumpAt(t, Routes.theme, initial: p(th)),

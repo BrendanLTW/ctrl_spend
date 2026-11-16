@@ -18,7 +18,6 @@ import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
 import 'package:ctrl_spend/features/dev/presentation/sample_data_section.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_settings_sheet.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -49,6 +48,8 @@ class SettingsScreen extends ConsumerWidget {
       prefs.dailyReminderOn,
       prefs.budgetAlertsOn,
       prefs.weeklySummaryOn,
+      // Bill reminders are v1.1, shown with the bills rows.
+      if (kDebugMode) prefs.billRemindersOn,
     ].where((on) => on).length;
     final version = ref.watch(appVersionProvider).value;
 
@@ -118,7 +119,7 @@ class SettingsScreen extends ConsumerWidget {
                 leading: tile(AppIcon.bell, CategoryColorKey.yellow),
                 title: l10n.notificationsRow,
                 value: l10n.notificationsOnCount(notificationsOn),
-                onTap: () => showNotificationSettingsSheet(context),
+                onTap: () => context.push(Routes.notificationSettings),
               ),
             ],
           ),

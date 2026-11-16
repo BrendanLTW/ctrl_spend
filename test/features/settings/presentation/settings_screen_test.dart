@@ -12,6 +12,7 @@ import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
@@ -98,7 +99,8 @@ void main() {
       expect(row(tester, 'Month starts on').value, '15th');
       expect(row(tester, 'Theme').value, 'System');
       expect(row(tester, 'Currency').value, 'RM');
-      expect(row(tester, 'Notifications').value, '2 on', reason: 'defaults');
+      // Daily reminder, budget alerts and (debug only) bill reminders.
+      expect(row(tester, 'Notifications').value, '3 on', reason: 'defaults');
       expect(row(tester, 'Categories').value, '8', reason: 'with archived');
       expect(find.text('Export to CSV'), findsOneWidget);
       expect(find.text('Import from CSV'), findsOneWidget);
@@ -110,19 +112,19 @@ void main() {
       expect(find.text('ctrlSpend 1.0 · by BrendanLTW'), findsOneWidget);
     });
 
-    testWidgets('Notifications opens the toggles and counts them', (
+    testWidgets('Notifications opens S48 and counts what is on', (
       tester,
     ) async {
       await pumpAt(tester, Routes.settings);
       await tester.tap(find.text('Notifications'));
       await tester.pumpAndSettle();
-      expect(find.text('Weekly summary'), findsOneWidget);
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
       await tester.tap(find.text('Weekly summary'));
       await tester.pumpAndSettle();
       expect((await prefs.read()).weeklySummaryOn, isTrue);
-      await tester.tapAt(const Offset(20, 20));
+      await tester.pageBack();
       await tester.pumpAndSettle();
-      expect(row(tester, 'Notifications').value, '3 on');
+      expect(row(tester, 'Notifications').value, '4 on');
     });
 
     test('the footer shows major and minor', () {

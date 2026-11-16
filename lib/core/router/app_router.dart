@@ -13,6 +13,7 @@ import 'package:ctrl_spend/features/goals/presentation/add_goal_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/goal_detail_screen.dart';
 import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
@@ -63,6 +64,9 @@ abstract final class Routes {
 
   /// S34; under onboarding it's [onboardingCurrency] (S04's currency row).
   static const currency = '/settings/currency';
+
+  /// S48 Notification settings.
+  static const notificationSettings = '/settings/notifications';
 
   /// S35 Export data.
   static const export = '/settings/export';
@@ -204,6 +208,10 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.currency,
         builder: (context, state) => const CurrencyScreen(),
+      ),
+      GoRoute(
+        path: Routes.notificationSettings,
+        builder: (context, state) => const NotificationSettingsScreen(),
       ),
       GoRoute(
         path: Routes.categories,

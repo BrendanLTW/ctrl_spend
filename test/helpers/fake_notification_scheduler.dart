@@ -19,11 +19,21 @@ class FakeNotificationScheduler implements NotificationScheduler {
   int permissionRequests = 0;
   final Map<int, Scheduled> pending = {};
 
+  /// What [isPermitted] answers; tests flip it to mimic the phone.
+  late bool permitted = grant;
+  int settingsOpened = 0;
+
   @override
   Future<bool> requestPermission() async {
     permissionRequests++;
     return grant;
   }
+
+  @override
+  Future<bool> isPermitted() async => permitted;
+
+  @override
+  Future<void> openSystemSettings() async => settingsOpened++;
 
   @override
   Future<void> scheduleDaily({

@@ -1990,4 +1990,36 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get nameHelper => 'Shown on Home and the lock screen.';
+
+  @override
+  String get remindersSection => 'Reminders';
+
+  @override
+  String get alertsSection => 'Alerts and summaries';
+
+  @override
+  String get dailyReminderDetail => 'A nudge to log today\'s spending';
+
+  @override
+  String get remindMeAt => 'Remind me at';
+
+  @override
+  String get billReminders => 'Bill reminders';
+
+  @override
+  String get billRemindersDetail => 'Before each bill\'s due date';
+
+  @override
+  String get notificationsOffTitle => 'Notifications are off for ctrlSpend';
+
+  @override
+  String get notificationsOffBody =>
+      'You said no when we asked. Turn them on in your phone\'s Settings to get these reminders.';
+
+  @override
+  String get openPhoneSettings => 'Open phone settings';
+
+  @override
+  String get notificationsFootnote =>
+      'Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.';
 }

@@ -10,7 +10,13 @@ enum MessageKind { error, warning, success, info }
 /// An inline message (DESIGN §7): radius 18, padding 12 × 14, a 20 px
 /// icon and `message` text. Errors are announced as they appear.
 class MessageBox extends StatelessWidget {
-  const new(this.text, {this.kind = MessageKind.info, this.child, super.key});
+  const new(
+    this.text, {
+    this.kind = MessageKind.info,
+    this.child,
+    this.action,
+    super.key,
+  });
 
   final String text;
   final MessageKind kind;
@@ -18,6 +24,10 @@ class MessageBox extends StatelessWidget {
   /// Shown instead of [text], e.g. with a bold part; [text] is still what
   /// screen readers hear.
   final Widget? child;
+
+  /// A link under the text, e.g. S48's "Open phone settings". Unlike the
+  /// text it stays its own control for screen readers.
+  final Widget? action;
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +51,17 @@ class MessageBox extends StatelessWidget {
       MessageKind.info => (colors.infoBox, colors.onInfoBox, AppIcon.info),
     };
     final style = context.text.message.copyWith(color: foreground);
+    final content = Semantics(
+      label: text,
+      excludeSemantics: true,
+      child: DefaultTextStyle.merge(
+        style: style,
+        child: child ?? Text(text, style: style),
+      ),
+    );
     return Semantics(
       container: true,
       liveRegion: kind == MessageKind.error,
-      label: text,
-      excludeSemantics: true,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
         decoration: BoxDecoration(
@@ -57,14 +73,23 @@ class MessageBox extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.only(top: 1),
-              child: AppIconView(icon, size: 20, stroke: 2, color: foreground),
+              child: ExcludeSemantics(
+                child: AppIconView(
+                  icon,
+                  size: 20,
+                  stroke: 2,
+                  color: foreground,
+                ),
+              ),
             ),
             const SizedBox(width: 10),
             Expanded(
-              child: DefaultTextStyle.merge(
-                style: style,
-                child: child ?? Text(text, style: style),
-              ),
+              child: action == null
+                  ? content
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [content, action!],
+                    ),
             ),
           ],
         ),

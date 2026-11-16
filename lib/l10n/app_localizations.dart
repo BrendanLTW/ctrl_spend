@@ -2984,6 +2984,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Shown on Home and the lock screen.'**
   String get nameHelper;
+
+  /// No description provided for @remindersSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminders'**
+  String get remindersSection;
+
+  /// No description provided for @alertsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts and summaries'**
+  String get alertsSection;
+
+  /// No description provided for @dailyReminderDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'A nudge to log today\'s spending'**
+  String get dailyReminderDetail;
+
+  /// No description provided for @remindMeAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Remind me at'**
+  String get remindMeAt;
+
+  /// No description provided for @billReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill reminders'**
+  String get billReminders;
+
+  /// No description provided for @billRemindersDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Before each bill\'s due date'**
+  String get billRemindersDetail;
+
+  /// No description provided for @notificationsOffTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications are off for ctrlSpend'**
+  String get notificationsOffTitle;
+
+  /// No description provided for @notificationsOffBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You said no when we asked. Turn them on in your phone\'s Settings to get these reminders.'**
+  String get notificationsOffBody;
+
+  /// No description provided for @openPhoneSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open phone settings'**
+  String get openPhoneSettings;
+
+  /// No description provided for @notificationsFootnote.
+  ///
+  /// In en, this message translates to:
+  /// **'Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.'**
+  String get notificationsFootnote;
 }
 
 class _AppLocalizationsDelegate

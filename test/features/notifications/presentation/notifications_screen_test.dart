@@ -10,6 +10,7 @@ import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_row.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:flutter/material.dart';
@@ -176,12 +177,14 @@ void main() {
       handle.dispose();
     });
 
-    testWidgets('the settings icon opens the toggles', (tester) async {
+    testWidgets('the settings icon opens S48', (tester) async {
       await pumpApp(tester, seed: seedWithUnread);
       await openInbox(tester);
       await tester.tap(find.byTooltip('Notification settings'));
       await tester.pumpAndSettle();
-      expect(find.byType(AppToggle), findsNWidgets(3));
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
+      // Bill reminders shows in debug builds until 5.9.
+      expect(find.byType(AppToggle), findsNWidgets(4));
       await tester.tap(find.text('Weekly summary'));
       await tester.pumpAndSettle();
       expect((await prefs.read()).weeklySummaryOn, isTrue);
@@ -215,12 +218,12 @@ void main() {
       });
     });
 
-    testWidgets('a row opens the toggles', (tester) async {
+    testWidgets('a row opens S48', (tester) async {
       await pumpApp(tester);
       await openInbox(tester);
       await tester.tap(find.text('Budget alerts'));
       await tester.pumpAndSettle();
-      expect(find.text('Notification settings'), findsOneWidget);
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
       await tester.tap(find.text('When a budget reaches 80% and 100%'));
       await tester.pumpAndSettle();
       expect((await prefs.read()).budgetAlertsOn, isFalse);
