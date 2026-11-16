@@ -204,7 +204,7 @@ void main() {
       expect(rows(tester).first.value, isNull);
     });
 
-    testWidgets('no previous periods hides the section', (tester) async {
+    testWidgets('S55: the first period says when it ends', (tester) async {
       await pumpApp(
         tester,
         location: Routes.pastPeriods,
@@ -212,6 +212,15 @@ void main() {
       );
       expect(find.text('PREVIOUS'), findsNothing);
       expect(find.byType(ListGroupRow), findsNothing);
+      expect(find.text('CURRENT PERIOD'), findsOneWidget);
+      expect(find.text('No past periods yet'), findsOneWidget);
+      expect(
+        find.text(
+          "Your first period ends on 14 Nov. After that, each period's "
+          'total and how it did against your budget will show here.',
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('S20 opens it', (tester) async {

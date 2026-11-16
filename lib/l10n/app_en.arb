@@ -1969,5 +1969,14 @@
   },
   "periodsUpdated": "Periods updated",
   "seeInActivity": "See in Activity",
-  "backToSettings": "Back to Settings"
+  "backToSettings": "Back to Settings",
+  "noPastPeriodsTitle": "No past periods yet",
+  "noPastPeriodsBody": "Your first period ends on {date}. After that, each period's total and how it did against your budget will show here.",
+  "@noPastPeriodsBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  }
 }

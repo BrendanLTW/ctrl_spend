@@ -280,4 +280,36 @@ void main() {
       expect(trend.averageMinor, 183333);
     });
   });
+
+  group('hasEnoughSpending', () {
+    Transaction at(
+      DateTime when, {
+      TransactionType type = TransactionType.expense,
+    }) => Transaction(
+      id: when.millisecondsSinceEpoch,
+      amountMinor: 100,
+      type: type,
+      categoryId: 1,
+      occurredAt: when.toUtc(),
+      title: 'x',
+    );
+
+    test('needs expenses on three different local days', () {
+      final two = [
+        at(DateTime(2026, 11, 4, 8)),
+        at(DateTime(2026, 11, 4, 22)),
+        at(DateTime(2026, 11, 3, 12)),
+      ];
+      expect(hasEnoughSpending(two), isFalse);
+      expect(
+        hasEnoughSpending([
+          ...two,
+          at(DateTime(2026, 11, 2, 12), type: TransactionType.income),
+        ]),
+        isFalse,
+        reason: 'income days do not count',
+      );
+      expect(hasEnoughSpending([...two, at(DateTime(2026, 9))]), isTrue);
+    });
+  });
 }

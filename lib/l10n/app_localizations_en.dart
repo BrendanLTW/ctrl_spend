@@ -2187,4 +2187,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get backToSettings => 'Back to Settings';
+
+  @override
+  String get noPastPeriodsTitle => 'No past periods yet';
+
+  @override
+  String noPastPeriodsBody(String date) {
+    return 'Your first period ends on $date. After that, each period\'s total and how it did against your budget will show here.';
+  }
 }

@@ -79,11 +79,12 @@ Future<void> spend(
   title: title ?? category,
 );
 
-/// The design's month: RM 760 over four categories.
+/// The design's month: RM 760 over four categories, on three days so
+/// Insights has enough to chart (S40).
 Future<void> designMonth() async {
   await spend(32800, 'Food');
-  await spend(21000, 'Shopping');
-  await spend(11600, 'Transport');
+  await spend(21000, 'Shopping', at: DateTime(2026, 11, 1, 12));
+  await spend(11600, 'Transport', at: DateTime(2026, 10, 31, 12));
   await spend(6800, 'Bills');
   await spend(3800, 'Fun');
 }
@@ -151,8 +152,9 @@ void main() {
         seed: () async {
           await spend(5000, 'Food');
           await spend(480000, 'Salary', type: TransactionType.income);
-          // 14 Oct is the previous period.
+          // 14 Oct and 20 Sep are earlier periods.
           await spend(9900, 'Shopping', at: DateTime(2026, 10, 14, 12));
+          await spend(1000, 'Transport', at: DateTime(2026, 9, 20, 12));
         },
       );
       expect([for (final c in cards(tester)) c.category.name], ['Food']);
@@ -190,6 +192,33 @@ void main() {
         findsOneWidget,
       );
       expect(find.byType(CategoryShareCard), findsNothing);
+    });
+
+    testWidgets('spending on two days is not enough, three is', (tester) async {
+      await pumpInsights(
+        tester,
+        seed: () async {
+          await spend(5000, 'Food');
+          await spend(5000, 'Food', at: DateTime(2026, 11, 2, 20));
+          await spend(5000, 'Food', at: DateTime(2026, 11, 1, 12));
+          // Income on other days doesn't count.
+          await spend(
+            480000,
+            'Salary',
+            type: TransactionType.income,
+            at: DateTime(2026, 10, 31, 9),
+          );
+        },
+      );
+      expect(find.text('Not enough data yet'), findsOneWidget);
+      for (final label in ['Week', '6 months']) {
+        await tester.tap(find.text(label));
+        await tester.pumpAndSettle();
+        expect(find.text('Not enough data yet'), findsOneWidget);
+      }
+      await spend(1000, 'Food', at: DateTime(2026, 10, 30, 12));
+      await tester.pumpAndSettle();
+      expect(find.text('Not enough data yet'), findsNothing);
     });
 
     testWidgets('income alone is still no data', (tester) async {

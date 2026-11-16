@@ -7,6 +7,23 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 
 /// Insights calculations (PRD §5.7). Pure functions over minor units.
 
+/// "A few days" of spending (S40): Insights charts nothing until there
+/// are expenses on this many different local days.
+const minSpendingDays = 3;
+
+/// Whether [transactions] have expenses on at least [minSpendingDays]
+/// different local days, ever. Income doesn't count.
+bool hasEnoughSpending(Iterable<Transaction> transactions) {
+  final days = <(int, int, int)>{};
+  for (final t in transactions) {
+    if (t.type != TransactionType.expense) continue;
+    final local = t.occurredAt.toLocal();
+    days.add((local.year, local.month, local.day));
+    if (days.length >= minSpendingDays) return true;
+  }
+  return false;
+}
+
 typedef CategoryShare = ({int categoryId, int spentMinor, int percent});
 
 /// Spending per category in [period], largest first (S18). Percents are

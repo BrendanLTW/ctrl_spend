@@ -199,7 +199,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.8
 - [x] **6.18 Import flow S51–S53 and S36.** Checking with progress and Cancel, Review with the duplicate choice and new categories, Success.
   Refs: PRD §5.8, §6.4
-- [ ] **6.19 Past periods S25, S26, S55, S20 and S40.** Read from snapshots. Add S55 empty. S40 shows until there's spending on 3 different days.
+- [x] **6.19 Past periods S25, S26, S55, S20 and S40.** Read from snapshots. Add S55 empty. S40 shows until there's spending on 3 different days.
   Refs: PRD §5.7, §5.10
 - [ ] **6.20 Bills S27, S56–S59, S44.** Pay pill opens S57. A row opens S56 (pause, history, Mark as paid, Edit, Delete). Overdue copy (S58), empty state (S59), Custom 1–12 days, weeks or months.
   Refs: PRD §5.11

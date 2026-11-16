@@ -3212,6 +3212,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Back to Settings'**
   String get backToSettings;
+
+  /// No description provided for @noPastPeriodsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No past periods yet'**
+  String get noPastPeriodsTitle;
+
+  /// No description provided for @noPastPeriodsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Your first period ends on {date}. After that, each period\'s total and how it did against your budget will show here.'**
+  String noPastPeriodsBody(String date);
 }
 
 class _AppLocalizationsDelegate

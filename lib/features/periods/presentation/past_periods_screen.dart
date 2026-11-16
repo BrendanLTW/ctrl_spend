@@ -14,6 +14,7 @@ import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
 import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
+import 'package:ctrl_spend/core/widgets/state_view.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
 import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
@@ -26,10 +27,11 @@ import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 /// S25 Past periods: the current period with days left and progress, then
 /// every saved period (its snapshot), newest first, with its result
-/// against the budget it saved. A row opens S26.
+/// against the budget it saved. A row opens S26. With none yet it's S55.
 class PastPeriodsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -108,6 +110,18 @@ class PastPeriodsScreen extends ConsumerWidget {
             budgetMinor: budget,
             formatter: formatter,
           ),
+          // S55: the very first period, nothing saved yet.
+          if (previous.isEmpty)
+            Padding(
+              padding: const EdgeInsets.only(top: 96),
+              child: StateView(
+                icon: AppIcon.calendar,
+                title: l10n.noPastPeriodsTitle,
+                body: l10n.noPastPeriodsBody(
+                  DateFormat('d MMM', locale).format(current.end),
+                ),
+              ),
+            ),
           if (previous.isNotEmpty) ...[
             const SizedBox(height: 28),
             SectionLabel(l10n.previousPeriods),
@@ -181,7 +195,7 @@ class _CurrentPeriodCard extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(22, 20, 22, 22),
         decoration: BoxDecoration(
           color: colors.surface,
-          borderRadius: BorderRadius.circular(AppRadius.r32),
+          borderRadius: BorderRadius.circular(AppRadius.r28),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,

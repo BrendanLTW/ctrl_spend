@@ -136,6 +136,13 @@ final screens = <String, Drive>{
   'S23 category detail': (t, th) => cdet.pumpDetail(t, theme: th),
   'S25 past periods': (t, th) =>
       per.pumpApp(t, location: Routes.pastPeriods, theme: th),
+  'S55 past periods empty': (t, th) => per.pumpApp(
+    t,
+    location: Routes.pastPeriods,
+    theme: th,
+    seed: () => per.spend(76000, 'Food', DateTime(2026, 11, 2, 12)),
+  ),
+  'S40 insights empty': (t, th) => ins.pumpInsights(t, theme: th),
   'S26 period detail': (t, th) =>
       per.pumpApp(t, location: Routes.period(DateTime(2026, 9, 15)), theme: th),
   'S35 export': (t, th) => exp.pumpExport(t, theme: th),
