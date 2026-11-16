@@ -107,6 +107,8 @@ class MainApp extends ConsumerWidget {
       ..watch(notificationServiceProvider)
       ..watch(snapshotServiceProvider);
     return MaterialApp.router(
+      // The name in Android's recent apps.
+      onGenerateTitle: (context) => context.l10n.appName,
       theme: buildLightTheme(),
       darkTheme: buildDarkTheme(),
       themeMode: ref.watch(appThemeModeProvider),
