@@ -6,6 +6,7 @@ import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/activity/presentation/activity_screen_test.dart' as act;
+import '../features/app_lock/presentation/app_lock_screen_test.dart' as lock;
 import '../features/bills/presentation/add_bill_screen_test.dart' as nb;
 import '../features/bills/presentation/bill_detail_screen_test.dart' as bd;
 import '../features/bills/presentation/recurring_bills_screen_test.dart' as rb;
@@ -124,6 +125,22 @@ final screens = <String, Drive>{
       .pumpApp(t, initial: nsvc.onboarded.copyWith(theme: th))
       .then((_) => inbox.openInbox(t)),
   'S21 settings': (t, th) => stg.pumpAt(t, Routes.settings, initial: p(th)),
+  'S37 app lock': (t, th) => lock.pumpAppLock(t, on: true, theme: th),
+  'S68 lock after': (t, th) async {
+    await lock.pumpAppLock(t, on: true, theme: th);
+    await lock.tapText(t, 'Lock after');
+  },
+  'S64 create PIN': (t, th) async {
+    await lock.pumpAppLock(t, theme: th);
+    await lock.tapToggle(t, 'App lock');
+    await lock.enterPin(t, '25');
+  },
+  'S65 PIN mismatch': (t, th) async {
+    await lock.pumpAppLock(t, theme: th);
+    await lock.tapToggle(t, 'App lock');
+    await lock.enterPin(t, '2580');
+    await lock.enterPin(t, '2581');
+  },
   'S48 notification settings': (t, th) => s48.pumpS48(t, theme: th),
   'S48 notifications off': (t, th) =>
       s48.pumpS48(t, theme: th, permitted: false),

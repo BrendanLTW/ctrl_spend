@@ -132,17 +132,21 @@ void main() {
       expect(shortVersion('1.12.3'), '1.12');
     });
 
-    testWidgets('App lock is hidden; bills and goals show in debug', (
+    testWidgets('v1.1 rows show in debug: app lock, bills and goals', (
       tester,
     ) async {
       await pumpAt(tester, Routes.settings);
-      expect(find.text('App lock'), findsNothing);
+      expect(row(tester, 'App lock').value, 'Off');
       // Tests run as debug builds, where these rows show until 5.9.
       expect(kDebugMode, isTrue);
+      await tester.ensureVisible(find.text('Recurring bills'));
+      await tester.pumpAndSettle();
       await tester.tap(find.text('Recurring bills'));
       await tester.pumpAndSettle();
       expect(find.byType(RecurringBillsScreen), findsOneWidget);
       await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Savings goals'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Savings goals'));
       await tester.pumpAndSettle();

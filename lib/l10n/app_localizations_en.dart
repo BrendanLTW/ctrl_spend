@@ -2303,4 +2303,92 @@ class AppLocalizationsEn extends AppLocalizations {
   String goalCompletedOn(String date) {
     return 'Completed $date';
   }
+
+  @override
+  String get appLock => 'App lock';
+
+  @override
+  String get appLockDetail => 'Ask for your PIN when you open ctrlSpend';
+
+  @override
+  String get unlockWithBiometrics => 'Unlock with biometrics';
+
+  @override
+  String get unlockWithBiometricsDetail =>
+      'Face ID or fingerprint, if set up on this phone';
+
+  @override
+  String get optionsSection => 'Options';
+
+  @override
+  String get lockAfter => 'Lock after';
+
+  @override
+  String lockAfterChoice(String minutes) {
+    String _temp0 = intl.Intl.selectLogic(minutes, {
+      '0': 'Immediately',
+      '1': 'After 1 minute',
+      '60': 'After 1 hour',
+      'other': 'After $minutes minutes',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get lockAfterBody =>
+      'How long ctrlSpend can stay in the background before it asks for your PIN again.';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get hideInSwitcher => 'Hide amounts in app switcher';
+
+  @override
+  String get appLockNote =>
+      'Turning app lock on asks you to create a PIN. If you forget it, you can reset it with biometrics or your phone\'s passcode.';
+
+  @override
+  String pinStep(int step) {
+    return 'Step $step of 2';
+  }
+
+  @override
+  String get pinCreateTitle => 'Create a 4-digit PIN';
+
+  @override
+  String get pinCreateBody =>
+      'You\'ll enter it each time you open ctrlSpend. Avoid 1234 or your birthday.';
+
+  @override
+  String get pinConfirmTitle => 'Enter it again';
+
+  @override
+  String get pinConfirmBody => 'To make sure it matches.';
+
+  @override
+  String get pinMismatch =>
+      'Those PINs don\'t match. Enter your new PIN again.';
+
+  @override
+  String get pinCurrentTitle => 'Enter your current PIN';
+
+  @override
+  String get pinCurrentBody => 'To change app lock settings.';
+
+  @override
+  String get pinWrong => 'That\'s not your PIN. Try again.';
+
+  @override
+  String pinLockedOut(String time) {
+    return 'Too many wrong PINs. Try again in $time.';
+  }
+
+  @override
+  String pinDotsLabel(int count) {
+    return '$count of 4 digits entered';
+  }
+
+  @override
+  String get biometricsReason => 'Confirm to unlock ctrlSpend with biometrics';
 }

@@ -3374,6 +3374,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Completed {date}'**
   String goalCompletedOn(String date);
+
+  /// No description provided for @appLock.
+  ///
+  /// In en, this message translates to:
+  /// **'App lock'**
+  String get appLock;
+
+  /// No description provided for @appLockDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for your PIN when you open ctrlSpend'**
+  String get appLockDetail;
+
+  /// No description provided for @unlockWithBiometrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock with biometrics'**
+  String get unlockWithBiometrics;
+
+  /// No description provided for @unlockWithBiometricsDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Face ID or fingerprint, if set up on this phone'**
+  String get unlockWithBiometricsDetail;
+
+  /// No description provided for @optionsSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Options'**
+  String get optionsSection;
+
+  /// No description provided for @lockAfter.
+  ///
+  /// In en, this message translates to:
+  /// **'Lock after'**
+  String get lockAfter;
+
+  /// No description provided for @lockAfterChoice.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, select, 0{Immediately} 1{After 1 minute} 60{After 1 hour} other{After {minutes} minutes}}'**
+  String lockAfterChoice(String minutes);
+
+  /// No description provided for @lockAfterBody.
+  ///
+  /// In en, this message translates to:
+  /// **'How long ctrlSpend can stay in the background before it asks for your PIN again.'**
+  String get lockAfterBody;
+
+  /// No description provided for @changePin.
+  ///
+  /// In en, this message translates to:
+  /// **'Change PIN'**
+  String get changePin;
+
+  /// No description provided for @hideInSwitcher.
+  ///
+  /// In en, this message translates to:
+  /// **'Hide amounts in app switcher'**
+  String get hideInSwitcher;
+
+  /// No description provided for @appLockNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Turning app lock on asks you to create a PIN. If you forget it, you can reset it with biometrics or your phone\'s passcode.'**
+  String get appLockNote;
+
+  /// No description provided for @pinStep.
+  ///
+  /// In en, this message translates to:
+  /// **'Step {step} of 2'**
+  String pinStep(int step);
+
+  /// No description provided for @pinCreateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Create a 4-digit PIN'**
+  String get pinCreateTitle;
+
+  /// No description provided for @pinCreateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'ll enter it each time you open ctrlSpend. Avoid 1234 or your birthday.'**
+  String get pinCreateBody;
+
+  /// No description provided for @pinConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter it again'**
+  String get pinConfirmTitle;
+
+  /// No description provided for @pinConfirmBody.
+  ///
+  /// In en, this message translates to:
+  /// **'To make sure it matches.'**
+  String get pinConfirmBody;
+
+  /// No description provided for @pinMismatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Those PINs don\'t match. Enter your new PIN again.'**
+  String get pinMismatch;
+
+  /// No description provided for @pinCurrentTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your current PIN'**
+  String get pinCurrentTitle;
+
+  /// No description provided for @pinCurrentBody.
+  ///
+  /// In en, this message translates to:
+  /// **'To change app lock settings.'**
+  String get pinCurrentBody;
+
+  /// No description provided for @pinWrong.
+  ///
+  /// In en, this message translates to:
+  /// **'That\'s not your PIN. Try again.'**
+  String get pinWrong;
+
+  /// No description provided for @pinLockedOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many wrong PINs. Try again in {time}.'**
+  String pinLockedOut(String time);
+
+  /// No description provided for @pinDotsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} of 4 digits entered'**
+  String pinDotsLabel(int count);
+
+  /// No description provided for @biometricsReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm to unlock ctrlSpend with biometrics'**
+  String get biometricsReason;
 }
 
 class _AppLocalizationsDelegate

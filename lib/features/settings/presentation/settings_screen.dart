@@ -121,6 +121,14 @@ class SettingsScreen extends ConsumerWidget {
                 value: l10n.notificationsOnCount(notificationsOn),
                 onTap: () => context.push(Routes.notificationSettings),
               ),
+              // v1.1, shown in debug builds until task 5.9.
+              if (kDebugMode)
+                ListGroupRow(
+                  leading: tile(AppIcon.lock, CategoryColorKey.red),
+                  title: l10n.appLock,
+                  value: prefs.appLockOn ? l10n.onLabel : l10n.offLabel,
+                  onTap: () => context.push(Routes.appLock),
+                ),
             ],
           ),
           const SizedBox(height: AppSpacing.sectionTop),

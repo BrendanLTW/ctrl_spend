@@ -95,6 +95,14 @@ class AppTypography {
     fontWeight: FontWeight.w600,
     height: 1.35,
   );
+
+  /// The PIN pad's digits (S38, S64): 26/600.
+  TextStyle get pinKey => const TextStyle(
+    fontFamily: _family,
+    fontSize: 26,
+    fontWeight: FontWeight.w600,
+    height: 1.2,
+  );
   TextStyle get rowTitle => const TextStyle(
     fontFamily: _family,
     fontSize: 16,

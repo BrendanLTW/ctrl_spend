@@ -3,6 +3,13 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_theme.dart';
 import 'package:ctrl_spend/core/theme/theme_mode_controller.dart';
+import 'package:ctrl_spend/features/app_lock/data/channel_secure_window.dart';
+import 'package:ctrl_spend/features/app_lock/data/local_device_auth.dart';
+import 'package:ctrl_spend/features/app_lock/data/secure_pin_store.dart';
+import 'package:ctrl_spend/features/app_lock/domain/device_auth.dart';
+import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrl_spend/features/app_lock/domain/secure_window.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/app_switcher_guard.dart';
 import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
@@ -83,6 +90,9 @@ List<Override> appOverrides({NotificationScheduler? scheduler}) => [
   dataEraserProvider.overrideWith(
     (ref) => DriftDataEraser(ref.watch(appDatabaseProvider)),
   ),
+  pinStoreProvider.overrideWith((ref) => SecurePinStore()),
+  deviceAuthProvider.overrideWith((ref) => LocalDeviceAuth()),
+  secureWindowProvider.overrideWith((ref) => ChannelSecureWindow()),
 ];
 
 class MainApp extends ConsumerWidget {
@@ -102,6 +112,8 @@ class MainApp extends ConsumerWidget {
       routerConfig: ref.watch(appRouterProvider),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      builder: (context, child) =>
+          AppSwitcherGuard(child: child ?? const SizedBox.shrink()),
     );
   }
 }

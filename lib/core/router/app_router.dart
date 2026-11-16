@@ -1,5 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/app_lock_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/pin_flow_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_detail_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
@@ -65,6 +67,12 @@ abstract final class Routes {
 
   /// S34; under onboarding it's [onboardingCurrency] (S04's currency row).
   static const currency = '/settings/currency';
+
+  /// S37 App lock (v1.1).
+  static const appLock = '/settings/app-lock';
+
+  /// S64/S65 and the current-PIN check; pass a `PinFlow` as `extra`.
+  static const pin = '/settings/app-lock/pin';
 
   /// S48 Notification settings.
   static const notificationSettings = '/settings/notifications';
@@ -212,6 +220,18 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.currency,
         builder: (context, state) => const CurrencyScreen(),
+      ),
+      GoRoute(
+        path: Routes.appLock,
+        builder: (context, state) => const AppLockScreen(),
+      ),
+      GoRoute(
+        path: Routes.pin,
+        builder: (context, state) => PinFlowScreen(
+          flow: state.extra is PinFlow
+              ? state.extra! as PinFlow
+              : PinFlow.verify,
+        ),
       ),
       GoRoute(
         path: Routes.notificationSettings,

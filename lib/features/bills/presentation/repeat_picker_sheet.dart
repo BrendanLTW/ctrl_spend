@@ -1,11 +1,11 @@
 import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_radio.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
+import 'package:ctrl_spend/core/widgets/sheet_list_group.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_labels.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -65,33 +65,6 @@ Future<BillRepeat?> showRepeatPicker(
     title: l10n.customRepeatTitle,
     builder: (_) => _CustomRepeatBody(initial: current),
   );
-}
-
-/// Rows on a `fillSoft` card with dividers: a list inside a sheet, as
-/// S44 shows it, so it stands out from the sheet in both themes.
-class SheetListGroup extends StatelessWidget {
-  const new({required this.children, super.key});
-
-  final List<Widget> children;
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Material(
-      color: colors.fillSoft,
-      borderRadius: BorderRadius.circular(AppRadius.r28),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          for (final (i, child) in children.indexed) ...[
-            if (i > 0) Divider(height: 1, thickness: 1, color: colors.divider),
-            child,
-          ],
-        ],
-      ),
-    );
-  }
 }
 
 /// A preset with a radio, or Custom… ([selected] null) with a chevron.

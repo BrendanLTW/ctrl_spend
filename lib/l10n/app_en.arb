@@ -2075,5 +2075,56 @@
         "type": "String"
       }
     }
-  }
+  },
+  "appLock": "App lock",
+  "appLockDetail": "Ask for your PIN when you open ctrlSpend",
+  "unlockWithBiometrics": "Unlock with biometrics",
+  "unlockWithBiometricsDetail": "Face ID or fingerprint, if set up on this phone",
+  "optionsSection": "Options",
+  "lockAfter": "Lock after",
+  "lockAfterChoice": "{minutes, select, 0{Immediately} 1{After 1 minute} 60{After 1 hour} other{After {minutes} minutes}}",
+  "@lockAfterChoice": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "lockAfterBody": "How long ctrlSpend can stay in the background before it asks for your PIN again.",
+  "changePin": "Change PIN",
+  "hideInSwitcher": "Hide amounts in app switcher",
+  "appLockNote": "Turning app lock on asks you to create a PIN. If you forget it, you can reset it with biometrics or your phone's passcode.",
+  "pinStep": "Step {step} of 2",
+  "@pinStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "pinCreateTitle": "Create a 4-digit PIN",
+  "pinCreateBody": "You'll enter it each time you open ctrlSpend. Avoid 1234 or your birthday.",
+  "pinConfirmTitle": "Enter it again",
+  "pinConfirmBody": "To make sure it matches.",
+  "pinMismatch": "Those PINs don't match. Enter your new PIN again.",
+  "pinCurrentTitle": "Enter your current PIN",
+  "pinCurrentBody": "To change app lock settings.",
+  "pinWrong": "That's not your PIN. Try again.",
+  "pinLockedOut": "Too many wrong PINs. Try again in {time}.",
+  "@pinLockedOut": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pinDotsLabel": "{count} of 4 digits entered",
+  "@pinDotsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biometricsReason": "Confirm to unlock ctrlSpend with biometrics"
 }

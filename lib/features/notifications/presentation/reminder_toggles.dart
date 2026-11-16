@@ -49,61 +49,73 @@ class ReminderToggles extends ConsumerWidget {
   }
 }
 
-/// A [ListGroup] row of title, detail and a toggle (S07, S48). Tapping
-/// anywhere on the row flips it.
+/// A [ListGroup] row of an optional tile, a title, an optional detail
+/// and a toggle (S07, S37, S48). Tapping anywhere on the row flips it; a
+/// null [onChanged] disables it.
 class ToggleRow extends StatelessWidget {
   const new({
     required this.title,
-    required this.detail,
     required this.value,
     required this.onChanged,
+    this.detail,
+    this.leading,
     super.key,
   });
 
   final String title;
-  final String detail;
+  final String? detail;
+  final Widget? leading;
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
     final text = context.text;
+    final onChanged = this.onChanged;
     // Read as one toggle.
     return MergeSemantics(
       child: InkWell(
-        onTap: () => onChanged(!value),
+        onTap: onChanged == null ? null : () => onChanged(!value),
         highlightColor: colors.raised,
         splashFactory: NoSplash.splashFactory,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(18, 12, 14, 12),
-          child: Row(
-            children: [
-              Expanded(
-                // The toggle carries the label, so it's read once.
-                child: ExcludeSemantics(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: text.rowTitle.copyWith(color: colors.ink),
-                      ),
-                      Text(
-                        detail,
-                        style: text.body.copyWith(color: colors.muted),
-                      ),
-                    ],
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 64),
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 12, 14, 12),
+            child: Row(
+              children: [
+                if (leading case final leading?) ...[
+                  leading,
+                  const SizedBox(width: 16),
+                ],
+                Expanded(
+                  // The toggle carries the label, so it's read once.
+                  child: ExcludeSemantics(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: text.rowTitle.copyWith(color: colors.ink),
+                        ),
+                        if (detail case final detail?)
+                          Text(
+                            detail,
+                            style: text.body.copyWith(color: colors.muted),
+                          ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 12),
-              AppToggle(
-                value: value,
-                onChanged: onChanged,
-                semanticLabel: '$title, $detail',
-              ),
-            ],
+                const SizedBox(width: 12),
+                AppToggle(
+                  value: value,
+                  onChanged: onChanged,
+                  semanticLabel: [title, ?detail].join(', '),
+                ),
+              ],
+            ),
           ),
         ),
       ),
