@@ -13,12 +13,14 @@ import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/empty_state.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
+import 'package:ctrl_spend/core/widgets/pay_pill.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
-import 'package:ctrl_spend/features/bills/presentation/bill_actions.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_labels.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_row.dart';
+import 'package:ctrl_spend/features/bills/presentation/mark_paid_sheet.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
@@ -33,8 +35,10 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 /// S27 Recurring bills: what's due before the period ends and what that
-/// leaves to spend, the upcoming bills, and the ones paid this period.
-/// Unpaid bills never change "Left to spend" elsewhere (PRD §5.11).
+/// leaves to spend, the upcoming bills (overdue first, S58) with a Pay
+/// pill (S57), the ones paid this period, and paused ones last. A row
+/// opens S56. With none it's S59. Unpaid bills never change "Left to
+/// spend" elsewhere (PRD §5.11).
 class RecurringBillsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -54,8 +58,21 @@ class RecurringBillsScreen extends ConsumerWidget {
     final inPeriod =
         ref.watch(transactionsProvider(period: period)).value ??
         const <Transaction>[];
-    final categories =
-        ref.watch(categoriesProvider()).value ?? const <Category>[];
+    final categories = {
+      for (final c
+          in ref.watch(categoriesProvider()).value ?? const <Category>[])
+        c.id: c,
+    };
+    // Every bill shows its category's tile (PRD §5.11).
+    Widget tileFor(int categoryId) => switch (categories[categoryId]) {
+      final c? => CategoryTile.forKey(
+        c.iconKey,
+        color: c.colorKey,
+        size: CategoryTileSize.compact,
+      ),
+      null => const SizedBox(width: 44, height: 44),
+    };
+    void openBill(Bill bill) => unawaited(context.push(Routes.bill(bill.id)));
 
     void addBill() => unawaited(context.push(Routes.newBill));
 
@@ -63,43 +80,36 @@ class RecurringBillsScreen extends ConsumerWidget {
     if (bills == null) {
       body = const SizedBox.shrink();
     } else if (bills.isEmpty) {
-      body = Padding(
-        padding: const EdgeInsets.fromLTRB(
-          AppSpacing.screenX,
-          8,
-          AppSpacing.screenX,
-          32,
-        ),
-        child: EmptyState(
-          icon: AppIcon.receipt,
-          title: l10n.noBillsTitle,
-          body: l10n.noBillsBody,
-          actionLabel: l10n.addBill,
-          onAction: addBill,
-        ),
+      // S59.
+      body = ListView(
+        padding: const EdgeInsets.only(top: 170, bottom: 32),
+        children: [
+          EmptyState(
+            card: false,
+            icon: AppIcon.repeat,
+            title: l10n.noBillsTitle,
+            body: l10n.noBillsBody,
+            actionLabel: l10n.addBill,
+            onAction: addBill,
+          ),
+        ],
       );
     } else {
       final due = paymentsDue(bills, period);
+      final overdue = due.where((p) => p.due.isBefore(today)).length;
+      final active = [
+        for (final b in bills)
+          if (!b.paused) b,
+      ];
+      final paused = [
+        for (final b in bills)
+          if (b.paused) b,
+      ];
       final paid = [
         for (final t in inPeriod)
           if (t.billId != null) t,
       ];
       final byId = {for (final b in bills) b.id: b};
-      Widget paidTile(Transaction t) => switch (byId[t.billId]) {
-        final bill? => CategoryTile.forKey(
-          bill.iconKey,
-          color: bill.colorKey,
-          size: CategoryTileSize.compact,
-        ),
-        null => switch (categories.where((c) => c.id == t.categoryId)) {
-          final found when found.isNotEmpty => CategoryTile.forKey(
-            found.first.iconKey,
-            color: found.first.colorKey,
-            size: CategoryTileSize.compact,
-          ),
-          _ => const SizedBox(width: 44, height: 44),
-        },
-      };
 
       body = ListView(
         padding: const EdgeInsets.fromLTRB(
@@ -113,6 +123,7 @@ class RecurringBillsScreen extends ConsumerWidget {
             periodEnd: DateFormat('d MMM', locale).format(period.end),
             dueMinor: due.fold(0, (sum, p) => sum + p.bill.amountMinor),
             count: due.length,
+            overdue: overdue,
             leftAfterMinor: leftAfterBills(
               budgetMinor: prefs.monthlyBudgetMinor,
               spentMinor: periodTotals(inPeriod, period).spentMinor,
@@ -120,29 +131,39 @@ class RecurringBillsScreen extends ConsumerWidget {
             ),
             currency: currency,
           ),
-          const SizedBox(height: 28),
-          SectionLabel(l10n.billsUpcoming),
-          ListGroup(
-            children: [
-              for (final bill in bills)
-                BillRow(
-                  tile: CategoryTile.forKey(
-                    bill.iconKey,
-                    color: bill.colorKey,
-                    size: CategoryTileSize.compact,
+          if (active.isNotEmpty) ...[
+            const SizedBox(height: 28),
+            SectionLabel(l10n.billsUpcoming),
+            ListGroup(
+              children: [
+                for (final bill in active)
+                  BillRow(
+                    tile: tileFor(bill.categoryId),
+                    title: bill.name,
+                    caption: l10n.dueLabel(bill.nextDue, today, locale),
+                    captionColor: switch (dueSoon(bill.nextDue, today)) {
+                      DueSoon.overdue => colors.negative,
+                      DueSoon.soon => colors.warning,
+                      DueSoon.later => colors.muted,
+                    },
+                    amount: formatter.format(bill.amountMinor),
+                    onTap: () => openBill(bill),
+                    action: switch (categories[bill.categoryId]) {
+                      final category? => PayPill(
+                        label: l10n.payBill,
+                        semanticLabel: l10n.payBillLabel(bill.name),
+                        onPressed: () => showMarkPaidSheet(
+                          context,
+                          bill: bill,
+                          category: category,
+                        ),
+                      ),
+                      null => null,
+                    },
                   ),
-                  title: bill.name,
-                  caption: l10n.dueLabel(bill.nextDue, today, locale),
-                  captionColor: switch (dueSoon(bill.nextDue, today)) {
-                    DueSoon.overdue => colors.negative,
-                    DueSoon.soon => colors.warning,
-                    DueSoon.later => colors.muted,
-                  },
-                  amount: formatter.format(bill.amountMinor),
-                  onTap: () => showBillActions(context, ref, bill: bill),
-                ),
-            ],
-          ),
+              ],
+            ),
+          ],
           if (paid.isNotEmpty) ...[
             const SizedBox(height: 28),
             SectionLabel(l10n.billsPaidThisPeriod),
@@ -150,7 +171,7 @@ class RecurringBillsScreen extends ConsumerWidget {
               children: [
                 for (final t in paid)
                   BillRow(
-                    tile: paidTile(t),
+                    tile: tileFor(t.categoryId),
                     title: t.title,
                     caption: l10n.billPaid(
                       DateFormat(
@@ -160,8 +181,33 @@ class RecurringBillsScreen extends ConsumerWidget {
                     ),
                     captionColor: colors.positive,
                     amount: formatter.format(t.amountMinor),
-                    onTap: () =>
-                        unawaited(context.push(Routes.transaction(t.id))),
+                    // Its bill, or the payment once the bill is gone.
+                    onTap: switch (byId[t.billId]) {
+                      final bill? => () => openBill(bill),
+                      null => () => unawaited(
+                        context.push(Routes.transaction(t.id)),
+                      ),
+                    },
+                  ),
+              ],
+            ),
+          ],
+          if (paused.isNotEmpty) ...[
+            const SizedBox(height: 28),
+            SectionLabel(l10n.billsPausedSection),
+            ListGroup(
+              children: [
+                for (final bill in paused)
+                  BillRow(
+                    tile: Opacity(
+                      opacity: 0.5,
+                      child: tileFor(bill.categoryId),
+                    ),
+                    title: bill.name,
+                    caption: l10n.billPausedCaption,
+                    captionColor: colors.muted,
+                    amount: formatter.format(bill.amountMinor),
+                    onTap: () => openBill(bill),
                   ),
               ],
             ),
@@ -218,6 +264,7 @@ class _DueCard extends StatelessWidget {
     required this.periodEnd,
     required this.dueMinor,
     required this.count,
+    required this.overdue,
     required this.leftAfterMinor,
     required this.currency,
   });
@@ -225,6 +272,9 @@ class _DueCard extends StatelessWidget {
   final String periodEnd;
   final int dueMinor;
   final int count;
+
+  /// How many of [count] are overdue (S58).
+  final int overdue;
   final int? leftAfterMinor;
   final Currency currency;
 
@@ -235,7 +285,10 @@ class _DueCard extends StatelessWidget {
     final l10n = context.l10n;
     final formatter = MoneyFormatter(currency);
     final summary = [
-      l10n.billsDueCount(count),
+      if (overdue > 0)
+        l10n.billsOverdueSummary(overdue, count - overdue)
+      else
+        l10n.billsDueCount(count),
       switch (leftAfterMinor) {
         null => null,
         final left when left >= 0 => l10n.billsLeftAfter(

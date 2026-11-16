@@ -619,30 +619,6 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
     type: DriftSqlType.int,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _iconKeyMeta = const VerificationMeta(
-    'iconKey',
-  );
-  @override
-  late final GeneratedColumn<String> iconKey = GeneratedColumn<String>(
-    'icon_key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: const Constant('bolt'),
-  );
-  static const VerificationMeta _colorKeyMeta = const VerificationMeta(
-    'colorKey',
-  );
-  @override
-  late final GeneratedColumn<String> colorKey = GeneratedColumn<String>(
-    'color_key',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: false,
-    defaultValue: const Constant('yellow'),
-  );
   static const VerificationMeta _pausedMeta = const VerificationMeta('paused');
   @override
   late final GeneratedColumn<bool> paused = GeneratedColumn<bool>(
@@ -667,8 +643,6 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
     repeatDay,
     nextDue,
     remindDaysBefore,
-    iconKey,
-    colorKey,
     paused,
   ];
   @override
@@ -755,18 +729,6 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
         ),
       );
     }
-    if (data.containsKey('icon_key')) {
-      context.handle(
-        _iconKeyMeta,
-        iconKey.isAcceptableOrUnknown(data['icon_key']!, _iconKeyMeta),
-      );
-    }
-    if (data.containsKey('color_key')) {
-      context.handle(
-        _colorKeyMeta,
-        colorKey.isAcceptableOrUnknown(data['color_key']!, _colorKeyMeta),
-      );
-    }
     if (data.containsKey('paused')) {
       context.handle(
         _pausedMeta,
@@ -818,14 +780,6 @@ class $BillsTable extends Bills with TableInfo<$BillsTable, BillRow> {
         DriftSqlType.int,
         data['${effectivePrefix}remind_days_before'],
       ),
-      iconKey: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}icon_key'],
-      )!,
-      colorKey: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}color_key'],
-      )!,
       paused: attachedDatabase.typeMapping.read(
         DriftSqlType.bool,
         data['${effectivePrefix}paused'],
@@ -850,11 +804,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
   final DateTime nextDue;
   final int? remindDaysBefore;
 
-  /// The row's tile on S27. Added in schema v4; earlier bills get the
-  /// Bills category's look.
-  final String iconKey;
-  final String colorKey;
-
   /// A paused bill is left out of Upcoming totals, "Left after bills" and
   /// reminders (PRD §5.11). Added in schema v5.
   final bool paused;
@@ -868,8 +817,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     this.repeatDay,
     required this.nextDue,
     this.remindDaysBefore,
-    required this.iconKey,
-    required this.colorKey,
     required this.paused,
   });
   @override
@@ -888,8 +835,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     if (!nullToAbsent || remindDaysBefore != null) {
       map['remind_days_before'] = Variable<int>(remindDaysBefore);
     }
-    map['icon_key'] = Variable<String>(iconKey);
-    map['color_key'] = Variable<String>(colorKey);
     map['paused'] = Variable<bool>(paused);
     return map;
   }
@@ -909,8 +854,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       remindDaysBefore: remindDaysBefore == null && nullToAbsent
           ? const Value.absent()
           : Value(remindDaysBefore),
-      iconKey: Value(iconKey),
-      colorKey: Value(colorKey),
       paused: Value(paused),
     );
   }
@@ -930,8 +873,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       repeatDay: serializer.fromJson<int?>(json['repeatDay']),
       nextDue: serializer.fromJson<DateTime>(json['nextDue']),
       remindDaysBefore: serializer.fromJson<int?>(json['remindDaysBefore']),
-      iconKey: serializer.fromJson<String>(json['iconKey']),
-      colorKey: serializer.fromJson<String>(json['colorKey']),
       paused: serializer.fromJson<bool>(json['paused']),
     );
   }
@@ -948,8 +889,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       'repeatDay': serializer.toJson<int?>(repeatDay),
       'nextDue': serializer.toJson<DateTime>(nextDue),
       'remindDaysBefore': serializer.toJson<int?>(remindDaysBefore),
-      'iconKey': serializer.toJson<String>(iconKey),
-      'colorKey': serializer.toJson<String>(colorKey),
       'paused': serializer.toJson<bool>(paused),
     };
   }
@@ -964,8 +903,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     Value<int?> repeatDay = const Value.absent(),
     DateTime? nextDue,
     Value<int?> remindDaysBefore = const Value.absent(),
-    String? iconKey,
-    String? colorKey,
     bool? paused,
   }) => BillRow(
     id: id ?? this.id,
@@ -979,8 +916,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     remindDaysBefore: remindDaysBefore.present
         ? remindDaysBefore.value
         : this.remindDaysBefore,
-    iconKey: iconKey ?? this.iconKey,
-    colorKey: colorKey ?? this.colorKey,
     paused: paused ?? this.paused,
   );
   BillRow copyWithCompanion(BillsCompanion data) {
@@ -1004,8 +939,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
       remindDaysBefore: data.remindDaysBefore.present
           ? data.remindDaysBefore.value
           : this.remindDaysBefore,
-      iconKey: data.iconKey.present ? data.iconKey.value : this.iconKey,
-      colorKey: data.colorKey.present ? data.colorKey.value : this.colorKey,
       paused: data.paused.present ? data.paused.value : this.paused,
     );
   }
@@ -1022,8 +955,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           ..write('repeatDay: $repeatDay, ')
           ..write('nextDue: $nextDue, ')
           ..write('remindDaysBefore: $remindDaysBefore, ')
-          ..write('iconKey: $iconKey, ')
-          ..write('colorKey: $colorKey, ')
           ..write('paused: $paused')
           ..write(')'))
         .toString();
@@ -1040,8 +971,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
     repeatDay,
     nextDue,
     remindDaysBefore,
-    iconKey,
-    colorKey,
     paused,
   );
   @override
@@ -1057,8 +986,6 @@ class BillRow extends DataClass implements Insertable<BillRow> {
           other.repeatDay == this.repeatDay &&
           other.nextDue == this.nextDue &&
           other.remindDaysBefore == this.remindDaysBefore &&
-          other.iconKey == this.iconKey &&
-          other.colorKey == this.colorKey &&
           other.paused == this.paused);
 }
 
@@ -1072,8 +999,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
   final Value<int?> repeatDay;
   final Value<DateTime> nextDue;
   final Value<int?> remindDaysBefore;
-  final Value<String> iconKey;
-  final Value<String> colorKey;
   final Value<bool> paused;
   const BillsCompanion({
     this.id = const Value.absent(),
@@ -1085,8 +1010,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     this.repeatDay = const Value.absent(),
     this.nextDue = const Value.absent(),
     this.remindDaysBefore = const Value.absent(),
-    this.iconKey = const Value.absent(),
-    this.colorKey = const Value.absent(),
     this.paused = const Value.absent(),
   });
   BillsCompanion.insert({
@@ -1099,8 +1022,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     this.repeatDay = const Value.absent(),
     required DateTime nextDue,
     this.remindDaysBefore = const Value.absent(),
-    this.iconKey = const Value.absent(),
-    this.colorKey = const Value.absent(),
     this.paused = const Value.absent(),
   }) : name = Value(name),
        amountMinor = Value(amountMinor),
@@ -1118,8 +1039,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     Expression<int>? repeatDay,
     Expression<DateTime>? nextDue,
     Expression<int>? remindDaysBefore,
-    Expression<String>? iconKey,
-    Expression<String>? colorKey,
     Expression<bool>? paused,
   }) {
     return RawValuesInsertable({
@@ -1132,8 +1051,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
       if (repeatDay != null) 'repeat_day': repeatDay,
       if (nextDue != null) 'next_due': nextDue,
       if (remindDaysBefore != null) 'remind_days_before': remindDaysBefore,
-      if (iconKey != null) 'icon_key': iconKey,
-      if (colorKey != null) 'color_key': colorKey,
       if (paused != null) 'paused': paused,
     });
   }
@@ -1148,8 +1065,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     Value<int?>? repeatDay,
     Value<DateTime>? nextDue,
     Value<int?>? remindDaysBefore,
-    Value<String>? iconKey,
-    Value<String>? colorKey,
     Value<bool>? paused,
   }) {
     return BillsCompanion(
@@ -1162,8 +1077,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
       repeatDay: repeatDay ?? this.repeatDay,
       nextDue: nextDue ?? this.nextDue,
       remindDaysBefore: remindDaysBefore ?? this.remindDaysBefore,
-      iconKey: iconKey ?? this.iconKey,
-      colorKey: colorKey ?? this.colorKey,
       paused: paused ?? this.paused,
     );
   }
@@ -1198,12 +1111,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
     if (remindDaysBefore.present) {
       map['remind_days_before'] = Variable<int>(remindDaysBefore.value);
     }
-    if (iconKey.present) {
-      map['icon_key'] = Variable<String>(iconKey.value);
-    }
-    if (colorKey.present) {
-      map['color_key'] = Variable<String>(colorKey.value);
-    }
     if (paused.present) {
       map['paused'] = Variable<bool>(paused.value);
     }
@@ -1222,8 +1129,6 @@ class BillsCompanion extends UpdateCompanion<BillRow> {
           ..write('repeatDay: $repeatDay, ')
           ..write('nextDue: $nextDue, ')
           ..write('remindDaysBefore: $remindDaysBefore, ')
-          ..write('iconKey: $iconKey, ')
-          ..write('colorKey: $colorKey, ')
           ..write('paused: $paused')
           ..write(')'))
         .toString();
@@ -4669,8 +4574,6 @@ typedef $$BillsTableCreateCompanionBuilder = BillsCompanion Function({
   Value<int?> repeatDay,
   required DateTime nextDue,
   Value<int?> remindDaysBefore,
-  Value<String> iconKey,
-  Value<String> colorKey,
   Value<bool> paused,
 });
 typedef $$BillsTableUpdateCompanionBuilder = BillsCompanion Function({
@@ -4683,8 +4586,6 @@ typedef $$BillsTableUpdateCompanionBuilder = BillsCompanion Function({
   Value<int?> repeatDay,
   Value<DateTime> nextDue,
   Value<int?> remindDaysBefore,
-  Value<String> iconKey,
-  Value<String> colorKey,
   Value<bool> paused,
 });
 
@@ -4773,16 +4674,6 @@ class $$BillsTableFilterComposer extends Composer<_$AppDatabase, $BillsTable> {
 
   ColumnFilters<int> get remindDaysBefore => $composableBuilder(
     column: $table.remindDaysBefore,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get iconKey => $composableBuilder(
-    column: $table.iconKey,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get colorKey => $composableBuilder(
-    column: $table.colorKey,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -4889,16 +4780,6 @@ class $$BillsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get iconKey => $composableBuilder(
-    column: $table.iconKey,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get colorKey => $composableBuilder(
-    column: $table.colorKey,
-    builder: (column) => ColumnOrderings(column),
-  );
-
   ColumnOrderings<bool> get paused => $composableBuilder(
     column: $table.paused,
     builder: (column) => ColumnOrderings(column),
@@ -4968,12 +4849,6 @@ class $$BillsTableAnnotationComposer
     column: $table.remindDaysBefore,
     builder: (column) => column,
   );
-
-  GeneratedColumn<String> get iconKey =>
-      $composableBuilder(column: $table.iconKey, builder: (column) => column);
-
-  GeneratedColumn<String> get colorKey =>
-      $composableBuilder(column: $table.colorKey, builder: (column) => column);
 
   GeneratedColumn<bool> get paused =>
       $composableBuilder(column: $table.paused, builder: (column) => column);
@@ -5064,8 +4939,6 @@ class $$BillsTableTableManager
                 Value<int?> repeatDay = const Value.absent(),
                 Value<DateTime> nextDue = const Value.absent(),
                 Value<int?> remindDaysBefore = const Value.absent(),
-                Value<String> iconKey = const Value.absent(),
-                Value<String> colorKey = const Value.absent(),
                 Value<bool> paused = const Value.absent(),
               }) => BillsCompanion(
                 id: id,
@@ -5077,8 +4950,6 @@ class $$BillsTableTableManager
                 repeatDay: repeatDay,
                 nextDue: nextDue,
                 remindDaysBefore: remindDaysBefore,
-                iconKey: iconKey,
-                colorKey: colorKey,
                 paused: paused,
               ),
           createCompanionCallback:
@@ -5092,8 +4963,6 @@ class $$BillsTableTableManager
                 Value<int?> repeatDay = const Value.absent(),
                 required DateTime nextDue,
                 Value<int?> remindDaysBefore = const Value.absent(),
-                Value<String> iconKey = const Value.absent(),
-                Value<String> colorKey = const Value.absent(),
                 Value<bool> paused = const Value.absent(),
               }) => BillsCompanion.insert(
                 id: id,
@@ -5105,8 +4974,6 @@ class $$BillsTableTableManager
                 repeatDay: repeatDay,
                 nextDue: nextDue,
                 remindDaysBefore: remindDaysBefore,
-                iconKey: iconKey,
-                colorKey: colorKey,
                 paused: paused,
               ),
           withReferenceMapper: (p0) => p0

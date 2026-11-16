@@ -14,6 +14,7 @@ Future<T?> showAppSheet<T>(
   BuildContext context, {
   required String title,
   required WidgetBuilder builder,
+  String? subtitle,
   Widget? leading,
   Widget? trailing,
   bool floating = false,
@@ -21,6 +22,7 @@ Future<T?> showAppSheet<T>(
   final colors = context.colors;
   Widget sheet(BuildContext context) => AppSheet(
     title: title,
+    subtitle: subtitle,
     leading: leading,
     trailing: trailing,
     child: builder(context),
@@ -74,12 +76,16 @@ class AppSheet extends StatelessWidget {
   const new({
     required this.title,
     required this.child,
+    this.subtitle,
     this.leading,
     this.trailing,
     super.key,
   });
 
   final String title;
+
+  /// A muted line under the title, e.g. S57's bill name.
+  final String? subtitle;
   final Widget child;
   final Widget? leading;
   final Widget? trailing;
@@ -114,12 +120,26 @@ class AppSheet extends StatelessWidget {
                   const SizedBox(width: 16),
                 ],
                 Expanded(
-                  child: Semantics(
-                    header: true,
-                    child: Text(
-                      title,
-                      style: context.text.header.copyWith(color: colors.ink),
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Semantics(
+                        header: true,
+                        child: Text(
+                          title,
+                          style: context.text.header.copyWith(
+                            color: colors.ink,
+                          ),
+                        ),
+                      ),
+                      if (subtitle case final subtitle?)
+                        Text(
+                          subtitle,
+                          style: context.text.body.copyWith(
+                            color: colors.muted,
+                          ),
+                        ),
+                    ],
                   ),
                 ),
                 trailing ??

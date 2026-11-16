@@ -1308,7 +1308,7 @@
       }
     }
   },
-  "billOverdue": "Overdue · due {date}",
+  "billOverdue": "Overdue · was due {date}",
   "@billOverdue": {
     "placeholders": {
       "date": {
@@ -1324,9 +1324,9 @@
       }
     }
   },
-  "noBillsTitle": "No bills yet",
-  "noBillsBody": "Add the bills you pay regularly to see what's due before your next period.",
-  "addBill": "Add bill",
+  "noBillsTitle": "No recurring bills yet",
+  "noBillsBody": "Add rent, phone or streaming bills to see what's left after they're paid, and get a reminder before each one is due.",
+  "addBill": "Add a bill",
   "newBill": "New bill",
   "editBill": "Edit bill",
   "amountEachTime": "Amount each time",
@@ -1401,7 +1401,7 @@
   "repeatFewer": "Fewer",
   "repeatMore": "More",
   "setRepeat": "Set",
-  "markPaid": "Mark paid",
+  "markPaid": "Mark as paid",
   "deleteBill": "Delete bill",
   "deleteBillTitle": "Delete {name}?",
   "@deleteBillTitle": {
@@ -1975,6 +1975,72 @@
   "@noPastPeriodsBody": {
     "placeholders": {
       "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billsOverdueSummary": "{overdue} overdue and {upcoming} upcoming.",
+  "@billsOverdueSummary": {
+    "placeholders": {
+      "overdue": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      }
+    }
+  },
+  "billsPausedSection": "Paused",
+  "billPausedCaption": "Paused",
+  "payBill": "Pay",
+  "payBillLabel": "Pay {name}",
+  "@payBillLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billTitle": "Bill",
+  "billReminderRow": "Reminder",
+  "billReminderDays": "{days, plural, =0{On the day} =1{1 day before} other{{days} days before}}",
+  "@billReminderDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "pauseBill": "Pause this bill",
+  "billHistory": "History",
+  "billHistoryCaption": "Added to {category}",
+  "@billHistoryCaption": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "billPaidOnRow": "Paid on",
+  "billAmountRow": "Amount",
+  "markPaidNote": "This adds a {amount} expense to {category} and moves the next due date to {date}.",
+  "@markPaidNote": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatMonthlyOnDay": "Every month on the {day}",
+  "@repeatMonthlyOnDay": {
+    "placeholders": {
+      "day": {
         "type": "String"
       }
     }

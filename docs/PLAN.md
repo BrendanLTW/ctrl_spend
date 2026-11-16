@@ -201,7 +201,7 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.8, §6.4
 - [x] **6.19 Past periods S25, S26, S55, S20 and S40.** Read from snapshots. Add S55 empty. S40 shows until there's spending on 3 different days.
   Refs: PRD §5.7, §5.10
-- [ ] **6.20 Bills S27, S56–S59, S44.** Pay pill opens S57. A row opens S56 (pause, history, Mark as paid, Edit, Delete). Overdue copy (S58), empty state (S59), Custom 1–12 days, weeks or months.
+- [x] **6.20 Bills S27, S56–S59, S44.** Pay pill opens S57. A row opens S56 (pause, history, Mark as paid, Edit, Delete). Overdue copy (S58), empty state (S59), Custom 1–12 days, weeks or months.
   Refs: PRD §5.11
 - [ ] **6.21 Goals S29, S30, S60–S63.** ••• opens S62 (Edit, Mark as completed, Delete with its count, Cancel). S60/S61 sheets with the toggle, label, date and limit message. Status card with the three statuses. "Completed {date}" rows. S63 empty state.
   Refs: PRD §5.12

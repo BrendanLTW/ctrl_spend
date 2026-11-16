@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 
 import 'fake_transaction_repository.dart';
@@ -52,8 +51,6 @@ class FakeBillRepository implements BillRepository {
     required int categoryId,
     required BillRepeat repeat,
     required DateTime nextDue,
-    required CategoryIconKey iconKey,
-    required CategoryColorKey colorKey,
     int? remindDaysBefore,
   }) async {
     final bill = Bill(
@@ -63,8 +60,6 @@ class FakeBillRepository implements BillRepository {
       categoryId: categoryId,
       repeat: repeat,
       nextDue: nextDue,
-      iconKey: iconKey,
-      colorKey: colorKey,
       remindDaysBefore: remindDaysBefore,
     );
     _byId[bill.id] = bill;

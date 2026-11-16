@@ -7,6 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../features/activity/presentation/activity_screen_test.dart' as act;
 import '../features/bills/presentation/add_bill_screen_test.dart' as nb;
+import '../features/bills/presentation/bill_detail_screen_test.dart' as bd;
 import '../features/bills/presentation/recurring_bills_screen_test.dart' as rb;
 import '../features/budgets/presentation/budgets_screen_test.dart' as bud;
 import '../features/categories/presentation/category_detail_screen_test.dart'
@@ -164,9 +165,20 @@ final screens = <String, Drive>{
   },
   'S27 recurring bills': (t, th) => rb.pumpApp(t, theme: th),
   'S27 bills empty': (t, th) => rb.pumpApp(t, theme: th, seed: null),
-  'S27 bill actions': (t, th) => rb
-      .pumpApp(t, theme: th)
-      .then((_) => rb.openActions(t, 'Unifi Home Fibre')),
+  'S56 bill detail': (t, th) => bd.pumpDetail(t, theme: th),
+  'S57 mark as paid': (t, th) async {
+    await rb.pumpApp(t, theme: th);
+    await t.tap(find.bySemanticsLabel('Pay Unifi Home Fibre'));
+    await t.pumpAndSettle();
+  },
+  'S58 bills overdue': (t, th) => rb.pumpApp(
+    t,
+    theme: th,
+    seed: () async {
+      await rb.designBills();
+      await rb.addBill('Water', 1500, DateTime(2026, 11, 2));
+    },
+  ),
   'S28 new bill': (t, th) async {
     await nb.openNewBill(t, theme: th);
     await add.done(t);

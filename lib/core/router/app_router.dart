@@ -1,6 +1,7 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/bill_detail_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
@@ -85,6 +86,9 @@ abstract final class Routes {
 
   /// S28 New bill.
   static const newBill = '/settings/bills/new';
+
+  /// S56 Bill detail.
+  static String bill(int id) => '/settings/bills/$id';
 
   /// S28 Edit bill.
   static String editBill(int id) => '/settings/bills/$id/edit';
@@ -230,6 +234,13 @@ GoRouter appRouter(Ref ref) {
       GoRoute(
         path: Routes.newBill,
         builder: (context, state) => const AddBillScreen(),
+      ),
+      // After newBill, so "new" isn't read as an id.
+      GoRoute(
+        path: '/settings/bills/:id',
+        builder: (context, state) => BillDetailScreen(
+          billId: int.tryParse(state.pathParameters['id'] ?? '') ?? -1,
+        ),
       ),
       GoRoute(
         path: '/settings/bills/:id/edit',

@@ -9,19 +9,51 @@ void main() {
 
   setUpAll(() => verifier = SchemaVerifier(GeneratedHelper()));
 
-  for (final from in [1, 2, 3, 4]) {
+  for (final from in [1, 2, 3, 4, 5]) {
     test(
-      'v$from upgrades to v5 with the same schema as a new database',
+      'v$from upgrades to v6 with the same schema as a new database',
       () async {
         final connection = await verifier.startAt(from);
         final db = AppDatabase(connection);
-        await verifier.migrateAndValidate(db, 5);
+        await verifier.migrateAndValidate(db, 6);
         await db.close();
       },
     );
   }
 
-  group('v4 data in v5', () {
+  test('v5 bills keep everything but their icon and colour', () async {
+    final schema = await verifier.schemaAt(5);
+    schema.rawDatabase
+      ..execute(
+        'INSERT INTO categories (name, type, icon_key, color_key, sort_order) '
+        "VALUES ('Bills', 'expense', 'bolt', 'yellow', 0)",
+      )
+      ..execute(
+        'INSERT INTO bills (name, amount_minor, category_id, repeat_unit, '
+        'repeat_every, repeat_day, next_due, remind_days_before, icon_key, '
+        'color_key, paused) '
+        "VALUES ('Unifi', 12900, 1, 'month', 1, 8, "
+        "'2026-11-08T00:00:00.000Z', 2, 'wifi', 'blue', 1)",
+      )
+      ..execute(
+        'INSERT INTO transactions (amount_minor, type, category_id, '
+        'occurred_at, title, bill_id) '
+        "VALUES (12900, 'expense', 1, '2026-10-08T00:00:00.000Z', 'Unifi', "
+        '1)',
+      );
+    final db = AppDatabase(schema.newConnection());
+    final bill = await db.select(db.bills).getSingle();
+    expect(
+      (bill.id, bill.name, bill.amountMinor, bill.remindDaysBefore),
+      (1, 'Unifi', 12900, 2),
+    );
+    expect((bill.repeatUnit, bill.repeatDay, bill.paused), ('month', 8, true));
+    final payment = await db.select(db.transactions).getSingle();
+    expect(payment.billId, 1, reason: 'still linked to its bill');
+    await db.close();
+  });
+
+  group('v4 data in v6', () {
     late AppDatabase db;
 
     setUp(() async {
@@ -62,7 +94,7 @@ void main() {
 
     test('bills keep their data and are not paused', () async {
       final bill = await db.select(db.bills).getSingle();
-      expect((bill.name, bill.iconKey, bill.paused), ('Unifi', 'wifi', false));
+      expect((bill.name, bill.paused), ('Unifi', false));
     });
 
     test('goals were created on their first contribution', () async {
@@ -95,7 +127,7 @@ void main() {
     });
   });
 
-  test('v3 bills keep their data and get the Bills look', () async {
+  test('v3 bills keep their data', () async {
     final schema = await verifier.schemaAt(3);
     schema.rawDatabase
       ..execute(
@@ -112,7 +144,6 @@ void main() {
     final bill = await db.select(db.bills).getSingle();
     expect(bill.name, 'Unifi');
     expect(bill.repeatDay, 8);
-    expect((bill.iconKey, bill.colorKey), ('bolt', 'yellow'));
     await db.close();
   });
 

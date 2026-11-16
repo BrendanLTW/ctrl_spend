@@ -22,7 +22,8 @@ DueSoon dueSoon(DateTime due, DateTime today) =>
     };
 
 extension BillLabels on AppLocalizations {
-  /// S27's second line: "Due 8 Nov · in 4 days", "Overdue · due 2 Nov".
+  /// S27's second line: "Due 8 Nov · in 4 days", "Overdue · was due
+  /// 1 Nov".
   String dueLabel(DateTime due, DateTime today, String locale) {
     final date = DateFormat('d MMM', locale).format(due);
     return switch (dueSoon(due, today)) {
@@ -31,6 +32,13 @@ extension BillLabels on AppLocalizations {
       DueSoon.later => billDue(date),
     };
   }
+
+  /// S56's rule: "Every month on the 8th"; otherwise as [repeatLabel].
+  String repeatRuleLabel(BillRepeat repeat) => switch (repeat) {
+    BillRepeat(unit: RepeatUnit.month, every: 1, :final day?) =>
+      repeatMonthlyOnDay(ordinalDay('$day')),
+    _ => repeatLabel(repeat),
+  };
 
   /// S28's Repeats value and S44's choices.
   String repeatLabel(BillRepeat repeat) => switch (repeat) {

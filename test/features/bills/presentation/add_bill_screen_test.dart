@@ -4,7 +4,6 @@ import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,7 +18,8 @@ Future<void> openNewBill(
   AppTheme theme = AppTheme.system,
 }) async {
   await rb.pumpApp(tester, seed: null, theme: theme);
-  await tester.tap(find.text('Add bill'));
+  // The header's Add: at 200% text S59's button is below the fold.
+  await tester.tap(find.text('Add'));
   await tester.pumpAndSettle();
 }
 
@@ -89,12 +89,8 @@ void main() {
       await tester.pump();
       await tester.tap(find.text('Set 8 Nov'));
       await tester.pumpAndSettle();
-      // Above the fixed Save button, not behind it.
-      await tester.drag(find.byType(ListView), const Offset(0, -400));
-      await tester.pumpAndSettle();
-      await tester.tap(find.bySemanticsLabel('Wi-Fi'));
-      await tester.tap(find.bySemanticsLabel('Blue'));
-      await tester.pump();
+      // A bill shows its category's tile: there's no icon to pick.
+      expect(find.text('ICON'), findsNothing);
       await save(tester);
 
       expect(find.byType(RecurringBillsScreen), findsOneWidget);
@@ -105,10 +101,6 @@ void main() {
       expect(bill.repeat, const BillRepeat(unit: RepeatUnit.month, day: 8));
       expect(bill.nextDue, DateTime(2026, 11, 8));
       expect(bill.remindDaysBefore, AddBillScreen.remindDays);
-      expect(
-        (bill.iconKey, bill.colorKey),
-        (CategoryIconKey.wifi, CategoryColorKey.blue),
-      );
     });
 
     testWidgets('Remind me off saves no reminder', (tester) async {
@@ -204,7 +196,7 @@ void main() {
     testWidgets('fills in the bill and saves changes', (tester) async {
       await rb.pumpApp(tester);
       await rb.openActions(tester, 'Netflix');
-      await tester.tap(find.text('Edit bill'));
+      await tester.tap(find.text('Edit'));
       await tester.pumpAndSettle();
       expect(find.text('Edit bill'), findsOneWidget);
       expect(
@@ -217,7 +209,6 @@ void main() {
       await save(tester);
       final bill = rb.bills.all.firstWhere((b) => b.amountMinor == 5500);
       expect(bill.name, 'Netflix Premium');
-      expect(bill.iconKey, CategoryIconKey.tv);
     });
   });
 

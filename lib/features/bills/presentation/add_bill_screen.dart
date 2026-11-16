@@ -1,7 +1,6 @@
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
@@ -16,9 +15,7 @@ import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/bills/presentation/bill_labels.dart';
 import 'package:ctrl_spend/features/bills/presentation/repeat_picker_sheet.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
-import 'package:ctrl_spend/features/categories/presentation/category_style_pickers.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/category_choice.dart';
@@ -29,7 +26,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-/// S28 New bill, and Edit bill from S27's actions. New bills open the
+/// S28 New bill, and Edit bill from S56. A bill shows its category's
+/// tile, so there's no icon to pick. New bills open the
 /// keypad straight away, as S12 does.
 class AddBillScreen extends ConsumerStatefulWidget {
   const new({this.billId, super.key});
@@ -53,8 +51,6 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
   BillRepeat _repeat = const BillRepeat(unit: RepeatUnit.month);
   late DateTime _nextDue = _today;
   bool _remind = true;
-  CategoryIconKey _icon = CategoryIconKey.bolt;
-  CategoryColorKey _colour = CategoryColorKey.yellow;
   Bill? _editing;
 
   bool get _isEdit => widget.billId != null;
@@ -86,8 +82,6 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
     _repeat = bill.repeat;
     _nextDue = bill.nextDue;
     _remind = bill.remindDaysBefore != null;
-    _icon = bill.iconKey;
-    _colour = bill.colorKey;
   }
 
   Future<void> _openKeypad() => showKeypadSheet(
@@ -142,8 +136,6 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
         categoryId: category.id,
         repeat: repeat,
         nextDue: _nextDue,
-        iconKey: _icon,
-        colorKey: _colour,
         remindDaysBefore: remind,
       );
     } else {
@@ -154,8 +146,6 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
           categoryId: category.id,
           repeat: repeat,
           nextDue: _nextDue,
-          iconKey: _icon,
-          colorKey: _colour,
           remindDaysBefore: remind,
         ),
       );
@@ -274,29 +264,6 @@ class _AddBillScreenState extends ConsumerState<AddBillScreen> {
                         onChanged: (on) => setState(() => _remind = on),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: AppSpacing.sectionTop),
-                  SectionLabel(l10n.iconSection),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: colors.surface,
-                      borderRadius: BorderRadius.circular(AppRadius.r28),
-                    ),
-                    child: Column(
-                      children: [
-                        CategoryIconGrid(
-                          icons: billPickerIcons,
-                          selected: _icon,
-                          onSelected: (icon) => setState(() => _icon = icon),
-                        ),
-                        const SizedBox(height: 16),
-                        CategoryColourSwatches(
-                          selected: _colour,
-                          onSelected: (c) => setState(() => _colour = c),
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),

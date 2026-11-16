@@ -68,11 +68,6 @@ class Bills extends Table {
   IntColumn get remindDaysBefore =>
       integer().nullable().check(remindDaysBefore.isBiggerOrEqualValue(0))();
 
-  /// The row's tile on S27. Added in schema v4; earlier bills get the
-  /// Bills category's look.
-  TextColumn get iconKey => text().withDefault(const Constant('bolt'))();
-  TextColumn get colorKey => text().withDefault(const Constant('yellow'))();
-
   /// A paused bill is left out of Upcoming totals, "Left after bills" and
   /// reminders (PRD §5.11). Added in schema v5.
   BoolColumn get paused => boolean().withDefault(const Constant(false))();

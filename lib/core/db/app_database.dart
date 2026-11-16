@@ -23,7 +23,7 @@ class AppDatabase extends _$AppDatabase {
   new(super.e);
 
   @override
-  int get schemaVersion => 5;
+  int get schemaVersion => 6;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -45,12 +45,8 @@ class AppDatabase extends _$AppDatabase {
         await m.createTable(goalContributions);
         await m.addColumn(transactions, transactions.billId);
       }
-      // v4: bills have their own icon and colour (S27). Before v3,
-      // createTable above already made them.
-      if (from == 3) {
-        await m.addColumn(bills, bills.iconKey);
-        await m.addColumn(bills, bills.colorKey);
-      }
+      // v4 gave bills their own icon and colour; v6 takes them away
+      // again, so a v3 database skips straight past it.
       // v5 (15 Nov 2026 spec): period snapshots, paused bills, goal
       // creation dates and the billDue notification kind.
       if (from < 5) {
@@ -78,6 +74,11 @@ class AppDatabase extends _$AppDatabase {
             "WHERE kind = 'billReminder'",
           );
         }
+      }
+      // v6: bills show their category's tile (PRD §5.11), so the v4 icon
+      // and colour columns go. Rebuilding the table drops them.
+      if (from >= 4 && from < 6) {
+        await m.alterTable(TableMigration(bills));
       }
     },
     // SQLite ignores foreign keys unless asked, per connection.

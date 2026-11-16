@@ -4,19 +4,23 @@ import 'package:ctrl_spend/core/widgets/large_text.dart';
 import 'package:flutter/material.dart';
 
 /// An S27 row in a `ListGroup`: tile, name, a coloured due or paid line,
-/// and the amount. With large text the amount goes under the name.
+/// and the amount, then an optional [action] such as the Pay pill, which
+/// stays its own button. With large text the amount goes under the name.
+/// S56's history rows have no tile.
 class BillRow extends StatelessWidget {
   const new({
-    required this.tile,
     required this.title,
     required this.caption,
     required this.captionColor,
     required this.amount,
+    this.tile,
+    this.action,
     this.onTap,
     super.key,
   });
 
-  final Widget tile;
+  final Widget? tile;
+  final Widget? action;
   final String title;
   final String caption;
   final Color captionColor;
@@ -34,7 +38,7 @@ class BillRow extends StatelessWidget {
       amount,
       style: text.amountRow.copyWith(color: colors.ink),
     );
-    return Semantics(
+    final row = Semantics(
       button: onTap != null,
       label: '$title, $caption, $amount',
       excludeSemantics: true,
@@ -45,11 +49,10 @@ class BillRow extends StatelessWidget {
         child: ConstrainedBox(
           constraints: const BoxConstraints(minHeight: 64),
           child: Padding(
-            padding: const EdgeInsets.fromLTRB(18, 10, 18, 10),
+            padding: EdgeInsets.fromLTRB(18, 10, action == null ? 18 : 10, 10),
             child: Row(
               children: [
-                tile,
-                const SizedBox(width: 16),
+                if (tile case final tile?) ...[tile, const SizedBox(width: 16)],
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,7 +61,8 @@ class BillRow extends StatelessWidget {
                       Text(
                         title,
                         style: text.rowTitle.copyWith(color: colors.ink),
-                        maxLines: stacked ? null : 1,
+                        // Two lines beside the Pay pill, as designed.
+                        maxLines: stacked ? null : 2,
                         overflow: stacked ? null : TextOverflow.ellipsis,
                       ),
                       Text(
@@ -76,5 +80,14 @@ class BillRow extends StatelessWidget {
         ),
       ),
     );
+    if (action case final action?) {
+      return Row(
+        children: [
+          Expanded(child: row),
+          Padding(padding: const EdgeInsets.only(right: 12), child: action),
+        ],
+      );
+    }
+    return row;
   }
 }

@@ -1451,7 +1451,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String billOverdue(String date) {
-    return 'Overdue · due $date';
+    return 'Overdue · was due $date';
   }
 
   @override
@@ -1460,14 +1460,14 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get noBillsTitle => 'No bills yet';
+  String get noBillsTitle => 'No recurring bills yet';
 
   @override
   String get noBillsBody =>
-      'Add the bills you pay regularly to see what\'s due before your next period.';
+      'Add rent, phone or streaming bills to see what\'s left after they\'re paid, and get a reminder before each one is due.';
 
   @override
-  String get addBill => 'Add bill';
+  String get addBill => 'Add a bill';
 
   @override
   String get newBill => 'New bill';
@@ -1599,7 +1599,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setRepeat => 'Set';
 
   @override
-  String get markPaid => 'Mark paid';
+  String get markPaid => 'Mark as paid';
 
   @override
   String get deleteBill => 'Delete bill';
@@ -2194,5 +2194,69 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String noPastPeriodsBody(String date) {
     return 'Your first period ends on $date. After that, each period\'s total and how it did against your budget will show here.';
+  }
+
+  @override
+  String billsOverdueSummary(int overdue, int upcoming) {
+    return '$overdue overdue and $upcoming upcoming.';
+  }
+
+  @override
+  String get billsPausedSection => 'Paused';
+
+  @override
+  String get billPausedCaption => 'Paused';
+
+  @override
+  String get payBill => 'Pay';
+
+  @override
+  String payBillLabel(String name) {
+    return 'Pay $name';
+  }
+
+  @override
+  String get billTitle => 'Bill';
+
+  @override
+  String get billReminderRow => 'Reminder';
+
+  @override
+  String billReminderDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days before',
+      one: '1 day before',
+      zero: 'On the day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pauseBill => 'Pause this bill';
+
+  @override
+  String get billHistory => 'History';
+
+  @override
+  String billHistoryCaption(String category) {
+    return 'Added to $category';
+  }
+
+  @override
+  String get billPaidOnRow => 'Paid on';
+
+  @override
+  String get billAmountRow => 'Amount';
+
+  @override
+  String markPaidNote(String amount, String category, String date) {
+    return 'This adds a $amount expense to $category and moves the next due date to $date.';
+  }
+
+  @override
+  String repeatMonthlyOnDay(String day) {
+    return 'Every month on the $day';
   }
 }

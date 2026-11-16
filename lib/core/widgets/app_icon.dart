@@ -47,6 +47,7 @@ enum AppIcon {
   phone('smartphone'),
   plane('plane'),
   receipt('receipt-text'),
+  repeat('rotate-ccw'),
   search('search'),
   searchOff('search-x'),
   shield('shield-check'),

@@ -4,7 +4,6 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -191,8 +190,6 @@ void main() {
       categoryId: categories.byName('Bills').id,
       repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
       nextDue: due ?? DateTime(2026, 11, 8),
-      iconKey: CategoryIconKey.wifi,
-      colorKey: CategoryColorKey.blue,
       remindDaysBefore: remind,
     );
 

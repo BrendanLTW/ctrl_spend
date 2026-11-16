@@ -1,5 +1,4 @@
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -21,8 +20,6 @@ abstract interface class BillRepository {
     required int categoryId,
     required BillRepeat repeat,
     required DateTime nextDue,
-    required CategoryIconKey iconKey,
-    required CategoryColorKey colorKey,
     int? remindDaysBefore,
   });
 

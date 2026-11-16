@@ -303,8 +303,6 @@ void main() {
       categoryId: 4,
       repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
       nextDue: due ?? DateTime(2026, 11, 8),
-      iconKey: CategoryIconKey.wifi,
-      colorKey: CategoryColorKey.blue,
       remindDaysBefore: remind,
     );
 

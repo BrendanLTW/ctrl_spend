@@ -2245,7 +2245,7 @@ abstract class AppLocalizations {
   /// No description provided for @billOverdue.
   ///
   /// In en, this message translates to:
-  /// **'Overdue · due {date}'**
+  /// **'Overdue · was due {date}'**
   String billOverdue(String date);
 
   /// No description provided for @billPaid.
@@ -2257,19 +2257,19 @@ abstract class AppLocalizations {
   /// No description provided for @noBillsTitle.
   ///
   /// In en, this message translates to:
-  /// **'No bills yet'**
+  /// **'No recurring bills yet'**
   String get noBillsTitle;
 
   /// No description provided for @noBillsBody.
   ///
   /// In en, this message translates to:
-  /// **'Add the bills you pay regularly to see what\'s due before your next period.'**
+  /// **'Add rent, phone or streaming bills to see what\'s left after they\'re paid, and get a reminder before each one is due.'**
   String get noBillsBody;
 
   /// No description provided for @addBill.
   ///
   /// In en, this message translates to:
-  /// **'Add bill'**
+  /// **'Add a bill'**
   String get addBill;
 
   /// No description provided for @newBill.
@@ -2461,7 +2461,7 @@ abstract class AppLocalizations {
   /// No description provided for @markPaid.
   ///
   /// In en, this message translates to:
-  /// **'Mark paid'**
+  /// **'Mark as paid'**
   String get markPaid;
 
   /// No description provided for @deleteBill.
@@ -3224,6 +3224,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your first period ends on {date}. After that, each period\'s total and how it did against your budget will show here.'**
   String noPastPeriodsBody(String date);
+
+  /// No description provided for @billsOverdueSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'{overdue} overdue and {upcoming} upcoming.'**
+  String billsOverdueSummary(int overdue, int upcoming);
+
+  /// No description provided for @billsPausedSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get billsPausedSection;
+
+  /// No description provided for @billPausedCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Paused'**
+  String get billPausedCaption;
+
+  /// No description provided for @payBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get payBill;
+
+  /// No description provided for @payBillLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {name}'**
+  String payBillLabel(String name);
+
+  /// No description provided for @billTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Bill'**
+  String get billTitle;
+
+  /// No description provided for @billReminderRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Reminder'**
+  String get billReminderRow;
+
+  /// No description provided for @billReminderDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{days, plural, =0{On the day} =1{1 day before} other{{days} days before}}'**
+  String billReminderDays(int days);
+
+  /// No description provided for @pauseBill.
+  ///
+  /// In en, this message translates to:
+  /// **'Pause this bill'**
+  String get pauseBill;
+
+  /// No description provided for @billHistory.
+  ///
+  /// In en, this message translates to:
+  /// **'History'**
+  String get billHistory;
+
+  /// No description provided for @billHistoryCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to {category}'**
+  String billHistoryCaption(String category);
+
+  /// No description provided for @billPaidOnRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid on'**
+  String get billPaidOnRow;
+
+  /// No description provided for @billAmountRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get billAmountRow;
+
+  /// No description provided for @markPaidNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This adds a {amount} expense to {category} and moves the next due date to {date}.'**
+  String markPaidNote(String amount, String category, String date);
+
+  /// No description provided for @repeatMonthlyOnDay.
+  ///
+  /// In en, this message translates to:
+  /// **'Every month on the {day}'**
+  String repeatMonthlyOnDay(String day);
 }
 
 class _AppLocalizationsDelegate

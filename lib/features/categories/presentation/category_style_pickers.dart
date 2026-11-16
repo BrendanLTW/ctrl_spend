@@ -25,21 +25,6 @@ const List<CategoryIconKey> pickerIcons = [
   CategoryIconKey.phone,
 ];
 
-/// The icons a bill can use (S28): its services first.
-const List<CategoryIconKey> billPickerIcons = [
-  CategoryIconKey.wifi,
-  CategoryIconKey.tv,
-  CategoryIconKey.phone,
-  CategoryIconKey.bolt,
-  CategoryIconKey.music,
-  CategoryIconKey.home,
-  CategoryIconKey.car,
-  CategoryIconKey.heart,
-  CategoryIconKey.book,
-  CategoryIconKey.film,
-  CategoryIconKey.gift,
-  CategoryIconKey.bag,
-];
 final List<CategoryColorKey> pickerColours = [
   for (final key in CategoryColorKey.values)
     if (key != CategoryColorKey.neutral) key,
@@ -99,7 +84,7 @@ class CategoryNameField extends StatelessWidget {
   }
 }
 
-/// 12 icons, 6 to a row (S24, S23; S28 with [billPickerIcons]).
+/// 12 icons, 6 to a row (S24, S23).
 class CategoryIconGrid extends StatelessWidget {
   const new({
     required this.selected,

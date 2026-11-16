@@ -2,7 +2,6 @@ import 'package:ctrl_spend/core/db/app_database.dart';
 import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
 import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -40,8 +39,6 @@ void main() {
     categoryId: categoryId,
     repeat: repeat,
     nextDue: nextDue ?? DateTime(2026, 11, 8),
-    iconKey: CategoryIconKey.wifi,
-    colorKey: CategoryColorKey.blue,
     remindDaysBefore: remindDaysBefore,
   );
 
@@ -54,8 +51,6 @@ void main() {
     );
     expect(unifi.name, 'Unifi');
     expect(unifi.nextDue, DateTime(2026, 11, 8));
-    expect(unifi.iconKey, CategoryIconKey.wifi);
-    expect(unifi.colorKey, CategoryColorKey.blue);
     expect(unifi.paused, isFalse);
     expect(await repo.watch().first, [gym, unifi]);
     await repo.update(unifi.copyWith(paused: true));
