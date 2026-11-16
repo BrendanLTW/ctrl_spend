@@ -72,4 +72,5 @@ Copy that follows the screens over the PRD, and other per-task decisions, are re
 - **S38 lock screen** sits above the whole app, so the screen underneath is kept; it uses the splash logo at 76 px. Biometrics, when on, prompt over it as it opens. Only going to the background (hidden or paused) starts the Lock after clock; a prompt or banner (inactive) doesn't.
 - **S37 Preview lock screen** checks the real PIN but doesn't count wrong ones, has a ✕, and no Forgot PIN?.
 - **S67 on a phone with no lock** goes to Erase all data without the "Export a CSV first" link, which would get past the lock.
+- **S12/S13 entry screens** follow the earlier design (`docs/design/Add Edit transaction.png`, `Add income.png`), not the 15 Nov canvas (`AddTransaction`, `EditTransaction`): by request after v1.1. More opens the newer S46 Choose category. The one text row becomes the title (at most 40 characters); a transaction's note isn't typed here, but is kept when editing and still shows on S41 and in CSV.
 

@@ -1717,20 +1717,6 @@
       }
     }
   },
-  "entryTitleHint": "What was it? (optional)",
-  "entryNoteHint": "Add a note",
-  "entrySaveHint": "Enter an amount and pick a category to save",
-  "entryDateTime": "{date}, {time}",
-  "@entryDateTime": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "chooseCategory": "Choose category",
   "searchCategories": "Search categories",
   "addedByYou": "Added by you",

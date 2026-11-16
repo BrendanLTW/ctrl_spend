@@ -39,30 +39,12 @@ class AppTypography {
     fontFeatures: _tabular,
   );
 
-  /// The amount on entry screens and money sheets (S12, S57, S60).
-  TextStyle get amountEntry => const TextStyle(
-    fontFamily: _family,
-    fontSize: 40,
-    fontWeight: FontWeight.w800,
-    letterSpacing: -1.4,
-    height: 1.15,
-    fontFeatures: _tabular,
-  );
-
   /// State screens' titles: "No recurring bills yet" (DESIGN §4).
   TextStyle get stateTitle => const TextStyle(
     fontFamily: _family,
     fontSize: 22,
     fontWeight: FontWeight.w700,
     height: 1.3,
-  );
-
-  /// The hint under a disabled Save (S12): 12/400.
-  TextStyle get hint => const TextStyle(
-    fontFamily: _family,
-    fontSize: 12,
-    fontWeight: FontWeight.w400,
-    height: 1.4,
   );
 
   /// Message box text.

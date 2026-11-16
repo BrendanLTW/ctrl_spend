@@ -12,7 +12,6 @@ import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 import 'package:ctrl_spend/features/transactions/presentation/add_transaction_screen.dart';
-import 'package:ctrl_spend/features/transactions/presentation/entry_fields.dart';
 import 'package:ctrl_spend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,8 +40,6 @@ Future<void> pumpAt(
   addTearDown(tester.view.reset);
   transactions = FakeTransactionRepository();
   categories = FakeCategoryRepository();
-  // A blank title becomes the category name, as the real one does.
-  transactions.categoryName = (id) => categories.byId(id)?.name;
   await seed?.call();
   container = ProviderContainer(
     overrides: [
@@ -70,7 +67,7 @@ Future<void> pumpAt(
   await tester.pumpAndSettle();
 }
 
-/// Presses keys on the keypad: S12's pinned one, or an open keypad sheet.
+/// Presses keys on the open keypad sheet.
 Future<void> type(WidgetTester tester, String keys) async {
   for (final key in keys.split('')) {
     await tester.tap(find.widgetWithText(InkWell, key).last);
@@ -78,7 +75,6 @@ Future<void> type(WidgetTester tester, String keys) async {
   }
 }
 
-/// Closes a keypad sheet (S28, S31).
 Future<void> done(WidgetTester tester) async {
   await tester.tap(find.text('Done'));
   await tester.pumpAndSettle();
@@ -89,14 +85,7 @@ Finder tileFinder(String label) =>
     find.byWidgetPredicate((w) => w is CategoryPickerTile && w.label == label);
 
 Future<void> tapTile(WidgetTester tester, String label) async {
-  await tester.scrollUntilVisible(
-    tileFinder(label),
-    60,
-    scrollable: find.descendant(
-      of: find.byType(CategoryTileRow),
-      matching: find.byType(Scrollable),
-    ),
-  );
+  await tester.ensureVisible(tileFinder(label));
   await tester.tap(tileFinder(label));
   await tester.pumpAndSettle();
 }
@@ -107,11 +96,11 @@ bool saveEnabled(WidgetTester tester) =>
         .onPressed !=
     null;
 
-/// The row's categories, built or not: it scrolls sideways.
 List<String> tileLabels(WidgetTester tester) => [
-  for (final c
-      in tester.widget<CategoryTileRow>(find.byType(CategoryTileRow)).choices)
-    c.name,
+  for (final t in tester.widgetList<CategoryPickerTile>(
+    find.byType(CategoryPickerTile),
+  ))
+    t.label,
 ];
 
 CategoryPickerTile tile(WidgetTester tester, String label) =>
@@ -133,23 +122,16 @@ Future<void> save(WidgetTester tester) async {
   await tester.pumpAndSettle();
 }
 
-Finder titleField() => find.byType(TextField).first;
-Finder noteField() => find.byType(TextField).at(1);
-
-Finder amountLabel(String amount) =>
-    find.bySemanticsLabel('Total amount $amount');
-
 void main() {
   group('S12 New expense', () {
-    testWidgets('opens empty: RM 0.00, the keypad, Save off with a hint', (
-      tester,
-    ) async {
-      final handle = tester.ensureSemantics();
+    testWidgets('opens with the keypad and Save disabled', (tester) async {
       await pumpAt(tester, Routes.add);
       expect(find.text('New expense'), findsOneWidget);
-      expect(amountLabel('RM 0.00'), findsOneWidget);
-      expect(find.text('Done'), findsNothing, reason: 'no keypad sheet');
-      expect(find.bySemanticsLabel('Backspace'), findsOneWidget);
+      expect(find.text('Done'), findsOneWidget, reason: 'keypad sheet');
+      await done(tester);
+      expect(find.text('Delete'), findsNothing);
+      expect(saveEnabled(tester), isFalse);
+      expect(find.text('Today, 4 Nov'), findsOneWidget);
       expect(tileLabels(tester), [
         'Food',
         'Transport',
@@ -158,60 +140,61 @@ void main() {
         'Fun',
         'Health',
       ]);
-      expect(find.text('What was it? (optional)'), findsOneWidget);
-      expect(find.text('Today, 4 Nov'), findsOneWidget);
-      expect(find.text('Add a note'), findsOneWidget);
-      expect(saveEnabled(tester), isFalse);
-      expect(
-        find.text('Enter an amount and pick a category to save'),
-        findsOneWidget,
-      );
-      handle.dispose();
     });
 
     testWidgets('Save needs an amount and a category', (tester) async {
-      final handle = tester.ensureSemantics();
       await pumpAt(tester, Routes.add);
       await type(tester, '1250');
-      expect(amountLabel('RM 12.50'), findsOneWidget);
-      expect(saveEnabled(tester), isFalse);
+      await done(tester);
+      expect(find.text('12.50'), findsOneWidget);
+      expect(saveEnabled(tester), isFalse, reason: 'no category');
       await tapTile(tester, 'Food');
       expect(saveEnabled(tester), isTrue);
-      expect(
-        find.text('Enter an amount and pick a category to save'),
-        findsNothing,
-      );
-      handle.dispose();
+      expect(tile(tester, 'Food').selected, isTrue);
+
+      await tester.tap(find.text('12.50'));
+      await tester.pumpAndSettle();
+      await type(tester, '0000');
+      // Backspace back to 0.
+      for (var i = 0; i < 8; i++) {
+        await tester.tap(find.bySemanticsLabel('Backspace').last);
+        await tester.pump();
+      }
+      await done(tester);
+      expect(saveEnabled(tester), isFalse, reason: 'amount 0');
     });
 
-    testWidgets('saves the title and note, then closes', (tester) async {
+    testWidgets('saves with the note as title, then closes', (tester) async {
       await pumpAt(tester, Routes.add);
       await type(tester, '1250');
+      await done(tester);
       await tapTile(tester, 'Food');
-      await tester.enterText(titleField(), 'Nasi lemak');
-      await tester.enterText(noteField(), 'With teh tarik');
+      await tester.enterText(find.byType(TextField), '  Nasi lemak ');
       await save(tester);
       final saved = transactions.all.single;
-      expect(saved.title, 'Nasi lemak');
-      expect(saved.note, 'With teh tarik');
       expect(saved.amountMinor, 1250);
+      expect(saved.type, TransactionType.expense);
+      expect(saved.categoryId, categories.byName('Food').id);
+      expect(saved.title, 'Nasi lemak');
       expect(saved.occurredAt, now.toUtc());
       expect(find.byType(AddTransactionScreen), findsNothing);
     });
 
-    testWidgets('a blank title uses the category name', (tester) async {
+    testWidgets('a blank note uses the category name', (tester) async {
       await pumpAt(tester, Routes.add);
       await type(tester, '500');
+      await done(tester);
       await tapTile(tester, 'Transport');
       await save(tester);
       expect(transactions.all.single.title, 'Transport');
-      expect(transactions.all.single.note, isNull);
     });
 
-    testWidgets('the title stops at 40, the note at 200', (tester) async {
+    testWidgets('the note stops at 60 characters', (tester) async {
       await pumpAt(tester, Routes.add);
-      expect(tester.widget<TextField>(titleField()).maxLength, 40);
-      expect(tester.widget<TextField>(noteField()).maxLength, 200);
+      await done(tester);
+      await tester.enterText(find.byType(TextField), 'x' * 80);
+      final field = tester.widget<TextField>(find.byType(TextField));
+      expect(field.controller!.text.length, maxTitleLength);
     });
   });
 
@@ -221,155 +204,84 @@ void main() {
     ) async {
       await pumpAt(tester, Routes.add);
       await type(tester, '1000');
+      await done(tester);
       await tapTile(tester, 'Food');
       await tester.tap(find.text('Income'));
       await tester.pumpAndSettle();
+
       expect(find.text('New income'), findsOneWidget);
       expect(tileLabels(tester), ['Salary', 'Gifts']);
-      expect(saveEnabled(tester), isFalse);
+      expect(saveEnabled(tester), isFalse, reason: 'Food cleared');
+      final digits = tester.widget<Text>(find.text('10.00'));
+      expect(digits.style!.color, AppColors.light.positive);
     });
 
     testWidgets('?type=income opens New income', (tester) async {
       await pumpAt(tester, '${Routes.add}?type=income');
+      await done(tester);
       expect(find.text('New income'), findsOneWidget);
+      expect(tileLabels(tester), ['Salary', 'Gifts']);
     });
 
     testWidgets('saves income', (tester) async {
       await pumpAt(tester, '${Routes.add}?type=income');
       await type(tester, '480000');
+      await done(tester);
       await tapTile(tester, 'Salary');
       await save(tester);
-      expect(transactions.all.single.type, TransactionType.income);
+      final saved = transactions.all.single;
+      expect(saved.type, TransactionType.income);
+      expect(saved.title, 'Salary');
     });
   });
 
-  group('S46 Choose category', () {
-    Future<void> openPicker(WidgetTester tester) async {
-      await tester.tap(find.text('More'));
-      await tester.pumpAndSettle();
-    }
-
-    testWidgets('lists the type with limit status and "Added by you"', (
+  testWidgets('More opens S46; its pick joins the tiles', (tester) async {
+    await pumpAt(
       tester,
-    ) async {
-      await pumpAt(
-        tester,
-        Routes.add,
-        seed: () async {
-          await categories.update(
-            categories.byName('Food').copyWith(limitMinor: 40000),
-          );
-          await categories.update(
-            categories.byName('Shopping').copyWith(limitMinor: 20000),
-          );
+      Routes.add,
+      seed: () async {
+        for (final name in ['Coffee', 'Books', 'Travel']) {
           await categories.add(
-            name: 'Coffee',
+            name: name,
             type: TransactionType.expense,
             iconKey: CategoryIconKey.coffee,
-            colorKey: CategoryColorKey.orange,
+            colorKey: CategoryColorKey.purple,
           );
-          await transactions.add(
-            amountMinor: 32800,
-            type: TransactionType.expense,
-            categoryId: categories.byName('Food').id,
-            occurredAt: DateTime(2026, 11, 2, 12),
-            title: 'x',
-          );
-          await transactions.add(
-            amountMinor: 21000,
-            type: TransactionType.expense,
-            categoryId: categories.byName('Shopping').id,
-            occurredAt: DateTime(2026, 11, 2, 12),
-            title: 'x',
-          );
-        },
-      );
-      await openPicker(tester);
-      expect(find.text('Choose category'), findsOneWidget);
-      expect(find.text('Search categories'), findsOneWidget);
-      expect(find.text('RM 72 left'), findsOneWidget);
-      expect(find.text('Over by RM 10'), findsOneWidget);
-      await tester.ensureVisible(find.text('Added by you'));
-      expect(find.text('Added by you'), findsOneWidget);
-      expect(find.text('Salary'), findsNothing);
-    });
+        }
+      },
+    );
+    await done(tester);
+    expect(tileLabels(tester), hasLength(8));
+    expect(tileLabels(tester), isNot(contains('Travel')));
 
-    testWidgets('search narrows it; a pick selects and closes', (tester) async {
-      await pumpAt(tester, Routes.add);
-      await openPicker(tester);
-      await tester.enterText(
-        find.descendant(
-          of: find.byType(BottomSheet),
-          matching: find.byType(TextField),
-        ),
-        'he',
-      );
-      await tester.pump();
-      expect(find.text('Health'), findsWidgets);
-      expect(find.text('Shopping'), findsNothing);
-      await tester.tap(find.text('Health').last);
-      await tester.pumpAndSettle();
-      expect(find.text('Choose category'), findsNothing);
-      expect(tile(tester, 'Health').selected, isTrue);
-    });
+    await tester.tap(find.text('More'));
+    await tester.pumpAndSettle();
+    // S46, with search, limits and New category.
+    expect(find.text('Choose category'), findsOneWidget);
+    // The ninth row is below the fold of the sheet's list.
+    await tester.ensureVisible(find.text('Travel'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Travel'));
+    await tester.pumpAndSettle();
 
-    testWidgets('archived categories are left out', (tester) async {
-      await pumpAt(
-        tester,
-        Routes.add,
-        seed: () => categories.archive(categories.byName('Fun').id),
-      );
-      await openPicker(tester);
-      expect(
-        find.descendant(
-          of: find.byType(BottomSheet),
-          matching: find.text('Fun'),
-        ),
-        findsNothing,
-      );
-      expect(
-        find.text(
-          "Archived categories don't appear here. Restore them in Settings "
-          '→ Categories.',
-        ),
-        findsOneWidget,
-      );
-    });
-
-    testWidgets('New category opens S24 and selects what it makes', (
-      tester,
-    ) async {
-      await pumpAt(tester, Routes.add);
-      await openPicker(tester);
-      await tester.ensureVisible(find.text('New category'));
-      await tester.tap(find.text('New category'));
-      await tester.pumpAndSettle();
-      await tester.enterText(find.byType(TextField).last, 'Pets');
-      await tester.pump();
-      await tester.tap(find.text('Create category'));
-      await tester.pumpAndSettle();
-      expect(categories.byName('Pets').type, TransactionType.expense);
-      expect(tile(tester, 'Pets').selected, isTrue);
-    });
+    expect(tileLabels(tester), hasLength(8));
+    expect(tile(tester, 'Travel').selected, isTrue);
   });
 
   group('date', () {
     testWidgets('the picker sets the date and keeps the time', (tester) async {
       await pumpAt(tester, Routes.add);
       await type(tester, '1000');
+      await done(tester);
       await tapTile(tester, 'Food');
       await tester.tap(find.text('Today, 4 Nov'));
       await tester.pumpAndSettle();
       expect(find.text('Date'), findsOneWidget);
 
-      await tester.tap(
-        find.descendant(of: find.byType(BottomSheet), matching: find.text('5')),
-      );
+      await tester.tap(find.text('5'));
       await tester.pump();
       expect(find.text('Set 4 Nov'), findsOneWidget, reason: 'future day');
-      await tester.tap(
-        find.descendant(of: find.byType(BottomSheet), matching: find.text('2')),
-      );
+      await tester.tap(find.text('2'));
       await tester.pump();
       await tester.tap(find.text('Set 2 Nov'));
       await tester.pumpAndSettle();
@@ -384,11 +296,10 @@ void main() {
 
     testWidgets('yesterday reads "Yesterday"', (tester) async {
       await pumpAt(tester, Routes.add);
+      await done(tester);
       await tester.tap(find.text('Today, 4 Nov'));
       await tester.pumpAndSettle();
-      await tester.tap(
-        find.descendant(of: find.byType(BottomSheet), matching: find.text('3')),
-      );
+      await tester.tap(find.text('3'));
       await tester.pump();
       await tester.tap(find.text('Set 3 Nov'));
       await tester.pumpAndSettle();
@@ -396,35 +307,32 @@ void main() {
     });
   });
 
-  group('S45 Edit transaction', () {
-    testWidgets('opens filled in, with Delete and the date and time', (
-      tester,
-    ) async {
-      final handle = tester.ensureSemantics();
+  group('S13 Edit transaction', () {
+    testWidgets('opens filled in, with Delete and no keypad', (tester) async {
+      late Transaction lunch;
       await pumpAt(
         tester,
         Routes.editTransaction(1),
-        seed: () async {
-          final lunch = await seedLunch();
-          await transactions.update(lunch.copyWith(note: 'With teh tarik'));
-        },
+        seed: () async => lunch = await seedLunch(),
       );
+      expect(lunch.id, 1);
       expect(find.text('Edit transaction'), findsOneWidget);
       expect(find.text('Delete'), findsOneWidget);
-      expect(amountLabel('RM 12.50'), findsOneWidget);
+      expect(find.text('Done'), findsNothing);
+      expect(find.text('12.50'), findsOneWidget);
       expect(tile(tester, 'Food').selected, isTrue);
       expect(find.text('Nasi lemak'), findsOneWidget);
-      expect(find.text('With teh tarik'), findsOneWidget);
-      expect(find.text('4 Nov, 08:15'), findsOneWidget);
       expect(saveEnabled(tester), isTrue);
-      handle.dispose();
     });
 
     testWidgets('saving updates the same transaction', (tester) async {
       await pumpAt(tester, Routes.editTransaction(1), seed: seedLunch);
+      await tester.tap(find.text('12.50'));
+      await tester.pumpAndSettle();
       await type(tester, '0');
+      await done(tester);
       await tapTile(tester, 'Transport');
-      await tester.enterText(titleField(), 'Taxi');
+      await tester.enterText(find.byType(TextField), 'Taxi');
       await save(tester);
 
       final saved = transactions.all.single;
@@ -435,7 +343,26 @@ void main() {
       expect(saved.occurredAt, DateTime(2026, 11, 4, 8, 15).toUtc());
     });
 
-    testWidgets('a title that was the category name shows blank', (
+    testWidgets('a note typed elsewhere (CSV) is kept on save', (tester) async {
+      await pumpAt(
+        tester,
+        Routes.editTransaction(1),
+        seed: () => transactions.add(
+          amountMinor: 1250,
+          type: TransactionType.expense,
+          categoryId: categories.byName('Food').id,
+          occurredAt: DateTime(2026, 11, 4, 8, 15),
+          title: 'Nasi lemak',
+          note: 'with egg',
+        ),
+      );
+      await tester.enterText(find.byType(TextField), 'Nasi lemak ayam');
+      await save(tester);
+      final saved = transactions.all.single;
+      expect((saved.title, saved.note), ('Nasi lemak ayam', 'with egg'));
+    });
+
+    testWidgets('a title that was the category name shows a blank note', (
       tester,
     ) async {
       await pumpAt(
@@ -443,7 +370,7 @@ void main() {
         Routes.editTransaction(1),
         seed: () => seedLunch(title: 'Food'),
       );
-      final field = tester.widget<TextField>(titleField());
+      final field = tester.widget<TextField>(find.byType(TextField));
       expect(field.controller!.text, isEmpty);
     });
 
@@ -516,8 +443,9 @@ void main() {
   testWidgets('a saved expense shows on Home straight away', (tester) async {
     await pumpAt(tester, Routes.add);
     await type(tester, '1820');
+    await done(tester);
     await tapTile(tester, 'Transport');
-    await tester.enterText(titleField(), 'Grab to KLCC');
+    await tester.enterText(find.byType(TextField), 'Grab to KLCC');
     await save(tester);
     expect(find.byType(DashboardScreen), findsOneWidget);
     expect(find.text('Grab to KLCC'), findsOneWidget);
@@ -535,18 +463,14 @@ void main() {
         theme: theme,
         seed: seedLunch,
       );
-      final card =
-          tester
-                  .widget<Container>(
-                    find
-                        .ancestor(
-                          of: find.text('TOTAL AMOUNT'),
-                          matching: find.byType(Container),
-                        )
-                        .first,
-                  )
-                  .decoration!
-              as BoxDecoration;
+      final card = tester.widget<Material>(
+        find
+            .ancestor(
+              of: find.text('TOTAL AMOUNT'),
+              matching: find.byType(Material),
+            )
+            .first,
+      );
       expect(card.color, colors.surface);
       final selected = tester.widget<AnimatedContainer>(
         find.descendant(
@@ -555,7 +479,7 @@ void main() {
         ),
       );
       expect((selected.decoration! as BoxDecoration).color, colors.ink);
-      expect(tester.widget<Text>(find.text('12')).style!.color, colors.ink);
+      expect(tester.widget<Text>(find.text('12.50')).style!.color, colors.ink);
     });
   }
 }

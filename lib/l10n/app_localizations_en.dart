@@ -1885,20 +1885,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get entryTitleHint => 'What was it? (optional)';
-
-  @override
-  String get entryNoteHint => 'Add a note';
-
-  @override
-  String get entrySaveHint => 'Enter an amount and pick a category to save';
-
-  @override
-  String entryDateTime(String date, String time) {
-    return '$date, $time';
-  }
-
-  @override
   String get chooseCategory => 'Choose category';
 
   @override

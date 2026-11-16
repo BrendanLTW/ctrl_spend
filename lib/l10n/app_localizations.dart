@@ -2836,30 +2836,6 @@ abstract class AppLocalizations {
   /// **'Add {amount} to reach it.'**
   String goalPastTargetBody(String amount);
 
-  /// No description provided for @entryTitleHint.
-  ///
-  /// In en, this message translates to:
-  /// **'What was it? (optional)'**
-  String get entryTitleHint;
-
-  /// No description provided for @entryNoteHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Add a note'**
-  String get entryNoteHint;
-
-  /// No description provided for @entrySaveHint.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter an amount and pick a category to save'**
-  String get entrySaveHint;
-
-  /// No description provided for @entryDateTime.
-  ///
-  /// In en, this message translates to:
-  /// **'{date}, {time}'**
-  String entryDateTime(String date, String time);
-
   /// No description provided for @chooseCategory.
   ///
   /// In en, this message translates to:

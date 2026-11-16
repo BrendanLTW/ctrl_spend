@@ -28,55 +28,39 @@ class MoneyKeypadKey extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final full = size == MoneyKeypadSize.full;
-    final entry = size == MoneyKeypadSize.entry;
     final style = (full ? context.text.keypadKey : context.text.keypadKeySm)
         .copyWith(color: colors.ink);
-    final key = Material(
-      color: full ? colors.surface : colors.fillSoft,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          full ? AppRadius.r18 : AppRadius.r16,
-        ),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        highlightColor: full ? colors.raised : colors.keySoftPressed,
-        splashFactory: NoSplash.splashFactory,
-        child: SizedBox(
-          height: switch (size) {
-            MoneyKeypadSize.full => 56,
-            MoneyKeypadSize.sheet => 48,
-            MoneyKeypadSize.entry => 44,
-          },
-          child: Center(
-            child: switch (icon) {
-              final icon? => AppIconView(
-                icon,
-                size: style.fontSize,
-                color: colors.ink,
-              ),
-              null => Text(text!, style: style),
-            },
-          ),
-        ),
-      ),
-    );
     return Semantics(
       button: true,
       label: semanticLabel ?? text,
       excludeSemantics: true,
-      // Entry keys draw 44 high and take taps over 48.
-      child: entry
-          ? GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 2),
-                child: key,
-              ),
-            )
-          : key,
+      child: Material(
+        color: full ? colors.surface : colors.fillSoft,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            full ? AppRadius.r18 : AppRadius.r16,
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          highlightColor: full ? colors.raised : colors.keySoftPressed,
+          splashFactory: NoSplash.splashFactory,
+          child: SizedBox(
+            height: full ? 56 : 48,
+            child: Center(
+              child: switch (icon) {
+                final icon? => AppIconView(
+                  icon,
+                  size: style.fontSize,
+                  color: colors.ink,
+                ),
+                null => Text(text!, style: style),
+              },
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

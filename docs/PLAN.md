@@ -209,4 +209,5 @@ Group A (data and rules) has no UI changes. Stop for review after 6.10, and agai
   Refs: PRD §5.8, FR-18
 - [x] **6.23 Lock screen S38, S66, S67.** Shown on launch and after the lock-after delay. PIN pad, biometric key, lockout countdown, Forgot PIN through biometrics or the phone passcode. Erase all data also removes the PIN.
   Refs: PRD §5.8, FR-18
+- [x] **6.24 Entry screens back to the earlier design.** *(Requested after v1.1.)* S12 New expense/income and S13 Edit go back to the v1.0 layout (`docs/design/Add Edit transaction.png`): the Total amount card opening the keypad sheet, the category grid, the date row and one text row that becomes the title (40). More opens S46. Replaces 6.12's layout; S45's date and time and the separate note field go with it.
 

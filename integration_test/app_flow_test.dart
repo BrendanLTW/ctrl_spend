@@ -81,15 +81,15 @@ void main() {
     // Add an expense: S12.
     await tester.tap(find.byTooltip('Add transaction'));
     await tester.pumpAndSettle();
-    // The keypad sits under the form (S12), always typing the amount.
     await keypad(tester, '1250');
+    await tapText(tester, 'Done');
     await tester.tap(
       find.byWidgetPredicate(
         (w) => w is CategoryPickerTile && w.label == 'Food',
       ),
     );
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextField).first, 'Nasi lemak');
+    await tester.enterText(find.byType(TextField), 'Nasi lemak');
     await tester.pump();
     await tester.tap(find.widgetWithText(PrimaryButton, 'Save'));
     await tester.pumpAndSettle();
