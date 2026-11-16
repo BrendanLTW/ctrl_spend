@@ -1250,11 +1250,6 @@
   "columnType": "Type",
   "columnCategory": "Category",
   "columnAmount": "Amount",
-  "deleteAllData": "Delete all data",
-  "deleteAllDataTitle": "Delete all data?",
-  "deleteAllDataBody": "This erases every transaction, category, notification and setting on this phone. It can't be undone.",
-  "deleteEverything": "Delete everything",
-  "exportFirst": "Export first",
   "devSection": "Developer",
   "devAddSampleData": "Add 5,000 sample transactions",
   "devAddSampleDataDetail": "Debug builds only, for performance checks",
@@ -1781,5 +1776,37 @@
         "type": "int"
       }
     }
-  }
+  },
+  "profileSubtitle": "Data stored on this phone · Edit name",
+  "notificationsRow": "Notifications",
+  "notificationsOnCount": "{count} on",
+  "@notificationsOnCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dataSection": "Data",
+  "eraseAllData": "Erase all data",
+  "eraseAllDataTitle": "Erase all data?",
+  "eraseAllDataBody": "This deletes your {count, plural, =1{1 transaction} other{{count} transactions}}, budget, categories and settings from this phone and starts ctrlSpend fresh. It can't be undone.",
+  "@eraseAllDataBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportCsvFirst": "Export a CSV first",
+  "eraseEverything": "Erase everything",
+  "settingsFooter": "ctrlSpend {version} · by BrendanLTW",
+  "@settingsFooter": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "nameHelper": "Shown on Home and the lock screen."
 }

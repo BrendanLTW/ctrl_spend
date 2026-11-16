@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/app/app_version.dart';
 import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
@@ -6,7 +7,7 @@ import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_sheet.dart';
-import 'package:ctrl_spend/core/widgets/app_text_field.dart';
+import 'package:ctrl_spend/core/widgets/app_text_input.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -17,6 +18,7 @@ import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
 import 'package:ctrl_spend/features/dev/presentation/sample_data_section.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_sheet.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -26,8 +28,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// S21 Settings: the profile, preferences and data. v1.1 rows (App lock,
-/// Recurring bills, Savings goals) are hidden in release builds.
+/// S21a Settings (S21 in v1.1): the profile, preferences, data and a
+/// version footer. v1.1 rows (App lock, Recurring bills, Savings goals)
+/// are hidden in release builds.
 class SettingsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -42,6 +45,12 @@ class SettingsScreen extends ConsumerWidget {
     // The count includes archived categories (PRD §8).
     final categoryCount =
         (ref.watch(categoriesProvider()).value ?? const <Category>[]).length;
+    final notificationsOn = [
+      prefs.dailyReminderOn,
+      prefs.budgetAlertsOn,
+      prefs.weeklySummaryOn,
+    ].where((on) => on).length;
+    final version = ref.watch(appVersionProvider).value;
 
     CategoryTile tile(AppIcon icon, CategoryColorKey color) =>
         CategoryTile(icon: icon, color: color);
@@ -105,6 +114,12 @@ class SettingsScreen extends ConsumerWidget {
                 value: Currency.fromCode(prefs.currencyCode).symbol,
                 onTap: () => context.push(Routes.currency),
               ),
+              ListGroupRow(
+                leading: tile(AppIcon.bell, CategoryColorKey.yellow),
+                title: l10n.notificationsRow,
+                value: l10n.notificationsOnCount(notificationsOn),
+                onTap: () => showNotificationSettingsSheet(context),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sectionTop),
@@ -143,16 +158,25 @@ class SettingsScreen extends ConsumerWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.sectionTop),
+          SectionLabel(l10n.dataSection),
           ListGroup(
             children: [
               ListGroupRow(
                 leading: tile(AppIcon.trash, CategoryColorKey.red),
-                title: l10n.deleteAllData,
+                title: l10n.eraseAllData,
                 titleColor: colors.negative,
                 onTap: () => confirmAndDeleteAllData(context, ref),
               ),
             ],
           ),
+          if (version != null)
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 14, 8, 0),
+              child: Text(
+                l10n.settingsFooter(shortVersion(version)),
+                style: text.caption.copyWith(color: colors.muted),
+              ),
+            ),
           const SampleDataSection(),
         ],
       ),
@@ -167,6 +191,7 @@ class SettingsScreen extends ConsumerWidget {
     final name = await showAppSheet<String>(
       context,
       title: context.l10n.nameSheetTitle,
+      floating: true,
       builder: (_) => _NameSheetBody(initial: current),
     );
     if (name == null) return;
@@ -193,7 +218,7 @@ class _ProfileCard extends StatelessWidget {
       button: true,
       label: l10n.profileLabel(
         trimmed.isEmpty ? l10n.greetingNoName : trimmed,
-        l10n.dataStoredOnPhone,
+        l10n.profileSubtitle,
       ),
       excludeSemantics: true,
       child: Material(
@@ -205,7 +230,7 @@ class _ProfileCard extends StatelessWidget {
           highlightColor: colors.raised,
           splashFactory: NoSplash.splashFactory,
           child: Padding(
-            padding: const EdgeInsets.all(18),
+            padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
             child: Row(
               children: [
                 Container(
@@ -220,10 +245,10 @@ class _ProfileCard extends StatelessWidget {
                       ? AppIconView(AppIcon.user, color: colors.onInk)
                       : Text(
                           trimmed.characters.first.toUpperCase(),
-                          style: text.header.copyWith(color: colors.onInk),
+                          style: text.stateTitle.copyWith(color: colors.onInk),
                         ),
                 ),
-                const SizedBox(width: 16),
+                const SizedBox(width: 14),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -232,15 +257,17 @@ class _ProfileCard extends StatelessWidget {
                         trimmed.isEmpty ? l10n.greetingNoName : trimmed,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: text.header.copyWith(color: colors.ink),
+                        style: text.profileName.copyWith(color: colors.ink),
                       ),
                       Text(
-                        l10n.dataStoredOnPhone,
-                        style: text.body.copyWith(color: colors.muted),
+                        l10n.profileSubtitle,
+                        style: text.caption.copyWith(color: colors.muted),
                       ),
                     ],
                   ),
                 ),
+                const SizedBox(width: 12),
+                AppIconView(AppIcon.chevronRight, size: 20, color: colors.ink),
               ],
             ),
           ),
@@ -250,8 +277,9 @@ class _ProfileCard extends StatelessWidget {
   }
 }
 
-/// A first-name field and Save, with S03a's rules: trimmed, at most 30
-/// characters, not blank. Pops with the new name.
+/// S47: the name field, a helper line with the counter, and Save, with
+/// S03a's rules: trimmed, at most 30 characters, not blank. Pops with the
+/// new name.
 class _NameSheetBody extends StatefulWidget {
   const new({required this.initial});
 
@@ -281,20 +309,22 @@ class _NameSheetBodyState extends State<_NameSheetBody> {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        AppTextField(
+        AppTextInput(
           controller: _name,
+          label: l10n.firstName,
           hint: l10n.firstName,
-          icon: AppIcon.user,
+          helper: l10n.nameHelper,
+          background: context.colors.ground,
           maxLength: SettingsScreen.nameMaxLength,
           autofocus: true,
           textCapitalization: TextCapitalization.words,
-          textInputAction: TextInputAction.done,
           onChanged: (_) => setState(() {}),
           onSubmitted: (_) => _save(),
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 14),
         PrimaryButton(
           label: l10n.save,
+          size: PrimaryButtonSize.sheet,
           onPressed: _name.text.trim().isEmpty ? null : _save,
         ),
       ],

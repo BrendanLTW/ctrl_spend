@@ -1385,22 +1385,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get columnAmount => 'Amount';
 
   @override
-  String get deleteAllData => 'Delete all data';
-
-  @override
-  String get deleteAllDataTitle => 'Delete all data?';
-
-  @override
-  String get deleteAllDataBody =>
-      'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.';
-
-  @override
-  String get deleteEverything => 'Delete everything';
-
-  @override
-  String get exportFirst => 'Export first';
-
-  @override
   String get devSection => 'Developer';
 
   @override
@@ -1961,4 +1945,49 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get profileSubtitle => 'Data stored on this phone · Edit name';
+
+  @override
+  String get notificationsRow => 'Notifications';
+
+  @override
+  String notificationsOnCount(int count) {
+    return '$count on';
+  }
+
+  @override
+  String get dataSection => 'Data';
+
+  @override
+  String get eraseAllData => 'Erase all data';
+
+  @override
+  String get eraseAllDataTitle => 'Erase all data?';
+
+  @override
+  String eraseAllDataBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return 'This deletes your $_temp0, budget, categories and settings from this phone and starts ctrlSpend fresh. It can\'t be undone.';
+  }
+
+  @override
+  String get exportCsvFirst => 'Export a CSV first';
+
+  @override
+  String get eraseEverything => 'Erase everything';
+
+  @override
+  String settingsFooter(String version) {
+    return 'ctrlSpend $version · by BrendanLTW';
+  }
+
+  @override
+  String get nameHelper => 'Shown on Home and the lock screen.';
 }

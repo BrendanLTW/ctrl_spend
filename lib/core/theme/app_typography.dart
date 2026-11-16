@@ -87,6 +87,14 @@ class AppTypography {
     height: 1.3,
     fontFeatures: _tabular,
   );
+
+  /// The name on S21's profile card: 18/600.
+  TextStyle get profileName => const TextStyle(
+    fontFamily: _family,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    height: 1.35,
+  );
   TextStyle get rowTitle => const TextStyle(
     fontFamily: _family,
     fontSize: 16,

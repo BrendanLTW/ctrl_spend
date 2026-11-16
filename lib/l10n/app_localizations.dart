@@ -2164,36 +2164,6 @@ abstract class AppLocalizations {
   /// **'Amount'**
   String get columnAmount;
 
-  /// No description provided for @deleteAllData.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete all data'**
-  String get deleteAllData;
-
-  /// No description provided for @deleteAllDataTitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete all data?'**
-  String get deleteAllDataTitle;
-
-  /// No description provided for @deleteAllDataBody.
-  ///
-  /// In en, this message translates to:
-  /// **'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.'**
-  String get deleteAllDataBody;
-
-  /// No description provided for @deleteEverything.
-  ///
-  /// In en, this message translates to:
-  /// **'Delete everything'**
-  String get deleteEverything;
-
-  /// No description provided for @exportFirst.
-  ///
-  /// In en, this message translates to:
-  /// **'Export first'**
-  String get exportFirst;
-
   /// No description provided for @devSection.
   ///
   /// In en, this message translates to:
@@ -2948,6 +2918,72 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, =1{1 transaction} other{{count} transactions}}'**
   String transactionCount(int count);
+
+  /// No description provided for @profileSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data stored on this phone · Edit name'**
+  String get profileSubtitle;
+
+  /// No description provided for @notificationsRow.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get notificationsRow;
+
+  /// No description provided for @notificationsOnCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} on'**
+  String notificationsOnCount(int count);
+
+  /// No description provided for @dataSection.
+  ///
+  /// In en, this message translates to:
+  /// **'Data'**
+  String get dataSection;
+
+  /// No description provided for @eraseAllData.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase all data'**
+  String get eraseAllData;
+
+  /// No description provided for @eraseAllDataTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase all data?'**
+  String get eraseAllDataTitle;
+
+  /// No description provided for @eraseAllDataBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This deletes your {count, plural, =1{1 transaction} other{{count} transactions}}, budget, categories and settings from this phone and starts ctrlSpend fresh. It can\'t be undone.'**
+  String eraseAllDataBody(int count);
+
+  /// No description provided for @exportCsvFirst.
+  ///
+  /// In en, this message translates to:
+  /// **'Export a CSV first'**
+  String get exportCsvFirst;
+
+  /// No description provided for @eraseEverything.
+  ///
+  /// In en, this message translates to:
+  /// **'Erase everything'**
+  String get eraseEverything;
+
+  /// No description provided for @settingsFooter.
+  ///
+  /// In en, this message translates to:
+  /// **'ctrlSpend {version} · by BrendanLTW'**
+  String settingsFooter(String version);
+
+  /// No description provided for @nameHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Shown on Home and the lock screen.'**
+  String get nameHelper;
 }
 
 class _AppLocalizationsDelegate

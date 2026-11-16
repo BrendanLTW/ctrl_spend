@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:ctrl_spend/core/app/app_version.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
@@ -88,14 +90,44 @@ void main() {
         seed: () => categories.archive(categories.byName('Gifts').id),
       );
       expect(find.text('Alex'), findsOneWidget);
-      expect(find.text('Data stored on this phone'), findsOneWidget);
+      expect(
+        find.text('Data stored on this phone · Edit name'),
+        findsOneWidget,
+      );
       expect(find.text('A'), findsOneWidget);
       expect(row(tester, 'Month starts on').value, '15th');
       expect(row(tester, 'Theme').value, 'System');
       expect(row(tester, 'Currency').value, 'RM');
+      expect(row(tester, 'Notifications').value, '2 on', reason: 'defaults');
       expect(row(tester, 'Categories').value, '8', reason: 'with archived');
       expect(find.text('Export to CSV'), findsOneWidget);
       expect(find.text('Import from CSV'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('ctrlSpend 1.0 · by BrendanLTW'),
+        200,
+      );
+      expect(find.text('DATA'), findsOneWidget);
+      expect(find.text('ctrlSpend 1.0 · by BrendanLTW'), findsOneWidget);
+    });
+
+    testWidgets('Notifications opens the toggles and counts them', (
+      tester,
+    ) async {
+      await pumpAt(tester, Routes.settings);
+      await tester.tap(find.text('Notifications'));
+      await tester.pumpAndSettle();
+      expect(find.text('Weekly summary'), findsOneWidget);
+      await tester.tap(find.text('Weekly summary'));
+      await tester.pumpAndSettle();
+      expect((await prefs.read()).weeklySummaryOn, isTrue);
+      await tester.tapAt(const Offset(20, 20));
+      await tester.pumpAndSettle();
+      expect(row(tester, 'Notifications').value, '3 on');
+    });
+
+    test('the footer shows major and minor', () {
+      expect(shortVersion('1.0.0'), '1.0');
+      expect(shortVersion('1.12.3'), '1.12');
     });
 
     testWidgets('App lock is hidden; bills and goals show in debug', (
@@ -142,6 +174,10 @@ void main() {
       await tester.tap(find.text('Alex'));
       await tester.pumpAndSettle();
       expect(find.text('Your name'), findsOneWidget);
+      expect(find.text('Shown on Home and the lock screen.'), findsOneWidget);
+      expect(find.text('4/30'), findsOneWidget);
+      final sheet = tester.getRect(find.byType(AppSheet));
+      expect((sheet.left, sheet.right), (8, 390 - 8), reason: 'floating');
       await tester.enterText(find.byType(TextField), '  Alexandra  ');
       await tester.pump();
       await tapSave(tester);

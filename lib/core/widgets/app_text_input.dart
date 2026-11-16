@@ -5,14 +5,17 @@ import 'package:flutter/material.dart';
 
 /// A text input with a counter (DESIGN §7; S03a, S47): 56 high, radius 18,
 /// `surface`, 17/500. Focus draws a 2 px `ink` outline, [error] a 2 px
-/// `negative` one. The counter ("4/30") sits under it on the right.
-/// [label] is its screen-reader name.
+/// `negative` one. The counter ("4/30") sits under it on the right, with
+/// an optional [helper] line on the left. [label] is its screen-reader
+/// name. [background] replaces `surface`, e.g. `ground` inside a sheet.
 class AppTextInput extends StatefulWidget {
   const new({
     required this.controller,
     required this.label,
     required this.maxLength,
     this.hint,
+    this.helper,
+    this.background,
     this.error = false,
     this.autofocus = false,
     this.textCapitalization = TextCapitalization.none,
@@ -25,6 +28,8 @@ class AppTextInput extends StatefulWidget {
   final TextEditingController controller;
   final String label;
   final String? hint;
+  final String? helper;
+  final Color? background;
   final int maxLength;
   final bool error;
   final bool autofocus;
@@ -88,7 +93,7 @@ class _AppTextInputState extends State<AppTextInput> {
           padding: const EdgeInsets.symmetric(horizontal: 18),
           alignment: Alignment.centerLeft,
           decoration: BoxDecoration(
-            color: colors.surface,
+            color: widget.background ?? colors.surface,
             borderRadius: BorderRadius.circular(AppRadius.r18),
             border: Border.all(color: outline, width: 2),
           ),
@@ -110,12 +115,24 @@ class _AppTextInputState extends State<AppTextInput> {
           ),
         ),
         const SizedBox(height: 6),
-        ExcludeSemantics(
-          child: Text(
-            '${widget.controller.text.characters.length}/${widget.maxLength}',
-            textAlign: TextAlign.right,
-            style: text.caption.copyWith(color: colors.muted),
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Text(
+                widget.helper ?? '',
+                style: text.caption.copyWith(color: colors.muted),
+              ),
+            ),
+            const SizedBox(width: 12),
+            ExcludeSemantics(
+              child: Text(
+                '${widget.controller.text.characters.length}/'
+                '${widget.maxLength}',
+                style: text.caption.copyWith(color: colors.muted),
+              ),
+            ),
+          ],
         ),
       ],
     );

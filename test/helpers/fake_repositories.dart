@@ -1,3 +1,4 @@
+import 'package:ctrl_spend/core/app/app_version.dart';
 import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
@@ -61,4 +62,5 @@ List<Override> fakeRepositories({
   fileSharerProvider.overrideWithValue(sharer ?? FakeFileSharer()),
   csvFilePickerProvider.overrideWithValue(picker ?? FakeCsvFilePicker()),
   dataEraserProvider.overrideWithValue(eraser ?? FakeDataEraser()),
+  appVersionProvider.overrideWith((_) async => '1.0.0'),
 ];

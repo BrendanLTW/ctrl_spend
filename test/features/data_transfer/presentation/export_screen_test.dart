@@ -221,6 +221,8 @@ void main() {
       await tester.pumpAndSettle();
       unawaited(container.read(appRouterProvider).push(Routes.settings));
       await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Export to CSV'));
+      await tester.pumpAndSettle();
       await tap(tester, 'Export to CSV');
       expect(find.byType(ExportScreen), findsOneWidget);
     });
