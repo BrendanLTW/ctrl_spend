@@ -183,7 +183,7 @@ void main() {
       await tester.tap(find.byTooltip('Notification settings'));
       await tester.pumpAndSettle();
       expect(find.byType(NotificationSettingsScreen), findsOneWidget);
-      // Bill reminders shows in debug builds until 5.9.
+      // Daily, budget, weekly and bill reminders.
       expect(find.byType(AppToggle), findsNWidgets(4));
       await tester.tap(find.text('Weekly summary'));
       await tester.pumpAndSettle();

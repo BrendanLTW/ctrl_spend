@@ -9,8 +9,12 @@ import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
@@ -18,7 +22,6 @@ import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
 import 'package:ctrl_spend/features/settings/presentation/settings_screen.dart';
 import 'package:ctrl_spend/main.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -99,7 +102,7 @@ void main() {
       expect(row(tester, 'Month starts on').value, '15th');
       expect(row(tester, 'Theme').value, 'System');
       expect(row(tester, 'Currency').value, 'RM');
-      // Daily reminder, budget alerts and (debug only) bill reminders.
+      // Daily reminder, budget alerts and bill reminders.
       expect(row(tester, 'Notifications').value, '3 on', reason: 'defaults');
       expect(row(tester, 'Categories').value, '8', reason: 'with archived');
       expect(find.text('Export to CSV'), findsOneWidget);
@@ -132,13 +135,46 @@ void main() {
       expect(shortVersion('1.12.3'), '1.12');
     });
 
-    testWidgets('v1.1 rows show in debug: app lock, bills and goals', (
+    testWidgets('v1.1 rows: app lock, and bills and goals with counts', (
       tester,
     ) async {
       await pumpAt(tester, Routes.settings);
       expect(row(tester, 'App lock').value, 'Off');
-      // Tests run as debug builds, where these rows show until 5.9.
-      expect(kDebugMode, isTrue);
+      expect(row(tester, 'Recurring bills').value, '0');
+      expect(row(tester, 'Savings goals').value, '0');
+      final bills = container.read(billRepositoryProvider);
+      for (final name in ['Unifi', 'Netflix']) {
+        await bills.add(
+          name: name,
+          amountMinor: 5500,
+          categoryId: categories.byName('Bills').id,
+          repeat: const BillRepeat(unit: RepeatUnit.month, day: 12),
+          nextDue: DateTime(2026, 11, 12),
+        );
+      }
+      final goals = container.read(goalRepositoryProvider);
+      for (final name in ['Bali trip', 'Raya clothes']) {
+        await goals.add(
+          name: name,
+          iconKey: CategoryIconKey.travel,
+          targetMinor: 80000,
+          targetMonth: DateTime(2027, 3),
+          createdAt: DateTime(2026, 10),
+        );
+      }
+      // Reaching the target completes Raya clothes: only active ones count.
+      final raya = (await goals.watch().first).firstWhere(
+        (g) => g.name == 'Raya clothes',
+      );
+      await goals.addMoney(
+        raya.id,
+        amountMinor: 80000,
+        label: 'Savings',
+        date: DateTime(2026, 11, 2),
+      );
+      await tester.pumpAndSettle();
+      expect(row(tester, 'Recurring bills').value, '2');
+      expect(row(tester, 'Savings goals').value, '1');
       await tester.ensureVisible(find.text('Recurring bills'));
       await tester.pumpAndSettle();
       await tester.tap(find.text('Recurring bills'));

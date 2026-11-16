@@ -14,15 +14,13 @@ import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:ctrl_spend/l10n/setting_labels.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 /// S48 Notification settings: reminders, alerts and summaries, saved as
 /// they change. When the phone has notifications off, a banner explains
-/// it and opens the phone's Settings; the toggles still save. Bill
-/// reminders (v1.1) show in debug builds until task 5.9.
+/// it and opens the phone's Settings; the toggles still save.
 class NotificationSettingsScreen extends ConsumerStatefulWidget {
   const new({super.key});
 
@@ -138,14 +136,12 @@ class _NotificationSettingsScreenState
                 value: prefs.weeklySummaryOn,
                 onChanged: (on) => save((p) => p.copyWith(weeklySummaryOn: on)),
               ),
-              if (kDebugMode)
-                ToggleRow(
-                  title: l10n.billReminders,
-                  detail: l10n.billRemindersDetail,
-                  value: prefs.billRemindersOn,
-                  onChanged: (on) =>
-                      save((p) => p.copyWith(billRemindersOn: on)),
-                ),
+              ToggleRow(
+                title: l10n.billReminders,
+                detail: l10n.billRemindersDetail,
+                value: prefs.billRemindersOn,
+                onChanged: (on) => save((p) => p.copyWith(billRemindersOn: on)),
+              ),
             ],
           ),
           Padding(

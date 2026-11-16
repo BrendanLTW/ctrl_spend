@@ -1,5 +1,6 @@
 import 'package:ctrl_spend/core/app/app_version.dart';
 import 'package:ctrl_spend/core/money/money_formatter.dart';
+import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
@@ -12,24 +13,28 @@ import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
 import 'package:ctrl_spend/features/dev/presentation/sample_data_section.dart';
+import 'package:ctrl_spend/features/goals/domain/goal.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_calculations.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:ctrl_spend/l10n/setting_labels.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// S21a Settings (S21 in v1.1): the profile, preferences, data and a
-/// version footer. v1.1 rows (App lock, Recurring bills, Savings goals)
-/// are hidden in release builds.
+/// S21 Settings: the profile, preferences (with Notifications and App
+/// lock), what to manage (with Recurring bills and Savings goals and
+/// their counts), data and a version footer.
 class SettingsScreen extends ConsumerWidget {
   const new({super.key});
 
@@ -48,9 +53,24 @@ class SettingsScreen extends ConsumerWidget {
       prefs.dailyReminderOn,
       prefs.budgetAlertsOn,
       prefs.weeklySummaryOn,
-      // Bill reminders are v1.1, shown with the bills rows.
-      if (kDebugMode) prefs.billRemindersOn,
+      prefs.billRemindersOn,
     ].where((on) => on).length;
+    final billCount = (ref.watch(billsProvider).value ?? const <Bill>[]).length;
+    // Active goals only: completed ones are done (PRD §5.12).
+    final contributions =
+        ref.watch(goalContributionsProvider).value ??
+        const <GoalContribution>[];
+    final now = ref.watch(clockProvider)();
+    final activeGoalCount = [
+      for (final g in ref.watch(goalsProvider).value ?? const <Goal>[])
+        if (goalStatus(
+              g,
+              savedMinor(contributions.where((c) => c.goalId == g.id)),
+              now,
+            ) !=
+            GoalStatus.completed)
+          g,
+    ].length;
     final version = ref.watch(appVersionProvider).value;
 
     CategoryTile tile(AppIcon icon, CategoryColorKey color) =>
@@ -121,14 +141,12 @@ class SettingsScreen extends ConsumerWidget {
                 value: l10n.notificationsOnCount(notificationsOn),
                 onTap: () => context.push(Routes.notificationSettings),
               ),
-              // v1.1, shown in debug builds until task 5.9.
-              if (kDebugMode)
-                ListGroupRow(
-                  leading: tile(AppIcon.lock, CategoryColorKey.red),
-                  title: l10n.appLock,
-                  value: prefs.appLockOn ? l10n.onLabel : l10n.offLabel,
-                  onTap: () => context.push(Routes.appLock),
-                ),
+              ListGroupRow(
+                leading: tile(AppIcon.lock, CategoryColorKey.red),
+                title: l10n.appLock,
+                value: prefs.appLockOn ? l10n.onLabel : l10n.offLabel,
+                onTap: () => context.push(Routes.appLock),
+              ),
             ],
           ),
           const SizedBox(height: AppSpacing.sectionTop),
@@ -141,19 +159,18 @@ class SettingsScreen extends ConsumerWidget {
                 value: '$categoryCount',
                 onTap: () => context.push(Routes.categories),
               ),
-              // v1.1 rows show in debug builds until task 5.9 unhides them.
-              if (kDebugMode)
-                ListGroupRow(
-                  leading: tile(AppIcon.receipt, CategoryColorKey.yellow),
-                  title: l10n.recurringBills,
-                  onTap: () => context.push(Routes.bills),
-                ),
-              if (kDebugMode)
-                ListGroupRow(
-                  leading: tile(AppIcon.target, CategoryColorKey.green),
-                  title: l10n.savingsGoals,
-                  onTap: () => context.push(Routes.goals),
-                ),
+              ListGroupRow(
+                leading: tile(AppIcon.receipt, CategoryColorKey.yellow),
+                title: l10n.recurringBills,
+                value: '$billCount',
+                onTap: () => context.push(Routes.bills),
+              ),
+              ListGroupRow(
+                leading: tile(AppIcon.target, CategoryColorKey.green),
+                title: l10n.savingsGoals,
+                value: '$activeGoalCount',
+                onTap: () => context.push(Routes.goals),
+              ),
               ListGroupRow(
                 leading: tile(AppIcon.download, CategoryColorKey.blue),
                 title: l10n.exportCsv,

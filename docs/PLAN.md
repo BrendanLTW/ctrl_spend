@@ -151,7 +151,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
   Refs: S37, PRD §5.8, FR-18
 - [ ] ~~**5.8 Lock screen.**~~ *Superseded by 6.22–6.23.* S38 with PIN pad, biometric unlock and Forgot PIN, shown on launch and after the lock-after delay; obscure the app-switcher snapshot when enabled.
   Refs: S38, FR-18
-- [ ] **5.9 v1.1 release.** *(After Phase 6.)* Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`.
+- [x] **5.9 v1.1 release.** *(After Phase 6.)* Unhide the Settings rows, run the accessibility and fidelity checklists for the new screens, update the README, and tag `v1.1.0`. *(Tagged locally; no push, APK or GitHub Release. Device checks are listed in `docs/quality-audit.md`.)*
   Refs: PRD §11
 
 ## Phase 6 — Spec update (PRD and DESIGN of 15 Nov 2026, AUDIT.md §8)
