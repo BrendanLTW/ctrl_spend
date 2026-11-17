@@ -23,14 +23,15 @@ This is the single reference for how ctrlSpend looks. Values come from the "Ctrl
 | Item | Rule |
 |---|---|
 | Name | **ctrlSpend** — lowercase "ctrl", capital "S". Package `ctrl_spend`. |
-| Wordmark | "ctrl" in Poppins 800 + "Spend" in Poppins 500, set tight |
-| Symbol | An amber coin with a navy **⌃** caret cut into it, on a navy key-shaped tile |
+| Wordmark | "ctrl" in Poppins 400, grey `#5D6169` (on dark `#8A8F99`), then "Spend" in Poppins 700, `#15171C` (on dark `#FFFFFF`). Letter-spacing −2%. |
+| Symbol | A green budget ring on a charcoal keycap: `assets/brand/ctrlspend_mark.svg` in the app, `ctrlspend_app_icon.svg` (full-bleed, square corners) for the app icon |
+| Brand green | `#22C55E`, only in the logo, the app icon and the splash loader. Never elsewhere in the UI. |
 | Parent | ctrlWorks. In sentences: "ctrlSpend, from ctrlWorks". Never "ctrlWorks Spend". |
 | Endorsed lockup | "ctrlSpend by ctrlWorks" — App Store page and website |
 | Maker credit | "by BrendanLTW" — splash footer and Settings footer |
 | Small sizes | The symbol must stay legible at 24 px. Below 48 px, use the symbol without the wordmark. |
 
-The app icon and splash use the symbol tile. Export the symbol from the brand board as SVG into `assets/brand/`.
+The app icon and splash use the keycap. The Android adaptive icon is the ring on `#2C3038`, inside the 66 dp safe zone, with a one-colour ring for themed icons.
 
 ---
 

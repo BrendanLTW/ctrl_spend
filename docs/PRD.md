@@ -701,8 +701,8 @@ Priorities:
 From the canvas's design-system and brand boards.
 
 ### Brand
-- The name is written **ctrlSpend**: lowercase "ctrl". In the wordmark, "ctrl" is weight 800 and "Spend" is 500. It comes from **ctrlWorks**.
-- Logo: an **amber coin** with a navy **⌃** caret cut into it, on a navy key-shaped tile.
+- The name is written **ctrlSpend**: lowercase "ctrl". In the wordmark, "ctrl" is weight 400 in grey and "Spend" is 700 (DESIGN §2). It comes from **ctrlWorks**.
+- Logo: a **green budget ring** on a charcoal keycap (DESIGN §2).
 - Endorsed lockup "ctrlSpend by ctrlWorks" for the App Store page and website.
 - The splash footer and the Settings footer credit the maker instead: **"by BrendanLTW"**.
 - In sentences: "ctrlSpend, from ctrlWorks". Never "ctrlWorks Spend".

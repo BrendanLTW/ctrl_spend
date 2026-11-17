@@ -86,12 +86,18 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                       excludeSemantics: true,
                       child: Text.rich(
                         TextSpan(
-                          style: text.wordmark.copyWith(color: onSplash.ink),
+                          // On the dark splash in both themes.
+                          style: text.wordmark.copyWith(
+                            color: BrandColors.wordmarkCtrlOnDark,
+                          ),
                           children: const [
                             TextSpan(text: 'ctrl'),
                             TextSpan(
                               text: 'Spend',
-                              style: TextStyle(fontWeight: FontWeight.w500),
+                              style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: BrandColors.wordmarkSpendOnDark,
+                              ),
                             ),
                           ],
                         ),
@@ -122,7 +128,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
                             child: LinearProgressIndicator(
                               value: _progress.value,
                               backgroundColor: onSplash.raised,
-                              color: BrandColors.amber,
+                              color: BrandColors.green,
                             ),
                           ),
                         ),

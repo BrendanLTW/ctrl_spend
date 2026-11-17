@@ -3,7 +3,6 @@ import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_radius.dart';
 import 'package:ctrl_spend/core/theme/app_shadows.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/theme/brand_colors.dart';
 import 'package:ctrl_spend/core/widgets/brand_symbol.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
@@ -69,16 +68,8 @@ class _SampleNotification extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: BrandColors.navy,
-                borderRadius: BorderRadius.circular(AppRadius.r12),
-              ),
-              alignment: Alignment.center,
-              child: const BrandSymbol(size: 22),
-            ),
+            // The app icon, as the notification shows it.
+            const BrandSymbol(size: 40),
             const SizedBox(width: 12),
             Expanded(
               child: Column(

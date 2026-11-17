@@ -190,12 +190,13 @@ class AppTypography {
     fontFeatures: _tabular,
   );
 
-  /// The splash wordmark: "ctrl" at this weight, "Spend" at w500 (DESIGN §2).
+  /// The splash wordmark: "ctrl" at this weight, "Spend" at w700, −2%
+  /// letter-spacing (DESIGN §2).
   TextStyle get wordmark => const TextStyle(
     fontFamily: _family,
     fontSize: 40,
-    fontWeight: FontWeight.w800,
-    letterSpacing: -1.2,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.8,
     height: 1.1,
   );
 
