@@ -3,25 +3,25 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 
-/// The CSV columns, in order (docs/csv-format.md). `note` only when notes
-/// are included.
+/// The CSV columns, in order, shared by export and import (PRD §6.4,
+/// docs/csv-format.md).
 abstract final class CsvColumns {
   static const date = 'date';
   static const time = 'time';
   static const type = 'type';
+  static const amount = 'amount';
   static const category = 'category';
   static const title = 'title';
-  static const amount = 'amount';
   static const note = 'note';
 
-  static List<String> header({required bool notes}) => [
+  static const List<String> header = [
     date,
     time,
     type,
+    amount,
     category,
     title,
-    amount,
-    if (notes) note,
+    note,
   ];
 }
 
@@ -45,22 +45,23 @@ List<Transaction> transactionsToExport(
 
 /// [transactions] as CSV text (docs/csv-format.md): a header, then one row
 /// each in the given order, dates and times local, amounts as plain
-/// decimals with two places.
+/// decimals with two places. Every file has every column; without
+/// [notes] the note column is empty, so exports always import back.
 String transactionsToCsv(
   Iterable<Transaction> transactions, {
   required Map<int, Category> categories,
   required bool notes,
 }) => csv.encode([
-  CsvColumns.header(notes: notes),
+  CsvColumns.header,
   for (final t in transactions)
     [
       _date(t.occurredAt.toLocal()),
       _time(t.occurredAt.toLocal()),
       t.type.name,
+      formatCsvAmount(t.amountMinor),
       categories[t.categoryId]?.name ?? '',
       t.title,
-      formatCsvAmount(t.amountMinor),
-      if (notes) t.note ?? '',
+      if (notes) t.note ?? '' else '',
     ],
 ]);
 

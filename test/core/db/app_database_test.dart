@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,8 +39,8 @@ void main() {
         ),
       );
 
-  test('schema v2 has the four v1.0 tables and no P2 tables', () async {
-    expect(db.schemaVersion, 2);
+  test('schema v6 has bills, goals and period snapshots', () async {
+    expect(db.schemaVersion, 6);
     final tables = await db
         .customSelect(
           "SELECT name FROM sqlite_master WHERE type = 'table' "
@@ -54,6 +55,11 @@ void main() {
         'transactions',
         'notifications',
         'preferences',
+        'bills',
+        'goals',
+        'goal_contributions',
+        'period_snapshots',
+        'period_snapshot_limits',
       ]),
     );
   });
@@ -125,6 +131,153 @@ void main() {
       final row = await db.select(db.transactions).getSingle();
       expect(row.occurredAt.isUtc, isTrue);
       expect(row.occurredAt, at);
+    });
+  });
+
+  group('bills', () {
+    Future<int> addBill(
+      int categoryId, {
+      int amountMinor = 12900,
+      String unit = 'month',
+      int every = 1,
+    }) => db
+        .into(db.bills)
+        .insert(
+          BillsCompanion.insert(
+            name: 'Unifi',
+            amountMinor: amountMinor,
+            categoryId: categoryId,
+            repeatUnit: unit,
+            repeatEvery: every,
+            nextDue: DateTime.utc(2026, 11, 8),
+          ),
+        );
+
+    test('the amount must be more than 0', () async {
+      final id = await addCategory();
+      await expectLater(
+        addBill(id, amountMinor: 0),
+        throwsA(isA<SqliteException>()),
+      );
+    });
+
+    test('a repeat is a known unit, at least every 1', () async {
+      final id = await addCategory();
+      await expectLater(
+        addBill(id, unit: 'fortnight'),
+        throwsA(isA<SqliteException>()),
+      );
+      await expectLater(addBill(id, every: 0), throwsA(isA<SqliteException>()));
+      expect(await addBill(id, unit: 'day', every: 10), isPositive);
+    });
+
+    test('a category with a bill cannot be deleted', () async {
+      final id = await addCategory();
+      await addBill(id);
+      await expectLater(
+        (db.delete(db.categories)..where((c) => c.id.equals(id))).go(),
+        throwsA(isA<SqliteException>()),
+      );
+    });
+
+    test('deleting a bill keeps its payments without the link', () async {
+      final categoryId = await addCategory();
+      final billId = await addBill(categoryId);
+      final paymentId = await addTransaction(categoryId);
+      await (db.update(db.transactions)..where((t) => t.id.equals(paymentId)))
+          .write(TransactionsCompanion(billId: Value(billId)));
+
+      await (db.delete(db.bills)..where((b) => b.id.equals(billId))).go();
+
+      final payment = await db.select(db.transactions).getSingle();
+      expect(payment.id, paymentId);
+      expect(payment.billId, isNull);
+    });
+  });
+
+  group('goals', () {
+    Future<int> addGoal() => db
+        .into(db.goals)
+        .insert(
+          GoalsCompanion.insert(
+            name: 'Bali trip',
+            iconKey: 'travel',
+            targetMinor: 500000,
+            targetMonth: DateTime.utc(2027, 3),
+            createdAt: DateTime.utc(2026, 8),
+          ),
+        );
+
+    Future<int> contribute(int goalId, int amountMinor) => db
+        .into(db.goalContributions)
+        .insert(
+          GoalContributionsCompanion.insert(
+            goalId: goalId,
+            amountMinor: amountMinor,
+            label: 'From salary',
+            date: DateTime.utc(2026, 11, 3),
+          ),
+        );
+
+    test('a contribution adds or withdraws, never 0', () async {
+      final goalId = await addGoal();
+      expect(await contribute(goalId, 40000), isPositive);
+      expect(await contribute(goalId, -10000), isPositive);
+      await expectLater(contribute(goalId, 0), throwsA(isA<SqliteException>()));
+    });
+
+    test('deleting a goal deletes its contributions', () async {
+      final goalId = await addGoal();
+      await contribute(goalId, 40000);
+      await (db.delete(db.goals)..where((g) => g.id.equals(goalId))).go();
+      expect(await db.select(db.goalContributions).get(), isEmpty);
+    });
+
+    test('dates come back as the same UTC calendar date', () async {
+      await addGoal();
+      final goal = await db.select(db.goals).getSingle();
+      expect(goal.targetMonth, DateTime.utc(2027, 3));
+      expect(goal.targetMonth.isUtc, isTrue);
+    });
+  });
+
+  group('period snapshots', () {
+    Future<int> addSnapshot(DateTime start) => db
+        .into(db.periodSnapshots)
+        .insert(
+          PeriodSnapshotsCompanion.insert(
+            periodStart: start,
+            periodEnd: DateTime.utc(2026, 11, 14),
+            budgetMinor: const Value(200000),
+            spentMinor: 76000,
+            incomeMinor: 480000,
+          ),
+        );
+
+    test('one per period start', () async {
+      await addSnapshot(DateTime.utc(2026, 10, 15));
+      await expectLater(
+        addSnapshot(DateTime.utc(2026, 10, 15)),
+        throwsA(isA<SqliteException>()),
+      );
+    });
+
+    test('limits go with their snapshot', () async {
+      final categoryId = await addCategory();
+      final snapshotId = await addSnapshot(DateTime.utc(2026, 10, 15));
+      await db
+          .into(db.periodSnapshotLimits)
+          .insert(
+            PeriodSnapshotLimitsCompanion.insert(
+              snapshotId: snapshotId,
+              categoryId: categoryId,
+              limitMinor: 40000,
+            ),
+          );
+      await (db.delete(
+        db.periodSnapshots,
+      )..where((s) => s.id.equals(snapshotId))).go();
+      expect(await db.select(db.periodSnapshotLimits).get(), isEmpty);
     });
   });
 

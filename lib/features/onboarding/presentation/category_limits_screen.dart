@@ -13,6 +13,7 @@ import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/budgets/presentation/limit_bounds.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -46,6 +47,14 @@ class CategoryLimitsScreen extends ConsumerWidget {
         const <Category>[];
 
     Future<void> editLimit(Category category) async {
+      final bounds = limitBounds(
+        l10n,
+        categoryId: category.id,
+        categoryName: category.name,
+        categories: categories,
+        budgetMinor: budgetMinor,
+        currency: currency,
+      );
       final result = await showAmountSheet(
         context,
         title: l10n.categoryBudget(category.name),
@@ -56,11 +65,8 @@ class CategoryLimitsScreen extends ConsumerWidget {
         currency: currency,
         initialMinor: category.limitMinor ?? 0,
         removable: category.limitMinor != null,
-        maxMinor: maxLimitFor(
-          category.id,
-          categories: categories,
-          budgetMinor: budgetMinor,
-        ),
+        maxMinor: bounds.maxMinor,
+        overMessage: bounds.overMessage,
       );
       final limit = switch (result) {
         AmountSaved(:final minor) => minor,

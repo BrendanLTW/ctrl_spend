@@ -194,10 +194,7 @@ void main() {
       await done(tester);
       await tester.enterText(find.byType(TextField), 'x' * 80);
       final field = tester.widget<TextField>(find.byType(TextField));
-      expect(
-        field.controller!.text.length,
-        AddTransactionScreen.maxTitleLength,
-      );
+      expect(field.controller!.text.length, maxTitleLength);
     });
   });
 
@@ -238,9 +235,7 @@ void main() {
     });
   });
 
-  testWidgets('More lists every category; its pick joins the tiles', (
-    tester,
-  ) async {
+  testWidgets('More opens S46; its pick joins the tiles', (tester) async {
     await pumpAt(
       tester,
       Routes.add,
@@ -261,7 +256,8 @@ void main() {
 
     await tester.tap(find.text('More'));
     await tester.pumpAndSettle();
-    expect(find.text('Category'), findsOneWidget);
+    // S46, with search, limits and New category.
+    expect(find.text('Choose category'), findsOneWidget);
     // The ninth row is below the fold of the sheet's list.
     await tester.ensureVisible(find.text('Travel'));
     await tester.pumpAndSettle();
@@ -345,6 +341,25 @@ void main() {
       expect(saved.categoryId, categories.byName('Transport').id);
       expect(saved.title, 'Taxi');
       expect(saved.occurredAt, DateTime(2026, 11, 4, 8, 15).toUtc());
+    });
+
+    testWidgets('a note typed elsewhere (CSV) is kept on save', (tester) async {
+      await pumpAt(
+        tester,
+        Routes.editTransaction(1),
+        seed: () => transactions.add(
+          amountMinor: 1250,
+          type: TransactionType.expense,
+          categoryId: categories.byName('Food').id,
+          occurredAt: DateTime(2026, 11, 4, 8, 15),
+          title: 'Nasi lemak',
+          note: 'with egg',
+        ),
+      );
+      await tester.enterText(find.byType(TextField), 'Nasi lemak ayam');
+      await save(tester);
+      final saved = transactions.all.single;
+      expect((saved.title, saved.note), ('Nasi lemak ayam', 'with egg'));
     });
 
     testWidgets('a title that was the category name shows a blank note', (

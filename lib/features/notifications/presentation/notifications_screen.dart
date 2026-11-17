@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ctrl_spend/core/period/clock.dart';
+import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/theme/app_spacing.dart';
 import 'package:ctrl_spend/core/theme/app_typography.dart';
@@ -15,7 +16,6 @@ import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_row.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_settings_sheet.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
@@ -115,7 +115,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
             tooltip: l10n.notificationSettings,
             icon: const AppIconView(AppIcon.sliders, size: 24),
             color: colors.ink,
-            onPressed: () => showNotificationSettingsSheet(context),
+            onPressed: () => context.push(Routes.notificationSettings),
           ),
           const SizedBox(width: 8),
         ],
@@ -176,7 +176,7 @@ class _Empty extends ConsumerWidget {
     final locale = Localizations.localeOf(context).toLanguageTag();
     final prefs = ref.watch(preferencesProvider).value ?? const Preferences();
     String onOff({required bool on}) => on ? l10n.onLabel : l10n.offLabel;
-    void open() => unawaited(showNotificationSettingsSheet(context));
+    void open() => unawaited(context.push(Routes.notificationSettings));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [

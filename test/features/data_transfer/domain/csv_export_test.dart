@@ -61,19 +61,22 @@ void main() {
         notes: true,
       );
       expect(text.split('\r\n'), [
-        'date,time,type,category,title,amount,note',
-        '2026-11-04,08:05,expense,Food,Nasi lemak,12.50,with egg',
-        '2026-11-01,09:00,income,Salary,November pay,4800.00,',
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,with egg',
+        '2026-11-01,09:00,income,4800.00,Salary,November pay,',
       ]);
     });
 
-    test('without notes there is no note column', () {
+    test('without notes the note column is there but empty', () {
       final text = transactionsToCsv(
         [tx(1250, note: 'secret')],
         categories: categories,
         notes: false,
       );
-      expect(text, contains('date,time,type,category,title,amount\r\n'));
+      expect(text.split('\r\n'), [
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Lunch,',
+      ]);
       expect(text, isNot(contains('secret')));
     });
 
@@ -85,7 +88,7 @@ void main() {
       );
       expect(
         text.split('\r\n').last,
-        '2026-11-04,08:05,expense,Food,"Kopi, ""kaw""",5.00,"line one\nline '
+        '2026-11-04,08:05,expense,5.00,Food,"Kopi, ""kaw""","line one\nline '
         'two"',
       );
     });

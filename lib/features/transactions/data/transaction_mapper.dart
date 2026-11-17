@@ -11,6 +11,7 @@ extension TransactionRowMapper on TransactionRow {
     occurredAt: occurredAt,
     title: title,
     note: note,
+    billId: billId,
   );
 }
 
@@ -25,5 +26,6 @@ extension TransactionMapper on Transaction {
     occurredAt: Value(occurredAt.toUtc()),
     title: Value(title),
     note: Value(note),
+    billId: Value(billId),
   );
 }

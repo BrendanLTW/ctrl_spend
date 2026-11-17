@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Colour tokens from DESIGN §3.1–3.2. Read them with `context.colors`.
+/// Colour tokens from DESIGN §3.1–3.3. Read them with `context.colors`.
 @immutable
 class AppColors extends ThemeExtension<AppColors> {
   const new({
@@ -24,6 +24,19 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.chipText,
     required this.navSelected,
     required this.keySoftPressed,
+    required this.buttonDisabled,
+    required this.onButtonDisabled,
+    required this.scrim,
+    required this.destructive,
+    required this.onDestructive,
+    required this.errorBox,
+    required this.onErrorBox,
+    required this.warningBox,
+    required this.onWarningBox,
+    required this.successBox,
+    required this.onSuccessBox,
+    required this.infoBox,
+    required this.onInfoBox,
   });
 
   static const light = AppColors(
@@ -47,6 +60,19 @@ class AppColors extends ThemeExtension<AppColors> {
     chipText: Color(0xFF344054),
     navSelected: Color(0xFFEEF1F6),
     keySoftPressed: Color(0xFFEAECF0),
+    buttonDisabled: Color(0xFFD0D5DD),
+    onButtonDisabled: Color(0xFFFFFFFF),
+    scrim: Color(0x6B101828),
+    destructive: Color(0xFFD92D20),
+    onDestructive: Color(0xFFFFFFFF),
+    errorBox: Color(0xFFFEE4E2),
+    onErrorBox: Color(0xFFB42318),
+    warningBox: Color(0xFFFEF0C7),
+    onWarningBox: Color(0xFF93370D),
+    successBox: Color(0xFFD1FADF),
+    onSuccessBox: Color(0xFF05603A),
+    infoBox: Color(0xFFEEF1F6),
+    onInfoBox: Color(0xFF344054),
   );
 
   static const dark = AppColors(
@@ -70,6 +96,19 @@ class AppColors extends ThemeExtension<AppColors> {
     chipText: Color(0xFFD0D5DD),
     navSelected: Color(0xFF2A3444),
     keySoftPressed: Color(0xFF344054),
+    buttonDisabled: Color(0xFF2A3444),
+    onButtonDisabled: Color(0xFF667085),
+    scrim: Color(0x99000000),
+    destructive: Color(0xFFF04438),
+    onDestructive: Color(0xFFFFFFFF),
+    errorBox: Color(0x29F04438),
+    onErrorBox: Color(0xFFFDA29B),
+    warningBox: Color(0x29F79009),
+    onWarningBox: Color(0xFFFEC84B),
+    successBox: Color(0x2917B26A),
+    onSuccessBox: Color(0xFF75E0A7),
+    infoBox: Color(0xFF1C2536),
+    onInfoBox: Color(0xFFD0D5DD),
   );
 
   /// Screen background.
@@ -132,6 +171,45 @@ class AppColors extends ThemeExtension<AppColors> {
   /// Pressed keypad key inside sheets (DESIGN §7 pressed states).
   final Color keySoftPressed;
 
+  /// Disabled primary button fill (DESIGN §3.2).
+  final Color buttonDisabled;
+
+  /// The disabled primary button's label.
+  final Color onButtonDisabled;
+
+  /// Behind sheets and dialogs.
+  final Color scrim;
+
+  /// Destructive button fill, white label (S49).
+  final Color destructive;
+
+  /// The destructive button's label, white in both themes.
+  final Color onDestructive;
+
+  /// Error message box background (DESIGN §3.3).
+  final Color errorBox;
+
+  /// Error message box text and icon.
+  final Color onErrorBox;
+
+  /// Warning message box background.
+  final Color warningBox;
+
+  /// Warning message box text and icon.
+  final Color onWarningBox;
+
+  /// Success message box background.
+  final Color successBox;
+
+  /// Success message box text and icon.
+  final Color onSuccessBox;
+
+  /// Info message box background.
+  final Color infoBox;
+
+  /// Info message box text and icon.
+  final Color onInfoBox;
+
   /// Every token by name, so tests can check both palettes cover them all.
   @visibleForTesting
   Map<String, Color> get tokens => {
@@ -155,6 +233,19 @@ class AppColors extends ThemeExtension<AppColors> {
     'chipText': chipText,
     'navSelected': navSelected,
     'keySoftPressed': keySoftPressed,
+    'buttonDisabled': buttonDisabled,
+    'onButtonDisabled': onButtonDisabled,
+    'scrim': scrim,
+    'destructive': destructive,
+    'onDestructive': onDestructive,
+    'errorBox': errorBox,
+    'onErrorBox': onErrorBox,
+    'warningBox': warningBox,
+    'onWarningBox': onWarningBox,
+    'successBox': successBox,
+    'onSuccessBox': onSuccessBox,
+    'infoBox': infoBox,
+    'onInfoBox': onInfoBox,
   };
 
   @override
@@ -179,6 +270,19 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? chipText,
     Color? navSelected,
     Color? keySoftPressed,
+    Color? buttonDisabled,
+    Color? onButtonDisabled,
+    Color? scrim,
+    Color? destructive,
+    Color? onDestructive,
+    Color? errorBox,
+    Color? onErrorBox,
+    Color? warningBox,
+    Color? onWarningBox,
+    Color? successBox,
+    Color? onSuccessBox,
+    Color? infoBox,
+    Color? onInfoBox,
   }) {
     return AppColors(
       ground: ground ?? this.ground,
@@ -201,6 +305,19 @@ class AppColors extends ThemeExtension<AppColors> {
       chipText: chipText ?? this.chipText,
       navSelected: navSelected ?? this.navSelected,
       keySoftPressed: keySoftPressed ?? this.keySoftPressed,
+      buttonDisabled: buttonDisabled ?? this.buttonDisabled,
+      onButtonDisabled: onButtonDisabled ?? this.onButtonDisabled,
+      scrim: scrim ?? this.scrim,
+      destructive: destructive ?? this.destructive,
+      onDestructive: onDestructive ?? this.onDestructive,
+      errorBox: errorBox ?? this.errorBox,
+      onErrorBox: onErrorBox ?? this.onErrorBox,
+      warningBox: warningBox ?? this.warningBox,
+      onWarningBox: onWarningBox ?? this.onWarningBox,
+      successBox: successBox ?? this.successBox,
+      onSuccessBox: onSuccessBox ?? this.onSuccessBox,
+      infoBox: infoBox ?? this.infoBox,
+      onInfoBox: onInfoBox ?? this.onInfoBox,
     );
   }
 
@@ -228,6 +345,23 @@ class AppColors extends ThemeExtension<AppColors> {
       chipText: Color.lerp(chipText, other.chipText, t)!,
       navSelected: Color.lerp(navSelected, other.navSelected, t)!,
       keySoftPressed: Color.lerp(keySoftPressed, other.keySoftPressed, t)!,
+      buttonDisabled: Color.lerp(buttonDisabled, other.buttonDisabled, t)!,
+      onButtonDisabled: Color.lerp(
+        onButtonDisabled,
+        other.onButtonDisabled,
+        t,
+      )!,
+      scrim: Color.lerp(scrim, other.scrim, t)!,
+      destructive: Color.lerp(destructive, other.destructive, t)!,
+      onDestructive: Color.lerp(onDestructive, other.onDestructive, t)!,
+      errorBox: Color.lerp(errorBox, other.errorBox, t)!,
+      onErrorBox: Color.lerp(onErrorBox, other.onErrorBox, t)!,
+      warningBox: Color.lerp(warningBox, other.warningBox, t)!,
+      onWarningBox: Color.lerp(onWarningBox, other.onWarningBox, t)!,
+      successBox: Color.lerp(successBox, other.successBox, t)!,
+      onSuccessBox: Color.lerp(onSuccessBox, other.onSuccessBox, t)!,
+      infoBox: Color.lerp(infoBox, other.infoBox, t)!,
+      onInfoBox: Color.lerp(onInfoBox, other.onInfoBox, t)!,
     );
   }
 }

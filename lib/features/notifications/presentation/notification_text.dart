@@ -2,6 +2,7 @@ import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/period_format.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_rules.dart';
 import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 
 typedef NotificationText = ({String title, String body});
 
@@ -66,6 +67,13 @@ NotificationText notificationText(
               formatPeriod(event.period, locale),
               money(budgetMinor),
             ),
+    ),
+    BillReminder(:final name, :final daysBefore) => (
+      title: l10n.notifyBillTitle(name, daysBefore),
+      body: l10n.notifyBillBody(
+        money(event.amountMinor),
+        DateFormat('d MMM', locale).format(event.due),
+      ),
     ),
   };
 }

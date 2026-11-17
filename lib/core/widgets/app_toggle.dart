@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 /// A 52 × 32 pill switch (DESIGN §7): `control` with a white thumb off,
 /// `ink` with an `onInk` thumb on (so it stays visible in dark mode).
 /// Custom so it looks the same on iOS and Android; it still reads as a
-/// toggle. The touch area is 44 high.
+/// toggle. The touch area is 44 high. A null [onChanged] disables it,
+/// in `disabled`.
 class AppToggle extends StatelessWidget {
   const new({
     required this.value,
@@ -15,7 +16,7 @@ class AppToggle extends StatelessWidget {
   });
 
   final bool value;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
   final String semanticLabel;
 
   @override
@@ -23,12 +24,13 @@ class AppToggle extends StatelessWidget {
     final colors = context.colors;
     return Semantics(
       toggled: value,
+      enabled: onChanged != null,
       label: semanticLabel,
       excludeSemantics: true,
-      onTap: () => onChanged(!value),
+      onTap: onChanged == null ? null : () => onChanged!(!value),
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
-        onTap: () => onChanged(!value),
+        onTap: onChanged == null ? null : () => onChanged!(!value),
         child: SizedBox(
           width: 52,
           height: 44,
@@ -41,7 +43,11 @@ class AppToggle extends StatelessWidget {
               padding: const EdgeInsets.all(3),
               alignment: value ? Alignment.centerRight : Alignment.centerLeft,
               decoration: ShapeDecoration(
-                color: value ? colors.ink : colors.control,
+                color: onChanged == null
+                    ? colors.disabled
+                    : value
+                    ? colors.ink
+                    : colors.control,
                 shape: const StadiumBorder(),
               ),
               child: Container(

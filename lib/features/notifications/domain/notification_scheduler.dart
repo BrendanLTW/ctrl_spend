@@ -8,6 +8,13 @@ abstract interface class NotificationScheduler {
   /// Asks the OS for permission (S07). True when granted.
   Future<bool> requestPermission();
 
+  /// Whether the phone lets ctrlSpend show notifications, without asking
+  /// (S48's banner).
+  Future<bool> isPermitted();
+
+  /// Opens ctrlSpend's notification page in the phone's Settings (S48).
+  Future<void> openSystemSettings();
+
   /// Repeats every day at [minutes] after local midnight.
   Future<void> scheduleDaily({
     required int id,
@@ -36,6 +43,11 @@ abstract interface class NotificationScheduler {
 
   Future<void> cancel(int id);
 }
+
+/// Whether notifications are allowed; S48 refreshes it on resume.
+@riverpod
+Future<bool> notificationsPermitted(Ref ref) =>
+    ref.watch(notificationSchedulerProvider).isPermitted();
 
 /// Overridden in `main.dart` with the flutter_local_notifications one.
 @Riverpod(keepAlive: true)

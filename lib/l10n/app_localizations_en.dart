@@ -234,7 +234,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String budgetBelowLimits(String amount) {
-    return 'Your category limits add up to $amount. Set at least that.';
+    return 'Your category limits add up to $amount. Lower them first, or set the budget to at least $amount.';
   }
 
   @override
@@ -288,11 +288,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get save => 'Save';
-
-  @override
-  String leftToAllocate(String amount) {
-    return '$amount left to allocate';
-  }
 
   @override
   String get remindersTitle => 'Stay on track';
@@ -764,6 +759,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'travel': 'Travel',
       'home': 'Home',
       'phone': 'Phone',
+      'wifi': 'Wi-Fi',
+      'tv': 'TV',
+      'music': 'Music',
+      'laptop': 'Laptop',
       'other': 'Wallet',
     });
     return '$_temp0';
@@ -1386,22 +1385,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get columnAmount => 'Amount';
 
   @override
-  String get deleteAllData => 'Delete all data';
-
-  @override
-  String get deleteAllDataTitle => 'Delete all data?';
-
-  @override
-  String get deleteAllDataBody =>
-      'This erases every transaction, category, notification and setting on this phone. It can\'t be undone.';
-
-  @override
-  String get deleteEverything => 'Delete everything';
-
-  @override
-  String get exportFirst => 'Export first';
-
-  @override
   String get devSection => 'Developer';
 
   @override
@@ -1413,4 +1396,1044 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get devSampleDataAdded => 'Added 5,000 sample transactions';
+
+  @override
+  String get recurringBills => 'Recurring bills';
+
+  @override
+  String billsDueBefore(String date) {
+    return 'Due before $date';
+  }
+
+  @override
+  String billsDueCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count bills.',
+      one: '1 bill.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String billsLeftAfter(String amount) {
+    return 'After these, $amount is left to spend.';
+  }
+
+  @override
+  String billsOverAfter(String amount) {
+    return 'After these, you\'re over budget by $amount.';
+  }
+
+  @override
+  String get billsUpcoming => 'Upcoming';
+
+  @override
+  String get billsPaidThisPeriod => 'Paid this period';
+
+  @override
+  String billDue(String date) {
+    return 'Due $date';
+  }
+
+  @override
+  String billDueSoon(String date, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'in $days days',
+      one: 'tomorrow',
+      zero: 'today',
+    );
+    return 'Due $date · $_temp0';
+  }
+
+  @override
+  String billOverdue(String date) {
+    return 'Overdue · was due $date';
+  }
+
+  @override
+  String billPaid(String date) {
+    return 'Paid $date';
+  }
+
+  @override
+  String get noBillsTitle => 'No recurring bills yet';
+
+  @override
+  String get noBillsBody =>
+      'Add rent, phone or streaming bills to see what\'s left after they\'re paid, and get a reminder before each one is due.';
+
+  @override
+  String get addBill => 'Add a bill';
+
+  @override
+  String get newBill => 'New bill';
+
+  @override
+  String get editBill => 'Edit bill';
+
+  @override
+  String get amountEachTime => 'Amount each time';
+
+  @override
+  String amountEachTimeLabel(String amount) {
+    return 'Amount each time $amount';
+  }
+
+  @override
+  String get billNameRow => 'Name';
+
+  @override
+  String get billNameHint => 'Bill name';
+
+  @override
+  String get billRepeatsRow => 'Repeats';
+
+  @override
+  String get billNextDueRow => 'Next due';
+
+  @override
+  String get billRemindMe => 'Remind me';
+
+  @override
+  String get billRemindDetail => '2 days before it\'s due';
+
+  @override
+  String get saveBill => 'Save bill';
+
+  @override
+  String get repeatWeekly => 'Every week';
+
+  @override
+  String get repeatFortnightly => 'Every 2 weeks';
+
+  @override
+  String get repeatMonthly => 'Every month';
+
+  @override
+  String repeatOnDay(String day) {
+    return 'On the $day';
+  }
+
+  @override
+  String get repeatQuarterly => 'Every 3 months';
+
+  @override
+  String get repeatYearly => 'Every year';
+
+  @override
+  String get repeatCustom => 'Custom…';
+
+  @override
+  String repeatEveryDays(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count days',
+      one: 'Every day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryWeeks(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count weeks',
+      one: 'Every week',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count months',
+      one: 'Every month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String repeatEveryYears(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Every $count years',
+      one: 'Every year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get customRepeatTitle => 'Custom repeat';
+
+  @override
+  String get repeatEvery => 'Every';
+
+  @override
+  String get repeatDays => 'Days';
+
+  @override
+  String get repeatWeeks => 'Weeks';
+
+  @override
+  String get repeatMonths => 'Months';
+
+  @override
+  String get repeatYears => 'Years';
+
+  @override
+  String get repeatFewer => 'Fewer';
+
+  @override
+  String get repeatMore => 'More';
+
+  @override
+  String get setRepeat => 'Set';
+
+  @override
+  String get markPaid => 'Mark as paid';
+
+  @override
+  String get deleteBill => 'Delete bill';
+
+  @override
+  String deleteBillTitle(String name) {
+    return 'Delete $name?';
+  }
+
+  @override
+  String get deleteBillBody => 'Its past payments stay in Activity.';
+
+  @override
+  String billMarkedPaid(String name) {
+    return '$name marked paid';
+  }
+
+  @override
+  String billActionsLabel(String name, String amount, String due) {
+    return '$name, $amount, $due';
+  }
+
+  @override
+  String notifyBillTitle(String name, int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'in $days days',
+      one: 'tomorrow',
+      zero: 'today',
+    );
+    return '$name is due $_temp0';
+  }
+
+  @override
+  String notifyBillBody(String amount, String date) {
+    return '$amount on $date. Mark it paid in Recurring bills.';
+  }
+
+  @override
+  String get savingsGoals => 'Savings goals';
+
+  @override
+  String get totalSaved => 'Total saved';
+
+  @override
+  String savedThisMonth(String amount) {
+    return '$amount this month';
+  }
+
+  @override
+  String get activeGoals => 'Active goals';
+
+  @override
+  String completedGoals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count completed goals',
+      one: '1 completed goal',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String goalNameAmount(String name, String amount) {
+    return '$name · $amount';
+  }
+
+  @override
+  String goalChip(String type, String month) {
+    return '$type · by $month';
+  }
+
+  @override
+  String goalType(String icon) {
+    String _temp0 = intl.Intl.selectLogic(icon, {
+      'travel': 'Travel',
+      'car': 'Car',
+      'home': 'Home',
+      'laptop': 'Gadget',
+      'heart': 'Personal',
+      'other': 'Gift',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get goalSavedLabel => 'Saved';
+
+  @override
+  String get goalToGoLabel => 'To go';
+
+  @override
+  String goalPercent(int percent) {
+    return '$percent%';
+  }
+
+  @override
+  String goalCardLabel(
+    String name,
+    String chip,
+    int percent,
+    String saved,
+    String toGo,
+  ) {
+    return '$name, $chip, $percent% saved, $saved saved, $toGo to go';
+  }
+
+  @override
+  String get noGoalsTitle => 'Start your first goal';
+
+  @override
+  String get noGoalsBody =>
+      'Pick a target and a date, and ctrlSpend shows how much to put aside each month. Savings don\'t count as spending.';
+
+  @override
+  String get addGoal => 'Create a goal';
+
+  @override
+  String goalOfTarget(String amount) {
+    return 'of $amount';
+  }
+
+  @override
+  String goalToGo(String amount) {
+    return '$amount to go';
+  }
+
+  @override
+  String goalTarget(String month) {
+    return 'Target $month';
+  }
+
+  @override
+  String goalProgressLabel(int percent, String target) {
+    return '$percent% of $target saved';
+  }
+
+  @override
+  String get goalOnTrack => 'On track';
+
+  @override
+  String goalOnTrackBody(String amount, String month) {
+    return 'Save $amount a month to reach it by $month.';
+  }
+
+  @override
+  String get goalCompleted => 'Goal reached';
+
+  @override
+  String goalCompletedBody(String amount) {
+    return 'You reached $amount.';
+  }
+
+  @override
+  String get contributions => 'Contributions';
+
+  @override
+  String get noContributions => 'Nothing saved yet. Add money to start.';
+
+  @override
+  String get addMoney => 'Add money';
+
+  @override
+  String get withdraw => 'Withdraw';
+
+  @override
+  String get contributionAdded => 'Added';
+
+  @override
+  String get contributionWithdrawn => 'Withdrawn';
+
+  @override
+  String withdrawAtMost(String amount) {
+    return '$amount saved';
+  }
+
+  @override
+  String contributionAmountLabel(String amount) {
+    return 'Amount $amount';
+  }
+
+  @override
+  String get deleteGoal => 'Delete goal';
+
+  @override
+  String get newGoal => 'New goal';
+
+  @override
+  String get editGoal => 'Edit goal';
+
+  @override
+  String get targetAmount => 'Target amount';
+
+  @override
+  String get goalNameHint => 'Goal name';
+
+  @override
+  String get targetDateRow => 'Target date';
+
+  @override
+  String goalHintAmount(String amount) {
+    return '$amount a month';
+  }
+
+  @override
+  String goalHintBody(String target, String month) {
+    return 'to reach $target by $month';
+  }
+
+  @override
+  String get createGoal => 'Create goal';
+
+  @override
+  String get saveGoal => 'Save goal';
+
+  @override
+  String setMonth(String month) {
+    return 'Set $month';
+  }
+
+  @override
+  String get previousYear => 'Previous year';
+
+  @override
+  String get nextYear => 'Next year';
+
+  @override
+  String problemTooLong(String column, int max) {
+    return '$column is over $max characters';
+  }
+
+  @override
+  String problemFutureDate(String value) {
+    return '“$value” is in the future';
+  }
+
+  @override
+  String get columnTitle => 'Title';
+
+  @override
+  String get columnNote => 'Note';
+
+  @override
+  String problemTooManyRows(int count, int max) {
+    final intl.NumberFormat countNumberFormat =
+        intl.NumberFormat.decimalPattern(localeName);
+    final String countString = countNumberFormat.format(count);
+    final intl.NumberFormat maxNumberFormat = intl.NumberFormat.decimalPattern(
+      localeName,
+    );
+    final String maxString = maxNumberFormat.format(max);
+
+    return '$countString rows; an import takes at most $maxString';
+  }
+
+  @override
+  String importSkippedDuplicates(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count duplicates skipped',
+      one: '1 duplicate skipped',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get goalBehind => 'Behind';
+
+  @override
+  String goalBehindBody(String amount, String month) {
+    return 'Save $amount a month to catch up by $month.';
+  }
+
+  @override
+  String get goalPastTarget => 'Past the target date';
+
+  @override
+  String goalPastTargetBody(String amount) {
+    return 'Add $amount to reach it.';
+  }
+
+  @override
+  String get chooseCategory => 'Choose category';
+
+  @override
+  String get searchCategories => 'Search categories';
+
+  @override
+  String get addedByYou => 'Added by you';
+
+  @override
+  String get pickerArchivedNote =>
+      'Archived categories don\'t appear here. Restore them in Settings → Categories.';
+
+  @override
+  String noCategoryMatch(String query) {
+    return 'No categories match “$query”';
+  }
+
+  @override
+  String limitsOverBudget(
+    String total,
+    String budget,
+    String category,
+    String max,
+  ) {
+    return 'Your limits would add up to $total, which is more than your $budget monthly budget. $category can be up to $max.';
+  }
+
+  @override
+  String transactionCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get profileSubtitle => 'Data stored on this phone · Edit name';
+
+  @override
+  String get notificationsRow => 'Notifications';
+
+  @override
+  String notificationsOnCount(int count) {
+    return '$count on';
+  }
+
+  @override
+  String get dataSection => 'Data';
+
+  @override
+  String get eraseAllData => 'Erase all data';
+
+  @override
+  String get eraseAllDataTitle => 'Erase all data?';
+
+  @override
+  String eraseAllDataBody(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions',
+      one: '1 transaction',
+    );
+    return 'This deletes your $_temp0, budget, categories and settings from this phone and starts ctrlSpend fresh. It can\'t be undone.';
+  }
+
+  @override
+  String get exportCsvFirst => 'Export a CSV first';
+
+  @override
+  String get eraseEverything => 'Erase everything';
+
+  @override
+  String settingsFooter(String version) {
+    return 'ctrlSpend $version · by BrendanLTW';
+  }
+
+  @override
+  String get nameHelper => 'Shown on Home and the lock screen.';
+
+  @override
+  String get remindersSection => 'Reminders';
+
+  @override
+  String get alertsSection => 'Alerts and summaries';
+
+  @override
+  String get dailyReminderDetail => 'A nudge to log today\'s spending';
+
+  @override
+  String get remindMeAt => 'Remind me at';
+
+  @override
+  String get billReminders => 'Bill reminders';
+
+  @override
+  String get billRemindersDetail => 'Before each bill\'s due date';
+
+  @override
+  String get notificationsOffTitle => 'Notifications are off for ctrlSpend';
+
+  @override
+  String get notificationsOffBody =>
+      'You said no when we asked. Turn them on in your phone\'s Settings to get these reminders.';
+
+  @override
+  String get openPhoneSettings => 'Open phone settings';
+
+  @override
+  String get notificationsFootnote =>
+      'Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.';
+
+  @override
+  String transactionsInRange(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count transactions in this range.',
+      one: '1 transaction in this range.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String exportCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Export $count transactions',
+      one: 'Export 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get importChecking => 'Checking your file';
+
+  @override
+  String importCheckingRow(int row, int total, String file) {
+    return 'Row $row of $total · $file';
+  }
+
+  @override
+  String importCheckingLabel(int percent) {
+    return 'Checking file, $percent%';
+  }
+
+  @override
+  String get importCheckingNote =>
+      'Every row is checked before anything is imported. If any row has a problem, nothing changes.';
+
+  @override
+  String importFileDetail(int rows, String size) {
+    String _temp0 = intl.Intl.pluralLogic(
+      rows,
+      locale: localeName,
+      other: '$rows rows',
+      one: '1 row',
+    );
+    return '$_temp0 · $size';
+  }
+
+  @override
+  String fileSizeBytes(int size) {
+    return '$size B';
+  }
+
+  @override
+  String fileSizeKb(int size) {
+    return '$size KB';
+  }
+
+  @override
+  String fileSizeMb(String size) {
+    return '$size MB';
+  }
+
+  @override
+  String get changeFile => 'Change';
+
+  @override
+  String importAllGood(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'All $count rows look good.',
+      one: 'The row looks good.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get reviewDates => 'Dates';
+
+  @override
+  String get reviewTypes => 'Expenses · Income';
+
+  @override
+  String reviewTypesValue(int expenses, int income) {
+    return '$expenses · $income';
+  }
+
+  @override
+  String get reviewNewCategories => 'New categories';
+
+  @override
+  String duplicatesHeader(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count rows match transactions you already have',
+      one: '1 row matches a transaction you already have',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get skipDuplicates => 'Skip duplicates';
+
+  @override
+  String get skipDuplicatesDetail => 'Same date, amount and category';
+
+  @override
+  String get importAnyway => 'Import them anyway';
+
+  @override
+  String get importNote =>
+      'Imports add to your data and can\'t be undone. Export a CSV first if you want a backup.';
+
+  @override
+  String importCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Import $count transactions',
+      one: 'Import 1 transaction',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String importDuplicatesSkipped(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count duplicates were skipped.',
+      one: '1 duplicate was skipped.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String importCategoriesAdded(int count, String names) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count new categories were added: $names.',
+      two: 'Two new categories were added: $names.',
+      one: 'One new category was added: $names.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String listAnd(String rest, String last) {
+    return '$rest and $last';
+  }
+
+  @override
+  String get periodsUpdated => 'Periods updated';
+
+  @override
+  String get seeInActivity => 'See in Activity';
+
+  @override
+  String get backToSettings => 'Back to Settings';
+
+  @override
+  String get noPastPeriodsTitle => 'No past periods yet';
+
+  @override
+  String noPastPeriodsBody(String date) {
+    return 'Your first period ends on $date. After that, each period\'s total and how it did against your budget will show here.';
+  }
+
+  @override
+  String billsOverdueSummary(int overdue, int upcoming) {
+    return '$overdue overdue and $upcoming upcoming.';
+  }
+
+  @override
+  String get billsPausedSection => 'Paused';
+
+  @override
+  String get billPausedCaption => 'Paused';
+
+  @override
+  String get payBill => 'Pay';
+
+  @override
+  String payBillLabel(String name) {
+    return 'Pay $name';
+  }
+
+  @override
+  String get billTitle => 'Bill';
+
+  @override
+  String get billReminderRow => 'Reminder';
+
+  @override
+  String billReminderDays(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: '$days days before',
+      one: '1 day before',
+      zero: 'On the day',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get pauseBill => 'Pause this bill';
+
+  @override
+  String get billHistory => 'History';
+
+  @override
+  String billHistoryCaption(String category) {
+    return 'Added to $category';
+  }
+
+  @override
+  String get billPaidOnRow => 'Paid on';
+
+  @override
+  String get billAmountRow => 'Amount';
+
+  @override
+  String markPaidNote(String amount, String category, String date) {
+    return 'This adds a $amount expense to $category and moves the next due date to $date.';
+  }
+
+  @override
+  String repeatMonthlyOnDay(String day) {
+    return 'Every month on the $day';
+  }
+
+  @override
+  String get contributionAmount => 'Amount';
+
+  @override
+  String get contributionLabelHint => 'Label';
+
+  @override
+  String get contributionDefaultLabel => 'From salary';
+
+  @override
+  String contributionAddButton(String amount) {
+    return 'Add $amount';
+  }
+
+  @override
+  String get savingNotSpending =>
+      'Money you save doesn\'t count as spending, so \"Left to spend\" stays the same.';
+
+  @override
+  String withdrawUpTo(String amount) {
+    return 'You can withdraw up to $amount, the amount saved so far.';
+  }
+
+  @override
+  String get goalOptions => 'More options';
+
+  @override
+  String get editGoalDetail => 'Name, target, date and icon';
+
+  @override
+  String get markGoalCompleted => 'Mark as completed';
+
+  @override
+  String get markGoalCompletedDetail => 'Moves it to completed goals';
+
+  @override
+  String deleteGoalDetail(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Removes the goal and its $count contributions. Your spending isn\'t affected.',
+      one: 'Removes the goal and its 1 contribution. Your spending isn\'t affected.',
+      zero: 'Removes the goal. Your spending isn\'t affected.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String goalCompletedOn(String date) {
+    return 'Completed $date';
+  }
+
+  @override
+  String get appLock => 'App lock';
+
+  @override
+  String get appLockDetail => 'Ask for your PIN when you open ctrlSpend';
+
+  @override
+  String get unlockWithBiometrics => 'Unlock with biometrics';
+
+  @override
+  String get unlockWithBiometricsDetail =>
+      'Face ID or fingerprint, if set up on this phone';
+
+  @override
+  String get optionsSection => 'Options';
+
+  @override
+  String get lockAfter => 'Lock after';
+
+  @override
+  String lockAfterChoice(String minutes) {
+    String _temp0 = intl.Intl.selectLogic(minutes, {
+      '0': 'Immediately',
+      '1': 'After 1 minute',
+      '60': 'After 1 hour',
+      'other': 'After $minutes minutes',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get lockAfterBody =>
+      'How long ctrlSpend can stay in the background before it asks for your PIN again.';
+
+  @override
+  String get changePin => 'Change PIN';
+
+  @override
+  String get hideInSwitcher => 'Hide amounts in app switcher';
+
+  @override
+  String get appLockNote =>
+      'Turning app lock on asks you to create a PIN. If you forget it, you can reset it with biometrics or your phone\'s passcode.';
+
+  @override
+  String pinStep(int step) {
+    return 'Step $step of 2';
+  }
+
+  @override
+  String get pinCreateTitle => 'Create a 4-digit PIN';
+
+  @override
+  String get pinCreateBody =>
+      'You\'ll enter it each time you open ctrlSpend. Avoid 1234 or your birthday.';
+
+  @override
+  String get pinConfirmTitle => 'Enter it again';
+
+  @override
+  String get pinConfirmBody => 'To make sure it matches.';
+
+  @override
+  String get pinMismatch =>
+      'Those PINs don\'t match. Enter your new PIN again.';
+
+  @override
+  String get pinCurrentTitle => 'Enter your current PIN';
+
+  @override
+  String get pinCurrentBody => 'To change app lock settings.';
+
+  @override
+  String get pinWrong => 'That\'s not your PIN. Try again.';
+
+  @override
+  String pinLockedOut(String time) {
+    return 'Too many wrong PINs. Try again in $time.';
+  }
+
+  @override
+  String pinDotsLabel(int count) {
+    return '$count of 4 digits entered';
+  }
+
+  @override
+  String get biometricsReason => 'Confirm to unlock ctrlSpend with biometrics';
+
+  @override
+  String welcomeBackName(String name) {
+    return 'Welcome back, $name';
+  }
+
+  @override
+  String get welcomeBack => 'Welcome back';
+
+  @override
+  String get enterYourPin => 'Enter your PIN';
+
+  @override
+  String get forgotPin => 'Forgot PIN?';
+
+  @override
+  String get tooManyWrongPins => 'Too many wrong PINs';
+
+  @override
+  String tryAgainInOrBiometrics(String time) {
+    return 'Try again in $time, or use biometrics';
+  }
+
+  @override
+  String tryAgainIn(String time) {
+    return 'Try again in $time';
+  }
+
+  @override
+  String get pinEntryPaused => 'PIN entry paused';
+
+  @override
+  String get unlockReason => 'Unlock ctrlSpend';
+
+  @override
+  String get resetPin => 'Reset PIN';
+
+  @override
+  String get forgotPinTitle => 'Forgot your PIN?';
+
+  @override
+  String get forgotPinBody =>
+      'Confirm it\'s you with biometrics or your phone\'s passcode, then choose a new PIN. Your data stays as it is.';
+
+  @override
+  String get forgotPinNote =>
+      'If neither is set up on this phone, the only way back in is to erase ctrlSpend\'s data on the next screen.';
+
+  @override
+  String get continueWithBiometrics => 'Continue with biometrics';
+
+  @override
+  String get usePhonePasscode => 'Use phone passcode';
+
+  @override
+  String get resetPinReason => 'Confirm it\'s you to reset your ctrlSpend PIN';
+
+  @override
+  String get previewLockScreen => 'Preview lock screen';
 }

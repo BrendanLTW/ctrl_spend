@@ -10,17 +10,25 @@ import 'package:flutter/material.dart';
 
 /// The icons and colours a user can pick (DESIGN §8, §3.3); Wallet and
 /// Grey are for built-in categories.
-final List<CategoryIconKey> pickerIcons = [
-  for (final key in CategoryIconKey.values)
-    if (key != CategoryIconKey.wallet) key,
+const List<CategoryIconKey> pickerIcons = [
+  CategoryIconKey.food,
+  CategoryIconKey.coffee,
+  CategoryIconKey.car,
+  CategoryIconKey.bag,
+  CategoryIconKey.bolt,
+  CategoryIconKey.film,
+  CategoryIconKey.heart,
+  CategoryIconKey.gift,
+  CategoryIconKey.book,
+  CategoryIconKey.travel,
+  CategoryIconKey.home,
+  CategoryIconKey.phone,
 ];
+
 final List<CategoryColorKey> pickerColours = [
   for (final key in CategoryColorKey.values)
     if (key != CategoryColorKey.neutral) key,
 ];
-
-/// The longest category name (S23, S24).
-const maxCategoryNameLength = 30;
 
 /// The name with a preview tile of the chosen icon and colour.
 class CategoryNameField extends StatelessWidget {
@@ -76,12 +84,23 @@ class CategoryNameField extends StatelessWidget {
   }
 }
 
-/// The 12 icons, 6 to a row (S24, S23).
+/// 12 icons, 6 to a row (S24, S23).
 class CategoryIconGrid extends StatelessWidget {
-  const new({required this.selected, required this.onSelected, super.key});
+  const new({
+    required this.selected,
+    required this.onSelected,
+    this.icons = pickerIcons,
+    this.tileColor,
+    super.key,
+  });
 
   final CategoryIconKey selected;
   final ValueChanged<CategoryIconKey> onSelected;
+  final List<CategoryIconKey> icons;
+
+  /// Unselected tiles; `fillSoft` by default, for a sheet or card. S31
+  /// passes `surface`, since its icons sit on the ground.
+  final Color? tileColor;
 
   static const _perRow = 6;
 
@@ -95,7 +114,7 @@ class CategoryIconGrid extends StatelessWidget {
       label: context.l10n.iconName(icon.name),
       excludeSemantics: true,
       child: Material(
-        color: chosen ? colors.ink : colors.fillSoft,
+        color: chosen ? colors.ink : tileColor ?? colors.fillSoft,
         borderRadius: BorderRadius.circular(AppRadius.r16),
         clipBehavior: Clip.antiAlias,
         child: InkWell(
@@ -117,16 +136,14 @@ class CategoryIconGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     children: [
-      for (var row = 0; row * _perRow < pickerIcons.length; row++)
+      for (var row = 0; row * _perRow < icons.length; row++)
         Padding(
           padding: EdgeInsets.only(top: row == 0 ? 0 : 8),
           child: Row(
             children: [
               for (var col = 0; col < _perRow; col++) ...[
                 if (col > 0) const SizedBox(width: 8),
-                Expanded(
-                  child: _tile(context, pickerIcons[row * _perRow + col]),
-                ),
+                Expanded(child: _tile(context, icons[row * _perRow + col])),
               ],
             ],
           ),

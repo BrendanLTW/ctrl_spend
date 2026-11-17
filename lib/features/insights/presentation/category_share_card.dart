@@ -13,8 +13,12 @@ class CategoryShareCard extends StatelessWidget {
     required this.percent,
     required this.amount,
     required this.semanticLabel,
+    this.onTap,
     super.key,
   });
+
+  /// Opens S23 (PRD §5.7).
+  final VoidCallback? onTap;
 
   final Category category;
   final int percent;
@@ -28,52 +32,59 @@ class CategoryShareCard extends StatelessWidget {
     final colors = context.colors;
     final text = context.text;
     return Semantics(
+      button: onTap != null,
       label: semanticLabel,
       excludeSemantics: true,
-      child: Container(
-        padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
-        decoration: BoxDecoration(
-          color: colors.surface,
-          borderRadius: BorderRadius.circular(AppRadius.r28),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
+      child: Material(
+        color: colors.surface,
+        borderRadius: BorderRadius.circular(AppRadius.r28),
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          onTap: onTap,
+          highlightColor: colors.raised,
+          splashFactory: NoSplash.splashFactory,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CategoryTile.forKey(
-                  category.iconKey,
-                  color: category.colorKey,
-                  size: CategoryTileSize.compact,
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CategoryTile.forKey(
+                      category.iconKey,
+                      color: category.colorKey,
+                      size: CategoryTileSize.compact,
+                    ),
+                    const Spacer(),
+                    Text(
+                      '$percent%',
+                      style: text.rowTitle.copyWith(
+                        color: colors.ink,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Text(
-                  '$percent%',
-                  style: text.rowTitle.copyWith(
-                    color: colors.ink,
-                    fontWeight: FontWeight.w700,
+                const SizedBox(height: 10),
+                // Never cut short (DESIGN §10): scales down instead.
+                FittedBox(
+                  fit: BoxFit.scaleDown,
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    amount,
+                    style: text.statValue.copyWith(color: colors.ink),
                   ),
+                ),
+                Text(
+                  category.name,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: text.body.copyWith(color: colors.muted),
                 ),
               ],
             ),
-            const SizedBox(height: 10),
-            // Never cut short (DESIGN §10): scales down instead.
-            FittedBox(
-              fit: BoxFit.scaleDown,
-              alignment: Alignment.centerLeft,
-              child: Text(
-                amount,
-                style: text.statValue.copyWith(color: colors.ink),
-              ),
-            ),
-            Text(
-              category.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: text.body.copyWith(color: colors.muted),
-            ),
-          ],
+          ),
         ),
       ),
     );

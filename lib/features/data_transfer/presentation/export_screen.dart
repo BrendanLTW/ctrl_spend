@@ -6,12 +6,14 @@ import 'package:ctrl_spend/core/theme/app_typography.dart';
 import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
 import 'package:ctrl_spend/core/widgets/app_toggle.dart';
+import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/core/widgets/segmented_control.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/csv_export.dart';
 import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
@@ -29,6 +31,8 @@ enum ExportRange { thisPeriod, allTime, custom }
 
 /// S35 Export data: a range, which kinds to include, and Export CSV, which
 /// hands `ctrlspend-YYYY-MM-DD.csv` to the share sheet (docs/csv-format.md).
+/// Custom (S50) adds From and To, a live count, and "Export {n}
+/// transactions".
 class ExportScreen extends ConsumerStatefulWidget {
   const new({super.key});
 
@@ -77,14 +81,17 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
     );
   }
 
+  /// What Export would write, with the current range and toggles.
+  List<Transaction> get _toExport => transactionsToExport(
+    ref.read(transactionsProvider()).value ?? const <Transaction>[],
+    expenses: _expenses,
+    income: _income,
+    range: _selectedRange,
+  );
+
   Future<void> _export() async {
     final l10n = context.l10n;
-    final transactions = transactionsToExport(
-      ref.read(transactionsProvider()).value ?? const <Transaction>[],
-      expenses: _expenses,
-      income: _income,
-      range: _selectedRange,
-    );
+    final transactions = _toExport;
     if (transactions.isEmpty) {
       showAppToast(context, message: l10n.nothingToExport);
       return;
@@ -126,6 +133,12 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
       ..watch(categoriesProvider());
     final custom = _custom ?? _period;
     final day = DateFormat('d MMM yyyy', locale);
+    // S50's live count, which the button repeats.
+    final count = _range == ExportRange.custom ? _toExport.length : null;
+    const calendar = CategoryTile(
+      icon: AppIcon.calendar,
+      color: CategoryColorKey.blue,
+    );
 
     return Scaffold(
       backgroundColor: colors.ground,
@@ -187,16 +200,30 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                     ListGroup(
                       children: [
                         ListGroupRow(
+                          leading: calendar,
                           title: l10n.fromLabel,
                           value: day.format(custom.start),
                           onTap: () => _pick(from: true),
                         ),
                         ListGroupRow(
+                          leading: calendar,
                           title: l10n.toLabel,
                           value: day.format(custom.end),
                           onTap: () => _pick(from: false),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        AppSpacing.textX - AppSpacing.screenX,
+                        10,
+                        AppSpacing.textX - AppSpacing.screenX,
+                        0,
+                      ),
+                      child: Text(
+                        l10n.transactionsInRange(count!),
+                        style: text.caption.copyWith(color: colors.muted),
+                      ),
                     ),
                   ],
                   const SizedBox(height: AppSpacing.sectionTop),
@@ -231,7 +258,9 @@ class _ExportScreenState extends ConsumerState<ExportScreen> {
                 16,
               ),
               child: PrimaryButton(
-                label: l10n.exportCsvButton,
+                label: count == null
+                    ? l10n.exportCsvButton
+                    : l10n.exportCount(count),
                 onPressed: _expenses || _income ? _export : null,
               ),
             ),

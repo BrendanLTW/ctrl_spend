@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../helpers/fake_category_repository.dart';
+import '../../../helpers/fake_period_snapshot_repository.dart';
 import '../../../helpers/fake_preferences_repository.dart';
 import '../../../helpers/fake_repositories.dart';
 import '../../../helpers/fake_transaction_repository.dart';
@@ -25,6 +26,8 @@ final now = DateTime(2026, 11, 4, 9);
 
 late FakeTransactionRepository transactions;
 late FakeCategoryRepository categories;
+late FakePreferencesRepository prefs;
+late FakePeriodSnapshotRepository snapshots;
 late ProviderContainer container;
 
 Future<void> pumpApp(
@@ -39,20 +42,23 @@ Future<void> pumpApp(
   addTearDown(tester.view.reset);
   transactions = FakeTransactionRepository();
   categories = FakeCategoryRepository();
+  snapshots = FakePeriodSnapshotRepository();
   await seed?.call();
+  prefs = FakePreferencesRepository(
+    Preferences(
+      onboardingComplete: true,
+      monthStartDay: const DayOfMonth(15),
+      monthlyBudgetMinor: budget,
+      theme: theme,
+    ),
+  );
   container = ProviderContainer(
     overrides: [
       ...fakeRepositories(
-        preferences: FakePreferencesRepository(
-          Preferences(
-            onboardingComplete: true,
-            monthStartDay: const DayOfMonth(15),
-            monthlyBudgetMinor: budget,
-            theme: theme,
-          ),
-        ),
+        preferences: prefs,
         categories: categories,
         transactions: transactions,
+        snapshots: snapshots,
       ),
       clockProvider.overrideWithValue(() => now),
     ],
@@ -155,6 +161,31 @@ void main() {
       expect(shown[1].valueColor, AppColors.light.positive);
     });
 
+    testWidgets('each ended period is saved on launch', (tester) async {
+      await pumpApp(tester, location: Routes.pastPeriods);
+      expect(
+        [for (final s in snapshots.all) s.period.start.month],
+        [9, 8, 7, 6, 5],
+      );
+      final september = snapshots.all.first;
+      expect(september.budgetMinor, 200000);
+      expect(september.limits, {
+        categories.byName('Food').id: 40000,
+        categories.byName('Transport').id: 30000,
+        categories.byName('Shopping').id: 20000,
+      });
+    });
+
+    testWidgets('a later budget change keeps past results', (tester) async {
+      await pumpApp(tester, location: Routes.pastPeriods);
+      await prefs.update((p) => p.copyWith(monthlyBudgetMinor: 300000));
+      await tester.pumpAndSettle();
+      final first = rows(tester).first;
+      expect(first.subtitle, 'RM 2,010 of RM 2,000');
+      expect(first.value, 'Over by RM 10');
+      expect(find.text('RM 760 of RM 3,000 spent'), findsOneWidget);
+    });
+
     testWidgets('a row opens its period', (tester) async {
       await pumpApp(tester, location: Routes.pastPeriods);
       await tester.tap(find.text('15 Sep – 14 Oct'));
@@ -173,7 +204,7 @@ void main() {
       expect(rows(tester).first.value, isNull);
     });
 
-    testWidgets('no previous periods hides the section', (tester) async {
+    testWidgets('S55: the first period says when it ends', (tester) async {
       await pumpApp(
         tester,
         location: Routes.pastPeriods,
@@ -181,6 +212,15 @@ void main() {
       );
       expect(find.text('PREVIOUS'), findsNothing);
       expect(find.byType(ListGroupRow), findsNothing);
+      expect(find.text('CURRENT PERIOD'), findsOneWidget);
+      expect(find.text('No past periods yet'), findsOneWidget);
+      expect(
+        find.text(
+          "Your first period ends on 14 Nov. After that, each period's "
+          'total and how it did against your budget will show here.',
+        ),
+        findsOneWidget,
+      );
     });
 
     testWidgets('S20 opens it', (tester) async {
@@ -228,6 +268,20 @@ void main() {
       ]) {
         expect(find.bySemanticsLabel(label), findsOneWidget, reason: label);
       }
+      handle.dispose();
+    });
+
+    testWidgets('limits are the ones the period saved', (tester) async {
+      final handle = tester.ensureSemantics();
+      await pumpApp(tester, location: sepPeriod);
+      await categories.update(
+        categories.byName('Food').copyWith(limitMinor: 60000),
+      );
+      await tester.pumpAndSettle();
+      expect(
+        find.bySemanticsLabel('Food, RM 112 over, limit RM 400, RM 512'),
+        findsOneWidget,
+      );
       handle.dispose();
     });
 

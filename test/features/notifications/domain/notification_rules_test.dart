@@ -1,10 +1,17 @@
+import 'package:ctrl_spend/core/money/money_formatter.dart';
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/domain/notification_rules.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_text.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:flutter/widgets.dart' show Locale;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 var _nextId = 1;
 
@@ -133,6 +140,61 @@ void main() {
     });
   });
 
+  group('alert deduplication', () {
+    test('an alert already sent this period is left out', () {
+      final big = tx(33000);
+      final fresh = events([], [big]);
+      expect(fresh.single, isA<BudgetWarning>());
+      final again = transactionEvents(
+        before: const [],
+        after: [big],
+        categories: categories,
+        prefs: prefs,
+        now: now,
+        alreadySent: {(NotificationKind.budgetWarning, food)},
+      );
+      expect(again, isEmpty);
+    });
+
+    test('income is never deduplicated', () {
+      final pay = tx(480000, categoryId: salary, type: TransactionType.income);
+      final result = transactionEvents(
+        before: const [],
+        after: [pay],
+        categories: categories,
+        prefs: prefs,
+        now: now,
+        alreadySent: {(NotificationKind.incomeRecorded, salary)},
+      );
+      expect(result.single, isA<IncomeRecorded>());
+    });
+
+    test('alertsSentIn reads budget alerts in the period only', () {
+      AppNotification n(NotificationKind kind, DateTime at, int? category) =>
+          AppNotification(
+            id: at.millisecondsSinceEpoch,
+            kind: kind,
+            title: 'x',
+            body: 'x',
+            createdAt: at,
+            categoryId: category,
+          );
+      final period = periodFor(now, const DayOfMonth(15));
+      expect(
+        alertsSentIn([
+          n(NotificationKind.budgetWarning, DateTime(2026, 11, 2), food),
+          n(NotificationKind.overBudget, DateTime(2026, 10, 20), null),
+          n(NotificationKind.budgetWarning, DateTime(2026, 10, 14), 2),
+          n(NotificationKind.incomeRecorded, DateTime(2026, 11, 2), salary),
+        ], period),
+        {
+          (NotificationKind.budgetWarning, food),
+          (NotificationKind.overBudget, null),
+        },
+      );
+    });
+  });
+
   group('scheduledEvents', () {
     List<NotificationEvent> due(
       DateTime from,
@@ -231,5 +293,77 @@ void main() {
       nextPeriodStart(DateTime(2028, 2, 10), const LastDayOfMonth()),
       DateTime(2028, 2, 29, 9),
     );
+  });
+
+  group('bill reminders', () {
+    Bill unifi({int? remind = 2, DateTime? due}) => Bill(
+      id: 3,
+      name: 'Unifi',
+      amountMinor: 12900,
+      categoryId: 4,
+      repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
+      nextDue: due ?? DateTime(2026, 11, 8),
+      remindDaysBefore: remind,
+    );
+
+    test('fire at 9:00, the set days before the due date', () {
+      expect(billReminderAt(unifi()), DateTime(2026, 11, 6, 9));
+      expect(billReminderAt(unifi(remind: 0)), DateTime(2026, 11, 8, 9));
+      // Across a month end.
+      expect(
+        billReminderAt(unifi(due: DateTime(2026, 12, 2))),
+        DateTime(2026, 11, 30, 9),
+      );
+      expect(billReminderAt(unifi(remind: null)), isNull);
+      expect(billReminderAt(unifi().copyWith(paused: true)), isNull);
+    });
+
+    test('one that fired since the last check goes to the inbox', () {
+      List<NotificationEvent> due(Bill bill, DateTime from, DateTime to) =>
+          scheduledEvents(
+            from: from,
+            to: to,
+            prefs: prefs.copyWith(dailyReminderOn: false),
+            transactions: const [],
+            bills: [bill],
+          );
+      final result = due(
+        unifi(),
+        DateTime(2026, 11, 5, 20),
+        DateTime(2026, 11, 6, 12),
+      );
+      final reminder = result.single as BillReminder;
+      expect(reminder.at, DateTime(2026, 11, 6, 9));
+      expect(reminder.categoryId, 4);
+      expect((reminder.name, reminder.daysBefore), ('Unifi', 2));
+      expect(
+        due(unifi(), DateTime(2026, 11, 6, 10), DateTime(2026, 11, 7)),
+        isEmpty,
+      );
+      expect(
+        due(
+          unifi(remind: null),
+          DateTime(2026, 11, 5, 20),
+          DateTime(2026, 11, 6, 12),
+        ),
+        isEmpty,
+      );
+    });
+
+    test('say how soon, the amount and the date', () async {
+      await initializeDateFormatting('en');
+      final l10n = lookupAppLocalizations(const Locale('en'));
+      final formatter = MoneyFormatter(Currency.fromCode('MYR'));
+      NotificationText text(int days) => notificationText(
+        BillReminder.forBill(unifi(remind: days), DateTime(2026, 11, 6, 9)),
+        l10n,
+        formatter,
+        'en',
+      );
+      expect(text(2).title, 'Unifi is due in 2 days');
+      expect(text(1).title, 'Unifi is due tomorrow');
+      expect(text(0).title, 'Unifi is due today');
+      expect(text(2).body, 'RM 129 on 8 Nov. Mark it paid in Recurring bills.');
+    });
   });
 }

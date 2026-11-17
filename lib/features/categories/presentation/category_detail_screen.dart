@@ -13,7 +13,7 @@ import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/section_label.dart';
 import 'package:ctrl_spend/core/widgets/transaction_row.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/budgets/presentation/limit_bounds.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_edit_sheets.dart';
@@ -88,6 +88,16 @@ class CategoryDetailScreen extends ConsumerWidget {
     final repository = ref.read(categoryRepositoryProvider);
 
     Future<void> editLimit() async {
+      final bounds = limitBounds(
+        l10n,
+        categoryId: category.id,
+        categoryName: category.name,
+        categories: all.where(
+          (c) => c.type == TransactionType.expense && !c.archived,
+        ),
+        budgetMinor: prefs.monthlyBudgetMinor,
+        currency: currency,
+      );
       final result = await showAmountSheet(
         context,
         title: l10n.monthlyLimit,
@@ -98,13 +108,8 @@ class CategoryDetailScreen extends ConsumerWidget {
         currency: currency,
         initialMinor: limit ?? 0,
         removable: limit != null,
-        maxMinor: maxLimitFor(
-          category.id,
-          categories: all.where(
-            (c) => c.type == TransactionType.expense && !c.archived,
-          ),
-          budgetMinor: prefs.monthlyBudgetMinor,
-        ),
+        maxMinor: bounds.maxMinor,
+        overMessage: bounds.overMessage,
       );
       if (result == null) return;
       await repository.update(

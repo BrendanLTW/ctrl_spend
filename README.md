@@ -11,6 +11,13 @@ Built in Flutter as a portfolio project, where architecture, tests and design fi
 | **Light** | <img src="docs/screenshots/dashboard-light.png" width="140"> | <img src="docs/screenshots/activity-light.png" width="140"> | <img src="docs/screenshots/budgets-light.png" width="140"> | <img src="docs/screenshots/insights-light.png" width="140"> | <img src="docs/screenshots/insights-week-light.png" width="140"> | <img src="docs/screenshots/add-transaction-light.png" width="140"> |
 | **Dark** | <img src="docs/screenshots/dashboard-dark.png" width="140"> | <img src="docs/screenshots/activity-dark.png" width="140"> | <img src="docs/screenshots/budgets-dark.png" width="140"> | <img src="docs/screenshots/insights-dark.png" width="140"> | <img src="docs/screenshots/insights-week-dark.png" width="140"> | <img src="docs/screenshots/add-transaction-dark.png" width="140"> |
 
+New in v1.1:
+
+| | Bills | Bill | Goals | Goal | App lock | Lock screen |
+|---|---|---|---|---|---|---|
+| **Light** | <img src="docs/screenshots/bills-light.png" width="140"> | <img src="docs/screenshots/bill-detail-light.png" width="140"> | <img src="docs/screenshots/goals-light.png" width="140"> | <img src="docs/screenshots/goal-detail-light.png" width="140"> | <img src="docs/screenshots/app-lock-light.png" width="140"> | <img src="docs/screenshots/lock-screen-light.png" width="140"> |
+| **Dark** | <img src="docs/screenshots/bills-dark.png" width="140"> | <img src="docs/screenshots/bill-detail-dark.png" width="140"> | <img src="docs/screenshots/goals-dark.png" width="140"> | <img src="docs/screenshots/goal-detail-dark.png" width="140"> | <img src="docs/screenshots/app-lock-dark.png" width="140"> | <img src="docs/screenshots/lock-screen-dark.png" width="140"> |
+
 ## Features
 
 - **Payday periods.** A month runs from your start day (1st–28th or the last day) to the day before it next month, such as 15 Oct – 14 Nov.
@@ -21,12 +28,15 @@ Built in Flutter as a portfolio project, where architecture, tests and design fi
 - **Past periods**, each with its result per category.
 - **Categories.** Add your own with an icon and colour. A category with history is archived, never deleted.
 - **Local notifications.** A daily reminder, budget alerts, a weekly summary and new-period notices, plus an inbox.
-- **CSV export and import.** Import checks every row and saves all of them or none, listing problems by row.
-- **Light, dark or system theme**, seven currencies (only the symbol changes, amounts are never converted), and Delete all data.
+- **CSV export and import.** Export a period, all time or a custom range. Import checks every row with live progress and saves all of them or none: problems are listed by row, and a clean file gets a review first, with its dates, counts, new categories and a choice about duplicates.
+- **Recurring bills** *(v1.1)*. What's due before payday and what's left after it, overdue bills first, a Pay button that records the payment and moves the bill on, pausing, and a reminder before each one is due. Unpaid bills never change "Left to spend".
+- **Savings goals** *(v1.1)*. A target and a date, the monthly amount needed, and whether you're on track, behind or past the date. Add or withdraw money; savings don't count as spending.
+- **App lock** *(v1.1)*. A 4-digit PIN, kept only as a salted hash in the phone's secure storage, with biometrics, a lock-after delay, a growing pause after wrong PINs, a reset through biometrics or the phone's passcode, and amounts hidden in the app switcher.
+- **Light, dark or system theme**, Ringgit (RM) for now (switching currency only ever changes the symbol; amounts are never converted), and Erase all data.
 
 ## Tech stack
 
-Flutter (stable, Dart 3) · Riverpod 3 with code generation · Drift (SQLite) with versioned migrations · go_router with a `StatefulShellRoute` · freezed · intl · fl_chart · flutter_local_notifications · flutter_svg with bundled Lucide icons · very_good_analysis.
+Flutter (stable, Dart 3) · Riverpod 3 with code generation · Drift (SQLite) with versioned migrations · go_router with a `StatefulShellRoute` · freezed · intl · fl_chart · flutter_local_notifications · flutter_secure_storage and local_auth (app lock) · flutter_svg with bundled Lucide icons · very_good_analysis.
 
 ## Architecture
 
@@ -114,9 +124,7 @@ Debug builds have **Settings → Developer → Add 5,000 sample transactions**.
 
 ## Status
 
-All v1.0 features are built. Before tagging v1.0.0:
-
-- On-device performance numbers for a mid-range Android phone are still to be measured.
+v1.1 is built: every v1.0 feature plus recurring bills, savings goals and app lock, and the 15 Nov 2026 spec update. Not yet checked on a real phone: on-device performance, the biometric and passcode prompts, Android's app-switcher hiding and the notification permission check. The benchmarks and the ready-to-run device test are described in [`docs/quality-audit.md`](docs/quality-audit.md).
 
 ## Credits
 

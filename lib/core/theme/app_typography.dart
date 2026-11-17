@@ -38,6 +38,22 @@ class AppTypography {
     height: 1.2,
     fontFeatures: _tabular,
   );
+
+  /// State screens' titles: "No recurring bills yet" (DESIGN §4).
+  TextStyle get stateTitle => const TextStyle(
+    fontFamily: _family,
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    height: 1.3,
+  );
+
+  /// Message box text.
+  TextStyle get message => const TextStyle(
+    fontFamily: _family,
+    fontSize: 13,
+    fontWeight: FontWeight.w500,
+    height: 1.45,
+  );
   TextStyle get pageTitle => const TextStyle(
     fontFamily: _family,
     fontSize: 28,
@@ -52,6 +68,22 @@ class AppTypography {
     fontWeight: FontWeight.w700,
     height: 1.3,
     fontFeatures: _tabular,
+  );
+
+  /// The name on S21's profile card: 18/600.
+  TextStyle get profileName => const TextStyle(
+    fontFamily: _family,
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    height: 1.35,
+  );
+
+  /// The PIN pad's digits (S38, S64): 26/600.
+  TextStyle get pinKey => const TextStyle(
+    fontFamily: _family,
+    fontSize: 26,
+    fontWeight: FontWeight.w600,
+    height: 1.2,
   );
   TextStyle get rowTitle => const TextStyle(
     fontFamily: _family,
@@ -93,6 +125,15 @@ class AppTypography {
     fontSize: 13,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.7,
+    height: 1.3,
+    fontFeatures: _tabular,
+  );
+
+  /// Status pills and the Pay pill's label size (DESIGN §7).
+  TextStyle get pillLabel => const TextStyle(
+    fontFamily: _family,
+    fontSize: 12,
+    fontWeight: FontWeight.w600,
     height: 1.3,
     fontFeatures: _tabular,
   );
@@ -149,12 +190,13 @@ class AppTypography {
     fontFeatures: _tabular,
   );
 
-  /// The splash wordmark: "ctrl" at this weight, "Spend" at w500 (DESIGN §2).
+  /// The splash wordmark: "ctrl" at this weight, "Spend" at w700, −2%
+  /// letter-spacing (DESIGN §2).
   TextStyle get wordmark => const TextStyle(
     fontFamily: _family,
     fontSize: 40,
-    fontWeight: FontWeight.w800,
-    letterSpacing: -1.2,
+    fontWeight: FontWeight.w400,
+    letterSpacing: -0.8,
     height: 1.1,
   );
 

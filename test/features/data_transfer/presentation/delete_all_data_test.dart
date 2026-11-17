@@ -6,6 +6,7 @@ import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/app_dialog.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
+import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
@@ -103,8 +104,11 @@ Future<void> tap(WidgetTester tester, String text) async {
 }
 
 Future<void> openDialog(WidgetTester tester) async {
-  await tester.scrollUntilVisible(find.text('Delete all data'), 200);
-  await tap(tester, 'Delete all data');
+  await tester.scrollUntilVisible(find.text('Erase all data'), 200);
+  // Built isn't on screen: bring the whole row into view.
+  await tester.ensureVisible(find.text('Erase all data'));
+  await tester.pumpAndSettle();
+  await tap(tester, 'Erase all data');
 }
 
 void main() {
@@ -114,16 +118,20 @@ void main() {
     await pumpSettings(tester);
     await openDialog(tester);
     expect(find.byType(AppDialog), findsOneWidget);
-    expect(find.text('Delete all data?'), findsOneWidget);
+    expect(
+      tester.widget<AppDialog>(find.byType(AppDialog)).layout,
+      AppDialogLayout.state,
+    );
+    expect(find.text('Erase all data?'), findsOneWidget);
     expect(
       find.text(
-        'This erases every transaction, category, notification and setting '
-        "on this phone. It can't be undone.",
+        'This deletes your 1 transaction, budget, categories and settings '
+        "from this phone and starts ctrlSpend fresh. It can't be undone.",
       ),
       findsOneWidget,
     );
-    expect(find.text('Export first'), findsOneWidget);
-    expect(find.text('Delete everything'), findsOneWidget);
+    expect(find.text('Export a CSV first'), findsOneWidget);
+    expect(find.text('Erase everything'), findsOneWidget);
     expect(find.text('Cancel'), findsOneWidget);
   });
 
@@ -136,28 +144,33 @@ void main() {
     expect(find.byType(AppDialog), findsNothing);
   });
 
-  testWidgets('Export first opens S35 and deletes nothing', (tester) async {
+  testWidgets('Export a CSV first opens S35 and deletes nothing', (
+    tester,
+  ) async {
     await pumpSettings(tester);
     await openDialog(tester);
-    await tap(tester, 'Export first');
+    await tap(tester, 'Export a CSV first');
     expect(find.byType(ExportScreen), findsOneWidget);
     expect(eraser.erased, 0);
     expect(transactions.all, hasLength(1));
   });
 
-  testWidgets('Delete everything erases it all and restarts onboarding', (
+  testWidgets('Erase everything erases it all and restarts at the splash', (
     tester,
   ) async {
     await pumpSettings(tester);
     expect(scheduler.pending, isNotEmpty);
+    final pins = container.read(pinStoreProvider);
+    await pins.save('2580');
     await openDialog(tester);
-    await tap(tester, 'Delete everything');
+    await tap(tester, 'Erase everything');
     expect(eraser.erased, 1);
     expect(transactions.all, isEmpty);
     expect(inbox.all, isEmpty);
     expect(categories.byName('Food').limitMinor, isNull);
     expect(await prefs.read(), const Preferences());
     expect(scheduler.pending, isEmpty);
+    expect(await pins.hasPin(), isFalse, reason: 'the app lock PIN too');
     expect(find.byType(WelcomeScreen), findsOneWidget);
   });
 
@@ -166,7 +179,7 @@ void main() {
   ) async {
     await pumpSettings(tester);
     await openDialog(tester);
-    await tap(tester, 'Delete everything');
+    await tap(tester, 'Erase everything');
     await prefs.update((p) => p.copyWith(onboardingComplete: true));
     await tester.pumpAndSettle();
     expect(scheduler.pending[NotificationService.dailyId]?.kind, 'daily');
@@ -180,9 +193,10 @@ void main() {
   ]) {
     testWidgets('the row is red in ${theme.name} mode', (tester) async {
       await pumpSettings(tester, theme: theme);
+      await tester.scrollUntilVisible(find.text('Erase all data'), 200);
       final row = tester.widget<ListGroupRow>(
         find.byWidgetPredicate(
-          (w) => w is ListGroupRow && w.title == 'Delete all data',
+          (w) => w is ListGroupRow && w.title == 'Erase all data',
         ),
       );
       expect(row.titleColor, colors.negative);

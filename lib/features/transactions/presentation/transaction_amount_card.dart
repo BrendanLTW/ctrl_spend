@@ -16,9 +16,13 @@ class TransactionAmountCard extends StatelessWidget {
     required this.currency,
     required this.income,
     required this.onTap,
+    this.label,
     super.key,
   });
 
+  /// The caption; "Total amount" by default (S12), "Amount each time" on
+  /// S28.
+  final String? label;
   final int minor;
   final Currency currency;
   final bool income;
@@ -36,7 +40,10 @@ class TransactionAmountCard extends StatelessWidget {
     return Semantics(
       button: true,
       liveRegion: true,
-      label: l10n.totalAmountLabel(formatter.format(minor)),
+      label: switch (label) {
+        null => l10n.totalAmountLabel(formatter.format(minor)),
+        final label => '$label, ${formatter.format(minor)}',
+      },
       excludeSemantics: true,
       child: Material(
         color: colors.surface,
@@ -51,7 +58,7 @@ class TransactionAmountCard extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  l10n.totalAmount.toUpperCase(),
+                  (label ?? l10n.totalAmount).toUpperCase(),
                   style: text.label.copyWith(color: colors.muted),
                 ),
                 const SizedBox(height: 8),

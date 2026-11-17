@@ -1,6 +1,8 @@
-/// Icon keys a category can use (DESIGN §8). The database stores the key,
-/// never an icon code point. Users pick from the first twelve; [wallet] is
-/// for the built-in Salary category (Category manager design).
+/// Icon keys a category or bill can use (DESIGN §8). The database stores
+/// the key, never an icon code point. Categories pick from the first
+/// twelve; [wallet] is for the built-in Salary category (Category manager
+/// design). [wifi], [tv] and [music] are for bills (S27), [laptop] for
+/// goals (S31).
 enum CategoryIconKey {
   food,
   coffee,
@@ -15,6 +17,10 @@ enum CategoryIconKey {
   home,
   phone,
   wallet,
+  wifi,
+  tv,
+  music,
+  laptop,
 }
 
 /// Colour keys a category can use (DESIGN §3.3). Users pick from the first

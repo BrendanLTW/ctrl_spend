@@ -1,13 +1,23 @@
 import 'package:ctrl_spend/core/widgets/app_shell.dart';
 import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/app_lock_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/lock_screen.dart';
+import 'package:ctrl_spend/features/app_lock/presentation/pin_flow_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/bill_detail_screen.dart';
+import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
 import 'package:ctrl_spend/features/budgets/presentation/budgets_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:ctrl_spend/features/data_transfer/presentation/csv_import_flow.dart';
+import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
-import 'package:ctrl_spend/features/data_transfer/presentation/import_failed_screen.dart';
+import 'package:ctrl_spend/features/data_transfer/presentation/import_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/add_goal_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/goal_detail_screen.dart';
+import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/budget_screen.dart';
@@ -59,17 +69,53 @@ abstract final class Routes {
   /// S34; under onboarding it's [onboardingCurrency] (S04's currency row).
   static const currency = '/settings/currency';
 
+  /// S37 App lock (v1.1).
+  static const appLock = '/settings/app-lock';
+
+  /// S38 as a preview, from S37.
+  static const lockPreview = '/settings/app-lock/preview';
+
+  /// S64/S65 and the current-PIN check; pass a `PinFlow` as `extra`.
+  static const pin = '/settings/app-lock/pin';
+
+  /// S48 Notification settings.
+  static const notificationSettings = '/settings/notifications';
+
   /// S35 Export data.
   static const export = '/settings/export';
 
-  /// S36 Import failed; pass the `ImportFailure` as `extra`.
-  static const importFailed = '/settings/import';
+  /// Import data (S51–S53, S36); pass the picked file as `extra`.
+  static const importData = '/settings/import';
 
   /// S22 Category manager.
   static const categories = '/settings/categories';
 
   /// S23 Category detail.
   static String category(int id) => '/settings/categories/$id';
+
+  /// S27 Recurring bills (v1.1).
+  static const bills = '/settings/bills';
+
+  /// S28 New bill.
+  static const newBill = '/settings/bills/new';
+
+  /// S56 Bill detail.
+  static String bill(int id) => '/settings/bills/$id';
+
+  /// S28 Edit bill.
+  static String editBill(int id) => '/settings/bills/$id/edit';
+
+  /// S29 Savings goals (v1.1).
+  static const goals = '/settings/goals';
+
+  /// S31 New goal.
+  static const newGoal = '/settings/goals/new';
+
+  /// S30 Goal detail.
+  static String goal(int id) => '/settings/goals/$id';
+
+  /// S31 Edit goal; pops with true when the goal was deleted.
+  static String editGoal(int id) => '/settings/goals/$id/edit';
 
   /// S14 Notifications.
   static const notifications = '/notifications';
@@ -164,10 +210,10 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const ExportScreen(),
       ),
       GoRoute(
-        path: Routes.importFailed,
+        path: Routes.importData,
         builder: (context, state) => switch (state.extra) {
-          final ImportFailure failure => ImportFailedScreen(failure: failure),
-          // Only reachable with its problems; anything else goes back.
+          final PickedFile file => ImportScreen(file: file),
+          // Only reachable with a picked file; anything else goes back.
           _ => const SettingsScreen(),
         },
       ),
@@ -180,6 +226,29 @@ GoRouter appRouter(Ref ref) {
         builder: (context, state) => const CurrencyScreen(),
       ),
       GoRoute(
+        path: Routes.appLock,
+        builder: (context, state) => const AppLockScreen(),
+      ),
+      GoRoute(
+        path: Routes.lockPreview,
+        builder: (context, state) => LockScreen(
+          preview: true,
+          onUnlocked: () => Navigator.of(context).pop(),
+        ),
+      ),
+      GoRoute(
+        path: Routes.pin,
+        builder: (context, state) => PinFlowScreen(
+          flow: state.extra is PinFlow
+              ? state.extra! as PinFlow
+              : PinFlow.verify,
+        ),
+      ),
+      GoRoute(
+        path: Routes.notificationSettings,
+        builder: (context, state) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
         path: Routes.categories,
         builder: (context, state) => const CategoryManagerScreen(),
       ),
@@ -187,6 +256,48 @@ GoRouter appRouter(Ref ref) {
         path: '/settings/categories/:id',
         builder: (context, state) => CategoryDetailScreen(
           categoryId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+        ),
+      ),
+      GoRoute(
+        path: Routes.bills,
+        builder: (context, state) => const RecurringBillsScreen(),
+      ),
+      GoRoute(
+        path: Routes.newBill,
+        builder: (context, state) => const AddBillScreen(),
+      ),
+      // After newBill, so "new" isn't read as an id.
+      GoRoute(
+        path: '/settings/bills/:id',
+        builder: (context, state) => BillDetailScreen(
+          billId: int.tryParse(state.pathParameters['id'] ?? '') ?? -1,
+        ),
+      ),
+      GoRoute(
+        path: '/settings/bills/:id/edit',
+        builder: (context, state) => AddBillScreen(
+          billId: int.tryParse(state.pathParameters['id'] ?? ''),
+        ),
+      ),
+      GoRoute(
+        path: Routes.goals,
+        builder: (context, state) => const SavingsGoalsScreen(),
+      ),
+      // Before ':id', so "new" isn't read as an id.
+      GoRoute(
+        path: Routes.newGoal,
+        builder: (context, state) => const AddGoalScreen(),
+      ),
+      GoRoute(
+        path: '/settings/goals/:id',
+        builder: (context, state) => GoalDetailScreen(
+          goalId: int.tryParse(state.pathParameters['id'] ?? '') ?? 0,
+        ),
+      ),
+      GoRoute(
+        path: '/settings/goals/:id/edit',
+        builder: (context, state) => AddGoalScreen(
+          goalId: int.tryParse(state.pathParameters['id'] ?? ''),
         ),
       ),
       GoRoute(

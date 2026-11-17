@@ -1,7 +1,12 @@
 import 'package:intl/intl.dart';
 
-/// Currencies offered in Settings (S34). Only the symbol changes on a switch;
-/// amounts are never converted.
+/// The currencies S34 offers. Only Malaysian Ringgit for now (15 Nov
+/// 2026); the rest of [Currency] is kept for later. A saved currency that
+/// isn't offered reads as MYR.
+const List<Currency> offeredCurrencies = [Currency.myr];
+
+/// Currencies the app knows (S34 offers [offeredCurrencies]). Only the
+/// symbol changes on a switch; amounts are never converted.
 enum Currency {
   myr('MYR', 'RM'),
   sgd('SGD', r'S$'),

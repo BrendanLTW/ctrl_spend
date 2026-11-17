@@ -4,7 +4,10 @@ import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_icon.dart';
 import 'package:ctrl_spend/core/widgets/app_toast.dart';
+import 'package:ctrl_spend/core/widgets/category_tile.dart';
+import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/features/data_transfer/presentation/export_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
@@ -101,7 +104,8 @@ Future<void> tap(WidgetTester tester, String text) async {
 }
 
 Future<void> export(WidgetTester tester) async {
-  await tester.tap(find.widgetWithText(PrimaryButton, 'Export CSV'));
+  // "Export CSV", or "Export {n} transactions" for a custom range.
+  await tester.tap(find.byType(PrimaryButton));
   await tester.pumpAndSettle();
 }
 
@@ -138,10 +142,10 @@ void main() {
       expect(file.fileName, 'ctrlspend-2026-11-04.csv');
       expect(file.mimeType, 'text/csv');
       expect(lines(), [
-        'date,time,type,category,title,amount,note',
-        '2026-11-04,08:05,expense,Food,Nasi lemak,12.50,egg',
-        '2026-11-01,09:00,income,Salary,November pay,4800.00,',
-        '2026-10-10,18:00,expense,Shopping,Shoes,99.00,',
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,egg',
+        '2026-11-01,09:00,income,4800.00,Salary,November pay,',
+        '2026-10-10,18:00,expense,99.00,Shopping,Shoes,',
       ]);
       expect(find.text('Saved 3 transactions to Files'), findsOneWidget);
       expect(find.text('ctrlspend-2026-11-04.csv'), findsOneWidget);
@@ -155,8 +159,8 @@ void main() {
       await tap(tester, 'Notes');
       await export(tester);
       expect(lines(), [
-        'date,time,type,category,title,amount',
-        '2026-11-04,08:05,expense,Food,Nasi lemak,12.50',
+        'date,time,type,amount,category,title,note',
+        '2026-11-04,08:05,expense,12.50,Food,Nasi lemak,',
       ]);
       expect(find.text('Saved 1 transaction to Files'), findsOneWidget);
       hideAppToast();
@@ -169,6 +173,8 @@ void main() {
       await tap(tester, 'Custom');
       expect(find.text('15 Oct 2026'), findsOneWidget);
       expect(find.text('14 Nov 2026'), findsOneWidget);
+      expect(find.text('2 transactions in this range.'), findsOneWidget);
+      expect(find.text('Export 2 transactions'), findsOneWidget);
       await tap(tester, 'To');
       await tap(tester, '1');
       await tester.tap(
@@ -179,11 +185,32 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(find.text('1 Nov 2026'), findsOneWidget);
+      expect(find.text('1 transaction in this range.'), findsOneWidget);
+      expect(find.text('Export 1 transaction'), findsOneWidget);
       await export(tester);
       expect(lines().skip(1), [
-        '2026-11-01,09:00,income,Salary,November pay,4800.00,',
+        '2026-11-01,09:00,income,4800.00,Salary,November pay,',
       ]);
       hideAppToast();
+    });
+
+    testWidgets('the custom count follows the include toggles', (tester) async {
+      await pumpExport(tester);
+      await tap(tester, 'Custom');
+      final tiles = tester.widgetList<ListGroupRow>(
+        find.byWidgetPredicate(
+          (w) => w is ListGroupRow && (w.title == 'From' || w.title == 'To'),
+        ),
+      );
+      expect(tiles.map((r) => (r.leading! as CategoryTile).icon), [
+        AppIcon.calendar,
+        AppIcon.calendar,
+      ]);
+      await tap(tester, 'Income');
+      expect(find.text('1 transaction in this range.'), findsOneWidget);
+      await tap(tester, 'All time');
+      expect(find.text('Export CSV'), findsOneWidget);
+      expect(find.textContaining('in this range'), findsNothing);
     });
 
     testWidgets('nothing in range says so and shares nothing', (tester) async {
@@ -220,6 +247,8 @@ void main() {
       await tester.tap(find.byTooltip('Back'));
       await tester.pumpAndSettle();
       unawaited(container.read(appRouterProvider).push(Routes.settings));
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Export to CSV'));
       await tester.pumpAndSettle();
       await tap(tester, 'Export to CSV');
       expect(find.byType(ExportScreen), findsOneWidget);

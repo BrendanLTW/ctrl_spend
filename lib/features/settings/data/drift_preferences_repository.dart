@@ -1,4 +1,6 @@
 import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrl_spend/features/categories/data/category_mapper.dart';
 import 'package:ctrl_spend/features/settings/data/preferences_mapper.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
@@ -19,7 +21,19 @@ class DriftPreferencesRepository implements PreferencesRepository {
   @override
   Future<void> update(Preferences Function(Preferences) change) =>
       _db.transaction(() async {
-        final values = preferencesToValues(change(await read()));
+        final before = await read();
+        final after = change(before);
+        // The budget can't drop below the category limits (PRD §5.6).
+        // Removing it is fine: the limits stay.
+        final budget = after.monthlyBudgetMinor;
+        if (budget != null && budget != before.monthlyBudgetMinor) {
+          final limits = allocated([
+            for (final row in await _db.select(_db.categories).get())
+              row.toEntity(),
+          ]);
+          if (limits > budget) throw BudgetBelowLimitsException(limits);
+        }
+        final values = preferencesToValues(after);
         // Only our keys are touched; others (v1.1 app lock) are left alone.
         for (final MapEntry(:key, :value) in values.entries) {
           if (value == null) {

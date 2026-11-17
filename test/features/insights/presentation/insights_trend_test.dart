@@ -110,6 +110,8 @@ void main() {
         seed: () async {
           await spend(150000, 'Food', at: DateTime(2026, 10, 1, 12));
           await spend(76000, 'Food', at: DateTime(2026, 11, 2, 12));
+          // A third day, so Insights has enough to chart (S40).
+          await spend(100, 'Food', at: DateTime(2026, 11, 3, 12));
         },
       );
       expect(find.text('RM 1,500'), findsWidgets);
@@ -123,7 +125,12 @@ void main() {
     ) async {
       await pumpTrend(
         tester,
-        seed: () => spend(76000, 'Food', at: DateTime(2026, 11, 2, 12)),
+        // Three days in this period, so Insights has enough to chart.
+        seed: () async {
+          await spend(76000, 'Food', at: DateTime(2026, 11, 2, 12));
+          await spend(100, 'Food', at: DateTime(2026, 11, 3, 12));
+          await spend(100, 'Food', at: DateTime(2026, 11, 1, 12));
+        },
       );
       expect(find.text('—'), findsOneWidget);
       expect(find.text('No full months yet'), findsOneWidget);

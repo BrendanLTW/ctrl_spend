@@ -19,6 +19,31 @@ void main() {
     return row.toEntity();
   }
 
+  test('a bill payment keeps its bill through a round trip', () async {
+    final billId = await db
+        .into(db.bills)
+        .insert(
+          BillsCompanion.insert(
+            name: 'Unifi',
+            amountMinor: 12900,
+            categoryId: 1,
+            repeatUnit: 'week',
+            repeatEvery: 1,
+            nextDue: DateTime.utc(2026, 11, 8),
+          ),
+        );
+    final payment = Transaction(
+      id: 3,
+      amountMinor: 12900,
+      type: TransactionType.expense,
+      categoryId: 1,
+      occurredAt: DateTime.utc(2026, 11, 8, 2),
+      title: 'Unifi',
+      billId: billId,
+    );
+    expect(await roundTrip(payment), payment);
+  });
+
   test('a transaction with a note survives a round trip', () async {
     final lunch = Transaction(
       id: 1,

@@ -4,6 +4,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'category.freezed.dart';
 
+/// The longest category name (PRD §5.9, §8).
+const maxCategoryNameLength = 20;
+
 /// An expense or income category (PRD §8).
 @freezed
 abstract class Category with _$Category {

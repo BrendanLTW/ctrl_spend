@@ -6,7 +6,8 @@ abstract final class AppRadius {
   /// Icon tiles, keypad keys in sheets.
   static const double r16 = 16;
 
-  /// Full-screen keypad keys, segmented segments, day selector.
+  /// Message boxes, text inputs, compact fields, picker tiles, segmented
+  /// segments, day selector.
   static const double r18 = 18;
 
   /// Fields, toast, category tile buttons, empty-state icon.
@@ -17,6 +18,9 @@ abstract final class AppRadius {
 
   /// List groups, budget cards, dialogs, empty-state card.
   static const double r28 = 28;
+
+  /// Dialogs in the S49 style.
+  static const double r30 = 30;
 
   /// Hero card, bottom-sheet top corners.
   static const double r32 = 32;

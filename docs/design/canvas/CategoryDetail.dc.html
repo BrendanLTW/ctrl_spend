@@ -1,0 +1,116 @@
+<script src="./support.js"></script>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;display=swap">
+<style>
+body{margin:0;background:#F7F8FA}
+a{color:#101828;text-decoration:none}a:hover{color:#344054}
+.r{width:390px;height:844px;position:relative;overflow:hidden;background:#F7F8FA;color:#101828;font-family:Poppins,sans-serif;font-feature-settings:"tnum"}
+.sb{height:47px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:15px;font-weight:600}
+.lbl{font-size:13px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:#5B6B86;padding:18px 24px 10px}
+.mut{color:#5B6B86}
+.hdr{display:grid;grid-template-columns:64px 1fr 64px;align-items:center;height:60px;padding:0 8px}
+.hdr h1{margin:0;text-align:center;font-size:20px;font-weight:700}
+.hdr a,.hdr button{display:flex;align-items:center;justify-content:center;height:44px;min-width:44px;border:0;background:none;font:600 15px Poppins,sans-serif;color:#101828;cursor:pointer}
+.group{background:#fff;border-radius:28px;margin:0 16px;overflow:hidden}
+.gi{display:flex;align-items:center;gap:16px;padding:0 18px;height:60px;border-bottom:1px solid #EEF1F6;color:#101828}
+.gi:last-child{border-bottom:0}
+.gi:hover{background:#FAFBFC;color:#101828}
+.gn{flex:1;font-size:16px;font-weight:600}
+.chev{width:20px;height:20px;flex:none;fill:none;stroke:#101828;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ic{width:42px;height:42px;border-radius:14px;display:flex;align-items:center;justify-content:center;flex:none;background:#E4DBF7}
+.ic svg{width:20px;height:20px;fill:none;stroke:#6D3FD1;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ic.food{background:#FFE2B8}.ic.food svg{stroke:#C25E00}
+.ic.car{background:#CDE6FB}.ic.car svg{stroke:#1769C2}
+.ic.bag{background:#FBD3E1}.ic.bag svg{stroke:#C8174F}
+.ic.bolt{background:#FFF0B8}.ic.bolt svg{stroke:#8A6100}
+.ic.wallet{background:#C9F3D5}.ic.wallet svg{stroke:#1E8A43}
+.ic.health{background:#FEE4E2}.ic.health svg{stroke:#D92D20}
+.ic.gift{background:#EEF1F6}.ic.gift svg{stroke:#5B6B86}
+.r.dark{background:#0B1018;color:#F2F4F7;color-scheme:dark}
+.r.dark a{color:#F2F4F7}
+.r.dark .lbl,.r.dark .mut,.r.dark .s,.r.dark .cn,.r.dark .gv,.r.dark .day .dt,.r.dark .seg button{color:#98A2B3}
+.r.dark .card,.r.dark .row,.r.dark .stat,.r.dark .empty,.r.dark .group,.r.dark .goal,.r.dark .cc,.r.dark .seg,.r.dark .search,.r.dark .chip,.r.dark .field,.r.dark .key,.r.dark .cat .ct,.r.dark .sheet,.r.dark .nav{background:#161D29;color:#F2F4F7}
+.r.dark .chip{color:#D0D5DD}
+.r.dark .cat,.r.dark .hdr a,.r.dark .hdr button,.r.dark .nav a,.r.dark .field input,.r.dark .search input{color:#F2F4F7}
+.r.dark .search input::placeholder{color:#98A2B3}
+.r.dark .gi{color:#F2F4F7;border-bottom-color:#232C3A}.r.dark .gi:hover{background:#1B2331}
+.r.dark .chev,.r.dark .key svg,.r.dark .cat .ct svg,.r.dark .field svg,.r.dark .iconbtn svg,.r.dark .empty .e svg,.r.dark svg[stroke="#101828"]{stroke:#F2F4F7}
+.r.dark .iconbtn,.r.dark .empty .e,.r.dark .bar{background:#232C3A}
+.r.dark .key:hover,.r.dark .chip:hover,.r.dark .cat:hover .ct,.r.dark .nav a:hover{background:#232C3A}
+.r.dark .nav{box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.r.dark .nav a.on{background:#2A3444}
+.r.dark .seg button.sel,.r.dark .chip.sel,.r.dark .cat.sel .ct,.r.dark .btn,.r.dark .pill,.r.dark .avatar,.r.dark .fab,.r.dark .toast{background:#F2F4F7;color:#0B1018}
+.r.dark .btn:hover,.r.dark .pill:hover,.r.dark .avatar:hover,.r.dark .fab:hover{background:#D0D5DD;color:#0B1018}
+.r.dark .cat.sel .ct svg,.r.dark .fab svg{stroke:#0B1018}
+.r.dark .fab{box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.r.dark .toast button{color:#B54708}
+.r.dark .hero{background:#1C2536}.r.dark .hero .bar{background:#344054}
+.r.dark .neg{color:#F97066}.r.dark .pos{color:#47CD89}.r.dark .warn{color:#FDB022}
+.r.dark .ic{background:rgba(124,77,219,.26)}.r.dark .ic svg{stroke:#B69BFF}
+.r.dark .ic.food{background:rgba(251,140,0,.2)}.r.dark .ic.food svg{stroke:#FFB547}
+.r.dark .ic.car{background:rgba(33,150,243,.22)}.r.dark .ic.car svg{stroke:#6CB8FF}
+.r.dark .ic.bag{background:rgba(240,69,122,.22)}.r.dark .ic.bag svg{stroke:#FF7AA2}
+.r.dark .ic.bolt{background:rgba(245,184,0,.2)}.r.dark .ic.bolt svg{stroke:#FFD34D}
+.r.dark .ic.wallet{background:rgba(23,178,106,.22)}.r.dark .ic.wallet svg{stroke:#5BD996}
+.r.dark .ic.health{background:rgba(240,68,56,.22)}.r.dark .ic.health svg{stroke:#FF8A80}
+.r.dark .ic.gift{background:#232C3A}.r.dark .ic.gift svg{stroke:#98A2B3}
+.r.dark .stat .c.out{background:rgba(240,68,56,.2)}.r.dark .stat .c.out svg{stroke:#F97066}
+.r.dark .stat .c.in{background:rgba(23,178,106,.2)}.r.dark .stat .c.in svg{stroke:#47CD89}
+.r.dark [style*="background:#fff"]{background:#161D29 !important}
+.r.dark [style*="background:#F7F8FA"]{background:#0B1018 !important}
+.r.dark [style*="background:#EEF1F6"],.r.dark [style*="background:#EAECF0"]{background:#2A3444 !important}
+.r.dark [style*="background:#101828"]{background:#F2F4F7 !important;color:#0B1018 !important}
+.r.dark [style*="background:#FFE2B8"]{background:rgba(251,140,0,.2) !important}
+.r.dark [style*="background:#CDE6FB"]{background:rgba(33,150,243,.22) !important}
+.r.dark [style*="color:#101828"]{color:#F2F4F7 !important}
+.r.dark [style*="color:#5B6B86"]{color:#98A2B3 !important}
+.r.dark [style*="color:#D92D20"]{color:#F97066 !important}
+.r.dark [style*="background:rgba(16,24,40"]{background:rgba(0,0,0,.6) !important}
+.card{background:#fff;border-radius:28px}
+.gv{font-size:14px;font-weight:500;color:#5B6B86}
+.gs{display:block;font-size:13px;font-weight:400;color:#5B6B86}
+.warn{color:#B54708}.neg{color:#D92D20}
+.bar{height:10px;border-radius:999px;background:#EEF1F6;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px;background:#101828}
+.arch{display:block;margin:12px auto 0;height:44px;padding:0 20px;border:0;border-radius:999px;background:none;font:600 15px Poppins,sans-serif;color:#D92D20;cursor:pointer}
+.arch:hover{background:#FEE4E2}
+.r.dark .gs{color:#98A2B3}.r.dark .arch{color:#F97066}.r.dark .arch:hover{background:rgba(240,68,56,.15)}
+</style>
+</helmet>
+<div class="r {{mode}}">
+  <div class="sb"><span>9:41</span><span>●●● ▮</span></div>
+  <div class="hdr">
+    <a href="./Categories.dc.html" aria-label="Back"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#101828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"></path></svg></a>
+    <h1>Category</h1><span></span>
+  </div>
+
+  <div class="card" style="margin:8px 16px 0;padding:20px 22px">
+    <div style="display:flex;align-items:center;gap:16px">
+      <span class="ic food" style="width:56px;height:56px;border-radius:18px"><svg viewBox="0 0 24 24" style="width:26px;height:26px"><path d="M4 3v7a3 3 0 0 0 3 3v8M10 3v7M7 3v4M17 21V3c-2 1-3 4-3 8h3"></path></svg></span>
+      <span style="flex:1"><span style="display:block;font-size:20px;font-weight:700">Food</span><span class="mut" style="font-size:13px">Expense · 14 transactions</span></span>
+      <span class="warn" style="font-size:16px;font-weight:700">82%</span>
+    </div>
+    <div class="lbl" style="padding:18px 0 0">This period</div>
+    <div style="display:flex;align-items:baseline;gap:8px;margin-top:2px"><span style="font-size:30px;font-weight:700;letter-spacing:-.8px">RM 328</span><span class="mut" style="font-size:15px;font-weight:500">of RM 400</span></div>
+    <div class="bar" style="margin-top:12px;background:#FFE2B8" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100" aria-label="82% of Food limit spent"><i style="width:82%;background:#F79009"></i></div>
+    <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:14px;font-weight:600"><span class="warn">RM 72 left</span><span class="mut" style="font-weight:500">10 days to go</span></div>
+  </div>
+
+  <div class="lbl">Settings</div>
+  <div class="group">
+    <a class="gi" href="#"><span class="gn">Name</span><span class="gv">Food</span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></a>
+    <a class="gi" href="#"><span class="gn">Icon &amp; colour</span><span class="ic food" style="width:30px;height:30px;border-radius:10px"><svg viewBox="0 0 24 24" style="width:16px;height:16px"><path d="M4 3v7a3 3 0 0 0 3 3v8M10 3v7M7 3v4M17 21V3c-2 1-3 4-3 8h3"></path></svg></span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></a>
+    <a class="gi" href="#"><span class="gn">Monthly limit</span><span class="gv">RM 400</span><svg class="chev" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"></path></svg></a>
+  </div>
+
+  <div class="lbl">Recent</div>
+  <div class="group">
+    <a class="gi" href="./AddTransaction.dc.html"><span class="gn">Nasi lemak<span class="gs">Today</span></span><span class="neg" style="font-size:15px;font-weight:700">−RM 12.50</span></a>
+    <a class="gi" href="./AddTransaction.dc.html"><span class="gn">Jaya Grocer<span class="gs">Sat, 1 Nov</span></span><span class="neg" style="font-size:15px;font-weight:700">−RM 86.40</span></a>
+  </div>
+  <button class="arch">Archive category</button>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"dark":{"editor":"boolean","default":false},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic { renderVals(){ return { mode: this.props.dark ? "dark" : "" }; } }
+</script>

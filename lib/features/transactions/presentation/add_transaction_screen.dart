@@ -37,8 +37,6 @@ class AddTransactionScreen extends ConsumerStatefulWidget {
   final int? transactionId;
   final TransactionType initialType;
 
-  static const maxTitleLength = 60;
-
   @override
   ConsumerState<AddTransactionScreen> createState() =>
       _AddTransactionScreenState();
@@ -248,6 +246,7 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
                     choices: choices,
                     selected: selected,
                     onSelected: (c) => setState(() => _categoryId = c.id),
+                    type: _type,
                   ),
                   const SizedBox(height: 24),
                   _DateRow(
@@ -263,7 +262,9 @@ class _AddTransactionScreenState extends ConsumerState<AddTransactionScreen> {
                     controller: _note,
                     hint: l10n.addNote,
                     icon: AppIcon.note,
-                    maxLength: AddTransactionScreen.maxTitleLength,
+                    // The field becomes the title until S12 is rebuilt
+                    // (task 6.12), so it takes the title's limit.
+                    maxLength: maxTitleLength,
                     textCapitalization: TextCapitalization.sentences,
                     textInputAction: TextInputAction.done,
                   ),

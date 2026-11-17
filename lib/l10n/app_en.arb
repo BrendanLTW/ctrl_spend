@@ -117,7 +117,7 @@
       }
     }
   },
-  "budgetBelowLimits": "Your category limits add up to {amount}. Set at least that.",
+  "budgetBelowLimits": "Your category limits add up to {amount}. Lower them first, or set the budget to at least {amount}.",
   "@budgetBelowLimits": {
     "placeholders": {
       "amount": {
@@ -186,14 +186,6 @@
   },
   "remove": "Remove",
   "save": "Save",
-  "leftToAllocate": "{amount} left to allocate",
-  "@leftToAllocate": {
-    "placeholders": {
-      "amount": {
-        "type": "String"
-      }
-    }
-  },
   "remindersTitle": "Stay on track",
   "remindersSubtitle": "A nudge at the end of the day helps you log spending before you forget it.",
   "sampleNotification": "You have RM 72 left for Food this period. Log today's spending?",
@@ -599,7 +591,7 @@
       }
     }
   },
-  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} other{Wallet}}",
+  "iconName": "{icon, select, food{Food} coffee{Coffee} car{Car} bag{Bag} bolt{Bolt} film{Film} heart{Heart} gift{Gift} book{Book} travel{Travel} home{Home} phone{Phone} wifi{Wi-Fi} tv{TV} music{Music} laptop{Laptop} other{Wallet}}",
   "@iconName": {
     "placeholders": {
       "icon": {
@@ -1258,13 +1250,905 @@
   "columnType": "Type",
   "columnCategory": "Category",
   "columnAmount": "Amount",
-  "deleteAllData": "Delete all data",
-  "deleteAllDataTitle": "Delete all data?",
-  "deleteAllDataBody": "This erases every transaction, category, notification and setting on this phone. It can't be undone.",
-  "deleteEverything": "Delete everything",
-  "exportFirst": "Export first",
   "devSection": "Developer",
   "devAddSampleData": "Add 5,000 sample transactions",
   "devAddSampleDataDetail": "Debug builds only, for performance checks",
-  "devSampleDataAdded": "Added 5,000 sample transactions"
+  "devSampleDataAdded": "Added 5,000 sample transactions",
+  "recurringBills": "Recurring bills",
+  "billsDueBefore": "Due before {date}",
+  "@billsDueBefore": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billsDueCount": "{count, plural, =1{1 bill.} other{{count} bills.}}",
+  "@billsDueCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "billsLeftAfter": "After these, {amount} is left to spend.",
+  "@billsLeftAfter": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billsOverAfter": "After these, you're over budget by {amount}.",
+  "@billsOverAfter": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billsUpcoming": "Upcoming",
+  "billsPaidThisPeriod": "Paid this period",
+  "billDue": "Due {date}",
+  "@billDue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billDueSoon": "Due {date} · {days, plural, =0{today} =1{tomorrow} other{in {days} days}}",
+  "@billDueSoon": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "billOverdue": "Overdue · was due {date}",
+  "@billOverdue": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billPaid": "Paid {date}",
+  "@billPaid": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "noBillsTitle": "No recurring bills yet",
+  "noBillsBody": "Add rent, phone or streaming bills to see what's left after they're paid, and get a reminder before each one is due.",
+  "addBill": "Add a bill",
+  "newBill": "New bill",
+  "editBill": "Edit bill",
+  "amountEachTime": "Amount each time",
+  "amountEachTimeLabel": "Amount each time {amount}",
+  "@amountEachTimeLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "billNameRow": "Name",
+  "billNameHint": "Bill name",
+  "billRepeatsRow": "Repeats",
+  "billNextDueRow": "Next due",
+  "billRemindMe": "Remind me",
+  "billRemindDetail": "2 days before it's due",
+  "saveBill": "Save bill",
+  "repeatWeekly": "Every week",
+  "repeatFortnightly": "Every 2 weeks",
+  "repeatMonthly": "Every month",
+  "repeatOnDay": "On the {day}",
+  "@repeatOnDay": {
+    "description": "The day is an ordinal, such as 8th.",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatQuarterly": "Every 3 months",
+  "repeatYearly": "Every year",
+  "repeatCustom": "Custom…",
+  "repeatEveryDays": "{count, plural, =1{Every day} other{Every {count} days}}",
+  "@repeatEveryDays": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryWeeks": "{count, plural, =1{Every week} other{Every {count} weeks}}",
+  "@repeatEveryWeeks": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryMonths": "{count, plural, =1{Every month} other{Every {count} months}}",
+  "@repeatEveryMonths": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "repeatEveryYears": "{count, plural, =1{Every year} other{Every {count} years}}",
+  "@repeatEveryYears": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "customRepeatTitle": "Custom repeat",
+  "repeatEvery": "Every",
+  "repeatDays": "Days",
+  "repeatWeeks": "Weeks",
+  "repeatMonths": "Months",
+  "repeatYears": "Years",
+  "repeatFewer": "Fewer",
+  "repeatMore": "More",
+  "setRepeat": "Set",
+  "markPaid": "Mark as paid",
+  "deleteBill": "Delete bill",
+  "deleteBillTitle": "Delete {name}?",
+  "@deleteBillTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteBillBody": "Its past payments stay in Activity.",
+  "billMarkedPaid": "{name} marked paid",
+  "@billMarkedPaid": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billActionsLabel": "{name}, {amount}, {due}",
+  "@billActionsLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "notifyBillTitle": "{name} is due {days, plural, =0{today} =1{tomorrow} other{in {days} days}}",
+  "@notifyBillTitle": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "notifyBillBody": "{amount} on {date}. Mark it paid in Recurring bills.",
+  "@notifyBillBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "savingsGoals": "Savings goals",
+  "totalSaved": "Total saved",
+  "savedThisMonth": "{amount} this month",
+  "@savedThisMonth": {
+    "description": "Net saved this period, signed: +RM 400.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "activeGoals": "Active goals",
+  "completedGoals": "{count, plural, =1{1 completed goal} other{{count} completed goals}}",
+  "@completedGoals": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalNameAmount": "{name} · {amount}",
+  "@goalNameAmount": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalChip": "{type} · by {month}",
+  "@goalChip": {
+    "placeholders": {
+      "type": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalType": "{icon, select, travel{Travel} car{Car} home{Home} laptop{Gadget} heart{Personal} other{Gift}}",
+  "@goalType": {
+    "placeholders": {
+      "icon": {
+        "type": "String"
+      }
+    }
+  },
+  "goalSavedLabel": "Saved",
+  "goalToGoLabel": "To go",
+  "goalPercent": "{percent}%",
+  "@goalPercent": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "goalCardLabel": "{name}, {chip}, {percent}% saved, {saved} saved, {toGo} to go",
+  "@goalCardLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "chip": {
+        "type": "String"
+      },
+      "percent": {
+        "type": "int"
+      },
+      "saved": {
+        "type": "String"
+      },
+      "toGo": {
+        "type": "String"
+      }
+    }
+  },
+  "noGoalsTitle": "Start your first goal",
+  "noGoalsBody": "Pick a target and a date, and ctrlSpend shows how much to put aside each month. Savings don't count as spending.",
+  "addGoal": "Create a goal",
+  "goalOfTarget": "of {amount}",
+  "@goalOfTarget": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalToGo": "{amount} to go",
+  "@goalToGo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalTarget": "Target {month}",
+  "@goalTarget": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalProgressLabel": "{percent}% of {target} saved",
+  "@goalProgressLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "goalOnTrack": "On track",
+  "goalOnTrackBody": "Save {amount} a month to reach it by {month}.",
+  "@goalOnTrackBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalCompleted": "Goal reached",
+  "goalCompletedBody": "You reached {amount}.",
+  "@goalCompletedBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "contributions": "Contributions",
+  "noContributions": "Nothing saved yet. Add money to start.",
+  "addMoney": "Add money",
+  "withdraw": "Withdraw",
+  "contributionAdded": "Added",
+  "contributionWithdrawn": "Withdrawn",
+  "withdrawAtMost": "{amount} saved",
+  "@withdrawAtMost": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "contributionAmountLabel": "Amount {amount}",
+  "@contributionAmountLabel": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "deleteGoal": "Delete goal",
+  "newGoal": "New goal",
+  "editGoal": "Edit goal",
+  "targetAmount": "Target amount",
+  "goalNameHint": "Goal name",
+  "targetDateRow": "Target date",
+  "goalHintAmount": "{amount} a month",
+  "@goalHintAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalHintBody": "to reach {target} by {month}",
+  "@goalHintBody": {
+    "placeholders": {
+      "target": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "createGoal": "Create goal",
+  "saveGoal": "Save goal",
+  "setMonth": "Set {month}",
+  "@setMonth": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "previousYear": "Previous year",
+  "nextYear": "Next year",
+  "problemTooLong": "{column} is over {max} characters",
+  "@problemTooLong": {
+    "placeholders": {
+      "column": {
+        "type": "String"
+      },
+      "max": {
+        "type": "int"
+      }
+    }
+  },
+  "problemFutureDate": "“{value}” is in the future",
+  "@problemFutureDate": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "columnTitle": "Title",
+  "columnNote": "Note",
+  "problemTooManyRows": "{count} rows; an import takes at most {max}",
+  "@problemTooManyRows": {
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "format": "decimalPattern"
+      },
+      "max": {
+        "type": "int",
+        "format": "decimalPattern"
+      }
+    }
+  },
+  "importSkippedDuplicates": "{count, plural, =1{1 duplicate skipped} other{{count} duplicates skipped}}",
+  "@importSkippedDuplicates": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalBehind": "Behind",
+  "goalBehindBody": "Save {amount} a month to catch up by {month}.",
+  "@goalBehindBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "goalPastTarget": "Past the target date",
+  "goalPastTargetBody": "Add {amount} to reach it.",
+  "@goalPastTargetBody": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "chooseCategory": "Choose category",
+  "searchCategories": "Search categories",
+  "addedByYou": "Added by you",
+  "pickerArchivedNote": "Archived categories don't appear here. Restore them in Settings → Categories.",
+  "noCategoryMatch": "No categories match “{query}”",
+  "@noCategoryMatch": {
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
+  "limitsOverBudget": "Your limits would add up to {total}, which is more than your {budget} monthly budget. {category} can be up to {max}.",
+  "@limitsOverBudget": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      },
+      "budget": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "max": {
+        "type": "String"
+      }
+    }
+  },
+  "transactionCount": "{count, plural, =1{1 transaction} other{{count} transactions}}",
+  "@transactionCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "profileSubtitle": "Data stored on this phone · Edit name",
+  "notificationsRow": "Notifications",
+  "notificationsOnCount": "{count} on",
+  "@notificationsOnCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "dataSection": "Data",
+  "eraseAllData": "Erase all data",
+  "eraseAllDataTitle": "Erase all data?",
+  "eraseAllDataBody": "This deletes your {count, plural, =1{1 transaction} other{{count} transactions}}, budget, categories and settings from this phone and starts ctrlSpend fresh. It can't be undone.",
+  "@eraseAllDataBody": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportCsvFirst": "Export a CSV first",
+  "eraseEverything": "Erase everything",
+  "settingsFooter": "ctrlSpend {version} · by BrendanLTW",
+  "@settingsFooter": {
+    "placeholders": {
+      "version": {
+        "type": "String"
+      }
+    }
+  },
+  "nameHelper": "Shown on Home and the lock screen.",
+  "remindersSection": "Reminders",
+  "alertsSection": "Alerts and summaries",
+  "dailyReminderDetail": "A nudge to log today's spending",
+  "remindMeAt": "Remind me at",
+  "billReminders": "Bill reminders",
+  "billRemindersDetail": "Before each bill's due date",
+  "notificationsOffTitle": "Notifications are off for ctrlSpend",
+  "notificationsOffBody": "You said no when we asked. Turn them on in your phone's Settings to get these reminders.",
+  "openPhoneSettings": "Open phone settings",
+  "notificationsFootnote": "Each alert fires once per period. Notifications are created on this phone and nothing is sent to a server.",
+  "transactionsInRange": "{count, plural, =1{1 transaction in this range.} other{{count} transactions in this range.}}",
+  "@transactionsInRange": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "exportCount": "{count, plural, =1{Export 1 transaction} other{Export {count} transactions}}",
+  "@exportCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importChecking": "Checking your file",
+  "importCheckingRow": "Row {row} of {total} · {file}",
+  "@importCheckingRow": {
+    "placeholders": {
+      "row": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "file": {
+        "type": "String"
+      }
+    }
+  },
+  "importCheckingLabel": "Checking file, {percent}%",
+  "@importCheckingLabel": {
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "importCheckingNote": "Every row is checked before anything is imported. If any row has a problem, nothing changes.",
+  "importFileDetail": "{rows, plural, =1{1 row} other{{rows} rows}} · {size}",
+  "@importFileDetail": {
+    "placeholders": {
+      "rows": {
+        "type": "int"
+      },
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "fileSizeBytes": "{size} B",
+  "@fileSizeBytes": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "fileSizeKb": "{size} KB",
+  "@fileSizeKb": {
+    "placeholders": {
+      "size": {
+        "type": "int"
+      }
+    }
+  },
+  "fileSizeMb": "{size} MB",
+  "@fileSizeMb": {
+    "placeholders": {
+      "size": {
+        "type": "String"
+      }
+    }
+  },
+  "changeFile": "Change",
+  "importAllGood": "{count, plural, =1{The row looks good.} other{All {count} rows look good.}}",
+  "@importAllGood": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewDates": "Dates",
+  "reviewTypes": "Expenses · Income",
+  "reviewTypesValue": "{expenses} · {income}",
+  "@reviewTypesValue": {
+    "placeholders": {
+      "expenses": {
+        "type": "int"
+      },
+      "income": {
+        "type": "int"
+      }
+    }
+  },
+  "reviewNewCategories": "New categories",
+  "duplicatesHeader": "{count, plural, =1{1 row matches a transaction you already have} other{{count} rows match transactions you already have}}",
+  "@duplicatesHeader": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "skipDuplicates": "Skip duplicates",
+  "skipDuplicatesDetail": "Same date, amount and category",
+  "importAnyway": "Import them anyway",
+  "importNote": "Imports add to your data and can't be undone. Export a CSV first if you want a backup.",
+  "importCount": "{count, plural, =1{Import 1 transaction} other{Import {count} transactions}}",
+  "@importCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importDuplicatesSkipped": "{count, plural, =1{1 duplicate was skipped.} other{{count} duplicates were skipped.}}",
+  "@importDuplicatesSkipped": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "importCategoriesAdded": "{count, plural, =1{One new category was added: {names}.} =2{Two new categories were added: {names}.} other{{count} new categories were added: {names}.}}",
+  "@importCategoriesAdded": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "listAnd": "{rest} and {last}",
+  "@listAnd": {
+    "placeholders": {
+      "rest": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "periodsUpdated": "Periods updated",
+  "seeInActivity": "See in Activity",
+  "backToSettings": "Back to Settings",
+  "noPastPeriodsTitle": "No past periods yet",
+  "noPastPeriodsBody": "Your first period ends on {date}. After that, each period's total and how it did against your budget will show here.",
+  "@noPastPeriodsBody": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "billsOverdueSummary": "{overdue} overdue and {upcoming} upcoming.",
+  "@billsOverdueSummary": {
+    "placeholders": {
+      "overdue": {
+        "type": "int"
+      },
+      "upcoming": {
+        "type": "int"
+      }
+    }
+  },
+  "billsPausedSection": "Paused",
+  "billPausedCaption": "Paused",
+  "payBill": "Pay",
+  "payBillLabel": "Pay {name}",
+  "@payBillLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "billTitle": "Bill",
+  "billReminderRow": "Reminder",
+  "billReminderDays": "{days, plural, =0{On the day} =1{1 day before} other{{days} days before}}",
+  "@billReminderDays": {
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "pauseBill": "Pause this bill",
+  "billHistory": "History",
+  "billHistoryCaption": "Added to {category}",
+  "@billHistoryCaption": {
+    "placeholders": {
+      "category": {
+        "type": "String"
+      }
+    }
+  },
+  "billPaidOnRow": "Paid on",
+  "billAmountRow": "Amount",
+  "markPaidNote": "This adds a {amount} expense to {category} and moves the next due date to {date}.",
+  "@markPaidNote": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "repeatMonthlyOnDay": "Every month on the {day}",
+  "@repeatMonthlyOnDay": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
+  "contributionAmount": "Amount",
+  "contributionLabelHint": "Label",
+  "contributionDefaultLabel": "From salary",
+  "contributionAddButton": "Add {amount}",
+  "@contributionAddButton": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "savingNotSpending": "Money you save doesn't count as spending, so \"Left to spend\" stays the same.",
+  "withdrawUpTo": "You can withdraw up to {amount}, the amount saved so far.",
+  "@withdrawUpTo": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "goalOptions": "More options",
+  "editGoalDetail": "Name, target, date and icon",
+  "markGoalCompleted": "Mark as completed",
+  "markGoalCompletedDetail": "Moves it to completed goals",
+  "deleteGoalDetail": "{count, plural, =0{Removes the goal. Your spending isn't affected.} =1{Removes the goal and its 1 contribution. Your spending isn't affected.} other{Removes the goal and its {count} contributions. Your spending isn't affected.}}",
+  "@deleteGoalDetail": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "goalCompletedOn": "Completed {date}",
+  "@goalCompletedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "appLock": "App lock",
+  "appLockDetail": "Ask for your PIN when you open ctrlSpend",
+  "unlockWithBiometrics": "Unlock with biometrics",
+  "unlockWithBiometricsDetail": "Face ID or fingerprint, if set up on this phone",
+  "optionsSection": "Options",
+  "lockAfter": "Lock after",
+  "lockAfterChoice": "{minutes, select, 0{Immediately} 1{After 1 minute} 60{After 1 hour} other{After {minutes} minutes}}",
+  "@lockAfterChoice": {
+    "placeholders": {
+      "minutes": {
+        "type": "String"
+      }
+    }
+  },
+  "lockAfterBody": "How long ctrlSpend can stay in the background before it asks for your PIN again.",
+  "changePin": "Change PIN",
+  "hideInSwitcher": "Hide amounts in app switcher",
+  "appLockNote": "Turning app lock on asks you to create a PIN. If you forget it, you can reset it with biometrics or your phone's passcode.",
+  "pinStep": "Step {step} of 2",
+  "@pinStep": {
+    "placeholders": {
+      "step": {
+        "type": "int"
+      }
+    }
+  },
+  "pinCreateTitle": "Create a 4-digit PIN",
+  "pinCreateBody": "You'll enter it each time you open ctrlSpend. Avoid 1234 or your birthday.",
+  "pinConfirmTitle": "Enter it again",
+  "pinConfirmBody": "To make sure it matches.",
+  "pinMismatch": "Those PINs don't match. Enter your new PIN again.",
+  "pinCurrentTitle": "Enter your current PIN",
+  "pinCurrentBody": "To change app lock settings.",
+  "pinWrong": "That's not your PIN. Try again.",
+  "pinLockedOut": "Too many wrong PINs. Try again in {time}.",
+  "@pinLockedOut": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pinDotsLabel": "{count} of 4 digits entered",
+  "@pinDotsLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "biometricsReason": "Confirm to unlock ctrlSpend with biometrics",
+  "welcomeBackName": "Welcome back, {name}",
+  "@welcomeBackName": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "welcomeBack": "Welcome back",
+  "enterYourPin": "Enter your PIN",
+  "forgotPin": "Forgot PIN?",
+  "tooManyWrongPins": "Too many wrong PINs",
+  "tryAgainInOrBiometrics": "Try again in {time}, or use biometrics",
+  "@tryAgainInOrBiometrics": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "tryAgainIn": "Try again in {time}",
+  "@tryAgainIn": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "pinEntryPaused": "PIN entry paused",
+  "unlockReason": "Unlock ctrlSpend",
+  "resetPin": "Reset PIN",
+  "forgotPinTitle": "Forgot your PIN?",
+  "forgotPinBody": "Confirm it's you with biometrics or your phone's passcode, then choose a new PIN. Your data stays as it is.",
+  "forgotPinNote": "If neither is set up on this phone, the only way back in is to erase ctrlSpend's data on the next screen.",
+  "continueWithBiometrics": "Continue with biometrics",
+  "usePhonePasscode": "Use phone passcode",
+  "resetPinReason": "Confirm it's you to reset your ctrlSpend PIN",
+  "previewLockScreen": "Preview lock screen"
 }

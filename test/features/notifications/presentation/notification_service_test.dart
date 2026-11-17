@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
 import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../helpers/fake_bill_repository.dart';
 import '../../../helpers/fake_category_repository.dart';
 import '../../../helpers/fake_notification_repository.dart';
 import '../../../helpers/fake_notification_scheduler.dart';
@@ -26,6 +28,7 @@ late DateTime now;
 late FakePreferencesRepository prefs;
 late FakeCategoryRepository categories;
 late FakeTransactionRepository transactions;
+late FakeBillRepository bills;
 late FakeNotificationRepository inbox;
 late FakeNotificationScheduler scheduler;
 late ProviderContainer container;
@@ -45,6 +48,7 @@ Future<void> pumpApp(
   prefs = FakePreferencesRepository(initial);
   categories = FakeCategoryRepository();
   transactions = FakeTransactionRepository();
+  bills = FakeBillRepository(transactions: transactions);
   inbox = FakeNotificationRepository();
   scheduler = FakeNotificationScheduler();
   await seed?.call();
@@ -54,6 +58,7 @@ Future<void> pumpApp(
         preferences: prefs,
         categories: categories,
         transactions: transactions,
+        bills: bills,
         notifications: inbox,
         scheduler: scheduler,
       ),
@@ -174,6 +179,130 @@ void main() {
     });
   });
 
+  group('bill reminders', () {
+    Future<Bill> addBill({
+      String name = 'Unifi',
+      DateTime? due,
+      int? remind = 2,
+    }) => bills.add(
+      name: name,
+      amountMinor: 12900,
+      categoryId: categories.byName('Bills').id,
+      repeat: const BillRepeat(unit: RepeatUnit.month, day: 8),
+      nextDue: due ?? DateTime(2026, 11, 8),
+      remindDaysBefore: remind,
+    );
+
+    int idOf(Bill bill) => NotificationService.billIdBase + bill.id;
+
+    testWidgets('each bill with Remind me on is scheduled', (tester) async {
+      late Bill unifi;
+      late Bill gym;
+      await pumpApp(
+        tester,
+        seed: () async {
+          unifi = await addBill();
+          gym = await addBill(name: 'Gym', remind: null);
+        },
+      );
+      final reminder = scheduler.pending[idOf(unifi)]!;
+      expect(reminder.kind, 'once');
+      expect(reminder.at, DateTime(2026, 11, 6, 9));
+      expect(reminder.title, 'Unifi is due in 2 days');
+      expect(
+        reminder.body,
+        'RM 129 on 8 Nov. Mark it paid in Recurring bills.',
+      );
+      expect(scheduler.pending[idOf(gym)], isNull);
+    });
+
+    testWidgets('a reminder already past is not scheduled', (tester) async {
+      late Bill water;
+      await pumpApp(
+        tester,
+        seed: () async => water = await addBill(due: DateTime(2026, 11, 5)),
+      );
+      // 3 Nov at 9:00 has passed on 4 Nov.
+      expect(scheduler.pending[idOf(water)], isNull);
+    });
+
+    testWidgets('paying, editing and deleting reschedule or cancel', (
+      tester,
+    ) async {
+      await pumpApp(tester);
+      final unifi = await addBill();
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.at, DateTime(2026, 11, 6, 9));
+
+      await bills.markPaid(unifi.id, paidAt: now);
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.at, DateTime(2026, 12, 6, 9));
+      expect(scheduler.pending[idOf(unifi)]!.body, contains('8 Dec'));
+
+      await bills.update(bills.all.single.copyWith(remindDaysBefore: null));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+
+      await bills.update(bills.all.single.copyWith(remindDaysBefore: 2));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await bills.delete(unifi.id);
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+    });
+
+    testWidgets('paused bills and Bill reminders off schedule nothing', (
+      tester,
+    ) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await bills.update(bills.all.single.copyWith(paused: true));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+      await bills.update(bills.all.single.copyWith(paused: false));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNotNull);
+      await prefs.update((p) => p.copyWith(billRemindersOn: false));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+    });
+
+    testWidgets('a currency change rewrites the amount', (tester) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      await prefs.update((p) => p.copyWith(currencyCode: 'USD'));
+      await tester.pumpAndSettle();
+      expect(scheduler.pending[idOf(unifi)]!.body, startsWith(r'$ 129 '));
+    });
+
+    testWidgets('one that fired while closed reaches the inbox', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        initial: onboarded.copyWith(
+          dailyReminderOn: false,
+          notificationsCheckedAt: DateTime(2026, 11, 2, 20),
+        ),
+        seed: () => addBill(due: DateTime(2026, 11, 5)),
+      );
+      final row = inbox.all.single;
+      expect(row.kind, NotificationKind.billDue);
+      expect(row.title, 'Unifi is due in 2 days');
+      expect(row.createdAt, DateTime(2026, 11, 3, 9));
+      expect(row.categoryId, categories.byName('Bills').id);
+    });
+
+    testWidgets('Delete all data cancels them', (tester) async {
+      late Bill unifi;
+      await pumpApp(tester, seed: () async => unifi = await addBill());
+      await container.read(notificationServiceProvider).reset();
+      expect(scheduler.pending[idOf(unifi)], isNull);
+      expect(scheduler.pending, isEmpty);
+    });
+  });
+
   group('transactions', () {
     testWidgets('a limit crossing 80% writes the PRD copy', (tester) async {
       await pumpApp(
@@ -190,6 +319,109 @@ void main() {
       expect(alert.title, 'Food is at 82% of its limit');
       expect(alert.body, 'RM 72 left with 10 days to go.');
       expect(alert.createdAt, now);
+    });
+
+    testWidgets('an alert fires once per period, even after dropping back', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        seed: () => categories.update(
+          categories.byName('Food').copyWith(limitMinor: 40000),
+        ),
+      );
+      await spend(tester, 33000, 'Food', title: 'big');
+      expect(inbox.all, hasLength(1));
+      // Delete it: back under 80%. Then cross again.
+      final big = transactions.all.firstWhere((t) => t.title == 'big');
+      await transactions.delete(big.id);
+      await tester.pumpAndSettle();
+      await spend(tester, 33000, 'Food');
+      expect(inbox.all, hasLength(1));
+      // 100% is its own threshold.
+      await spend(tester, 8000, 'Food');
+      expect(
+        [for (final n in inbox.all) n.kind],
+        unorderedEquals([
+          NotificationKind.budgetWarning,
+          NotificationKind.overBudget,
+        ]),
+      );
+    });
+
+    testWidgets('two quick saves alert once', (tester) async {
+      await pumpApp(
+        tester,
+        seed: () => categories.update(
+          categories.byName('Food').copyWith(limitMinor: 40000),
+        ),
+      );
+      await spend(tester, 33000, 'Food', title: 'big');
+      final big = transactions.all.firstWhere((t) => t.title == 'big');
+      // No pump between: the inbox hasn't caught up.
+      await transactions.delete(big.id);
+      await transactions.restore(big);
+      await tester.pumpAndSettle();
+      expect(inbox.all, hasLength(1));
+    });
+
+    testWidgets('an alert from the last period does not stop this one', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        seed: () async {
+          await categories.update(
+            categories.byName('Food').copyWith(limitMinor: 40000),
+          );
+          await inbox.add(
+            kind: NotificationKind.budgetWarning,
+            title: 'Food is at 85% of its limit',
+            body: 'x',
+            createdAt: DateTime(2026, 10, 10),
+            categoryId: categories.byName('Food').id,
+          );
+        },
+      );
+      await spend(tester, 33000, 'Food');
+      expect(inbox.all, hasLength(2));
+    });
+
+    testWidgets('a new month start alerts for thresholds already passed', (
+      tester,
+    ) async {
+      await pumpApp(
+        tester,
+        initial: onboarded.copyWith(budgetAlertsOn: false),
+        seed: () async {
+          await categories.update(
+            categories.byName('Food').copyWith(limitMinor: 40000),
+          );
+          await transactions.add(
+            amountMinor: 33000,
+            type: TransactionType.expense,
+            categoryId: categories.byName('Food').id,
+            occurredAt: DateTime(2026, 11, 2, 12),
+            title: 'x',
+          );
+        },
+      );
+      await prefs.update(
+        (p) => p.copyWith(
+          budgetAlertsOn: true,
+          monthStartDay: const DayOfMonth(1),
+        ),
+      );
+      await tester.pumpAndSettle();
+      final alert = inbox.all.single;
+      expect(alert.kind, NotificationKind.budgetWarning);
+      expect(alert.categoryId, categories.byName('Food').id);
+      // Back to the 15th: the alert is already in that period too.
+      await prefs.update(
+        (p) => p.copyWith(monthStartDay: const DayOfMonth(15)),
+      );
+      await tester.pumpAndSettle();
+      expect(inbox.all, hasLength(1));
     });
 
     testWidgets('going over a limit writes the PRD copy', (tester) async {

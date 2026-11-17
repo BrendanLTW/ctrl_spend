@@ -16,8 +16,8 @@ typedef PeriodSummary = ({
   List<CategoryResult> categories,
 });
 
-/// Sums [period] against today's budget and limits: the app keeps no
-/// budget history, so changing them changes past results too.
+/// Sums [period] against [budgetMinor] and [categories]' limits: for a
+/// past period, the ones its snapshot saved (`withSnapshotLimits`).
 /// Categories are those that spent in the period or have a limit, largest
 /// spend first, then in display order.
 PeriodSummary periodSummary(

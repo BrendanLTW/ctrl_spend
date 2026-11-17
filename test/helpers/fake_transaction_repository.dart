@@ -80,7 +80,11 @@ class FakeTransactionRepository implements TransactionRepository {
         out.add(current());
         changes = _changes.stream.listen((_) => out.add(current()));
       },
-      onCancel: () => changes?.cancel(),
+      // Not returning the cancel future: under the widget test clock it
+      // never completes, so `.first` would never return.
+      onCancel: () {
+        unawaited(changes?.cancel());
+      },
     );
     return out.stream;
   }
@@ -91,16 +95,18 @@ class FakeTransactionRepository implements TransactionRepository {
     required TransactionType type,
     required int categoryId,
     required DateTime occurredAt,
-    required String title,
+    String? title,
     String? note,
   }) async {
+    final given = title?.trim() ?? '';
     final transaction = Transaction(
       id: _nextId++,
       amountMinor: amountMinor,
       type: type,
       categoryId: categoryId,
       occurredAt: occurredAt.toUtc(),
-      title: title,
+      // Blank: the category's name, as the real one does, when known.
+      title: given.isEmpty ? categoryName?.call(categoryId) ?? '' : given,
       note: note,
     );
     _byId[transaction.id] = transaction;

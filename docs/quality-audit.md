@@ -125,12 +125,35 @@ Debug builds have **Settings → Developer → Add 5,000 sample transactions** (
 
 Fixed: S20 and S25 rescanned every transaction for each period. `transactionsByPeriod` now groups them in one pass. The test also times each one with 1,000 transactions and fails if 5 times the data takes 12 times as long or more: linear work measures about 5 times, quadratic about 25. A ratio holds on any machine, where a fixed limit in milliseconds failed on the slower CI runner. Activity builds its rows lazily, so scrolling doesn't rebuild the list.
 
-### On a device (pending)
+### On a device (not measured)
 
-Not yet measured: no Android phone was available. To measure, on a mid-range Android phone in profile mode:
+Skipped for v1.0: no Android phone was available, and the release went ahead on the benchmarks above. The device test is ready; to measure, on a mid-range Android phone in profile mode:
 
 1. Frame timings and dashboard readiness with 5,000 transactions:
    `flutter drive --profile --driver=test_driver/integration_test.dart --target=integration_test/performance_test.dart`
    The test fails if the dashboard takes 2 s or more, or if the 90th-percentile build or raster time passes 16.7 ms while scrolling Activity, switching Insights views or opening Categories. Summaries are written to `build/integration_response_data.json`.
 2. Cold start from launch: `flutter run --profile --trace-startup`, then read `timeToFirstFrameMicros` in `build/start_up_info.json`.
+
+## v1.1 screens (task 5.9)
+
+Every screen added or changed in v1.1 and the 15 Nov 2026 spec update (tasks 5.1–5.8 and 6.11–6.23) was checked the same way as v1.0:
+
+- **Accessibility.** Each one is in `test/helpers/screens.dart`, so `test/accessibility` runs the tap-target, label and contrast guidelines on it in light and dark, plus the 200% text pass. All pass. Found and fixed along the way: the import banner link and lock screen keys needed 48 px targets, the Pay pill and banner links needed to be their own buttons for screen readers, and the lock screen's paused keys now read as disabled.
+- **Design fidelity.** Each one was rendered in light and dark and compared with its canvas artboard as it was built. Intentional differences are in [`design-notes.md`](design-notes.md).
+
+| Screens | Accessibility | Fidelity |
+|---|---|---|
+| S21 Settings, S47 Edit name, S49 Erase all data | Pass | Pass |
+| S48 Notification settings | Pass | Pass |
+| S35 Export, S50 Custom range | Pass | Pass |
+| S51 Checking, S36 Import failed, S52 Review, S53 Done | Pass | Pass (S51 progress checked in isolation) |
+| S25 Past periods, S55 Empty, S26 Period detail, S20 6 months, S40 No data | Pass | Pass |
+| S27 Bills, S58 Overdue, S59 Empty, S56 Bill detail, S57 Mark as paid, S28 New bill, S44 Repeats | Pass | Pass |
+| S29 Goals, S63 Empty, S30 Goal detail, S60 Add money, S61 Withdraw, S62 Options, S31 New goal | Pass | Pass |
+| S37 App lock, S68 Lock after, S64 Create PIN, S65 Mismatch | Pass | Pass |
+| S38 Lock screen, S66 Too many attempts, S67 Forgot PIN | Pass | Pass |
+
+### Not checked on a device
+
+These run against fakes in the tests and build for both platforms, but haven't been tried on a real phone: the Face ID and fingerprint prompts, the phone passcode prompt, Android's FLAG_SECURE for the app switcher, the notification permission check and Open phone settings, and import progress on a large file.
 

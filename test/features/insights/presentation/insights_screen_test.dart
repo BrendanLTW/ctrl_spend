@@ -3,6 +3,7 @@ import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
 import 'package:ctrl_spend/core/widgets/pill_button.dart';
+import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/category_share_card.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_screen.dart';
 import 'package:ctrl_spend/features/insights/presentation/spending_donut.dart';
@@ -78,11 +79,12 @@ Future<void> spend(
   title: title ?? category,
 );
 
-/// The design's month: RM 760 over four categories.
+/// The design's month: RM 760 over four categories, on three days so
+/// Insights has enough to chart (S40).
 Future<void> designMonth() async {
   await spend(32800, 'Food');
-  await spend(21000, 'Shopping');
-  await spend(11600, 'Transport');
+  await spend(21000, 'Shopping', at: DateTime(2026, 11, 1, 12));
+  await spend(11600, 'Transport', at: DateTime(2026, 10, 31, 12));
   await spend(6800, 'Bills');
   await spend(3800, 'Fun');
 }
@@ -121,6 +123,14 @@ void main() {
       expect(find.text('RM 328'), findsOneWidget);
     });
 
+    testWidgets('a category card opens S23', (tester) async {
+      await pumpInsights(tester, seed: designMonth);
+      await tester.scrollUntilVisible(find.text('Shopping'), 200);
+      await tester.tap(find.text('Shopping'));
+      await tester.pumpAndSettle();
+      expect(find.byType(CategoryDetailScreen), findsOneWidget);
+    });
+
     testWidgets('the ring reads every category share', (tester) async {
       final handle = tester.ensureSemantics();
       await pumpInsights(tester, seed: designMonth);
@@ -142,8 +152,9 @@ void main() {
         seed: () async {
           await spend(5000, 'Food');
           await spend(480000, 'Salary', type: TransactionType.income);
-          // 14 Oct is the previous period.
+          // 14 Oct and 20 Sep are earlier periods.
           await spend(9900, 'Shopping', at: DateTime(2026, 10, 14, 12));
+          await spend(1000, 'Transport', at: DateTime(2026, 9, 20, 12));
         },
       );
       expect([for (final c in cards(tester)) c.category.name], ['Food']);
@@ -183,6 +194,33 @@ void main() {
       expect(find.byType(CategoryShareCard), findsNothing);
     });
 
+    testWidgets('spending on two days is not enough, three is', (tester) async {
+      await pumpInsights(
+        tester,
+        seed: () async {
+          await spend(5000, 'Food');
+          await spend(5000, 'Food', at: DateTime(2026, 11, 2, 20));
+          await spend(5000, 'Food', at: DateTime(2026, 11, 1, 12));
+          // Income on other days doesn't count.
+          await spend(
+            480000,
+            'Salary',
+            type: TransactionType.income,
+            at: DateTime(2026, 10, 31, 9),
+          );
+        },
+      );
+      expect(find.text('Not enough data yet'), findsOneWidget);
+      for (final label in ['Week', '6 months']) {
+        await tester.tap(find.text(label));
+        await tester.pumpAndSettle();
+        expect(find.text('Not enough data yet'), findsOneWidget);
+      }
+      await spend(1000, 'Food', at: DateTime(2026, 10, 30, 12));
+      await tester.pumpAndSettle();
+      expect(find.text('Not enough data yet'), findsNothing);
+    });
+
     testWidgets('income alone is still no data', (tester) async {
       await pumpInsights(
         tester,
@@ -216,15 +254,15 @@ void main() {
             .backgroundColor,
         colors.ground,
       );
-      final card = tester.widget<Container>(
+      final card = tester.widget<Material>(
         find
             .descendant(
               of: find.byType(CategoryShareCard),
-              matching: find.byType(Container),
+              matching: find.byType(Material),
             )
             .first,
       );
-      expect((card.decoration! as BoxDecoration).color, colors.surface);
+      expect(card.color, colors.surface);
       expect(find.byType(SpendingDonut), findsOneWidget);
     });
   }

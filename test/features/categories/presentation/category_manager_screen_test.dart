@@ -10,6 +10,7 @@ import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
 import 'package:ctrl_spend/core/widgets/swipe_to_delete.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrl_spend/features/categories/presentation/category_detail_screen.dart';
 import 'package:ctrl_spend/features/categories/presentation/category_manager_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
@@ -142,6 +143,31 @@ void main() {
       expect(rowTitles(tester), contains('Gifts'));
     });
 
+    testWidgets('an archived row counts its transactions and opens S23', (
+      tester,
+    ) async {
+      await pumpManager(
+        tester,
+        seed: () async {
+          for (var i = 0; i < 2; i++) {
+            await transactions.add(
+              amountMinor: 1000,
+              type: TransactionType.income,
+              categoryId: categories.byName('Gifts').id,
+              occurredAt: DateTime(2026, 11, 2),
+              title: 'x',
+            );
+          }
+          await categories.archive(categories.byName('Gifts').id);
+        },
+      );
+      await tester.scrollUntilVisible(find.text('2 transactions'), 200);
+      expect(find.text('2 transactions'), findsOneWidget);
+      await tester.tap(find.text('Gifts'));
+      await tester.pumpAndSettle();
+      expect(find.byType(CategoryDetailScreen), findsOneWidget);
+    });
+
     testWidgets('an unused category is deleted', (tester) async {
       await pumpManager(tester);
       await swipeDelete(tester, 'Health');
@@ -243,7 +269,19 @@ void main() {
       expect(find.text('Optional'), findsOneWidget);
       await tester.tap(find.text('Monthly limit'));
       await tester.pumpAndSettle();
-      expect(find.text('RM 500 left to allocate'), findsOneWidget);
+      for (final key in '60000'.split('')) {
+        await tester.tap(find.widgetWithText(InkWell, key).last);
+        await tester.pump();
+      }
+      // RM 600 is over the RM 500 left: S54, naming the new category.
+      expect(
+        find.bySemanticsLabel(RegExp('Coffee can be up to RM 500')),
+        findsOneWidget,
+      );
+      for (var i = 0; i < 5; i++) {
+        await tester.tap(find.bySemanticsLabel('Backspace').last);
+        await tester.pump();
+      }
       for (final key in '20000'.split('')) {
         await tester.tap(find.widgetWithText(InkWell, key).last);
         await tester.pump();

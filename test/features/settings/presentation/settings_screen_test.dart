@@ -1,13 +1,22 @@
 import 'dart:async';
 
+import 'package:ctrl_spend/core/app/app_version.dart';
 import 'package:ctrl_spend/core/period/clock.dart';
 import 'package:ctrl_spend/core/period/period.dart';
 import 'package:ctrl_spend/core/router/app_router.dart';
 import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrl_spend/core/widgets/app_sheet.dart';
 import 'package:ctrl_spend/core/widgets/day_selector.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/core/widgets/primary_button.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
+import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
+import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
 import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
+import 'package:ctrl_spend/features/goals/presentation/savings_goals_screen.dart';
+import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
 import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/presentation/month_start_screen.dart';
@@ -85,21 +94,99 @@ void main() {
         seed: () => categories.archive(categories.byName('Gifts').id),
       );
       expect(find.text('Alex'), findsOneWidget);
-      expect(find.text('Data stored on this phone'), findsOneWidget);
+      expect(
+        find.text('Data stored on this phone · Edit name'),
+        findsOneWidget,
+      );
       expect(find.text('A'), findsOneWidget);
       expect(row(tester, 'Month starts on').value, '15th');
       expect(row(tester, 'Theme').value, 'System');
       expect(row(tester, 'Currency').value, 'RM');
+      // Daily reminder, budget alerts and bill reminders.
+      expect(row(tester, 'Notifications').value, '3 on', reason: 'defaults');
       expect(row(tester, 'Categories').value, '8', reason: 'with archived');
       expect(find.text('Export to CSV'), findsOneWidget);
       expect(find.text('Import from CSV'), findsOneWidget);
+      await tester.scrollUntilVisible(
+        find.text('ctrlSpend 1.0 · by BrendanLTW'),
+        200,
+      );
+      expect(find.text('DATA'), findsOneWidget);
+      expect(find.text('ctrlSpend 1.0 · by BrendanLTW'), findsOneWidget);
     });
 
-    testWidgets('v1.1 rows are hidden', (tester) async {
+    testWidgets('Notifications opens S48 and counts what is on', (
+      tester,
+    ) async {
       await pumpAt(tester, Routes.settings);
-      expect(find.text('App lock'), findsNothing);
-      expect(find.text('Recurring bills'), findsNothing);
-      expect(find.text('Savings goals'), findsNothing);
+      await tester.tap(find.text('Notifications'));
+      await tester.pumpAndSettle();
+      expect(find.byType(NotificationSettingsScreen), findsOneWidget);
+      await tester.tap(find.text('Weekly summary'));
+      await tester.pumpAndSettle();
+      expect((await prefs.read()).weeklySummaryOn, isTrue);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      expect(row(tester, 'Notifications').value, '4 on');
+    });
+
+    test('the footer shows major and minor', () {
+      expect(shortVersion('1.0.0'), '1.0');
+      expect(shortVersion('1.12.3'), '1.12');
+    });
+
+    testWidgets('v1.1 rows: app lock, and bills and goals with counts', (
+      tester,
+    ) async {
+      await pumpAt(tester, Routes.settings);
+      expect(row(tester, 'App lock').value, 'Off');
+      expect(row(tester, 'Recurring bills').value, '0');
+      expect(row(tester, 'Savings goals').value, '0');
+      final bills = container.read(billRepositoryProvider);
+      for (final name in ['Unifi', 'Netflix']) {
+        await bills.add(
+          name: name,
+          amountMinor: 5500,
+          categoryId: categories.byName('Bills').id,
+          repeat: const BillRepeat(unit: RepeatUnit.month, day: 12),
+          nextDue: DateTime(2026, 11, 12),
+        );
+      }
+      final goals = container.read(goalRepositoryProvider);
+      for (final name in ['Bali trip', 'Raya clothes']) {
+        await goals.add(
+          name: name,
+          iconKey: CategoryIconKey.travel,
+          targetMinor: 80000,
+          targetMonth: DateTime(2027, 3),
+          createdAt: DateTime(2026, 10),
+        );
+      }
+      // Reaching the target completes Raya clothes: only active ones count.
+      final raya = (await goals.watch().first).firstWhere(
+        (g) => g.name == 'Raya clothes',
+      );
+      await goals.addMoney(
+        raya.id,
+        amountMinor: 80000,
+        label: 'Savings',
+        date: DateTime(2026, 11, 2),
+      );
+      await tester.pumpAndSettle();
+      expect(row(tester, 'Recurring bills').value, '2');
+      expect(row(tester, 'Savings goals').value, '1');
+      await tester.ensureVisible(find.text('Recurring bills'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Recurring bills'));
+      await tester.pumpAndSettle();
+      expect(find.byType(RecurringBillsScreen), findsOneWidget);
+      await tester.pageBack();
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Savings goals'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Savings goals'));
+      await tester.pumpAndSettle();
+      expect(find.byType(SavingsGoalsScreen), findsOneWidget);
     });
 
     testWidgets('every row can be tapped', (tester) async {
@@ -129,6 +216,10 @@ void main() {
       await tester.tap(find.text('Alex'));
       await tester.pumpAndSettle();
       expect(find.text('Your name'), findsOneWidget);
+      expect(find.text('Shown on Home and the lock screen.'), findsOneWidget);
+      expect(find.text('4/30'), findsOneWidget);
+      final sheet = tester.getRect(find.byType(AppSheet));
+      expect((sheet.left, sheet.right), (8, 390 - 8), reason: 'floating');
       await tester.enterText(find.byType(TextField), '  Alexandra  ');
       await tester.pump();
       await tapSave(tester);

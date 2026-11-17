@@ -21,7 +21,7 @@ Future<void> pumpScreen(WidgetTester tester, ThemeData theme, Widget screen) =>
 void main() {
   group('PrimaryButton', () {
     for (final t in themes) {
-      testWidgets('ink when enabled, raised when disabled in ${t.name}', (
+      testWidgets('ink when enabled, buttonDisabled when off in ${t.name}', (
         tester,
       ) async {
         var taps = 0;
@@ -48,10 +48,10 @@ void main() {
           t.theme,
           const PrimaryButton(label: 'Continue', onPressed: null),
         );
-        expect(fill().color, t.colors.raised);
+        expect(fill().color, t.colors.buttonDisabled);
         expect(
           tester.widget<Text>(find.text('Continue')).style!.color,
-          t.colors.disabled,
+          t.colors.onButtonDisabled,
         );
       });
     }

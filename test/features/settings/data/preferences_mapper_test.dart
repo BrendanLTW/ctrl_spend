@@ -26,7 +26,6 @@ void main() {
   test('every setting survives a round trip', () {
     const prefs = Preferences(
       userName: 'Alex',
-      currencyCode: 'SGD',
       monthStartDay: DayOfMonth(15),
       monthlyBudgetMinor: 200000,
       theme: AppTheme.dark,
@@ -34,9 +33,33 @@ void main() {
       dailyReminderMinutes: 20 * 60 + 30,
       budgetAlertsOn: false,
       weeklySummaryOn: true,
+      billRemindersOn: false,
       onboardingComplete: true,
+      appLockOn: true,
+      biometricsOn: true,
+      lockAfterMinutes: 15,
+      hideInSwitcher: true,
+      failedPinCount: 7,
     );
     expect(preferencesFromValues(stored(prefs)), prefs);
+  });
+
+  test('a currency that is not offered reads as MYR', () {
+    for (final code in ['SGD', 'USD', 'XYZ', '']) {
+      expect(
+        preferencesFromValues({'currencyCode': code}).currencyCode,
+        'MYR',
+        reason: code,
+      );
+    }
+  });
+
+  test('a lockout ends at a UTC instant', () {
+    final until = DateTime(2026, 11, 4, 9, 30, 30);
+    final prefs = preferencesFromValues(
+      stored(Preferences(lockoutUntil: until)),
+    );
+    expect(prefs.lockoutUntil, until.toUtc());
   });
 
   test('the last notification check is stored as a UTC instant', () {
@@ -78,6 +101,9 @@ void main() {
       'dailyReminderOn': 'yes',
       'dailyReminderMinutes': '1440',
       'onboardingComplete': '',
+      'lockAfterMinutes': '2',
+      'failedPinCount': '-1',
+      'lockoutUntil': 'soon',
     });
     expect(prefs, const Preferences());
   });

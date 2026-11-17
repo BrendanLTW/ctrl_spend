@@ -12,6 +12,7 @@ import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/budgets/presentation/category_budget_row.dart';
+import 'package:ctrl_spend/features/budgets/presentation/limit_bounds.dart';
 import 'package:ctrl_spend/features/budgets/presentation/monthly_budget_card.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
@@ -93,6 +94,14 @@ class BudgetsScreen extends ConsumerWidget {
     }
 
     Future<void> editLimit(Category category) async {
+      final bounds = limitBounds(
+        l10n,
+        categoryId: category.id,
+        categoryName: category.name,
+        categories: expense,
+        budgetMinor: budget,
+        currency: currency,
+      );
       final result = await showAmountSheet(
         context,
         title: l10n.categoryBudget(category.name),
@@ -103,11 +112,8 @@ class BudgetsScreen extends ConsumerWidget {
         currency: currency,
         initialMinor: category.limitMinor ?? 0,
         removable: category.limitMinor != null,
-        maxMinor: maxLimitFor(
-          category.id,
-          categories: expense,
-          budgetMinor: budget,
-        ),
+        maxMinor: bounds.maxMinor,
+        overMessage: bounds.overMessage,
       );
       if (result == null) return;
       // Removing a limit keeps the category and its transactions.

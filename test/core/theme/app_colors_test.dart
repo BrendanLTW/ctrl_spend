@@ -6,9 +6,24 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('AppColors', () {
-    test('light and dark define all 20 tokens', () {
-      expect(AppColors.light.tokens, hasLength(20));
+    test('light and dark define all 33 tokens', () {
+      expect(AppColors.light.tokens, hasLength(33));
       expect(AppColors.dark.tokens.keys, AppColors.light.tokens.keys);
+    });
+
+    test('the 15 Nov tokens match DESIGN §3.2–3.3', () {
+      expect(AppColors.light.buttonDisabled, const Color(0xFFD0D5DD));
+      expect(AppColors.dark.onButtonDisabled, const Color(0xFF667085));
+      // rgba(16,24,40,.42) and rgba(0,0,0,.6).
+      expect(AppColors.light.scrim, const Color(0x6B101828));
+      expect(AppColors.dark.scrim, const Color(0x99000000));
+      expect(
+        (AppColors.light.errorBox, AppColors.light.onErrorBox),
+        (const Color(0xFFFEE4E2), const Color(0xFFB42318)),
+      );
+      // red at 16%.
+      expect(AppColors.dark.errorBox, const Color(0x29F04438));
+      expect(AppColors.dark.infoBox, const Color(0xFF1C2536));
     });
 
     test('lerp returns each end at 0 and 1', () {

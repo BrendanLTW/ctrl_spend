@@ -1,4 +1,5 @@
 import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrl_spend/features/bills/domain/bill.dart';
 import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
 import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
@@ -9,6 +10,7 @@ import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
 const int weeklySummaryWeekday = DateTime.sunday;
 const int weeklySummaryMinutes = 19 * 60;
 const int periodStartedMinutes = 9 * 60;
+const int billReminderMinutes = 9 * 60;
 
 /// Something worth a notification (PRD §5.4), before it's put into words.
 /// [at] is when it happened, which becomes the inbox row's time.
@@ -120,17 +122,101 @@ final class PeriodStarted extends NotificationEvent {
   NotificationKind get kind => NotificationKind.periodStarted;
 }
 
+/// A bill due in [daysBefore] days (0 today), from its Remind me (S28).
+final class BillReminder extends NotificationEvent {
+  const new({
+    required this.name,
+    required this.amountMinor,
+    required this.due,
+    required this.daysBefore,
+    required this.categoryId,
+    required DateTime at,
+  }) : super(at);
+
+  /// [bill]'s reminder for its next due date, at [at].
+  new forBill(Bill bill, DateTime at)
+    : this(
+        name: bill.name,
+        amountMinor: bill.amountMinor,
+        due: bill.nextDue,
+        daysBefore: bill.remindDaysBefore ?? 0,
+        categoryId: bill.categoryId,
+        at: at,
+      );
+
+  final String name;
+  final int amountMinor;
+  final DateTime due;
+  final int daysBefore;
+  @override
+  final int categoryId;
+
+  @override
+  NotificationKind get kind => NotificationKind.billDue;
+}
+
+/// When [bill]'s reminder fires: at 9:00 local, its Remind me days before
+/// its next due date. Null when Remind me is off or the bill is paused.
+DateTime? billReminderAt(Bill bill) => switch (bill.remindDaysBefore) {
+  _ when bill.paused => null,
+  null => null,
+  final days => _at(_addDays(bill.nextDue, -days), billReminderMinutes),
+};
+
+/// A budget alert's kind and category (null for the monthly budget). One
+/// of each is sent per period at most (PRD §5.4).
+typedef AlertKey = (NotificationKind kind, int? categoryId);
+
+/// The budget alerts already in [inbox] for [period], by when they were
+/// written.
+Set<AlertKey> alertsSentIn(Iterable<AppNotification> inbox, Period period) => {
+  for (final n in inbox)
+    if ((n.kind == NotificationKind.budgetWarning ||
+            n.kind == NotificationKind.overBudget) &&
+        period.contains(n.createdAt))
+      (n.kind, n.categoryId),
+};
+
 /// What a change to the transactions, from [before] to [after], is worth
 /// telling: a limit or the budget crossing 80% or 100% this period (when
 /// budget alerts are on), and each new income transaction. Only an upward
-/// crossing counts, so later edits above a threshold stay quiet. Jumping
-/// straight past 100% gives only the over-budget alert.
+/// crossing counts, and an alert in [alreadySent] isn't sent again this
+/// period, even if spending dropped below and crossed again (PRD §5.4).
+/// Jumping straight past 100% gives only the over-budget alert.
 List<NotificationEvent> transactionEvents({
   required Iterable<Transaction> before,
   required Iterable<Transaction> after,
   required Iterable<Category> categories,
   required Preferences prefs,
   required DateTime now,
+  Set<AlertKey> alreadySent = const {},
+}) => [
+  ...budgetAlerts(
+    before: before,
+    after: after,
+    categories: categories,
+    prefs: prefs,
+    now: now,
+    alreadySent: alreadySent,
+  ),
+  ...incomeEvents(
+    before: before,
+    after: after,
+    categories: categories,
+    now: now,
+  ),
+];
+
+/// The budget alerts in [transactionEvents]. With an empty [before], every
+/// threshold already passed this period alerts: used when the month start
+/// changes and the period with it (PRD §5.8).
+List<NotificationEvent> budgetAlerts({
+  required Iterable<Transaction> before,
+  required Iterable<Transaction> after,
+  required Iterable<Category> categories,
+  required Preferences prefs,
+  required DateTime now,
+  Set<AlertKey> alreadySent = const {},
 }) {
   final period = periodFor(now, prefs.monthStartDay);
   final days = daysLeft(period, now);
@@ -189,7 +275,20 @@ List<NotificationEvent> transactionEvents({
       if (event != null) events.add(event);
     }
   }
+  return [
+    for (final e in events)
+      if (!alreadySent.contains((e.kind, e.categoryId))) e,
+  ];
+}
 
+/// Each income transaction in [after] that wasn't in [before].
+List<NotificationEvent> incomeEvents({
+  required Iterable<Transaction> before,
+  required Iterable<Transaction> after,
+  required Iterable<Category> categories,
+  required DateTime now,
+}) {
+  final events = <NotificationEvent>[];
   final known = {for (final t in before) t.id};
   final names = {for (final c in categories) c.id: c.name};
   for (final t in after) {
@@ -208,12 +307,14 @@ List<NotificationEvent> transactionEvents({
 
 /// The scheduled notifications that fired after [from] and up to [to],
 /// for the inbox: the latest daily reminder, weekly summary and period
-/// start in that span, at most one of each, oldest first. Times are local.
+/// start in that span, at most one of each, and each of [bills]'
+/// reminders, oldest first. Times are local.
 List<NotificationEvent> scheduledEvents({
   required DateTime from,
   required DateTime to,
   required Preferences prefs,
   required Iterable<Transaction> transactions,
+  Iterable<Bill> bills = const [],
 }) {
   final events = <NotificationEvent>[];
   bool fired(DateTime at) => at.isAfter(from) && !at.isAfter(to);
@@ -263,6 +364,12 @@ List<NotificationEvent> scheduledEvents({
         at: started,
       ),
     );
+  }
+
+  for (final bill in prefs.billRemindersOn ? bills : const <Bill>[]) {
+    if (billReminderAt(bill) case final at? when fired(at)) {
+      events.add(BillReminder.forBill(bill, at));
+    }
   }
 
   return events..sort((a, b) => a.at.compareTo(b.at));

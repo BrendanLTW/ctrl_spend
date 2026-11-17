@@ -16,7 +16,8 @@ T _$identity<T>(T value) => value;
 mixin _$Transaction {
 
  int get id; int get amountMinor; TransactionType get type; int get categoryId;/// In UTC; shown in local time.
- DateTime get occurredAt; String get title; String? get note;
+ DateTime get occurredAt; String get title; String? get note;/// The bill this pays, if it came from "Mark paid" (v1.1).
+ int? get billId;
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,20 +29,20 @@ $TransactionCopyWith<Transaction> get copyWith => _$TransactionCopyWithImpl<Tran
 @override
 bool operator ==(Object other) {
   final _this = this as Transaction;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Transaction&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.amountMinor, _this.amountMinor) || other.amountMinor == _this.amountMinor)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.occurredAt, _this.occurredAt) || other.occurredAt == _this.occurredAt)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.note, _this.note) || other.note == _this.note));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Transaction&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.amountMinor, _this.amountMinor) || other.amountMinor == _this.amountMinor)&&(identical(other.type, _this.type) || other.type == _this.type)&&(identical(other.categoryId, _this.categoryId) || other.categoryId == _this.categoryId)&&(identical(other.occurredAt, _this.occurredAt) || other.occurredAt == _this.occurredAt)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.note, _this.note) || other.note == _this.note)&&(identical(other.billId, _this.billId) || other.billId == _this.billId));
 }
 
 
 @override
 int get hashCode {
   final _this = this as Transaction;
-  return Object.hash(runtimeType,_this.id,_this.amountMinor,_this.type,_this.categoryId,_this.occurredAt,_this.title,_this.note);
+  return Object.hash(runtimeType,_this.id,_this.amountMinor,_this.type,_this.categoryId,_this.occurredAt,_this.title,_this.note,_this.billId);
 }
 
 @override
 String toString() {
   final _this = this as Transaction;
-  return 'Transaction(id: ${_this.id}, amountMinor: ${_this.amountMinor}, type: ${_this.type}, categoryId: ${_this.categoryId}, occurredAt: ${_this.occurredAt}, title: ${_this.title}, note: ${_this.note})';
+  return 'Transaction(id: ${_this.id}, amountMinor: ${_this.amountMinor}, type: ${_this.type}, categoryId: ${_this.categoryId}, occurredAt: ${_this.occurredAt}, title: ${_this.title}, note: ${_this.note}, billId: ${_this.billId})';
 }
 
 
@@ -52,7 +53,7 @@ abstract mixin class $TransactionCopyWith<$Res>  {
   factory $TransactionCopyWith(Transaction value, $Res Function(Transaction) _then) = _$TransactionCopyWithImpl;
 @useResult
 $Res call({
- int id, int amountMinor, TransactionType type, int categoryId, DateTime occurredAt, String title, String? note
+ int id, int amountMinor, TransactionType type, int categoryId, DateTime occurredAt, String title, String? note, int? billId
 });
 
 
@@ -69,7 +70,7 @@ class _$TransactionCopyWithImpl<$Res>
 
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? amountMinor = null,Object? type = null,Object? categoryId = null,Object? occurredAt = null,Object? title = null,Object? note = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? amountMinor = null,Object? type = null,Object? categoryId = null,Object? occurredAt = null,Object? title = null,Object? note = freezed,Object? billId = freezed,}) {
   return _then(Transaction(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,amountMinor: null == amountMinor ? _self.amountMinor : amountMinor // ignore: cast_nullable_to_non_nullable
@@ -78,7 +79,8 @@ as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryI
 as int,occurredAt: null == occurredAt ? _self.occurredAt : occurredAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,billId: freezed == billId ? _self.billId : billId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
@@ -163,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note,  int? billId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
-return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note);case _:
+return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note,_that.billId);case _:
   return orElse();
 
 }
@@ -184,10 +186,10 @@ return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occ
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note,  int? billId)  $default,) {final _that = this;
 switch (_that) {
 case _Transaction():
-return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note);case _:
+return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note,_that.billId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +206,10 @@ return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occ
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int id,  int amountMinor,  TransactionType type,  int categoryId,  DateTime occurredAt,  String title,  String? note,  int? billId)?  $default,) {final _that = this;
 switch (_that) {
 case _Transaction() when $default != null:
-return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note);case _:
+return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occurredAt,_that.title,_that.note,_that.billId);case _:
   return null;
 
 }
@@ -219,7 +221,7 @@ return $default(_that.id,_that.amountMinor,_that.type,_that.categoryId,_that.occ
 
 
 class _Transaction implements Transaction {
-  const _Transaction({required this.id, required this.amountMinor, required this.type, required this.categoryId, required this.occurredAt, required this.title, this.note});
+  const _Transaction({required this.id, required this.amountMinor, required this.type, required this.categoryId, required this.occurredAt, required this.title, this.note, this.billId});
   
 
 @override final  int id;
@@ -230,6 +232,8 @@ class _Transaction implements Transaction {
 @override final  DateTime occurredAt;
 @override final  String title;
 @override final  String? note;
+/// The bill this pays, if it came from "Mark paid" (v1.1).
+@override final  int? billId;
 
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
@@ -241,18 +245,18 @@ _$TransactionCopyWith<_Transaction> get copyWith => __$TransactionCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Transaction&&(identical(other.id, id) || other.id == id)&&(identical(other.amountMinor, amountMinor) || other.amountMinor == amountMinor)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.occurredAt, occurredAt) || other.occurredAt == occurredAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.note, note) || other.note == note));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Transaction&&(identical(other.id, id) || other.id == id)&&(identical(other.amountMinor, amountMinor) || other.amountMinor == amountMinor)&&(identical(other.type, type) || other.type == type)&&(identical(other.categoryId, categoryId) || other.categoryId == categoryId)&&(identical(other.occurredAt, occurredAt) || other.occurredAt == occurredAt)&&(identical(other.title, title) || other.title == title)&&(identical(other.note, note) || other.note == note)&&(identical(other.billId, billId) || other.billId == billId));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,amountMinor,type,categoryId,occurredAt,title,note);
+    return Object.hash(runtimeType,id,amountMinor,type,categoryId,occurredAt,title,note,billId);
 }
 
 @override
 String toString() {
-    return 'Transaction(id: $id, amountMinor: $amountMinor, type: $type, categoryId: $categoryId, occurredAt: $occurredAt, title: $title, note: $note)';
+    return 'Transaction(id: $id, amountMinor: $amountMinor, type: $type, categoryId: $categoryId, occurredAt: $occurredAt, title: $title, note: $note, billId: $billId)';
 }
 
 
@@ -263,7 +267,7 @@ abstract mixin class _$TransactionCopyWith<$Res> implements $TransactionCopyWith
   factory _$TransactionCopyWith(_Transaction value, $Res Function(_Transaction) _then) = __$TransactionCopyWithImpl;
 @override @useResult
 $Res call({
- int id, int amountMinor, TransactionType type, int categoryId, DateTime occurredAt, String title, String? note
+ int id, int amountMinor, TransactionType type, int categoryId, DateTime occurredAt, String title, String? note, int? billId
 });
 
 
@@ -280,7 +284,7 @@ class __$TransactionCopyWithImpl<$Res>
 
 /// Create a copy of Transaction
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? amountMinor = null,Object? type = null,Object? categoryId = null,Object? occurredAt = null,Object? title = null,Object? note = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? amountMinor = null,Object? type = null,Object? categoryId = null,Object? occurredAt = null,Object? title = null,Object? note = freezed,Object? billId = freezed,}) {
   return _then(_Transaction(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as int,amountMinor: null == amountMinor ? _self.amountMinor : amountMinor // ignore: cast_nullable_to_non_nullable
@@ -289,7 +293,8 @@ as TransactionType,categoryId: null == categoryId ? _self.categoryId : categoryI
 as int,occurredAt: null == occurredAt ? _self.occurredAt : occurredAt // ignore: cast_nullable_to_non_nullable
 as DateTime,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
 as String,note: freezed == note ? _self.note : note // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,billId: freezed == billId ? _self.billId : billId // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 

@@ -7,17 +7,50 @@ import 'package:ctrl_spend/core/widgets/category_picker_tile.dart';
 import 'package:ctrl_spend/core/widgets/category_tile.dart';
 import 'package:ctrl_spend/core/widgets/list_group.dart';
 import 'package:ctrl_spend/features/categories/domain/category.dart';
+import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrl_spend/features/transactions/presentation/category_picker_sheet.dart';
 import 'package:ctrl_spend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
+/// Every choice in a sheet, the selected one ticked (S12's More, S28).
+/// Resolves to the tapped category, or null if dismissed.
+Future<Category?> showCategorySheet(
+  BuildContext context, {
+  required List<Category> choices,
+  Category? selected,
+}) => showAppSheet<Category>(
+  context,
+  title: context.l10n.categorySheetTitle,
+  builder: (sheet) => ConstrainedBox(
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.sizeOf(sheet).height * 0.6,
+    ),
+    child: SingleChildScrollView(
+      child: ListGroup(
+        children: [
+          for (final c in choices)
+            ListGroupRow(
+              leading: CategoryTile.forKey(c.iconKey, color: c.colorKey),
+              title: c.name,
+              selected: c.id == selected?.id,
+              onTap: () => Navigator.of(sheet).pop(c),
+            ),
+        ],
+      ),
+    ),
+  ),
+);
+
 /// S12's "Select category": up to [quickCount] tiles in rows of four and
-/// More, which lists every choice in a sheet. The selected category is
-/// always among the tiles, even if it's further down the list.
+/// More, which opens S46 Choose category (search, limits, New category).
+/// The selected category is always among the tiles, even if it's further
+/// down the list.
 class CategoryChoice extends StatelessWidget {
   const new({
     required this.choices,
     required this.selected,
     required this.onSelected,
+    required this.type,
     super.key,
   });
 
@@ -30,6 +63,9 @@ class CategoryChoice extends StatelessWidget {
   final Category? selected;
   final ValueChanged<Category> onSelected;
 
+  /// Expense or income: what S46 lists.
+  final TransactionType type;
+
   List<Category> get _quick {
     final quick = choices.take(quickCount).toList();
     final chosen = selected;
@@ -41,27 +77,10 @@ class CategoryChoice extends StatelessWidget {
   }
 
   Future<void> _openMore(BuildContext context) async {
-    final picked = await showAppSheet<Category>(
+    final picked = await showCategoryPickerSheet(
       context,
-      title: context.l10n.categorySheetTitle,
-      builder: (sheet) => ConstrainedBox(
-        constraints: BoxConstraints(
-          maxHeight: MediaQuery.sizeOf(sheet).height * 0.6,
-        ),
-        child: SingleChildScrollView(
-          child: ListGroup(
-            children: [
-              for (final c in choices)
-                ListGroupRow(
-                  leading: CategoryTile.forKey(c.iconKey, color: c.colorKey),
-                  title: c.name,
-                  selected: c.id == selected?.id,
-                  onTap: () => Navigator.of(sheet).pop(c),
-                ),
-            ],
-          ),
-        ),
-      ),
+      type: type,
+      selectedId: selected?.id,
     );
     if (picked != null) onSelected(picked);
   }

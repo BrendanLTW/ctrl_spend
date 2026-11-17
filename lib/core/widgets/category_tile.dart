@@ -19,6 +19,10 @@ AppIcon categoryIcon(CategoryIconKey key) => switch (key) {
   CategoryIconKey.home => AppIcon.home,
   CategoryIconKey.phone => AppIcon.phone,
   CategoryIconKey.wallet => AppIcon.wallet,
+  CategoryIconKey.wifi => AppIcon.wifi,
+  CategoryIconKey.tv => AppIcon.monitor,
+  CategoryIconKey.music => AppIcon.music,
+  CategoryIconKey.laptop => AppIcon.laptop,
 };
 
 enum CategoryTileSize {

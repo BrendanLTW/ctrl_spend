@@ -14,6 +14,7 @@ import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
 import 'package:ctrl_spend/features/insights/presentation/insight_bar_chart.dart';
 import 'package:ctrl_spend/features/insights/presentation/insight_chart_card.dart';
 import 'package:ctrl_spend/features/insights/presentation/insights_empty.dart';
+import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences.dart';
 import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
 import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
@@ -45,6 +46,7 @@ class InsightsTrendView extends ConsumerWidget {
       ref.watch(transactionsProvider()).value ?? const [],
       today: ref.watch(clockProvider)(),
       startDay: prefs.monthStartDay,
+      snapshots: ref.watch(periodSnapshotsProvider).value ?? const [],
       budgetMinor: budget,
     );
     if (trend.periods.every((p) => p.spentMinor == 0)) {

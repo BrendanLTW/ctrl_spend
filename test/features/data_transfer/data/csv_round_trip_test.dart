@@ -156,7 +156,7 @@ void main() {
     );
 
     final target = open();
-    final parsed = parseTransactionsCsv(exported);
+    final parsed = parseTransactionsCsv(exported, now: DateTime(2100));
     expect(parsed.problems, isEmpty);
     await target.transactions.importAll(parsed.rows);
 
