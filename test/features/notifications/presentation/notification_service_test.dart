@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/all_set_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/main.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/features/notifications/presentation/notification_service.dart';
+import 'package:ctrlspend/features/onboarding/presentation/all_set_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

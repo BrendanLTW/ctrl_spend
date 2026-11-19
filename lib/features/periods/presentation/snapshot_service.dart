@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/category_repository.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot_repository.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
 import 'package:flutter/widgets.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 

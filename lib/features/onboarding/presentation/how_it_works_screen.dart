@@ -1,12 +1,12 @@
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_spacing.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/category_tile.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
-import 'package:ctrl_spend/core/widgets/section_label.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_spacing.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/category_tile.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/core/widgets/onboarding_scaffold.dart';
+import 'package:ctrlspend/core/widgets/section_label.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

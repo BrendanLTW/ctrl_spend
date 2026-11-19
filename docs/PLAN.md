@@ -11,7 +11,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Before you start (you, not Claude Code)
 
-- [ ] Create the GitHub repo `ctrl_spend` and add `CLAUDE.md`, `.claude/commands/`, `docs/PRD.md`, `docs/DESIGN.md` and this file.
+- [ ] Create the GitHub repo `ctrlspend` and add `CLAUDE.md`, `.claude/commands/`, `docs/PRD.md`, `docs/DESIGN.md` and this file.
 - [ ] Export every canvas artboard to `docs/design/` as PNG, named after its file (`Dashboard.png`, `Dashboard · Dark.png`, …).
 - [ ] Add the name step (`OnbName` + `OnbNameDark`) to the canvas and export it.
 - [ ] Update the canvas: Add income shows Salary and Gifts; onboarding steps read "of 5"; the brand board's splash footer reads "by BrendanLTW".
@@ -20,7 +20,7 @@ Work top to bottom. Each task is sized for one Claude Code session and follows t
 
 ## Phase 0 — Foundation
 
-- [x] **0.1 Project setup.** Create the Flutter project `ctrl_spend` (android, ios). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
+- [x] **0.1 Project setup.** Create the Flutter project `ctrlspend` (android, ios). Add the v1.0 packages from `CLAUDE.md` (not the v1.1 ones), set up very_good_analysis, and make `flutter analyze` and `flutter test` pass on the template.
   Refs: CLAUDE.md Stack
 - [x] **0.2 Folder structure and routing.** Create the `core/` and `features/` folders from `CLAUDE.md`. Set up go_router with a `StatefulShellRoute` for Home, Activity, Budgets and Insights (placeholder screens), plus routes for Add transaction, Settings and Onboarding. Add an onboarding redirect driven by a placeholder provider.
   Refs: PRD §4, DESIGN §6

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
-import 'package:ctrl_spend/features/notifications/domain/notification_repository.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/features/notifications/domain/notification_repository.dart';
 
 /// In-memory inbox for widget tests.
 class FakeNotificationRepository implements NotificationRepository {

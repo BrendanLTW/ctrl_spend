@@ -22,7 +22,7 @@ This is the single reference for how ctrlSpend looks. Values come from the "Ctrl
 
 | Item | Rule |
 |---|---|
-| Name | **ctrlSpend** — lowercase "ctrl", capital "S". Package `ctrl_spend`. |
+| Name | **ctrlSpend** — lowercase "ctrl", capital "S". Package `ctrlspend`. |
 | Wordmark | "ctrl" in Poppins 400, grey `#5D6169` (on dark `#8A8F99`), then "Spend" in Poppins 700, `#15171C` (on dark `#FFFFFF`). Letter-spacing −2%. |
 | Symbol | A green budget ring on a charcoal keycap: `assets/brand/ctrlspend_mark.svg` in the app, `ctrlspend_app_icon.svg` (full-bleed, square corners) for the app icon |
 | Brand green | `#22C55E`, only in the logo, the app icon and the splash loader. Never elsewhere in the UI. |

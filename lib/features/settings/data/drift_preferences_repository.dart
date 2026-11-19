@@ -1,9 +1,9 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/data/category_mapper.dart';
-import 'package:ctrl_spend/features/settings/data/preferences_mapper.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/data/category_mapper.dart';
+import 'package:ctrlspend/features/settings/data/preferences_mapper.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 
 class DriftPreferencesRepository implements PreferencesRepository {
   new(this._db);

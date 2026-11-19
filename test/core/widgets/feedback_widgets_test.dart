@@ -1,11 +1,11 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_sheet.dart';
-import 'package:ctrl_spend/core/widgets/app_toast.dart';
-import 'package:ctrl_spend/core/widgets/empty_state.dart';
-import 'package:ctrl_spend/core/widgets/pill_button.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_dialog.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_sheet.dart';
+import 'package:ctrlspend/core/widgets/app_toast.dart';
+import 'package:ctrlspend/core/widgets/empty_state.dart';
+import 'package:ctrlspend/core/widgets/pill_button.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

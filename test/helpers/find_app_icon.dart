@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// Finds [AppIconView]s drawing [icon], as `find.byIcon` does for `Icon`.

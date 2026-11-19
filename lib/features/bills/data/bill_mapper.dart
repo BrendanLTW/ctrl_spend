@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/db/stored_dates.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/stored_dates.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
 import 'package:drift/drift.dart';
 
 extension BillRowMapper on BillRow {

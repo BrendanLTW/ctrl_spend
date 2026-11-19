@@ -1,15 +1,15 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/widgets/action_sheet.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_spinner.dart';
-import 'package:ctrl_spend/core/widgets/app_text_input.dart';
-import 'package:ctrl_spend/core/widgets/message_box.dart';
-import 'package:ctrl_spend/core/widgets/pay_pill.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/state_view.dart';
-import 'package:ctrl_spend/core/widgets/status_pill.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/widgets/action_sheet.dart';
+import 'package:ctrlspend/core/widgets/app_dialog.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_spinner.dart';
+import 'package:ctrlspend/core/widgets/app_text_input.dart';
+import 'package:ctrlspend/core/widgets/message_box.dart';
+import 'package:ctrlspend/core/widgets/pay_pill.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/state_view.dart';
+import 'package:ctrlspend/core/widgets/status_pill.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

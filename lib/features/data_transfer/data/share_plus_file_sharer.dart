@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
+import 'package:ctrlspend/features/data_transfer/domain/file_sharer.dart';
 import 'package:share_plus/share_plus.dart';
 
 /// [FileSharer] on share_plus, which writes the bytes to a temporary file

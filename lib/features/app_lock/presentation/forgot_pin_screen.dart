@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_spacing.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/message_box.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/state_view.dart';
-import 'package:ctrl_spend/core/widgets/text_link.dart';
-import 'package:ctrl_spend/features/app_lock/domain/device_auth.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/pin_attempts.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/pin_flow_screen.dart';
-import 'package:ctrl_spend/features/data_transfer/presentation/delete_all_data.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_spacing.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/message_box.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/state_view.dart';
+import 'package:ctrlspend/core/widgets/text_link.dart';
+import 'package:ctrlspend/features/app_lock/domain/device_auth.dart';
+import 'package:ctrlspend/features/app_lock/presentation/pin_attempts.dart';
+import 'package:ctrlspend/features/app_lock/presentation/pin_flow_screen.dart';
+import 'package:ctrlspend/features/data_transfer/presentation/delete_all_data.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

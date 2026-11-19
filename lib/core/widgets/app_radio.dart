@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// A 24 px radio (DESIGN §7): 2 px `control` ring off, 7 px `ink` ring on.

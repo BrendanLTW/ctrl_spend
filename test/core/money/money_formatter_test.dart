@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

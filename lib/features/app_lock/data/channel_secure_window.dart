@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ctrl_spend/features/app_lock/domain/secure_window.dart';
+import 'package:ctrlspend/features/app_lock/domain/secure_window.dart';
 import 'package:flutter/services.dart';
 
 /// [SecureWindow] through `MainActivity`'s channel. A no-op off Android.

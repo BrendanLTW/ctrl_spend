@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
 import 'package:drift_dev/api/migrations_native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

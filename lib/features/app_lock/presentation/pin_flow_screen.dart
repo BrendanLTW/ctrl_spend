@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/message_box.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_lockout.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/pin_attempts.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/pin_pad.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/message_box.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_lockout.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrlspend/features/app_lock/presentation/pin_attempts.dart';
+import 'package:ctrlspend/features/app_lock/presentation/pin_pad.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

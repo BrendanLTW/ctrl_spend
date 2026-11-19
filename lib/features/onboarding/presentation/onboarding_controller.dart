@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'onboarding_controller.g.dart';

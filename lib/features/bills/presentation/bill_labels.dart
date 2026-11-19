@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 /// How soon a bill is due, for its S27 row colour.

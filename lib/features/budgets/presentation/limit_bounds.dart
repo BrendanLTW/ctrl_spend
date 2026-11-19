@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/widgets/amount_sheet.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/widgets/amount_sheet.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/l10n/app_localizations.dart';
 
 /// The most a limit on [categoryId] may be, so all limits fit in
 /// [budgetMinor], and S54's message for going over it: "Your limits would

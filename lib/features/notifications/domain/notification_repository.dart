@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'notification_repository.g.dart';

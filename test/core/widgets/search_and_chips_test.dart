@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/widgets/filter_chips.dart';
-import 'package:ctrl_spend/core/widgets/search_field.dart';
+import 'package:ctrlspend/core/widgets/filter_chips.dart';
+import 'package:ctrlspend/core/widgets/search_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

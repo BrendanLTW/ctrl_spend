@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/widgets/app_toast.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/widgets/app_toast.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/screens.dart';

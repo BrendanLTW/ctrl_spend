@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 
 /// In-memory settings for widget tests, where Drift's stream timers clash
 /// with the fake clock.

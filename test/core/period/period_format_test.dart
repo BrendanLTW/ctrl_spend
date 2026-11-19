@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/core/period/period_format.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/core/period/period_format.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 

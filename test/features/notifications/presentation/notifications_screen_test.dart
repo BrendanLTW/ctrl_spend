@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_toggle.dart';
-import 'package:ctrl_spend/core/widgets/category_tile.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_row.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_settings_screen.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notifications_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_toggle.dart';
+import 'package:ctrlspend/core/widgets/category_tile.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/features/notifications/presentation/notification_row.dart';
+import 'package:ctrlspend/features/notifications/presentation/notification_service.dart';
+import 'package:ctrlspend/features/notifications/presentation/notification_settings_screen.dart';
+import 'package:ctrlspend/features/notifications/presentation/notifications_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

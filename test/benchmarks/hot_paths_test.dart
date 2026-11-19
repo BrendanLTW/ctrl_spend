@@ -1,14 +1,14 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/activity/domain/day_groups.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
-import 'package:ctrl_spend/features/dev/domain/sample_data.dart';
-import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
-import 'package:ctrl_spend/features/notifications/domain/notification_rules.dart';
-import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/activity/domain/day_groups.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/features/dev/domain/sample_data.dart';
+import 'package:ctrlspend/features/insights/domain/insight_calculations.dart';
+import 'package:ctrlspend/features/notifications/domain/notification_rules.dart';
+import 'package:ctrlspend/features/periods/domain/period_summary.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// What screens compute over every transaction when data changes, timed

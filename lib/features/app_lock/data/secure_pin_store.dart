@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:crypto/crypto.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_store.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 /// [PinStore] in the Keychain or Android Keystore. Only a random salt and

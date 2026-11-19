@@ -1,11 +1,11 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/data/category_mapper.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
-import 'package:ctrl_spend/features/settings/data/preferences_mapper.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/data/category_mapper.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/categories/domain/category_repository.dart';
+import 'package:ctrlspend/features/settings/data/preferences_mapper.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart';
 
 class DriftCategoryRepository implements CategoryRepository {

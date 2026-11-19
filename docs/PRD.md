@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Product | **ctrlSpend** (package `ctrl_spend`), from ctrlWorks |
+| Product | **ctrlSpend** (package `ctrlspend`), from ctrlWorks |
 | Type | Offline-first personal budgeting app (Flutter, iOS and Android) |
 | Purpose | Portfolio project |
 | UI source of truth | The "CtrlSpend UI" design canvas, which has: 70 light screens, a dark version of each, a design-system board and a brand board. Export the screens to `docs/design/`. |

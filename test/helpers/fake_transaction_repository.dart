@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
 
 /// In-memory transactions for widget tests. Filters by period, type and
 /// category; search matches the title, note and (given [categoryName]) the

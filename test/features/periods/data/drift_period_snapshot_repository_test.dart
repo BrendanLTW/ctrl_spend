@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/periods/data/drift_period_snapshot_repository.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/periods/data/drift_period_snapshot_repository.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

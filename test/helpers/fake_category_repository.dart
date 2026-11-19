@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/categories/domain/category_repository.dart';
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/categories/domain/category_repository.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// In-memory categories for widget tests, seeded with the defaults (ids
 /// 1–8, as on first launch). Drift's stream timers clash with the fake

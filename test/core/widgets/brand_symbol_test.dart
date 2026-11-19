@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ctrl_spend/core/widgets/brand_symbol.dart';
+import 'package:ctrlspend/core/widgets/brand_symbol.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/settings/data/drift_preferences_repository.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/settings/data/drift_preferences_repository.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

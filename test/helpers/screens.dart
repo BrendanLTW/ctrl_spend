@@ -1,8 +1,8 @@
 // The screens of v1.0 with sample data, driven into place for the
 // accessibility tests (task 4.1).
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../features/activity/presentation/activity_screen_test.dart' as act;

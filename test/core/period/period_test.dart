@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrlspend/core/period/period.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 DateTime d(int y, int m, int day) => DateTime(y, m, day);

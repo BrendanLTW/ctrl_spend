@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/app_lock/domain/device_auth.dart';
+import 'package:ctrlspend/features/app_lock/domain/device_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart';
 

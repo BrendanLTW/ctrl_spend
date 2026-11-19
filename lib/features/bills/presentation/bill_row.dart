@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/large_text.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/large_text.dart';
 import 'package:flutter/material.dart';
 
 /// An S27 row in a `ListGroup`: tile, name, a coloured due or paid line,

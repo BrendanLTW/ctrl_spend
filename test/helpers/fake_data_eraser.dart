@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/data_transfer/domain/data_eraser.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 
 import 'fake_category_repository.dart';
 import 'fake_notification_repository.dart';

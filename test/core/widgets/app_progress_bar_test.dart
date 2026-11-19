@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
+import 'package:ctrlspend/core/widgets/app_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

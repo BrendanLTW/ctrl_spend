@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// The loading spinner (DESIGN §7): a 64 px ring, 6 px stroke, `raised`

@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// One category's result in a period (S26). `leftMinor` is limit − spent:
 /// above 0 is "RM 90 under", 0 or below is over. Null means "No limit".

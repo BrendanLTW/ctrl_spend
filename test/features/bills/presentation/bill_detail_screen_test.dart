@@ -1,13 +1,13 @@
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
-import 'package:ctrl_spend/core/widgets/app_toggle.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
-import 'package:ctrl_spend/features/bills/presentation/bill_detail_screen.dart';
-import 'package:ctrl_spend/features/bills/presentation/bill_row.dart';
-import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_dialog.dart';
+import 'package:ctrlspend/core/widgets/app_toggle.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/features/bills/presentation/add_bill_screen.dart';
+import 'package:ctrlspend/features/bills/presentation/bill_detail_screen.dart';
+import 'package:ctrlspend/features/bills/presentation/bill_row.dart';
+import 'package:ctrlspend/features/bills/presentation/recurring_bills_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

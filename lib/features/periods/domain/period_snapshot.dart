@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/periods/domain/period_summary.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// A period's budget, limits and totals, saved once it has ended (PRD
 /// §6.2, §8), so later budget changes don't rewrite history. S25, S26 and

@@ -1,18 +1,18 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/widgets/amount_display.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_sheet.dart';
-import 'package:ctrl_spend/core/widgets/date_picker_sheet.dart';
-import 'package:ctrl_spend/core/widgets/large_text.dart';
-import 'package:ctrl_spend/core/widgets/message_box.dart';
-import 'package:ctrl_spend/core/widgets/money_keypad.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/segmented_control.dart';
-import 'package:ctrl_spend/features/transactions/presentation/entry_fields.dart';
-import 'package:ctrl_spend/l10n/date_labels.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/widgets/amount_display.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_sheet.dart';
+import 'package:ctrlspend/core/widgets/date_picker_sheet.dart';
+import 'package:ctrlspend/core/widgets/large_text.dart';
+import 'package:ctrlspend/core/widgets/message_box.dart';
+import 'package:ctrlspend/core/widgets/money_keypad.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/segmented_control.dart';
+import 'package:ctrlspend/features/transactions/presentation/entry_fields.dart';
+import 'package:ctrlspend/l10n/date_labels.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// What S60 or S61 saved: which way, the amount, the label and the day.

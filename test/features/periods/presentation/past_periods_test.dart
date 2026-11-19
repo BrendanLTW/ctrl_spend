@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/features/periods/presentation/past_periods_screen.dart';
-import 'package:ctrl_spend/features/periods/presentation/period_detail_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/main.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_progress_bar.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/features/periods/presentation/past_periods_screen.dart';
+import 'package:ctrlspend/features/periods/presentation/period_detail_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
 import 'package:flutter/painting.dart';
 
 /// Chart series colours (DESIGN §3.4). The same in light and dark.

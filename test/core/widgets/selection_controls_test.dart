@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/widgets/app_radio.dart';
-import 'package:ctrl_spend/core/widgets/app_toggle.dart';
-import 'package:ctrl_spend/core/widgets/day_selector.dart';
-import 'package:ctrl_spend/core/widgets/segmented_control.dart';
-import 'package:ctrl_spend/core/widgets/step_indicator.dart';
+import 'package:ctrlspend/core/widgets/app_radio.dart';
+import 'package:ctrlspend/core/widgets/app_toggle.dart';
+import 'package:ctrlspend/core/widgets/day_selector.dart';
+import 'package:ctrlspend/core/widgets/segmented_control.dart';
+import 'package:ctrlspend/core/widgets/step_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

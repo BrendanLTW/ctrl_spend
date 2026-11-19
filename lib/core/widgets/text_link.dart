@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 /// A text-only action (DESIGN §7): 16/600, 52 high touch area, no

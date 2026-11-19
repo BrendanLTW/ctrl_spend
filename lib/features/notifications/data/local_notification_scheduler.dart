@@ -1,5 +1,5 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
+import 'package:ctrlspend/features/notifications/domain/notification_scheduler.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;

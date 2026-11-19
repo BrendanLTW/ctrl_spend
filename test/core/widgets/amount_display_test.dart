@@ -1,9 +1,9 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_theme.dart';
-import 'package:ctrl_spend/core/widgets/amount_display.dart';
-import 'package:ctrl_spend/core/widgets/amount_text.dart';
-import 'package:ctrl_spend/core/widgets/money_keypad.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_theme.dart';
+import 'package:ctrlspend/core/widgets/amount_display.dart';
+import 'package:ctrlspend/core/widgets/amount_text.dart';
+import 'package:ctrlspend/core/widgets/money_keypad.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

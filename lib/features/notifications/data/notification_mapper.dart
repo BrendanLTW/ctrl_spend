@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
 import 'package:drift/drift.dart';
 
 extension NotificationRowMapper on NotificationRow {

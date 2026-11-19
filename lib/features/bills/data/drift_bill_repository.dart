@@ -1,13 +1,13 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/db/stored_dates.dart';
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/features/bills/data/bill_mapper.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
-import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
-import 'package:ctrl_spend/features/transactions/data/category_check.dart';
-import 'package:ctrl_spend/features/transactions/data/transaction_mapper.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/stored_dates.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/features/bills/data/bill_mapper.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/bills/domain/bill_calculations.dart';
+import 'package:ctrlspend/features/bills/domain/bill_repository.dart';
+import 'package:ctrlspend/features/transactions/data/category_check.dart';
+import 'package:ctrlspend/features/transactions/data/transaction_mapper.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart';
 
 class DriftBillRepository implements BillRepository {

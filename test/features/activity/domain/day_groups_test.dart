@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/activity/domain/day_groups.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/activity/domain/day_groups.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 var _nextId = 1;

@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/chart_palette.dart';
-import 'package:ctrl_spend/core/widgets/stat_card.dart';
-import 'package:ctrl_spend/features/insights/presentation/insights_trend_view.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/chart_palette.dart';
+import 'package:ctrlspend/core/widgets/stat_card.dart';
+import 'package:ctrlspend/features/insights/presentation/insights_trend_view.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

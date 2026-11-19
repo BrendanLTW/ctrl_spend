@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/db/stored_dates.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/stored_dates.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot_repository.dart';
 import 'package:drift/drift.dart';
 
 class DriftPeriodSnapshotRepository implements PeriodSnapshotRepository {

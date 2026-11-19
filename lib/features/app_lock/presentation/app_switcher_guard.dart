@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/features/app_lock/domain/secure_window.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/features/app_lock/domain/secure_window.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

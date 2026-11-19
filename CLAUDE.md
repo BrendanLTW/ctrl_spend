@@ -1,4 +1,4 @@
-# ctrlSpend (`ctrl_spend`)
+# ctrlSpend (`ctrlspend`)
 
 Offline-first personal budgeting app in Flutter (iOS and Android). Portfolio project: code quality, architecture, tests and design fidelity matter more than feature count.
 

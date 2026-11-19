@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:file_picker/file_picker.dart';
 
 /// [CsvFilePicker] on file_picker: the system picker, `.csv` files only.

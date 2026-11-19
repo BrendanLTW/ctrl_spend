@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// One day of Activity (S16): its local date, net total (income − spent)
 /// and transactions, newest first.

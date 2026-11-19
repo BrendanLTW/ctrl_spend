@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_lockout.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_lockout.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// Counts a wrong PIN, starting the S66 pause on every fifth.

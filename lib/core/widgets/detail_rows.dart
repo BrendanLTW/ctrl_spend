@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_toggle.dart';
-import 'package:ctrl_spend/core/widgets/large_text.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_toggle.dart';
+import 'package:ctrlspend/core/widgets/large_text.dart';
 import 'package:flutter/material.dart';
 
 const _padding = EdgeInsets.symmetric(horizontal: 18, vertical: 12);

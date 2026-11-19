@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:drift/drift.dart';
 
 extension TransactionRowMapper on TransactionRow {
