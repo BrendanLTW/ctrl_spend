@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'goal_repository.g.dart';

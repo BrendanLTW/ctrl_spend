@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
-import 'package:ctrl_spend/core/widgets/budget_hero.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_progress_bar.dart';
+import 'package:ctrlspend/core/widgets/budget_hero.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

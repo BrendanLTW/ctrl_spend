@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/bills/domain/bill_calculations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

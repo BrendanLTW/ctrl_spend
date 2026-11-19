@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/period/period.dart';
+import 'package:ctrlspend/core/period/period.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'preferences.freezed.dart';

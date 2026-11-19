@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
 import 'package:drift/drift.dart' show Value;
 import 'package:drift/native.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/l10n/app_localizations.dart';
 
 extension CurrencyNames on AppLocalizations {
   /// "Malaysian Ringgit" (S04, S34).

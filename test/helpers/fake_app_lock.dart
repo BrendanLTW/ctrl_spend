@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/features/app_lock/domain/device_auth.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
-import 'package:ctrl_spend/features/app_lock/domain/secure_window.dart';
+import 'package:ctrlspend/features/app_lock/domain/device_auth.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrlspend/features/app_lock/domain/secure_window.dart';
 
 /// Keeps the PIN in memory.
 class FakePinStore implements PinStore {

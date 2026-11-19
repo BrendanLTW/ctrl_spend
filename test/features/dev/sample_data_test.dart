@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
-import 'package:ctrl_spend/features/dev/domain/sample_data.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/features/dev/domain/sample_data.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

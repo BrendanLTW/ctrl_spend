@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_theme.dart';
-import 'package:ctrl_spend/core/theme/category_palette.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_theme.dart';
+import 'package:ctrlspend/core/theme/category_palette.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

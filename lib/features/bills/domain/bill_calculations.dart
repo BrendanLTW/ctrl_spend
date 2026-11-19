@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
 
 /// One payment of a bill, due on a local calendar date.
 typedef BillPayment = ({Bill bill, DateTime due});

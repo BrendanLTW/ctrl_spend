@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// A large amount with smaller, muted cents: "RM 1,240" + ".00" (DESIGN §4).

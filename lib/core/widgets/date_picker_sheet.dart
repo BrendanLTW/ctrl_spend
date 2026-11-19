@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/widgets/app_sheet.dart';
-import 'package:ctrl_spend/core/widgets/month_calendar.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/widgets/app_sheet.dart';
+import 'package:ctrlspend/core/widgets/month_calendar.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

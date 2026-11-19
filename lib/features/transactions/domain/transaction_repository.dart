@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'transaction_repository.g.dart';

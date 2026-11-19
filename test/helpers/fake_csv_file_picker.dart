@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_file_picker.dart';
 
 /// Hands back [files] in turn, as if the user picked each; null cancels.
 class FakeCsvFilePicker implements CsvFilePicker {

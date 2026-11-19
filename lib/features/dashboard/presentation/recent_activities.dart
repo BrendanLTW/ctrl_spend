@@ -1,15 +1,15 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_spacing.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/category_tile.dart';
-import 'package:ctrl_spend/core/widgets/empty_state.dart';
-import 'package:ctrl_spend/core/widgets/transaction_row.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/l10n/date_labels.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_spacing.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/category_tile.dart';
+import 'package:ctrlspend/core/widgets/empty_state.dart';
+import 'package:ctrlspend/core/widgets/transaction_row.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/l10n/date_labels.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// S09's Recent activities: a header with View all and the latest

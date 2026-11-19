@@ -1,8 +1,8 @@
 import 'dart:math';
 
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
 
 /// Sample titles per default category, for [sampleTransactions].
 const _titles = {

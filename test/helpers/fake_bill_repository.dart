@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/bills/domain/bill_calculations.dart';
-import 'package:ctrl_spend/features/bills/domain/bill_repository.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/bills/domain/bill_calculations.dart';
+import 'package:ctrlspend/features/bills/domain/bill_repository.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 import 'fake_transaction_repository.dart';
 

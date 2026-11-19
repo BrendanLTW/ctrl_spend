@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_shadows.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_shadows.dart';
 import 'package:flutter/material.dart';
 
 /// A 52 × 32 pill switch (DESIGN §7): `control` with a white thumb off,

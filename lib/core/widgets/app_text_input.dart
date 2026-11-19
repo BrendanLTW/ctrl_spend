@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 /// A text input with a counter (DESIGN §7; S03a, S47): 56 high, radius 18,

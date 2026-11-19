@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/widgets/app_toast.dart';
+import 'package:ctrlspend/core/widgets/app_toast.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../data_transfer/presentation/import_test.dart'

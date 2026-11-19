@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/data_transfer/domain/data_eraser.dart';
 
 class DriftDataEraser implements DataEraser {
   new(this._db);

@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/pill_button.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/pill_button.dart';
 import 'package:flutter/material.dart';
 
 /// A state circle's tint (DESIGN §7): `raised`, or the error or success

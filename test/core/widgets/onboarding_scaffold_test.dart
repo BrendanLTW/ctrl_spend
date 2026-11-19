@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/widgets/onboarding_scaffold.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/step_indicator.dart';
-import 'package:ctrl_spend/core/widgets/text_link.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/widgets/onboarding_scaffold.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/step_indicator.dart';
+import 'package:ctrlspend/core/widgets/text_link.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

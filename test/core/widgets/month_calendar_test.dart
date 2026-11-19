@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/widgets/month_calendar.dart';
+import 'package:ctrlspend/core/widgets/month_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

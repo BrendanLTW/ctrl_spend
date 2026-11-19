@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/app_lock/domain/lock_rules.dart';
+import 'package:ctrlspend/features/app_lock/domain/lock_rules.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

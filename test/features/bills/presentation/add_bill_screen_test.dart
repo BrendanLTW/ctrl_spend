@@ -1,10 +1,10 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/detail_rows.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/bills/presentation/add_bill_screen.dart';
-import 'package:ctrl_spend/features/bills/presentation/recurring_bills_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/detail_rows.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/bills/presentation/add_bill_screen.dart';
+import 'package:ctrlspend/features/bills/presentation/recurring_bills_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

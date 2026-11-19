@@ -1,11 +1,11 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/transactions/data/category_check.dart';
-import 'package:ctrl_spend/features/transactions/data/transaction_mapper.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/transactions/data/category_check.dart';
+import 'package:ctrlspend/features/transactions/data/transaction_mapper.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
 import 'package:drift/drift.dart';
 
 class DriftTransactionRepository implements TransactionRepository {

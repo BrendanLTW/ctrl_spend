@@ -1,15 +1,15 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/brand_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_shell.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/how_it_works_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/name_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/splash_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
-import 'package:ctrl_spend/main.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/brand_colors.dart';
+import 'package:ctrlspend/core/widgets/app_shell.dart';
+import 'package:ctrlspend/features/onboarding/presentation/how_it_works_screen.dart';
+import 'package:ctrlspend/features/onboarding/presentation/name_screen.dart';
+import 'package:ctrlspend/features/onboarding/presentation/splash_screen.dart';
+import 'package:ctrlspend/features/onboarding/presentation/welcome_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

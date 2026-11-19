@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/notifications/data/notification_mapper.dart';
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/notifications/data/notification_mapper.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/db/tables.dart';
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/core/db/tables.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -107,6 +107,8 @@ extension DefaultCategorySeed on AppDatabase {
 /// `AppDatabase(NativeDatabase.memory())`.
 @Riverpod(keepAlive: true)
 AppDatabase appDatabase(Ref ref) {
+  // The file on the phone keeps the package's old name: renaming it would
+  // open a new, empty database and leave everyone's data behind.
   final db = AppDatabase(driftDatabase(name: 'ctrl_spend'));
   ref.onDispose(db.close);
   return db;

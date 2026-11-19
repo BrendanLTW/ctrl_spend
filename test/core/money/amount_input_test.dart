@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/money/amount_input.dart';
+import 'package:ctrlspend/core/money/amount_input.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 int type(List<KeypadKey> keys, {int from = 0}) => keys.fold(from, applyKey);

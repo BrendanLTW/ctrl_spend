@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/period/clock.dart';
+import 'package:ctrlspend/core/period/clock.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 

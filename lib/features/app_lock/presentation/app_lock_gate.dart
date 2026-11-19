@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/period/clock.dart';
-import 'package:ctrl_spend/features/app_lock/domain/lock_rules.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/forgot_pin_screen.dart';
-import 'package:ctrl_spend/features/app_lock/presentation/lock_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/core/period/clock.dart';
+import 'package:ctrlspend/features/app_lock/domain/lock_rules.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrlspend/features/app_lock/presentation/forgot_pin_screen.dart';
+import 'package:ctrlspend/features/app_lock/presentation/lock_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

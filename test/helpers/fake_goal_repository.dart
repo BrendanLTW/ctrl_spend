@@ -1,8 +1,8 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
-import 'package:ctrl_spend/features/goals/domain/goal_repository.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/features/goals/domain/goal_repository.dart';
 
 /// In-memory goals for widget tests, soonest target first. Sets
 /// `completedAt` like the real one (never undone), and refuses to

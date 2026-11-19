@@ -1,6 +1,6 @@
 # ctrlSpend
 
-[![CI](https://github.com/BrendanLTW/ctrl_spend/actions/workflows/ci.yml/badge.svg)](https://github.com/BrendanLTW/ctrl_spend/actions/workflows/ci.yml)
+[![CI](https://github.com/BrendanLTW/ctrlspend/actions/workflows/ci.yml/badge.svg)](https://github.com/BrendanLTW/ctrlspend/actions/workflows/ci.yml)
 
 **Know what's left to spend, every day.** ctrlSpend is a private, offline budgeting app for iOS and Android. You set one monthly budget that resets on payday, log spending in seconds, and see where it goes. There's no account and no bank login, and nothing leaves the phone except a CSV you export yourself.
 

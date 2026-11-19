@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_shadows.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/theme/category_palette.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_shadows.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/theme/category_palette.dart';
 import 'package:flutter/material.dart';
 
 ThemeData buildLightTheme() => _build(

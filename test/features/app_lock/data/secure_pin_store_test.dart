@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/app_lock/data/secure_pin_store.dart';
+import 'package:ctrlspend/features/app_lock/data/secure_pin_store.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_test/flutter_test.dart';
 

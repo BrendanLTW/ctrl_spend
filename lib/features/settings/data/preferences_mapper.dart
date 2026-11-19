@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 
 /// Keys in the Preferences table (PRD §8).
 abstract final class PreferenceKeys {

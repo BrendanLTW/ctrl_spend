@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/money/amount_input.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/money_keypad_key.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/money/amount_input.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/money_keypad_key.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 enum MoneyKeypadSize {

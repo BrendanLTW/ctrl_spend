@@ -1,14 +1,14 @@
-import 'package:ctrl_spend/core/db/app_database.dart'
+import 'package:ctrlspend/core/db/app_database.dart'
     show AppDatabase, appDatabaseProvider;
-import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
-import 'package:ctrl_spend/core/widgets/category_picker_tile.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/swipe_to_delete.dart';
-import 'package:ctrl_spend/core/widgets/transaction_row.dart';
-import 'package:ctrl_spend/features/activity/presentation/activity_screen.dart';
-import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/welcome_screen.dart';
-import 'package:ctrl_spend/main.dart';
+import 'package:ctrlspend/core/widgets/app_shell_tab.dart';
+import 'package:ctrlspend/core/widgets/category_picker_tile.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/swipe_to_delete.dart';
+import 'package:ctrlspend/core/widgets/transaction_row.dart';
+import 'package:ctrlspend/features/activity/presentation/activity_screen.dart';
+import 'package:ctrlspend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrlspend/features/onboarding/presentation/welcome_screen.dart';
+import 'package:ctrlspend/main.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

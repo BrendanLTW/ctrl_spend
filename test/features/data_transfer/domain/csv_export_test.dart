@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_export.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_export.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 var _nextId = 1;

@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/periods/domain/period_summary.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/periods/domain/period_summary.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 var _nextId = 1;

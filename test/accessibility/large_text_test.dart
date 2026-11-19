@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:ctrl_spend/core/widgets/app_toast.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/widgets/app_toast.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';

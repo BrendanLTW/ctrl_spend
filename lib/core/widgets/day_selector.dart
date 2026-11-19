@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
 import 'package:flutter/material.dart';
 
 /// One selectable day or option, 56 high (DESIGN §7): "1st" · "15th" on

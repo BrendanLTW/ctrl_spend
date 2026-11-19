@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
 import 'package:flutter/material.dart';
 
 typedef CategoryTileColors = ({Color tile, Color icon});

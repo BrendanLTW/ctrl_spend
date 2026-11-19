@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'goal.freezed.dart';

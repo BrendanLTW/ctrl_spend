@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'bill_repository.g.dart';

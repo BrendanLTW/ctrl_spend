@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 
 /// A 10 px pill progress bar (DESIGN §7). [value] is clamped to 0–1, so an

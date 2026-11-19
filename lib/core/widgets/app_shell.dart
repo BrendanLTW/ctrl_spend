@@ -1,11 +1,11 @@
 import 'dart:math' as math;
 
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/theme/app_shadows.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_shell_tab.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_shadows.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_shell_tab.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// The tab scaffold (DESIGN §6): content runs full height under a floating

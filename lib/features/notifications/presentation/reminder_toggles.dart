@@ -1,11 +1,11 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_toggle.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
-import 'package:ctrl_spend/l10n/setting_labels.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_toggle.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
+import 'package:ctrlspend/l10n/setting_labels.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

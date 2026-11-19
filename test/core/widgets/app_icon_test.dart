@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:ctrl_spend/core/theme/app_theme.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/theme/app_theme.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot_repository.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot_repository.dart';
 
 /// In-memory snapshots for widget tests, newest first; a period start
 /// already saved is skipped, like the real one.

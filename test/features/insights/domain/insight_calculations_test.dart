@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/insights/domain/insight_calculations.dart';
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/insights/domain/insight_calculations.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 var _nextId = 1;

@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/settings/data/preferences_mapper.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/settings/data/preferences_mapper.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Map<String, String> stored(Preferences prefs) => {

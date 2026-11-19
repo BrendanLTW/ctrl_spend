@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// Derived budget values (PRD §6.3, §8). Pure functions over minor units.
 

@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/periods/domain/period_snapshot.dart';
+import 'package:ctrlspend/features/periods/domain/period_snapshot.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'period_snapshot_repository.g.dart';

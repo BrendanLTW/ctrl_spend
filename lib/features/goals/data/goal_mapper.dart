@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/db/stored_dates.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/db/stored_dates.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
 import 'package:drift/drift.dart';
 
 extension GoalRowMapper on GoalRow {

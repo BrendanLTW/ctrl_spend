@@ -1,6 +1,6 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
-import 'package:ctrl_spend/features/goals/domain/goal_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/features/goals/domain/goal_calculations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 final today = DateTime(2026, 11, 4);

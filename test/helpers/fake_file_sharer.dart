@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/data_transfer/domain/file_sharer.dart';
+import 'package:ctrlspend/features/data_transfer/domain/file_sharer.dart';
 
 /// Keeps what would have gone to the share sheet.
 class FakeFileSharer implements FileSharer {

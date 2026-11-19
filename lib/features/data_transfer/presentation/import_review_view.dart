@@ -1,20 +1,20 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/theme/app_spacing.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_radio.dart';
-import 'package:ctrl_spend/core/widgets/category_tile.dart';
-import 'package:ctrl_spend/core/widgets/list_group.dart';
-import 'package:ctrl_spend/core/widgets/message_box.dart';
-import 'package:ctrl_spend/core/widgets/primary_button.dart';
-import 'package:ctrl_spend/core/widgets/section_label.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_import.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/import_summary.dart';
-import 'package:ctrl_spend/l10n/date_labels.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_spacing.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_radio.dart';
+import 'package:ctrlspend/core/widgets/category_tile.dart';
+import 'package:ctrlspend/core/widgets/list_group.dart';
+import 'package:ctrlspend/core/widgets/message_box.dart';
+import 'package:ctrlspend/core/widgets/primary_button.dart';
+import 'package:ctrlspend/core/widgets/section_label.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_file_picker.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_import.dart';
+import 'package:ctrlspend/features/data_transfer/domain/import_summary.dart';
+import 'package:ctrlspend/l10n/date_labels.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// A checked file ready to import: its rows, their summary, and which

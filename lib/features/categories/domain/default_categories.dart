@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// The 8 categories seeded on first launch (PRD §8), in display order.
 /// Colours follow the Category manager design. Stored as data, so they're

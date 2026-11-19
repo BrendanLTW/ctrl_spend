@@ -1,16 +1,16 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_dialog.dart';
-import 'package:ctrl_spend/core/widgets/app_icon.dart';
-import 'package:ctrl_spend/core/widgets/app_toast.dart';
-import 'package:ctrl_spend/core/widgets/text_link.dart';
-import 'package:ctrl_spend/features/app_lock/domain/pin_store.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/data_eraser.dart';
-import 'package:ctrl_spend/features/notifications/presentation/notification_service.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_dialog.dart';
+import 'package:ctrlspend/core/widgets/app_icon.dart';
+import 'package:ctrlspend/core/widgets/app_toast.dart';
+import 'package:ctrlspend/core/widgets/text_link.dart';
+import 'package:ctrlspend/features/app_lock/domain/pin_store.dart';
+import 'package:ctrlspend/features/data_transfer/domain/data_eraser.dart';
+import 'package:ctrlspend/features/notifications/presentation/notification_service.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

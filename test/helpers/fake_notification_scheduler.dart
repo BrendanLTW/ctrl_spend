@@ -1,4 +1,4 @@
-import 'package:ctrl_spend/features/notifications/domain/notification_scheduler.dart';
+import 'package:ctrlspend/features/notifications/domain/notification_scheduler.dart';
 
 /// What the fake scheduler was asked to show: daily and weekly repeat at
 /// `minutes`; once fires at `at`.

@@ -1,8 +1,8 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/widgets/empty_state.dart';
-import 'package:ctrl_spend/features/insights/presentation/spending_donut.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/widgets/empty_state.dart';
+import 'package:ctrlspend/features/insights/presentation/spending_donut.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

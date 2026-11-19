@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/features/goals/data/drift_goal_repository.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/features/goals/data/drift_goal_repository.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -1,11 +1,11 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/bills/data/drift_bill_repository.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/categories/data/drift_category_repository.dart';
-import 'package:ctrl_spend/features/transactions/data/drift_transaction_repository.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/bills/data/drift_bill_repository.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/categories/data/drift_category_repository.dart';
+import 'package:ctrlspend/features/transactions/data/drift_transaction_repository.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
 import 'package:drift/native.dart';
 import 'package:flutter_test/flutter_test.dart';
 

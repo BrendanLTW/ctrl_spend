@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/features/categories/domain/category_keys.dart';
-import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:ctrlspend/features/categories/domain/category_keys.dart';
+import 'package:ctrlspend/l10n/app_localizations.dart';
 
 /// S31's six goal icons. Each sets the goal's type and colour (S29).
 const List<CategoryIconKey> goalIcons = [

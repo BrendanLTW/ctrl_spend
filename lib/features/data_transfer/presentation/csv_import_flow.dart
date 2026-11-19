@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_file_picker.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

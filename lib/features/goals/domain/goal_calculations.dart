@@ -1,7 +1,7 @@
 import 'dart:math';
 
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/goals/domain/goal.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/goals/domain/goal.dart';
 
 /// Where a goal stands (S29, S30; PRD §5.12).
 enum GoalStatus {

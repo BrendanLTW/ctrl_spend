@@ -1,7 +1,7 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_import.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_import.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// What S52 and S53 say about a set of import rows: the first and last
 /// dates, how many of each type, and the categories import will create.

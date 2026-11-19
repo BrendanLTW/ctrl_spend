@@ -1,9 +1,9 @@
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/categories/domain/default_categories.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_export.dart';
-import 'package:ctrl_spend/features/data_transfer/domain/csv_import.dart';
-import 'package:ctrl_spend/features/dev/domain/sample_data.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/categories/domain/default_categories.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_export.dart';
+import 'package:ctrlspend/features/data_transfer/domain/csv_import.dart';
+import 'package:ctrlspend/features/dev/domain/sample_data.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// PRD §10: an import of 20,000 rows is checked in under 5 s. Checking is

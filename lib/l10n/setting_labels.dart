@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/l10n/app_localizations.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 
 extension SettingLabels on AppLocalizations {

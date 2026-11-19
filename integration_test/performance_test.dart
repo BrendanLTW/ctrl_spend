@@ -1,10 +1,10 @@
-import 'package:ctrl_spend/core/db/app_database.dart';
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/features/dashboard/presentation/dashboard_screen.dart';
-import 'package:ctrl_spend/features/dev/domain/sample_data.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences_repository.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction_repository.dart';
-import 'package:ctrl_spend/main.dart';
+import 'package:ctrlspend/core/db/app_database.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/features/dashboard/presentation/dashboard_screen.dart';
+import 'package:ctrlspend/features/dev/domain/sample_data.dart';
+import 'package:ctrlspend/features/settings/domain/preferences_repository.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction_repository.dart';
+import 'package:ctrlspend/main.dart';
 import 'package:drift/native.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

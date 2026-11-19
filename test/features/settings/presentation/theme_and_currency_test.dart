@@ -1,10 +1,10 @@
-import 'package:ctrl_spend/core/router/app_router.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/widgets/app_radio.dart';
-import 'package:ctrl_spend/features/onboarding/presentation/month_setup_screen.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/settings/presentation/currency_screen.dart';
-import 'package:ctrl_spend/features/settings/presentation/theme_screen.dart';
+import 'package:ctrlspend/core/router/app_router.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/widgets/app_radio.dart';
+import 'package:ctrlspend/features/onboarding/presentation/month_setup_screen.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/settings/presentation/currency_screen.dart';
+import 'package:ctrlspend/features/settings/presentation/theme_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

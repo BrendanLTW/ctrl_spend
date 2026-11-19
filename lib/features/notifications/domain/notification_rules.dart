@@ -1,10 +1,10 @@
-import 'package:ctrl_spend/core/period/period.dart';
-import 'package:ctrl_spend/features/bills/domain/bill.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/notifications/domain/app_notification.dart';
-import 'package:ctrl_spend/features/settings/domain/preferences.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/core/period/period.dart';
+import 'package:ctrlspend/features/bills/domain/bill.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/notifications/domain/app_notification.dart';
+import 'package:ctrlspend/features/settings/domain/preferences.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
 
 /// When the scheduled notifications fire (S07 "Sunday evenings").
 const int weeklySummaryWeekday = DateTime.sunday;

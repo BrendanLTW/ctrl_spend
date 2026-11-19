@@ -1,14 +1,14 @@
-import 'package:ctrl_spend/core/money/money_formatter.dart';
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
-import 'package:ctrl_spend/core/theme/app_typography.dart';
-import 'package:ctrl_spend/core/widgets/app_progress_bar.dart';
-import 'package:ctrl_spend/core/widgets/category_tile.dart';
-import 'package:ctrl_spend/core/widgets/large_text.dart';
-import 'package:ctrl_spend/features/budgets/domain/budget_calculations.dart';
-import 'package:ctrl_spend/features/categories/domain/category.dart';
-import 'package:ctrl_spend/features/transactions/domain/transaction.dart';
-import 'package:ctrl_spend/l10n/l10n.dart';
+import 'package:ctrlspend/core/money/money_formatter.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_typography.dart';
+import 'package:ctrlspend/core/widgets/app_progress_bar.dart';
+import 'package:ctrlspend/core/widgets/category_tile.dart';
+import 'package:ctrlspend/core/widgets/large_text.dart';
+import 'package:ctrlspend/features/budgets/domain/budget_calculations.dart';
+import 'package:ctrlspend/features/categories/domain/category.dart';
+import 'package:ctrlspend/features/transactions/domain/transaction.dart';
+import 'package:ctrlspend/l10n/l10n.dart';
 import 'package:flutter/material.dart';
 
 /// S23's top card: the category, its type and transaction count, then this

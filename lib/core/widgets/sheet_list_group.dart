@@ -1,5 +1,5 @@
-import 'package:ctrl_spend/core/theme/app_colors.dart';
-import 'package:ctrl_spend/core/theme/app_radius.dart';
+import 'package:ctrlspend/core/theme/app_colors.dart';
+import 'package:ctrlspend/core/theme/app_radius.dart';
 import 'package:flutter/material.dart';
 
 /// Rows on a `fillSoft` card with dividers: a list inside a sheet, as
